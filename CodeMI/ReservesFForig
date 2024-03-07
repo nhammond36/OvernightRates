@@ -1,0 +1,281 @@
+#import libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+import plotly.express as px
+#import data
+#these are quick World Bank data in country*year format that include
+#population, for weighting circle size,
+#year, for the animation element,
+#continent, for the color identification
+#life_exp=y
+#gdp_cap=x
+#
+#
+# Reserves, FF, soma7.py code
+rates = pd.read_csv(r'C:/Users/Owner/Documents/Research/SOMA/FedReservesFFv3.csv',\
+                    usecols=[0, 1, 2, 3], skiprows=1,  parse_dates=['DATE'])
+# date_parser=dateparse, parse_dates=['datetime'],
+# TOTRESNS	NONBORRES	FEDFUNDS
+# date = stirs.loc[0:, "DATE"]
+res  = rates.loc[:, "TOTRESNS"]
+resnb = rates.loc[:, "NONBORRES"]
+ff = rates.loc[:, "FEDFUNDS"]
+print(ff)
+# volf = ((rates['FF']-rates['FF'].shift(1)) / rates['FF'].shift(1))
+volf = (ff-ff.shift(1))/ff.shift(1)
+rates["volf"] = volf
+print(volf)
+# irb2 = float(iorb)
+# irb = rates['IORB'].apply(lambda x: float(x))
+print(rates.columns)
+varnames=rates.columns
+list(varnames)
+# varnames = rates.head()
+rates.info()
+rates.columns = rates.columns.str.strip()
+rates['DATE'] = pd.to_datetime(rates['DATE'],format='%Y/%m/%d', dayfirst=True)
+date = rates.loc[:, "DATE"]
+print(date)
+#
+dateparse = lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
+# df = pd.read_csv(infile, parse_dates=['datetime'], date_parser=dateparse)
+# extract month and year from DATE
+# for i in range(0,len(rates)):
+    # a = rates.iloc[i]['DATE']
+    # t = datetime.strptime(a, "%m/%d/%Y %H:%M:%S %p")
+    # %H:%M:%S %p")
+    # TypeError: strltime() argument 1 must be str, not Time stamp
+    # target_time = t.strftime("%Y-%m-%d %H:%M:%S %p")
+    # %H:%M:%S %p")
+    # print(target_time)
+    # use 'loc' to locate and change the original data
+    # rates.loc[i,'DATE'] = str(target_time)[0:-3]
+    # not rewrite PM/AM back
+# datetime.strptime("DATE", '%Y/%m/%d').strftime("%Y/%m")
+# ValueError: time data 'DATE' does not math format '%m/%d/%Y'
+# rates['Date'].dt.to_period('M')
+# format='%Y-%m-%d
+# df = pd.DataFrame({'StartDate': rates['DATE']})
+# df['StartDate'].dt.to_period('M')# format='%Y-%m-%d
+# df['StartDate'] = pd.to_datetime(df['StartDate'])
+# x = rates.loc[:, "DATE"]
+
+# data.time = pd.to_datetime(data['time'], format='%Y-%m-%d %H:%M:%S.%f')
+# data.set_index(['time'],inplace=True)
+x = rates['DATE']
+print(x)
+# x = stirs['DATE']
+# , dtype=np.datet
+# x = rates.loc[:,"Date"]
+rates.plot(x="DATE", y="FEDFUNDS")
+print(rates.columns)
+rates.plot(x="DATE", y="TOTRESNS")
+print(rates.columns)
+# Scattplot  Reserves versus  FF voltility
+# output to static HTML file
+# output_file(\"C:/Users/Owner/Documents/Research/SOMA/scatter_ff.html\",title=\"Fed funds rates and reserves\")
+# create a new plot with a title and axis labels,)
+N = len(ff)
+# x = parse_dates
+z = res
+y = volf
+colors = np.random.rand(N)
+# area = (30 * np.random.rand(N))**2  # 0 to 15 point radii
+# area = [20*2**n for n in range(len(res))]
+area = res*.01
+plt.figure(figsize =(6, 4))
+plt.title('Fed Funds rate volatility vs total reserves',fontsize=12)
+plt.scatter(z, y, s=area,c='g', alpha=0.5)
+# fontweight ='bold')
+# volres=plt.scatter(z, y, marker='o',s=area, c='c', alpha=0.5)
+plt.xlabel('Reserves')
+plt.ylabel('FF rate volatility')
+plt.legend()
+plt.savefig('C:/Users/Owner/Documents/Research/SOMA/ffvol_reserves.eps')
+plt.show()
+#
+# Animate FF volatility versus reserves scatter plot
+# fig = plt.figure(figsize =(6, 4))
+# ax = py.axes(xlim=(0, 1), ylim=(0, 1))
+# volres = plt.scatter([], [], s=10)
+volres=plt.scatter([], [])
+nrates = rates.to_numpy()
+# print(rates)
+# print(nrates.shape)
+print("shape nrates= ",np.shape(nrates))
+print("dimensions nrates= ",len(nrates.shape))
+vn = nrates[:,1]
+yn = nrates[:,4]
+# print(nrates[ :,2])
+# rates({"A": rates.res, "B": rates.volf}).to_numpy()
+def init():
+    volres.set_offsets([])
+    volres.set_facecolor([])
+    return volres,
+
+
+def animate(i):
+    volres.set_offsets([vn[i], yn[i]])
+    # data = np.hstack((vn[:i,np.newaxis], yn[:i, np.newaxis]))
+    # volres.set_offsets(data)
+    return volres,
+
+
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(x)+1,
+                               interval=200, blit=False, repeat=False)
+anim.save(' C:/Users/Owner/Documents/Research/SOMA/volres.mp4')
+# ani = animation.FuncAnimation(fig, animate, np.arange(1, 200), init_func=init,
+#        interval=25, blit=True)
+# ,title=\"Soma data\")
+#
+# Scattplot  Reserves versus  FF
+# output to static HTML file
+# output_file(\'C:/Users/Owner/Documents/Research/SOMA/scatter_vol.html',title=\"Volatility and reserves")
+# create a new plot with a title and axis labels,)
+y = ff
+colors = np.random.rand(N)
+# area = (30 * np.random.rand(N))**2  # 0 to 15 point radii
+plt.figure(figsize =(5, 4))
+plt.title('Fed Funds rate vs total reserves',fontsize = 12, fontweight ='bold')
+plt.scatter(z, y, s=area,c='g', alpha=0.5)
+plt.xlabel('Reserves')
+plt.ylabel('Fed Funds rates')
+plt.legend()
+plt.show()
+plt.savefig('C:/Users/Owner/Documents/Research/SOMA/ff_reserves.png')
+#
+#
+#
+# replace df with rates
+rates = pd.read_csv(r'C:/Users/Owner/Documents/Research/SOMA/FedReservesFFv3.csv',\
+                    usecols=[0, 1, 2, 3], skiprows=1,  parse_dates=['DATE'])
+# date_parser=dateparse, parse_dates=['datetime'],
+# TOTRESNS	NONBORRES	FEDFUNDS
+# date = stirs.loc[0:, "DATE"]
+res  = rates.loc[:, "TOTRESNS"]
+resnb = rates.loc[:, "NONBORRES"]
+ff = rates.loc[:, "FEDFUNDS"]
+print(ff)
+# volf = ((rates['FF']-rates['FF'].shift(1)) / rates['FF'].shift(1))
+volf = (ff-ff.shift(1))/ff.shift(1)
+rates["volf"] = volf
+print(volf)
+# irb2 = float(iorb)
+# irb = rates['IORB'].apply(lambda x: float(x))
+print(rates.columns)
+varnames=rates.columns
+list(varnames)
+#
+# df = pd.read_csv('gapminder_full.csv')
+rates
+rates.describe()
+rates.info()
+rates_final=df
+rates_final=df.dropna(how='any')
+rates_final=df_final.sort_values(by=['year'])
+rates_final
+fig = px.scatter (rates_final, x='gdp_cap', y='life_exp')
+fig.show()
+fig = px.scatter (rates_final, x='gdp_cap', y='life_exp',
+    log_x= True, size_max=45, range_x=[100,100000], range_y=[25,90]
+    )
+fig.show()
+fig = px.scatter(rates_final, x='gdp_cap', y='life_exp', animation_frame='year',
+    animation_group='country',
+    log_x= True, size_max=45, range_x=[100,100000], range_y=[25,90]
+    )
+
+fig.layout.updatemenus[0].buttons[0].args[1]['frame']['duration'] = 700
+fig.show()
+fig = px.scatter(rates_final, x='gdp_cap', y='life_exp', animation_frame='year',
+    animation_group='country', size='population',
+    color='continent', hover_name='country',
+    log_x= True, size_max=45, range_x=[100,100000], range_y=[25,90]
+    )
+
+fig.layout.updatemenus[0].buttons[0].args[1]['frame']['duration'] = 700
+fig.show()
+fig = px.scatter(rates_final,x='gdp_cap', y='life_exp', animation_frame= 'year',
+ animation_group='country', size='population',
+ color='continent',
+ hover_name='country', log_x=True,
+ size_max=45,range_x=[200,150000], range_y=[10,100]
+ )
+# Tune marker appearance and layout
+fig.update_traces(mode='markers', marker=dict(sizemode='area',
+ ))
+fig.update_layout(
+ title='Life Expectancy v. Per Capita GDP, 1952~2007',
+ xaxis=dict(
+ title='GDP per Capita',
+ gridcolor='white',
+ type='log',
+ gridwidth=2,
+ ),
+ yaxis=dict(
+ title='Life Expectancy (Years)',
+ gridcolor='white',
+ gridwidth=2,
+ ),
+ paper_bgcolor='rgb(243, 243, 243)',
+ plot_bgcolor='rgb(243, 243, 243)',
+)
+fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 600
+fig.write_html("scatterplot.html")
+fig.show()
+#
+#
+# CHANGE!!!
+rates = px.data.gapminder()
+fig = px.scatter(df, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
+           size="pop", color="continent", hover_name="country", facet_col="continent",
+           log_x=True, size_max=45, range_x=[100,100000], range_y=[25,90])
+
+# Tune marker appearance and layout
+fig.update_traces(mode='markers', marker=dict(sizemode='area',
+ ))
+fig.update_layout(
+ title='Life Expectancy v. Per Capita GDP by Continent, 1952~2007',
+ xaxis=dict(
+ #title='GDP per Capita',
+ gridcolor='white',
+ type='log',
+ gridwidth=2,
+ ),
+ yaxis=dict(
+ title='Life Expectancy (Years)',
+ gridcolor='white',
+ gridwidth=2,
+ ),
+ paper_bgcolor='rgb(243, 243, 243)',
+ plot_bgcolor='rgb(243, 243, 243)',
+)
+fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 600
+fig.write_html("scatterplot_continent_facet.html")
+fig.show()
+df = px.data.gapminder()
+fig = px.line(df, x="year", y="lifeExp", color="continent", line_group="country", hover_name="country",
+        line_shape="spline", render_mode="svg")
+fig.show()
+df = px.data.gapminder()
+fig = px.area(df, x="year", y="pop", color="continent", line_group="country")
+fig.show()
+df = px.data.gapminder().query("year == 2007").query("continent == 'Europe'")
+df.loc[df['pop'] < 2.e6, 'country'] = 'Other countries' # Represent only large countries
+fig = px.pie(df, values='pop', names='country', title='Population of European continent')
+fig.show()
+#
+#
+df = px.data.gapminder().query("year == 2007")
+fig = px.sunburst(df, path=['continent', 'country'], values='pop',
+                  color='lifeExp', hover_data=['iso_alpha'])
+fig.show()
+df = px.data.gapminder()
+fig = px.scatter_geo(df, locations="iso_alpha", color="continent", hover_name="country", size="pop",
+               animation_frame="year", projection="natural earth")
+fig.show()
+df = px.data.gapminder()
+fig = px.choropleth(df, locations="iso_alpha", color="lifeExp", hover_name="country", animation_frame="year", range_color=[20,80])
+fig.show()
