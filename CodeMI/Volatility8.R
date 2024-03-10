@@ -1,0 +1,2054 @@
+# Loading
+library("dplyr")
+library(tidyverse)
+library(dslabs)
+library(lubridate)
+library(rugarch)
+library(xts)
+library(rmgarch)
+library("plyr")
+library(ggplot2)
+library(openai)
+library(kableExtra)
+library(lattice)
+library(knitr)
+library(xtable)
+library(quarto)
+library(zoo)
+library(gridExtra)
+library(e1071)
+library(ggridges)
+library(viridis)
+library(Rfast)
+library(car)
+library(MASS)
+library(fitdistrplus)
+library(reshape2)
+library(tseries)
+library(PerformanceAnalytics)
+library(FinTS)
+library(urca)
+library(timeDate)
+library(quantmod)
+library(DescTools)
+library(chron)
+
+
+###installing and loading multiple packages
+list.packages<-c("fGarch", "PerformanceAnalytics","rugarch","tseries","xts","FinTS", "urca")
+new.packages <- list.packages[!(list.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+#Loading Packages
+invisible(lapply(list.packages, require, character.only = TRUE))
+
+#  ----------------- Github repository
+# see https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/
+# https://github.com/nhammond36/OvernightRates.git
+# The most straightforward way to use RStudio and GitHub together is to create 
+# - a repo on GitHub first. Create the repo, 
+# - then when you start a new project in RStudio, use the version control option, enter your repo URL, and you're good to go.
+
+
+# --------------- READ DATA ------------------
+spread<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_1142024v3.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
+# Convert to numeric and replace non-numeric values with NA
+# spread$IORR <- as.numeric(as.character(spread_no_na$IORR))
+# spread$IORR[is.na(spread_no_na$IORR) | spread_no_na$IORR == "#N/A"] <- NA
+# spread$RRPONTSYAWARD <- as.numeric(as.character(spread$RRPONTSYAWARD))
+spread$RRPONTSYAWARD [is.na(spread$RRPONTSYAWARD) | spread$RRPONTSYAWARD  == "#N/A"] <- NA
+print(colnames(spread))
+str(spread)
+sdate<-as.Date(spread$Date,format="%m/%d/%Y")
+
+# Find the row number for the beginning and end dates of the sample: where  "3/4/2016" occurs and 12/29/2022 for the first time
+# Check which index corresponds to the specified dates
+begs <- which(sdate == as.Date("2016-03-04")) 
+ends <- which(sdate == as.Date("2023-12-14")) 
+print(begs) #[1] 4spr
+print(ends) #[1] 1960
+spread=spread[begs:ends,]
+sdate=sdate[begs:ends]sdate
+str(spread)
+
+spread_no_na <- spread
+spread_no_na <- mutate(spread_no_na, sdate = as.Date(Date, format = "%m/%d/%Y"))
+spread_no_na[is.na(spread_no_na)] <- 0
+columns_to_exclude <- c("Date","sdate")
+spread_no_na <- spread_no_na %>%
+  mutate_at(vars(-one_of(columns_to_exclude)), as.numeric)
+str(spread_no_na)
+#print(spread_no_na)
+
+# ONLY USE THIS IF THERE WAS A BP ERROR --------------------------------
+# Check spread before mutating to see if variables are in basis points
+#spread_no_na <- spread_no_na %>%
+columns_to_reverse <- c("Percentile01_EFFR", "Percentile25_EFFR","Percentile75_EFFR","Percentile99_EFFR","Percentile01_OBFR", "Percentile25_OBFR","Percentile75_OBFR","Percentile99_OBFR","Percentile01_TGCR", "Percentile25_TGCR","Percentile75_TGCR","Percentile99_TGCR","Percentile01_BGCR", "Percentile25_BGCR","Percentile75_BGCR","Percentile99_BGCR","Percentile01_SOFR", "Percentile25_SOFR","Percentile75_SOFR","Percentile99_SOFR")
+# ONLY USE THIS IF THERE WAS A BP ERROR --------------------------------
+columns_to_reverse <- c("VolumeEFFR","VolumeOBFR","VolumeTGCR", "VolumeBGCR","VolumeSOFR")
+# Reverse the multiplication for specific columns
+spread_no_na[columns_to_reverse] <- spread_no_na[columns_to_reverse] / 100  
+
+# FIX  
+columns_to_exclude2 <- c("Date","sdate", "VolumeEFFR","VolumeOBFR","VolumeTGCR", "VolumeBGCR","VolumeSOFR")  # Add other column names to exclude
+spread_no_na <- spread_no_na %>%
+  mutate_if(is.numeric, function(x) x * 100)
+str(spread_no_na)
+
+# Create a new environment---------------------------------
+my_envrates <- new.env()
+# Store your data frame in the environment
+my_envrates$spread_no_na <-spread_no_na
+
+                
+# FIND THIS FILE
+#mshocks=read.csv('C:/Users/Owner/Documents/Research/MonetaryPolicy/Data/onrates_table_weekdayv8.csv',header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE,skip=4));
+#class(spread)
+#mshocks %>% replace(is.na(.),0)
+#str(mshocks)
+
+# Daily data frames overnight rates and volumes -rrbp and vold------------------------
+# rrbp daily volume weighted median overnight reference rates
+rrbp <-  spread_no_na[, c("sdate","EFFR","OBFR","TGCR","BGCR","SOFR")]
+head(rrbp)
+str(rrbp)
+
+secured <-  spread_no_na[, c("sdate","TGCR","BGCR","SOFR")]
+str(secured)
+
+# Convert VolumeEFFR column to numeric
+spread_no_na$VolumeEFFR <- as.numeric(spread_no_na$VolumeEFFR)
+# Convert VolumeOBFR column to numeric
+spread_no_na$VolumeOBFR <- as.numeric(spread_no_na$VolumeOBFR)
+
+vold <- spread_no_na[, c("sdate","VolumeEFFR", "VolumeOBFR", "VolumeTGCR", "VolumeBGCR", "VolumeSOFR" )]
+head(vold)
+str(vold)
+
+# Important spreads
+iorsofr<-spread_no_na$IORR-spread_no_na$SOFR;
+rrppsofr<-spread_no_na$RRPONTSYAWARD-spread_no_na$SOFR;
+
+# target<- select(spread,TargetDe,TargetUe);
+vdsum <- colSums(vold[, sapply(vold, is.numeric)], na.rm = TRUE)
+# VolumeEFFR VolumeOBFR VolumeTGCR VolumeBGCR VolumeSOFR 
+# 154338     415674     579310     607225    1471252        
+
+
+
+# Quantiles -------------------------------------------
+# Define a color palette  FOLLOW EXAMPLE FOR RRBP
+# my_color_palette <- c("EFFR" = "darkblue", "OBFR" = "darkgreen", "TGCR" = "darkred", "BGCR" = "darkcyan", "SOFR" = "darkorange")
+
+quantilesE <- spread_no_na[, c("sdate", "EFFR", "VolumeEFFR", "TargetUe", "TargetDe", "Percentile01_EFFR", "Percentile25_EFFR", "Percentile75_EFFR", "Percentile99_EFFR")]
+quantilesO <- spread_no_na[, c("sdate", "OBFR", "VolumeOBFR", "Percentile01_OBFR", "Percentile25_OBFR", "Percentile75_OBFR", "Percentile99_OBFR")]
+quantilesT <- spread_no_na[, c("sdate","TGCR","VolumeTGCR","Percentile01_TGCR","Percentile25_TGCR","Percentile75_TGCR","Percentile99_TGCR")]
+quantilesB <- spread_no_na[, c("sdate","BGCR","VolumeBGCR","Percentile01_BGCR","Percentile25_BGCR","Percentile75_BGCR","Percentile99_BGCR")]
+quantilesS <- spread_no_na[, c("sdate","SOFR","VolumeSOFR","Percentile01_SOFR","Percentile25_SOFR", "Percentile75_SOFR", "Percentile99_SOFR")]
+
+
+# plot daily sample rates
+#
+# plot daily sample volumes
+#
+# plot daily epoch rates
+#begn = [4 860 924  1033 1517 4];
+#endn = [859 923 1032 1516 1714 1714];
+#1. normalcy   3/4/2016		7/31/2019      1  858
+#2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
+#3. covid 11/1/2019	    3/16/2020   923  1013
+#4. zlb         3/17/2020- 3/16/2022     1014-1518
+#4. Taming inflation 03/17/2022 - 12/29/2022 1519-1957
+
+
+# normalcy <-rrbp %>% slice(1:858)
+# adjust <-rrbp %>% slice(859:922)
+# covid <-rrbp %>% slice(923:1013)
+# zlb <-rrbp %>% slice(1014:1518)
+# inflation <-rrbp %>% slice(1519:1957)
+
+begn<- c(1, 859, 923,  1014, 1519, 1)
+endn<- c(858, 922, 1013, 1518, 1957, 1957)
+
+
+# ----------------------- Different realized volatility measures
+  # Use 252 day trailing window of std calculate three ways
+  # Volatility is calculated using publicly released weekly snapshots for 
+  # 52-week trailing windows, as the standard deviation of the first difference
+  # M = movstd(A,k) returns an array of local k-point standard deviation value
+  # a. log(r_t)-log(r_{t+1})
+  # b. std deviation (log(r_t)-log(r_{t+1}))
+  # c. movstd(vol_b,244) with kernel K=244 or 252
+  # Both models are estimated via OLS on daily data, using a 260-day rolling window 
+  # to allow their parameters to adapt to a changing environment.
+  # 
+  # Hamilton Figure 1 displays the sample histogram for fid, drawn for comparison with the Normal distribution. Forty-six percent of the observations are exactly zero, 
+  # while 25 observations exceed 5 standard deviations. If fid were an i.i.d. Gaussian time series, one would not expect to see even one 5 standard deviation outlier. Often these outliers occur on days that Gurkaynak, Sack, and
+  # 
+  # While GARCH, FIGARCH and stochastic volatility models propose statistical
+  # constructions which mimick volatility clustering in financial time series, they
+  # do not provide any economic explanation for it.
+  # 
+  # Duffie Among our other explanatory variables are measures of the volatility of the federal funds rate and of the 
+  # strength of the relationship between pairs of counterparties.
+  # To capture the volatility of the federal funds rate, we start with 
+  # a dollar-weighted average during a given minute t of the interest rates of all loans made in that minute. 
+  # We then measure the time-series sample standard deviation of these minute-by-minute average rates 
+  # over the previous 30 minutes, denoted or(t). 
+  # The median federal funds rate volatility is about 3 basis points, but ranges from under 1 basis point to 87 basis points, 
+  # with a sample standard deviation of 4 basis points. Our measure of sender-receiver relationship strength for a particular 
+  # pair (i,j) of counterparties, denoted Sij, is the dollar volume of transactions sent by i to j over the previous month 
+  # divided by the dollar volume of all transactions sent by i to the top 100 institutions. The receiver-sender relationship 
+  # strength Rij is the dollar volume of transactions received by i from j over the previous month divided by the dollar 
+  # volume of all transactions received by i from j
+  # 
+  # The formal definition of the primary metric I study, market volatility, is the standard deviation of 1
+  # minute returns: 
+  # si⌃N=sqrt(sum 1 through n(ri -rbar)^2/(n-1))
+  
+
+# x <- 10
+# if (x > 15) {
+#   print("x is greater than 15")
+# } else if (x > 5) {
+#   print("x is greater than 5 but not greater than 15")
+# } else {
+#   print("x is not greater than 5")
+# }
+
+k=6 # full sample
+bgn<-begn[k]
+edn<-endn[k]
+
+# Choose full sample or episode
+
+
+# evaluate_episode <- function(episode) {
+#   result <- case_when(
+#     alternative == 1 ~ "Alternative 1 chosen.",
+#     alternative == 2 ~ "Alternative 2 chosen.",
+#     alternative == 3 ~ "Alternative 3 chosen.",
+#     TRUE ~ "Invalid alternative."
+#   )
+#   
+#   return(result)
+# }
+
+
+# Using a for loop to print numbers from 1 to 5
+# Example initialization (adjust based on your data dimensions)
+nmat <- 6
+ncl <- 5
+max_rows <- max(endn - begn) + 1
+
+# Initialize a list to store matrices
+# In this example, measure_list1 and measure_list2 are lists where each element 
+# corresponds to a different k, and each element is a matrix with dimensions 
+# determined by the range of rows and ncl columns. You can access individual 
+# matrices for further analysis or visualization.
+# 
+# This approach provides flexibility and allows you to store matrices with 
+# varying dimensions based on the specific requirements for each k.
+
+# Access individual matrices for further analysis or visualization
+norm_measure1 <- measure_list1[[1]]
+adjust_measure1 <- measure_list1[[2]]
+covid_measure1 <- measure_list1[[3]]
+zlb_measure1 <- measure_list1[[4]]
+inflation_measure1 <- measure_list1[[5]]
+sample_measure1 <- measure_list1[[6]]
+
+
+
+second_matrix_measure2 <- measure_list2[[2]]
+# ... and so on
+
+nmat <- 6
+ncl <- 5
+max_rows <- max(endn - begn) + 1
+
+# Initialize a list to store matrices
+measure_list1 <- vector("list", length = nmat)
+measure_list2 <- vector("list", length = nmat)
+
+for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    
+    # Calculate measures for each k
+    measure_list1[[k]] <- log(rrbp[rows_in_range, 2:(1 + ncl)]) - log(rrbp[bgn:(edn - 1), 2:(1 + ncl)])
+    measure_list2[[k]] <- abs(rrbp[rows_in_range, 2:(1 + ncl)] - rrbp[bgn:(edn - 1), 2:(1 + ncl)])
+  } else {
+    print(paste("Invalid indices for k =", k))
+  }
+}
+
+# Access individual matrices for further analysis or visualization
+norm_measure1 <- measure_list1[[1]]
+adjust_measure1 <- measure_list1[[2]]
+covid_measure1 <- measure_list1[[3]]
+zlb_measure1 <- measure_list1[[4]]
+inflation_measure1 <- measure_list1[[5]]
+sample_measure1 <- measure_list1[[6]]
+
+norm_measure1[is.na(norm_measure1)] <- 0
+adjust_measure1[is.na(adjust_measure1)] <- 0
+covid_measure1[is.na(covid_measure1)] <- 0
+zlb_measure1[is.na(zlb_measure1)] <- 0
+inflation_measure1[is.na(inflation_measure1)] <- 0
+sample_measure1[is.na(sample_measure1)] <- 0
+
+library(ggplot2)
+
+# Assuming first_matrix_measure1 is your matrix
+# df <- as.data.frame(first_matrix_measure1)
+# 
+# # Create a scatter plot using ggplot2
+# ggplot(df, aes(x = 1:ncl, y = rownames(df))) +
+#   geom_point() +
+#   labs(title = "Scatter Plot of first_matrix_measure1",
+#        x = "Column Index",
+#        y = "Row Index")
+
+library(ggplot2)
+library(tidyr)
+
+# Assuming first_matrix_measure1 is your matrix
+# Assuming sdate is your date vector
+
+# Assuming col_names is a vector of column names
+col_names <- c("sdate","EFFR", "OBFR", "TGCR", "BGCR", "SOFR")
+
+# Assign column names to rrbp
+colnames(rrbp) <- col_names
+colnames(norm_measure1) <- col_names
+colnames(adjust_measure1) <- col_names
+colnames(covid_measure1) <- col_names
+colnames(zlb_measure1) <- col_names
+colnames(inflation_measure1) <- col_names
+colnames(sample_measure1) <- col_names
+
+
+# Create a dataframe
+# Norm episode
+df <- as.data.frame(norm_measure1)
+bgn<-begn[1]
+edn<-endn[1]-1
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates during normalcy period 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_norm.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_norm.png")
+
+# adjust episode
+k=2
+bgn<-begn[k]
+edn<-endn[k]-1
+df <- as.data.frame(adjust_measure1)
+bgn<-begn[1]
+edn<-endn[1]-1
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates during adjustment period 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust.png")
+
+# covid episode
+k=3
+bgn<-begn[k]
+edn<-endn[k]-1
+df <- as.data.frame(covid_measure1)
+bgn<-begn[1]
+edn<-endn[1]-1
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates during covid 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid.png")
+
+# zlb episode
+k=3
+bgn<-begn[k]
+edn<-endn[k]-1
+df <- as.data.frame(zlb_measure1)
+bgn<-begn[1]
+edn<-endn[1]-1
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates during zero lower bound 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb.png")
+
+# Inflation episode
+k=5
+bgn<-begn[k]
+edn<-endn[k]-1
+df <- as.data.frame(inflation_measure1)
+bgn<-begn[1]
+edn<-endn[1]-1
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates of inflation 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation.png")
+
+# Full sample
+k=6
+bgn<-begn[k]
+edn<-endn[k]-1
+df <- as.data.frame(sample_measure1)
+df$sdate <- sdate[bgn:edn]
+
+# Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+# Create a scatter plot using ggplot2
+ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(title = "Log percent change in rates of full sample 2016-2023",
+       x = "Date",
+       y = "Value",
+       color = "Variable") +
+  theme_minimal()
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_sample.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_sample.png")
+
+
+# Measure 1 log percent change ----------------------------------
+if(rates == 1)
+{ #measure1(bgn+1:edn,:) = abs(rrbp[bgn+1:edn,]-rrbp[bgn:edn-1,]);
+#measure2[bgn+1:endn(k),] = abs(rrbp[bgn+1:edn,]-rrbp[bgn+1:edn-1],));  # DK index
+measure1 <- log(rrbp[(bgn+1):edn,2:6])-log(rrbp[bgn:(edn-1),2:6]);
+for (i in seq_along(measure1)) {
+  measure1[[i]][is.infinite(measure1[[i]])] <- 0
+}
+# measure1[is.infinite(measure1)] <- 0 not for lists
+# y <- ifelse(is.infinite(x), 0, x)  if you want a new variable
+
+elseif (rates ==0) {
+  measure1(bgn+1:endn(k),)  <-  abs(vold(rrbp[bgn+1:edn,],)-vold(rrbp[bgn:edn,]-1,));
+  measure2(bgn+1:endn(k),)         <-  abs(vold(bgn+1:endn(k),)-vold(bgn+1:endn(k)-1,3));
+  measure3(bgn+1:endn(k),)  <-  log(vold(bgn+1:endn(k),))-log(rrbp(bgn:endn(k)-1,))}
+
+my_color_palette <- c("EFFR" = "darkblue", "OBFR" = "darkgreen", "TGCR" = "darkred", "BGCR" = "darkcyan", "SOFR" = "darkorange")
+dim(rrbp[(bgn+1):edn,2:6]) #[1] 1956    5
+dim(measure1)  #[1] 1956    5
+dim(rrbp$sdate[(bgn+1):edn]) # NULL
+length(rrbp$sdate[(bgn+1):edn]) [1] 1956
+
+
+mxq = max(measure1[,1:5])
+mnq = min(measure1[,1:5])
+print(mxq)
+print(mnq)
+
+my_color_palette <- c("EFFR" = "darkblue", "OBFR" = "darkgreen", "TGCR" = "darkred", "BGCR" = "darkcyan", "SOFR" = "darkorange")
+
+measure1$sdate =sdate[(bgn+1):edn]
+meltmeasure1r <- melt(measure1,id="sdate")
+#meltmeasure1r <- melt(measure1_no_na,id="sdate")
+measure1r <- ggplot(meltmeasure1r,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(x="Date",  y = "Pct Change Basis Points (bp)", color = "Pct change", shape = "Pct change") +  
+  scale_y_continuous(breaks = seq(0, mxq, by = .05), limits = c(0, mxq)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Pct change"))
+# + theme(axis.title.x=element_blank(), axis.text.x= element_text(size=8,vjust =.5))
+print(measure1r)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/rates_pctchange.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/rates_pctchange.png")
+
+
+#Measure 2 std log percent change ---------------------------------
+# Install and load the zoo package if not already installed
+# install.packages("zoo")
+# Assuming measure1 is a vector of daily measurements
+# Replace it with your actual data
+
+# multivariate rolling stdev-------------------
+nday <- 5
+sdates <- measure1$sdate  # Assuming sdate is the column containing dates
+
+# Select the first five columns of measure1 for calculation, excluding sdate
+measure_subset <- measure1[, 1:5]
+# Apply rolling standard deviation directly on the data frame
+sdrates <- rollapply(measure_subset, width = nday, FUN = sd, align = "right", fill = NA)
+sdates[is.na(sdrates)]<-0
+
+# Convert the result to a data frame
+sdrates <- as.data.frame(sdrates)
+
+# Print the structure of sdrates
+str(sdrates)
+
+# Check against chatgpt DUPLICATE
+# Apply rolling standard deviation directly on the data frame
+sdrates <- rollapply(measure_subset, width = nday, FUN = sd, align = "right", fill = NA)
+
+# Convert the result to a data frame
+sdrates <- as.data.frame(sdrates)
+
+# Print the structure of sdrates
+str(sdrates)
+sdrates[is.na(sdrates)] <- 0
+
+
+str(measure_subset)
+# 'data.frame':	1956 obs. of  5 variables:
+#   $ EFFR: num  0.0274 0 -0.0274 0 0 ...
+# $ OBFR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ TGCR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ BGCR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ SOFR: num  0 0 0 0 0 0 0 0 0 0 ...
+
+str(sdrates)
+# 'data.frame':	1956 obs. of  5 variables:
+# $ EFFR: num  0.0274 0 -0.0274 0 0 ...
+# $ OBFR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ TGCR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ BGCR: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ SOFR: num  0 0 0 0 0 0 0 0 0 0 ...
+nrow(sdrates)
+
+sdrates$sdate<-sdate[1:nrow(sdrates)]
+str(sdrates)
+
+mxq = max(sdrates[,1:5])
+mnq = min(sdrates[,1:5])
+print(mxq) # 1.089607
+print(mnq) # 0
+
+meltsdrates <- melt(sdrates,id="sdate")
+plotsdrates <- ggplot(meltsdrates,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(x="Date",  y = "Pct Change Basis Points (bp)", color = "Std dev pct change", shape = "Std dev pct change") +  
+  scale_y_continuous(breaks = seq(0, mxq, by = .05), limits = c(0, mxq)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Pct change"))
+# + theme(axis.title.x=element_blank(), axis.text.x= element_text(size=8,vjust =.5))
+print(plotsdrates)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/plotsdrates.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/plotsdrates.png")
+
+
+# univariate rolling stdev-------------------
+nday = 5 # find standard deviation of rates of nday
+n=1
+for (i in seq_along(measure1)) {
+  for (j in 1:nday) {}
+  sdrates[t,n]= sdrates[t,n]+measure1[i]
+}
+n=n+1
+measure2 <- apply(sdrates, 2, sd) # 2 for col, 1 for row
+}
+#  Calculate standard deviation for each column (2, 1 for row) ----------------
+# EFFR       OBFR       TGCR       BGCR       SOFR 
+# 0.07341066 0.08431432         NA         NA         NA 
+
+#standard_deviations <- apply(measure1, 2, sd)
+# Print the result
+print(standard_deviations)
+
+
+
+#measure3  <-  movstd(measure1,244)} -----------------------------
+dim(log(rrbp[(bgn+1):edn,2:6])) # 2 to 1957  1956
+dim(log(rrbp[bgn:(edn-1),2:6])) # 1 to 1956  1956
+
+
+# Duffie Krishnamurthy dispersion index ------------------------------------
+# We let yi,t(m) denote the rate at time t on instrument i, maturing in m days. We first
+# adjust the rate to remove term-structure effects, 
+# obtaining the associated "overnight-equivalent” rate as
+# yhat_(i,t) = yi,t(m) − (OISt(m) − OISt(1)), (4.1)
+# The dispersion index D at day t as the weighted mean absolute deviation of the cross-sectional adjusted rate
+# distribution on that day. That is,
+# D_t =1/ (sum_{i}^{}v_{i,t}) times 
+# (sum_{i}^{}v_{i,t} |yhat_{i,t} − y¯t|) (4.2)
+# where vi,t is the estimated outstanding amount of this instrument on day t, in dollars,
+# and y¯t is the volume-weighted mean rate, defined by
+# y¯t = [(sum_{i}^{}(v_{i,t}) times yhat_{i,t})]/(sum_{i}^{}v_{i,t})
+
+
+
+# Initialize vtot(t) and mrate(t) to zero
+# Assuming 'dk' is your data frame or matrix
+# Specify the number of columns to sum (e.g., the first 5 columns)
+
+
+# Initialize vectors to store results
+T<-nrow(rrbp)
+rcol<-6
+meanr<- colMeans(rrbp[,2:6])
+print(meanr)
+# EFFR     OBFR     TGCR     BGCR     SOFR 
+# 156.2080 155.5207 132.0189 132.0358 133.2616 
+ 
+#colsumvold <-rowSums(vold[ , c(2,3,4,5,6)], na.rm=TRUE)
+colsumvold <-rowSums(vold[ , 2:6], na.rm=TRUE)
+print(colsumvold)
+colsumvold[1:10]
+#[1] 1739 1730 1714 1691 1671 1693 1705 1656 1658 1641
+
+# Initialize a w x t array
+dk <- array(0, dim = c(T,rcol-1))
+nrow(dk) #[1] 1957
+dkindex<-array(0,T)
+nrow(dkindex) # [1] 1957
+ 
+#vold and rrbp col1=sdate, cols 2:6 EFFR OBFR  TGCR BGCRSOFR
+T<-nrow(rrbp)
+# Calculate dk(t)
+for (t in 1:T) {
+  for (i in 2:rcol) {
+    dk[t, i-1] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t, i] - meanr[i-1])
+  }
+}
+
+# Calculate dkindex(t)
+for (t in 1:T) {
+  dkindex[t] <- sum(dk[t, 1:rcol-1])
+  #dkindex[t] <-rowSums(dk[ t, 1:rcol-1], na.rm=TRUE)
+}
+
+dkindex <- as.data.frame(dkindex)
+dkindex$sdate<-sdate
+
+mxq = max(dkindex[,1])
+mnq = min(dkindex[,1])
+print(mxq) # 399.8723
+print(mnq) #  10.17096
+
+meltdkindex <- melt(dkindex,id="sdate")
+dk <- ggplot(meltdkindex,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(x="Date",  y = "Duffie Krishnamurthy index", color = "Dispersion", shape = "Dispersion") +  
+  scale_y_continuous(breaks = seq(0, mxq, by = 10), limits = c(0, mxq)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Pct change"))
+# + theme(axis.title.x=element_blank(), axis.text.x= element_text(size=8,vjust =.5))
+print(dk)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/dkindex2024.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/dkindex2024.png")
+
+
+# Gara distance EFFR from FOMC targets ------------------------------------------
+# Initialize 'g' vector
+T=nrow(rrbp)
+g <- array(0,T)
+
+# Loop through 't' values
+
+for (t in 1:T) {
+  if (!is.na(spread_no_na$TargetUe_EFFR[t]) && !is.na(rrbp[t, 2])) {
+    if (spread_no_na$TargetUe_EFFR[t] < rrbp[t, 2]) {
+      # Upper target
+      g[t] <- rrbp[t, 2] - spread_no_na$TargetUe_EFFR[t]
+    } else if (!is.na(spread_no_na$TargetDe_EFFR[t]) && rrbp[t, 2] < spread_no_na$TargetDe_EFFR[t]) {
+      # Lower target
+      g[t] <- rrbp[t, 3] - spread_no_na$TargetDe_EFFR[t]
+    } else {
+      # Handle other cases (if neither condition is met)
+      # You can assign a default value to 'g[t]' or handle it as needed
+    }
+  } else {
+    # Handle cases where 'spread$TargetUe_EFFR[t]' or 'rrbp[t, 2]' is NA
+    # You can assign a default value to 'g[t]' or handle it as needed
+  }
+}
+
+# Set day criteria h
+# Set your desired number of observations (N)
+N <- nrow(spread_no_na)
+
+# Create a dataframe with 7 columns and N observations, initialized to zero
+h <- data.frame(matrix(0, nrow = N, ncol = 11))
+
+# The vector $h_t$ is a collection of zero-one dummy variables incorporating calendar effects.
+# Calendar effects nine elements of h_t :
+#   t holidays (as captured by the first four elements of ht) matter for
+# the mean parameters (I) but not for the variance parameters (K). By
+# contrast, the end-of-quarter and end-of-year effects on the variance
+# were very dramatic
+# date t:
+
+
+
+# 1 precedes a 1-day holiday
+# 2 precedes a 3-day holiday
+# 3 follows a 1-day holiday
+# 4 follows a 3-day holiday
+# 5 the last day of quarter 1, 2, 3, or 4
+# 6 the last day of the year
+# 7 the day before, on, or after the last day of quarter 1,2, or 3
+# 8 2 days before, 1 day before, on, 1 day after, or 2 days after the end of the year
+# 9 Monday
+#10 Friday
+
+h$sdate<-sdate
+new_days <- c("holiday","oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday", "threeday_afterholiday", "endquarter","endyear","around_qtr","around_yr","Monday","Friday","sdate")
+names(h) <- new_days
+str(new_days)
+
+# Assign value 1 to every observation where the day satisfies these criteria
+# Assuming 'date_column_name' is the name of your date column
+h$oneday_beforeholiday <- c(FALSE, !is.element(h$date_column_name[-nrow(h)], holidays) & is.element(h$date_column_name[-1], holidays))
+
+h$threedday_beforeholiday <- c(!is.element(h$date_column_name[-1], holidays) & is.element(h$date_column_name[-nrow(h)], holidays), FALSE)
+
+h$oneday_afterholiday <- c(FALSE, !is.element(h$date_column_name[-nrow(h)], holidays) & is.element(h$date_column_name[-1], holidays))
+
+h$threedday_afterholiday <- c(!is.element(h$date_column_name[-1], holidays) & is.element(h$date_column_name[-nrow(h)], holidays), FALSE)
+
+
+# Assuming 'date_column_name' is the name of your date column
+#h$endquarter <- c(FALSE, quarters(h$date_column_name[-1]) != quarters(h$date_column_name[-nrow(h)]))
+h$endquarter <- c(FALSE, quarters(h$endquarter[-1]) != quarters(h$endquarter[-nrow(h)]))
+h$endyear <- c(FALSE, year(h$endyear[-1]) != year(h$endyear[-nrow(h)]))
+
+
+
+# Display the data frame with renamed columns
+print("Data frame with renamed columns:")
+str(h)
+print(h)
+
+holiday<- 1                   #h[1]
+oneday_beforeholiday<-1       #h[2]
+threeday_beforeholiday<-1     #h[3]
+oneday_afterholiday<-1        #h[4]
+threeday_afterholiday<-1      #h[5]
+endquarter <- 1               #h[6]
+endyear <- 1                  #h[7]
+around_qtr<- 1                #h[8]
+around_yr<-1                  #h[9]
+#the day before, on, or after the last day of quarter 1,2, or 3
+# 2 days before, 1 day before, on, 1 day after, or 2 days after the end of the year
+Monday <- 1                   #h[10]
+Friday <- 1                   #h[11]
+
+
+h$sdate<-sdate
+sday = day(h$sdate)
+sy = year(sdate)
+smon=month(sdate)
+
+# h[6] Is h$endquarter TRUE
+for (i in 1:nrow(h)) {
+  if (sday[i] ==31 & (smon[i] == 3 || smon[i] == 12)) {
+    h$endquarter[i] <- 1
+  }
+  if (sday[i] ==30 & (smon[i] == 6 || smon[i] == 9)) {
+    h$endquarter[i] <- 1
+  }
+}
+
+#around_qtr<- 1  #h[8]
+for (i in 1:nrow(h)) {
+  if (h$endquarter[i] ==1) {
+    h$enduarter[i-1] <-1
+  }
+  if (h$endquarter[i] ==1 & i < nrow(h)) {
+    h$endquarter[i+1]<- 1}
+}
+
+
+# h[7] Is h$endyear TRUE
+for (i in 1:nrow(h)) {
+  if (sday[i] ==31 & smon[i] == 12) {
+    h$endyear[i] <- 1}
+}
+
+#around_yr<-1                  #h[9]
+for (i in 1:nrow(h)) {
+  if (h$endyear[i] ==1) {
+    h$endyear[i-1] <-1
+  }
+  if (h$endyear[i] ==1 & i < nrow(h)) {
+  h$endyear[i+1]<- 1}
+}
+
+
+# Monday
+for (i in 1:nrow(h)) {
+if (weekdays(sdate[i])=="Monday"){
+  h$Monday[i+1]<- 1
+}
+}
+
+# Friday
+for (i in 1:nrow(h)) {
+  if (weekdays(sdate[i])=="Friday"){
+    h$Friday[i+1]<- 1
+  }
+}
+
+str(h)
+
+# NYSE Holidays h[1] - h$holiday
+# Fixed date holidays
+# Monday, January 1: New Year's Day
+# Wednesday, June 19: Juneteenth National Independence Day or 
+# Thursday, July 4: Independence Day
+# Wednesday, December 25: Christmas Day
+
+#h[6] Is h$endquarter TRUE
+for (i in 1:nrow(h)) {
+  if (sday[i] ==1 & smon[i] ==1) {
+    h$holiday[i] <- 1
+  }
+  if (sday[i] ==19 & smon[i] == 6) {
+    h$holiday[i] <- 1
+  }
+  if (sday[i] ==4 & smon[i] == 7) {
+    h$holiday[i] <- 1
+  }
+  if (sday[i] ==25 & smon[i] == 12) {
+    h$holiday[i] <- 1
+  }
+}
+
+# Variable Fixed date holidays
+# Monday, January 15: Martin Luther King Jr. Day  3rd Monday in January
+# Monday, February 19: Presidents' Day 3rd Monday in February
+# Friday, March 29: Good Friday  Friday before Easter
+# Monday, May 27: Memorial Day  4th Monday in May
+# Monday, September 2: Labor Day  first Monday in September
+# Thursday, November 28: Thanksgiving Day  forth Thursday in November
+# Monday, November 11: Veterans Day
+
+# Some Additional Bond Market Holidays:
+# # Monday, November 11: Veterans Day  
+# Monday, Oct. 14, 2024: Columbus Day  2nd Monday in October
+
+# General holiday dates with variable dates ---------------------------------
+# parameters [nth] [day] of [month] 
+# Function to find the [nth] [day] of [month] for a range of years -----------------
+desired_day <- "Monday"
+nday<- 4   #occurrence e.g. 4th desired_day
+#lastday<-  28. 29, 30 or 31
+
+holidays <- function(start_year, end_year,desired_day,month,lastday,nday) {
+  # Initialize an empty vector to store results
+  results<- vector("list", length = end_year - start_year + 1)
+  
+  # Loop through the range of years
+  for (year in seq(start_year, end_year)) {
+    # Create a sequence of dates for the month of November in the current year
+    #holiday_dates <- seq(as.Date(paste(year, "-05-01", sep = "")), as.Date(paste(year, "-05-31", sep = "")), by = "days")
+    holiday_dates <- seq(as.Date(paste(year,"-", month, "-01", sep = "")), as.Date(paste(year, "-", month, "-", lastday, sep = "")), by = "days")
+    
+    
+    #h <- data.frame(sdate = seq(as.Date(paste(start_year, "-", month, "-01", sep = "")),
+    #                             as.Date(paste(end_year, "-", month, "-", nday, sep = "")), by = "days"))
+    
+    # Filter the dates to include only Thursdays
+    days <- holiday_dates[format(holiday_dates, "%A") == desired_day]
+    #thursdays <- november_dates[format(november_dates, "%A") == "Thursday"]
+    
+    # Extract the fourth Thursday desired_day
+    nth_day <- days[nday]
+    #fourth_thursday <- thursdays[4]
+    
+    # Store the result in the results vector
+    results[[year - start_year + 1]] <- nth_day
+  }
+  return(results)
+}
+
+# Example usage for the years 2016 to 2023
+start_year <- 2016
+end_year <- 2023
+desired_day <- "Monday"
+month<-05
+lastday<-31
+nday<- 4
+
+results <-    holidays(start_year, end_year,desired_day,month,lastday,nday)
+
+# Print the results
+for (i in seq_along(results)) {
+  cat("Year:", start_year + i - 1, "- Fourth Thursday of November:", results[[i]], "\n")
+}  
+
+# for (i in seq_along(desired_days)) {
+#   result <- holidays(start_year, end_year, desired_days[i], months[i], ndays[i])
+#   cat("Holidays for", desired_days[i], "in", months[i], "with nday =", ndays[i], "\n")
+#   print(result)
+#   cat("\n")
+#   
+for (i in seq_along(results)) {
+  cat("Year:", start_year + i - 1, "-", nday,"th",desired_day, "of", month,":", results[[i]], "\n")
+}
+
+date_objects <- as.Date(unlist(results))
+#h$sdate <- as.Date(h$sdate)
+#h$holiday <- data.frame(sdate = as.Date(results, origin = "2016-03-04"))
+
+date_objects <- as.Date(unlist(results))
+h$holiday[h$sdate %in% date_objects] <- 1
+
+# Print the result
+print(h)
+
+
+# Function to find the fourth Thursday of November for a given year using base R single year ------------
+fourth_thursday_november_baseR <- function(year) {
+  # Create a sequence of dates for the month of November in the given year
+  november_dates <- seq(as.Date(paste(year, "-11-01", sep = "")), as.Date(paste(year, "-11-30", sep = "")), by = "days")
+  
+  # Filter the dates to include only Thursdays
+  thursdays <- november_dates[format(november_dates, "%A") == "Thursday"]
+  
+  # Extract the fourth Thursday
+  fourth_thursday <- thursdays[4]
+  
+  return(fourth_thursday)
+}
+
+# Example usage
+year <- 2024  # Change the year as needed
+result_baseR <- fourth_thursday_november_baseR(year)
+print(result_baseR)
+
+
+# Function to find the fourth Thursday of November for a given year using base R
+fourth_thursday_november_baseR <- function(year) {
+  # Create a sequence of dates for the month of November in the given year
+  november_dates <- seq(as.Date(paste(year, "-11-01", sep = "")), as.Date(paste(year, "-11-30", sep = "")), by = "days")
+  
+  # Filter the dates to include only Thursdays
+  thursdays <- november_dates[format(november_dates, "%A") == "Thursday"]
+  
+  # Extract the fourth Thursday
+  fourth_thursday <- thursdays[4]
+  
+  return(fourth_thursday)
+}
+
+# Example usage
+year <- 2024  # Change the year as needed
+result_baseR <- fourth_thursday_november_baseR(year)
+print(result_baseR)
+
+
+# Series end
+day_of_weeks <- weekdays(sdate[1:10])
+day_of_weekh <- weekdays(h_multiyear[1:10,1])
+h_multiyear[1624:1634,1]
+sdate[1947:1957]
+h_multiyear[1624:1634,1]
+# [1] "2023-11-30" "2023-12-01" "2023-12-04" "2023-12-05" "2023-12-06" "2023-12-07" "2023-12-08" "2023-12-11"
+# [9] "2023-12-12" "2023-12-13" "2023-12-14"
+sdate[1947:1957]
+# [1] "2023-11-30" "2023-12-01" "2023-12-04" "2023-12-05" "2023-12-06" "2023-12-07" "2023-12-08" "2023-12-11"
+# [9] "2023-12-12" "2023-12-13" "2023-12-14"
+
+
+# Check for error of 323 rows
+sdate[500]  #2018-02-28"
+sdate[1000] #2020-02-26"
+sdate[1500] #2022-02-17" 
+
+h_multiyear[500,1]  #2018-07-10"
+h_multiyear[1000,1] #2020-11-12          0
+h_multiyear[1500,1] #2023-06-09"
+
+sdate[50:100]
+h_multiyear[50:100,1]
+sdate[50:100]  #3 days lost from sdate? "2016-05-31"-"Tuesday" skips Monday " versus "2016-06-30"-"Monday"
+day_of_weeks <- weekdays(sdate[50:65])
+day_of_weekh <- weekdays(h_multiyear[50:65,1])
+print(day_of_weeks)
+print(day_of_weekh)
+# Memorial Day 2016 is on Monday, celebrated the last Monday of May
+# Labor Day first Monday in September
+# Thanksgiving day 4th Thursday in November
+# Martin Luther King Day is 3rd Monday in January
+
+# [1] "2016-05-12" "2016-05-13" "2016-05-16" "2016-05-17" "2016-05-18" "2016-05-19" "2016-05-20" "2016-05-23"
+# [9] "2016-05-24" "2016-05-25" "2016-05-26" "2016-05-27" "2016-05-31" "2016-06-01" "2016-06-02" "2016-06-03"
+# [17] "2016-06-06" "2016-06-07" "2016-06-08" "2016-06-09" "2016-06-10" "2016-06-13" "2016-06-14" "2016-06-15"
+# [25] "2016-06-16" "2016-06-17" "2016-06-20" "2016-06-21" "2016-06-22" "2016-06-23" "2016-06-24" "2016-06-27"
+# [33] "2016-06-28" "2016-06-29" "2016-06-30" "2016-07-01" "2016-07-05" "2016-07-06" "2016-07-07" "2016-07-08"
+# [41] "2016-07-11" "2016-07-12" "2016-07-13" "2016-07-14" "2016-07-15" "2016-07-18" "2016-07-19" "2016-07-20"
+# [49] "2016-07-21" "2016-07-22" "2016-07-25"
+h_multiyear[50:100,1]
+# [1] "2016-05-12" "2016-05-13" "2016-05-16" "2016-05-17" "2016-05-18" "2016-05-19" "2016-05-20" "2016-05-23"
+# [9] "2016-05-24" "2016-05-25" "2016-05-26" "2016-05-27" "2016-05-30" "2016-05-31" "2016-06-01" "2016-06-02"
+# [17] "2016-06-03" "2016-06-06" "2016-06-07" "2016-06-08" "2016-06-09" "2016-06-10" "2016-06-13" "2016-06-14"
+# [25] "2016-06-15" "2016-06-16" "2016-06-17" "2016-06-20" "2016-06-21" "2016-06-22" "2016-06-23" "2016-06-24"
+# [33] "2016-06-27" "2016-06-28" "2016-06-29" "2016-06-30" "2016-07-01" "2016-07-04" "2016-07-05" "2016-07-06"
+# [41] "2016-07-07" "2016-07-08" "2016-07-11" "2016-07-12" "2016-07-13" "2016-07-14" "2016-07-15" "2016-07-18"
+# [49] "2016-07-19" "2016-07-20" "2016-07-21"
+
+ print(day_of_weeks)
+# [1] "Friday"
+ print(day_of_weekh)
+# [1] "Monday"
+sdate[1:10]
+# [1] "2016-03-04"
+# h_multiyear[1:10,1]
+# [1] "2016-01-04"
+
+
+
+
+listHolidays("US") 
+# [1] "USChristmasDay"                      "USColumbusDay"                      
+# [3] "USCPulaskisBirthday"                 "USDecorationMemorialDay"            
+# [5] "USElectionDay"                       "USGoodFriday"                       
+# [7] "USInaugurationDay"                   "USIndependenceDay"                  
+# [9] "USJuneteenthNationalIndependenceDay" "USLaborDay"                         
+# [11] "USLincolnsBirthday"                  "USMemorialDay"                      
+# [13] "USMLKingsBirthday"                   "USNewYearsDay"                      
+# [15] "USPresidentsDay"                     "USThanksgivingDay"                  
+# [17] "USVeteransDay"                       "USWashingtonsBirthday"              
+
+
+generate_holidays <- function(year) {
+  return(as.Date(c("01-01","01-15","02-19","03-29","05-27","06-19", "07-04", "09-02","10-14","11-11","11-28","12-25"), format = "%m-%d", origin = paste(year, "-01-01", sep = "")))
+}
+
+holidays<-c()
+
+# lubridate package
+future_date <- now() + days(5)
+future_date
+
+past_date <- now() - months(3)
+past_date
+# EGARCH ----------------------------------------------------------------
+# 1) ------------------- univariate garch Older work
+simpleegarch_spec <- ugarchspec(variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+                       mean.model = list(armaOrder = c(0, 0)),
+                       distribution.model = "norm")
+
+# Define the EGARCH model specification
+ egarch_spec <- ugarchspec(
+   variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+   mean.model = list(armaOrder = c(0, 0)),
+   distribution.model = "std"
+ )
+
+## Fit the EGARCH model to your financial data
+egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
+
+simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
+summary(simple_fit) # View model summary
+
+## Fit the EGARCH model to your financial data
+# > egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
+# Warning message:
+#   In .egarchfit(spec = spec, data = data, out.sample = out.sample,  : 
+#                   ugarchfit-->warning: solver failer to converge.
+#                 > 
+#                   > simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
+#                 Error in h(simpleError(msg, call)) : 
+#                   error in evaluating the argument 'spec' in selecting a method for function 'ugarchfit': object 'simpleegarch_spec' not found
+
+# forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
+# egarch30d<-mean(forecast@forecast$sigmaFor)*sqrt(252)
+# forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
+# Error in h(simpleError(msg, call)) : 
+#   error in evaluating the argument 'fitORspec' in selecting a method for function 'ugarchforecast': object 'simple_fit' not found
+
+# see stockoverflow
+# y ~ x + I(x^2) ???
+
+
+# EFFR with external regressors
+quantilesE_no_na<-quantilesE
+quantilesE_no_na[is.na(quantilesE_no_na)] <- 0
+edata<-quantilesE_no_na[,3:9]
+str(edata)
+# 'data.frame':	1957 obs. of  7 variables:
+#   $ VolumeEFFR       : int  76 75 75 75 72 72 75 72 68 67 ...
+# $ TargetUe_EFFR    : num  50 50 50 50 50 50 50 50 50 50 ...
+# $ TargetDe_EFFR    : num  25 25 25 25 25 25 25 25 25 25 ...
+# $ Percentile01_EFFR: num  34 33 34 34 34 32 34 35 35 35 ...
+# $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+# $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+# $ Percentile99_EFFR: num  50 45 50 52 50 50 52 75 50 50 ...
+edata$IQR<- edata$Percentile75_EFFR- edata$Percentile25_EFFR
+edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
+
+
+
+
+# Simplify the Model:
+#   Try simplifying the model by reducing the complexity of the GARCH parameters or removing external regressors temporarily. This can help identify whether the convergence issue is related to the model complexity.
+# 
+# Check for Stationarity:
+#   Ensure that your financial time series is stationary. Non-stationary series can sometimes lead to convergence problems.
+# 
+# Consider Other Models:
+#   If GARCH continues to be problematic, consider exploring other time series models like ARIMA or more advanced models such as conditional autoregressive value at risk (CAViaR).
+# 
+# Consult Documentation and Literature:
+#   Review the documentation for the rugarch package and literature on GARCH modeling. There may be specific recommendations for handling convergence issues.
+# 
+# Remember to iterate and experiment with different approaches, and don't hesitate to consult resources like forums or academic papers for additional insights into handling convergence problems in GARCH modeling.
+
+
+# -----------------------------------------------
+#https://blog.devgenius.io/volatility-modeling-with-r-asymmetric-garch-models-85ee02f8b6e8
+
+# -------------------Online example
+egarch11.spec = ugarchspec(variance.model=list(model="eGARCH",
+                                               garchOrder=c(1,1)),
+                           mean.model=list(armaOrder=c(0,0)))
+
+#set timeseries element
+BMW$Years <- as.Date(BMW$Years, "%d/%m/%Y")
+class(BMW$Years)
+BMW.z = zoo(x=BMW$Prices, order.by=BMW$Years)
+#Calculate log retruns and remove first NA value
+Return.BMW<-Return.calculate(BMW.z, method = "log")[-1]
+# -----------------------------------------------------------------
+# Bertolini:
+#   $\nu_t$ is a mean zero, unit variance, i.i.d. error term
+# The enoirical Fed Funds rate
+# $r_t = \mu_t + \sigma_t \nu_t$
+#   
+#   $ \mu_t=r_{t-1}+\delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+# 
+# $ \mu_t=r_{t-1}+\Phi(r_{t-1}=r_{t-2})+ \Phi(r_{t-2}=r_{t-3}) +delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+#                                                                                               
+# Variance of the FFR $\sigma^2_t=E[(r_t-\mu_t)^2]$
+#                                                                                               
+# Introduce exponential Garch effects, EGARCH (Nelson 1991)
+#                                                                                             
+# Allow for deviations of persistent log of conditional variance from its unconditional expected value $-\omega h_t -\psi \nu_t -(1+\gamma N_t)$. Add day if maintenance period effects
+#                                                                                             
+# The resulting variance for the FFR is
+#     $$log(\sigma^2_t -\omega h_t -\psi \nu_t -(1+\gamma N_t)=\sigma^2_{t=1}  -\omega h_{t-1} -\psi \nu_{t-1}  -(1+\gamma N_{t-1} )+\alpha \abs(\nu_{t-1} ) + \Theta \nu_{t-1} 
+#                                                                                                   
+# Assume t distributions for innovations $\nu$
+#                                                                                                     
+# Bertolini model EFFR --------------------------------
+rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
+#Calculate log returns and remove first NA value
+return.effr<-Return.calculate(rrbp.z, method = "log")[-1]
+spec_effr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
+
+#fit EGARCH model
+edatabbp <- select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR")
+edatabbp$policy<-"TargetUe_EFFR[2:T]"-"TargetUe_EFFR[1:T-1]"
+# Model EFFR with external data
+exte.z = zoo(x=edatabBp, order.by=rrbp$sdate)
+ext_effrbbp<-Return.calculate(exte.z, method = "log")[-1]
+egarch_effrBBP=ugarchfit(data = return.effr,external.data=matrix(ext_effrbbp),spec=spec_effr)
+residuals_effrBBP <- residuals(egarch_effrBBP)
+plot(residuals_effrBBP)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.png")
+
+
+
+# Simple model EFFR ---------------------------------------------
+rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
+#Calculate log returns and remove first NA value
+return.effr<-Return.calculate(rrbp.z, method = "log")[-1]
+#fit EGARCH model
+spec_effr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
+egarch_effrsimple=ugarchfit(data = return.effr,spec=spec_effr)
+residuals_effrsimple <- residuals(egarch_effrsimple)
+plot(residuals_effrsimple)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_simple.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_simple.png")
+
+# *---------------------------------*
+#   *          GARCH Model Fit        *
+#   *---------------------------------*
+#   
+#   Conditional Variance Dynamics 	
+# -----------------------------------
+#   GARCH Model	: eGARCH(1,1)
+# Mean Model	: ARFIMA(1,0,0)
+# Distribution	: ged 
+# 
+# Optimal Parameters
+# ------------------------------------
+#   Estimate  Std. Error    t value Pr(>|t|)
+# mu      0.000000    0.000000  -0.039541 0.968459
+# ar1     0.000004    0.000001   4.321618 0.000015
+# omega  -0.371230    0.020183 -18.393482 0.000000
+# alpha1 -0.549327    0.109437  -5.019562 0.000001
+# beta1   0.902594    0.003121 289.239919 0.000000
+# gamma1  0.824669    0.067281  12.257104 0.000000
+# shape   0.116152    0.000920 126.214854 0.000000
+# 
+# Robust Standard Errors:
+#   Estimate  Std. Error   t value Pr(>|t|)
+# mu      0.000000    0.000023 -0.000177 0.999858
+# ar1     0.000004    0.000012  0.368683 0.712364
+# omega  -0.371230    0.078737 -4.714833 0.000002
+# alpha1 -0.549327    0.488556 -1.124389 0.260848
+# beta1   0.902594    0.013265 68.041405 0.000000
+# gamma1  0.824669    0.258930  3.184906 0.001448
+# shape   0.116152    0.004538 25.593203 0.000000
+# 
+# LogLikelihood : 18509.08 
+# 
+# Information Criteria
+# ------------------------------------
+#   
+#   Akaike       -18.918
+# Bayes        -18.898
+# Shibata      -18.918
+# Hannan-Quinn -18.911
+# 
+# Weighted Ljung-Box Test on Standardized Residuals
+# ------------------------------------
+#   statistic  p-value
+# Lag[1]                      3.843 0.049948
+# Lag[2*(p+q)+(p+q)-1][2]     3.844 0.006057
+# Lag[4*(p+q)+(p+q)-1][5]     3.886 0.244214
+# d.o.f=1
+# H0 : No serial correlation
+# 
+# Weighted Ljung-Box Test on Standardized Squared Residuals
+# ------------------------------------
+#   statistic p-value
+# Lag[1]                    0.01278  0.9100
+# Lag[2*(p+q)+(p+q)-1][5]   0.04599  0.9996
+# Lag[4*(p+q)+(p+q)-1][9]   0.07660  1.0000
+# d.o.f=2
+# 
+# Weighted ARCH LM Tests
+# ------------------------------------
+#   Statistic Shape Scale P-Value
+# ARCH Lag[3]   0.01583 0.500 2.000  0.8999
+# ARCH Lag[5]   0.03967 1.440 1.667  0.9964
+# ARCH Lag[7]   0.05913 2.315 1.543  0.9998
+# 
+# Nyblom stability test
+# ------------------------------------
+#   Joint Statistic:  626.1059
+# Individual Statistics:              
+#   mu       3.762
+# ar1     62.180
+# omega  298.413
+# alpha1   6.771
+# beta1  252.101
+# gamma1   2.952
+# shape  482.013
+# 
+# Asymptotic Critical Values (10% 5% 1%)
+# Joint Statistic:     	 1.69 1.9 2.35
+# Individual Statistic:	 0.35 0.47 0.75
+# 
+# Sign Bias Test
+# ------------------------------------
+#   t-value   prob sig
+# Sign Bias          0.17646 0.8600    
+# Negative Sign Bias 0.09015 0.9282    
+# Positive Sign Bias 0.34341 0.7313    
+# Joint Effect       0.16946 0.9824    
+# 
+# 
+# Adjusted Pearson Goodness-of-Fit Test:
+#   ------------------------------------
+#   group statistic p-value(g-1)
+# 1    20     24191            0
+# 2    30     37228            0
+# 3    40     50268            0
+# 4    50     63278            0
+
+# EGARCH EFFR + vOlume, FOMC rates, PERCENTILES
+
+
+# EGARCH EFFR + vOlume, FOMC rates, percentiles ---------------------------------
+rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
+#Calculate log returns and remove first NA value
+return.effr<-Return.calculate(rrbp.z, method = "log")[-1]
+
+edata <- quantilesE
+#select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR","IQR","range")
+str(edata)
+spec_effr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
+# Model EFFR with external data
+exte.z = zoo(x=edata, order.by=rrbp$sdate)
+ext_effr<-Return.calculate(exte.z, method = "log")[-1]
+
+#fit EGARCH model
+egarch_effrsimple=ugarchfit(data = return.effr,external.=matrix(ext_effr),spec=spec_effr)
+residuals_effr <- residuals(egarch_effr)
+plot(residuals_effr)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_per.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_per.png")
+
+
+# model <- arima(your_time_series, order = c(0, 0, 0))
+# The armaOrder parameter specifies the autoregressive (AR) and moving average (MA) 
+# components of an ARMA (AutoRegressive Moving Average) model.
+
+#EGARCH with GED distribution -----------------Volume, FOMC, IQR, range
+#Specify EGARCH models:  IQR
+spec_effr = ugarchspec(variance.model=list(model="eGARCH",
+                                      garchOrder=c(1,1)),
+                  mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
+
+#How to include variance in the mean model?
+#fit EGARCH model
+egarch_effr=ugarchfit(data = return.effr,external.data=matrix(ext_effr),spec=spec_effr)
+residuals_effr <- residuals(egarch_effr)
+plot(residuals_effr)
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_iqr.pdf")
+ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_iqr.png")
+
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals)
+# Box.test(residuals, lag = 20, type = "Ljung-Box")
+
+
+
+# OTHER RATES ----------------------------------------------------
+# TGCR
+# Simple model EFFR
+rrbp.z = zoo(x=rrbp$TGCR, order.by=rrbp$sdate)
+#Calculate log retruns and remove first NA value
+return.tgcrr<-Return.calculate(rrbp.z, method = "log")[-1]
+
+# Model EFFR with external data
+exte.z = zoo(x=edata, order.by=rrbp$sdate)
+ext_effr<-Return.calculate(exte.z, method = "log")[-1]
+
+
+#EGARCH with GED distribution
+#Specify EGARCH models:
+spec_tgcr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(0,0)),distribution.model="ged")
+#fit EGARCH model
+egarch_tgcrr.t=ugarchfit(data = return.tgcr,external.data=matrix(ext_tgcr),spec=spec_tgcr)
+residuals_tgcr <- residuals(egarch_tgcr)
+plot(residuals_tgcr)
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals_tgcr)
+# Box.test(residuals_tgcr, lag = 20, type = "Ljung-Box")
+
+# BGCR
+# Simple model EFFR
+rrbp.z = zoo(x=rrbp$BGCR, order.by=rrbp$sdate)
+#Calculate log retruns and remove first NA value
+return.bgcr<-Return.calculate(rrbp.z, method = "log")[-1]
+
+# Model bgcr with external data
+exte.z = zoo(x=edata, order.by=rrbp$sdate)
+ext_bgcr<-Return.calculate(exte.z, method = "log")[-1]
+
+
+#EGARCH with GED distribution
+#Specify EGARCH models:
+spec_bgcr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(0,0)),distribution.model="ged")
+#fit EGARCH model
+egarch-bgcr.t=ugarchfit(data = return.bgcr,external.data=matrix(ext_bgcr),spec=spec_bgcr)
+residuals_bgcr <- residuals(egarch_bgcr)
+plot(residuals_bgcr)
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals_bgcr)
+# Box.test(residuals_bgcr, lag = 20, type = "Ljung-Box")
+
+# SOFR
+# Simple model EFFR
+rrbp.z = zoo(x=rrbp$SOFR[526:T], order.by=rrbp$sdate[526:T])
+#Calculate log returns and remove first NA value
+return.sofr<-Return.calculate(rrbp.z, method = "log")[-1]
+
+# Model sofr with external data
+exte.z = zoo(x=sdata[526:T,], order.by=rrbp$sdate[526:T])
+ext_sofr<-Return.calculate(exte.z, method = "log")[-1]
+
+
+#EGARCH with GED distribution
+#Specify EGARCH models:
+spec_sofr = ugarchspec(variance.model=list(model="eGARCH",
+                                           garchOrder=c(1,1)),
+                       mean.model=list(armaOrder=c(0,0)),distribution.model="ged")
+#fit EGARCH model
+egarch-sofr.t=ugarchfit(data = return.sofr,spec=spec_sofr)
+#egarch-sofr.t=ugarchfit(data = return.sofr,external.data=matrix(ext_sofr),spec=spec_sofr)
+residuals_sofr <- residuals(egarch_sofr)
+plot(residuals_sofr)
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals)
+# Box.test(residuals, lag = 20, type = "Ljung-Box")
+
+#egarch-sofr.t=ugarchfit(data = return.sofr,spec=spec_sofr)
+#Error in if (mean(data) == 0) { : missing value where TRUE/FALSE needed
+
+# 2) ------------------- Multivariate garch -  with Chatgpt 1/18/2024
+# https://www.rdocumentation.org/packages/rmgarch/versions/1.3-9
+# https://stats.stackexchange.com/questions/568328/egarch-using-rugarch-package-in-r
+# Create a multivariate specification for five assets
+# Statement to jointly fit 5 models
+multireturn_fit <- list(fit1, fit5)
+
+# stackoverflow example https://stackoverflow.com/questions/54293924/rugarch-external-regressors-in-mean-variance
+# garch.spec <- ugarchspec(
+#   variance.model = list(model = "sGARCH", garchOrder = c(1, 1), external.regressors = matrix(df$regressor)),
+#   mean.model = list(armaOrder = c(2, 0), include.mean = TRUE))
+# ugarchfit(garch.spec, df$dependent)
+
+
+# EGARCH EFFR + volumn, FOMC rates, oercentilss
+# *---------------------------------*
+#   *          GARCH Model Fit        *
+#   *---------------------------------*
+#   
+#   Conditional Variance Dynamics 	
+# -----------------------------------
+#   GARCH Model	: eGARCH(1,1)
+# Mean Model	: ARFIMA(0,0,0)
+# Distribution	: ged 
+# 
+# Optimal Parameters
+# ------------------------------------
+#   Estimate  Std. Error    t value Pr(>|t|)
+# mu      0.000000    0.000000  -0.030449 0.975709
+# omega  -1.142564    0.040679 -28.087519 0.000000
+# alpha1  0.003428    0.000924   3.710594 0.000207
+# beta1   0.921293    0.006256 147.261596 0.000000
+# gamma1  0.020497    0.004979   4.116443 0.000038
+# shape   0.102644    0.011212   9.155058 0.000000
+# 
+#  Model with volume, fomc targets, all percentiles
+# Robust Standard Errors:
+#   Estimate  Std. Error   t value Pr(>|t|)
+# mu      0.000000    0.000032 -0.000071  0.99994
+# omega  -1.142564    4.551594 -0.251025  0.80180
+# alpha1  0.003428    0.042127  0.081368  0.93515
+# beta1   0.921293    0.711101  1.295588  0.19512
+# gamma1  0.020497    0.565357  0.036255  0.97108
+# shape   0.102644    1.258998  0.081528  0.93502
+
+# Model with volume, fomc targets, IQR, range
+# Robust Standard Errors:
+#   Estimate  Std. Error   t value Pr(>|t|)
+# mu      0.000000    0.000023 -0.000177 0.999858
+# ar1     0.000004    0.000012  0.368683 0.712364
+# omega  -0.371230    0.078737 -4.714833 0.000002
+# alpha1 -0.549327    0.488556 -1.124389 0.260848
+# beta1   0.902594    0.013265 68.041405 0.000000
+# gamma1  0.824669    0.258930  3.184906 0.001448
+# shape   0.116152    0.004538 25.593203 0.000000
+# LogLikelihood : 18509.08
+
+
+# LogLikelihood : 23663.95 
+# 
+# Information Criteria
+# ------------------------------------
+#   
+# Akaike       -24.190
+#    Akaike’s information criterion (AIC) compares the quality of a set of statistical models to each othe
+#    \url{https://www.statisticshowto.com/akaikes-information-criterion/}
+#    AIC = -2(log-likelihood) + 2K
+#    K number of model parameters plus the intercept
+#    Log-likelihood measure of model fit. The higher the number, the better the fit.
+
+# Bayes        -24.173
+# Bayesian Information Criterion
+# The BIC is a well-known general approach to model selection that favors more parsimonious models over more complex models (i.e., it adds a penalty based on the number of parameters being estimated in the model) (Schwarz, 1978; Raftery, 1995). One form for calculating the BIC is given by
+# (7) $BIC=T_m -df_m log()$
+#   
+# \url{https://www.sciencedirect.com/topics/social-sciences/bayesian-information-criterion}
+# where Tm is the chi-square statistic for the hypothesized model. 
+# BIC > 0 favors the saturated model (i.e., the model that allows all observed variables to be intercorrelated with no assumed model structure)
+# BIC < 0 favors the hypothesized model. 
+# Furthermore, the BIC can be used to assess two competing models.
+# between BICs od the two models is 0–2, ‘weak’ evidence in favor of the model with the smaller BIC; 
+# between 2 and 6 constitutes ‘positive’ evidence; 
+# between 6 and 10 constitutes ‘strong’ evidence;
+
+# Shibata      -24.190 see pdf in Papers, VOlatility
+
+# Hannan-Quinn -24.184 \url{https://www.rdocumentation.org/packages/qpcR/versions/1.3-7.1/topics/HQIC}
+# with $\mathcal{L}_{max}$ = maximum likelihood, $k$ = number of parameters and $n$ = number of observations.
+# $HQIC= -2 log(L_{max} + 2k log(log(n))$
+# The Determination of the Order of an Autoregression. Hannan EJ & Quinn BG. J Roy Stat Soc B (1979), 41: 190-195.
+
+# Weighted Ljung-Box Test on Standardized Residuals
+# ------------------------------------
+#   statistic p-value
+# Lag[1]                      1.551  0.2130
+# Lag[2*(p+q)+(p+q)-1][2]     1.551  0.3495
+# Lag[4*(p+q)+(p+q)-1][5]     1.551  0.7272
+# d.o.f=0
+# H0 : No serial correlation
+# 
+# Weighted Ljung-Box Test on Standardized Squared Residuals
+# \url{https://stats.stackexchange.com/questions/468768/interpretation-of-ljung-box-tests-for-garch-models-from-the-rugarch-package-in}
+# A GARCH model assumes the standardized errors (shocks, innovations) are i.i.d. with zero mean and unit variance. 
+# After having fit a GARCH model, it makes sense to test whether this is the case. Some common checks are to examine presence of a
+# utocorrelation and/or autoregressive conditional heteroskedasticity in the standardized errors; under the i.i.d. assumption, there should be none. 
+# If any is found, the model assumptions are violated, so the face value of the modeling results cannot be trusted.
+# 
+# Ljung-Box (LB) test on standardized residuals tests for autocorrelation in standardized errors, while LB test on standardized squared residuals and 
+# ARCH-LM test test for autoregressive conditional heteroskedasticity. Autocorrelation and autoregressive conditional heteroskedasticity are not the same. 
+# You can have one, the other or both in a time series. Hence, you should not be surprised if some tests find presence of one but not the other.
+# A problem with applying any of these tests to standardized (squared) residuals from a GARCH model is that the test statistics have nonstandard distributions 
+# under the null. (They have their standard null distributions when applied to raw data, but not when applied to residuals of a GARCH model.)* 
+# As far as I know, this is not accounted for in the rugarch package. Hence, you should take the test results with a grain of salt.
+# *There are papers and (I think) textbooks showing that ARCH-LM test should be substituted by Li-Mak test to have the correct distribution 
+# under the null if the mean of the process is modelled as a constant (not as ARMA as in your case). Similar corrections are needed for the LB tests. 
+# When the mean is not modelled as a constant, I am not sure whether there exists any test at all with a known null distribution. See my answer in the thread "Remaining heteroskedasticity even after GARCH estimation" for some references.
+# ------------------------------------
+#   statistic p-value
+# Lag[1]                   0.002779   0.958
+# Lag[2*(p+q)+(p+q)-1][5]  0.009022   1.000
+# Lag[4*(p+q)+(p+q)-1][9]  0.014712   1.000
+# d.o.f=2
+# 
+# Weighted ARCH LM Tests
+# ------------------------------------
+#   Statistic Shape Scale P-Value
+# ARCH Lag[3]  0.003121 0.500 2.000  0.9554
+# ARCH Lag[5]  0.007492 1.440 1.667  0.9997
+# ARCH Lag[7]  0.011130 2.315 1.543  1.0000
+# 
+# Nyblom stability test
+#\url{https://stats.stackexchange.com/questions/201165/garch-model-diagnostics-how-to-interpret-test-results}
+# A good source of information on diagnostic testing of univariate GARCH models is "rugarch" vignette by Alexios Ghalanos.
+# ------------------------------------
+#   Joint Statistic:  601.2937
+# Individual Statistics:              
+#   mu      10.225
+# omega    2.348
+# alpha1  11.500
+# beta1    1.860
+# gamma1  14.953
+# shape  444.381
+# 
+# Asymptotic Critical Values (10% 5% 1%)
+# Joint Statistic:     	 1.49 1.68 2.12
+# Individual Statistic:	 0.35 0.47 0.75
+# 
+# Sign Bias Test
+# ------------------------------------
+#   t-value   prob sig
+# Sign Bias           0.2978 0.7659    
+# Negative Sign Bias  0.0212 0.9831    
+# Positive Sign Bias  0.2321 0.8165    
+# Joint Effect        0.1622 0.9834    
+# 
+# 
+# Adjusted Pearson Goodness-of-Fit Test:
+#   ------------------------------------
+#   group statistic p-value(g-1)
+# 1    20     27898            0
+# 2    30     42825            0
+# 3    40     57742            0
+# 4    50     72666            0
+
+
+
+##
+egarch.fit2.t=ugarchfit(data = return.effr,spec=spec_effr)
+##summary of EGARCH fit
+##summary of EGARCH fit
+egarch.fit.tstr()
+
+# Perform Engle and Ng sign and size bias tests
+signbias(egarch.fit)
+
+
+# EGARCH EFFR + volume, FOMC rates, IQR and range
+# Optimal Parameters
+# ------------------------------------
+#   Estimate  Std. Error    t value Pr(>|t|)
+# mu      0.000000    0.000000  -0.030449 0.975709
+# omega  -1.142564    0.040679 -28.087519 0.000000
+# alpha1  0.003428    0.000924   3.710594 0.000207
+# beta1   0.921293    0.006256 147.261596 0.000000
+# gamma1  0.020497    0.004979   4.116443 0.000038
+# shape   0.102644    0.011212   9.155058 0.000000
+# 
+# Robust Standard Errors:
+#   Estimate  Std. Error   t value Pr(>|t|)
+# mu      0.000000    0.000032 -0.000071  0.99994
+# omega  -1.142564    4.551594 -0.251025  0.80180
+# alpha1  0.003428    0.042127  0.081368  0.93515
+# beta1   0.921293    0.711101  1.295588  0.19512
+# gamma1  0.020497    0.565357  0.036255  0.97108
+# shape   0.102644    1.258998  0.081528  0.93502
+# 
+# LogLikelihood : 23663.95 
+# 
+# Information Criteria
+# ------------------------------------
+#   
+# Akaike       -24.190
+# Bayes        -24.173
+# Shibata      -24.190
+# Hannan-Quinn -24.184
+# 
+# Weighted Ljung-Box Test on Standardized Residuals
+# ------------------------------------
+#   statistic p-value
+# Lag[1]                      1.551  0.2130
+# Lag[2*(p+q)+(p+q)-1][2]     1.551  0.3495
+# Lag[4*(p+q)+(p+q)-1][5]     1.551  0.7272
+# d.o.f=0
+# H0 : No serial correlation
+# 
+# Weighted Ljung-Box Test on Standardized Squared Residuals
+# ------------------------------------
+#   statistic p-value
+# Lag[1]                   0.002779   0.958
+# Lag[2*(p+q)+(p+q)-1][5]  0.009022   1.000
+# Lag[4*(p+q)+(p+q)-1][9]  0.014712   1.000
+# d.o.f=2
+# 
+# Weighted ARCH LM Tests
+# ------------------------------------
+#   Statistic Shape Scale P-Value
+# ARCH Lag[3]  0.003121 0.500 2.000  0.9554
+# ARCH Lag[5]  0.007492 1.440 1.667  0.9997
+# ARCH Lag[7]  0.011130 2.315 1.543  1.0000
+# 
+# Nyblom stability test
+# ------------------------------------
+#   Joint Statistic:  601.2937
+# Individual Statistics:              
+#   mu      10.225
+# omega    2.348
+# alpha1  11.500
+# beta1    1.860
+# gamma1  14.953
+# shape  444.381
+# 
+# Asymptotic Critical Values (10% 5% 1%)
+# Joint Statistic:     	 1.49 1.68 2.12
+# Individual Statistic:	 0.35 0.47 0.75
+# 
+# Sign Bias Test
+# ------------------------------------
+#   t-value   prob sig
+# Sign Bias           0.2978 0.7659    
+# Negative Sign Bias  0.0212 0.9831    
+# Positive Sign Bias  0.2321 0.8165    
+# Joint Effect        0.1622 0.9834    
+# 
+# 
+# Adjusted Pearson Goodness-of-Fit Test:
+#   ------------------------------------
+#   group statistic p-value(g-1)
+# 1    20     27898            0
+# 2    30     42825            0
+# 3    40     57742            0
+# 4    50     72666            0
+
+
+# -----------------------------------------------  
+signbias(egarch.fit)
+# Analyze the model residuals and check for goodness-of-fit:
+#   R
+# Copy code
+# # Extract the residuals from the model fit
+# residuals <- residuals(egarch_fit)
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals)
+# Box.test(residuals, lag = 20, type = "Ljung-Box")
+
+
+# Stuff to edit/delete ----------------------------------------
+#2.  Stack overchange model https://stats.stackexchange.com/questions/568328/egarch-using-rugarch-package-in-r
+garchMod <- ugarchspec(
+  variance.model = list(
+    model = "eGARCH",
+    garchOrder = c(1, 1)),
+  mean.model = list(armaOrder = c(0, 0)),
+  distribution.model = "norm")
+
+fit <- ugarchfit(spec = garchMod, data = rrbp, solver = "hybrid")
+forecast <- ugarchforecast(fit, data = rrbp, n.ahead = 22)
+egarch30d <- mean(forecast@forecast$sigmaFor) * sqrt(252)
+
+
+
+# 3. Combine the returns data into a multivariate time series
+#multivariate_returns <- merge(asset1_returns, asset2_returns)
+#multivariate_returns <- merge(rrbp[,1],rrbp[,2],rrbp[,3],rrbp[,4],rrbp[,5])
+# Assuming rrbp is a data frame with multiple columns
+# For example, columns 1 to 5 are the returns of different assets
+
+# Extract the relevant columns
+effr <- rrbp[, 2]
+obfr <- rrbp[, 3]
+tgcr <- rrbp[, 4]
+bgcr <- rrbp[, 5]
+sofr <- rrbp[, 6]
+
+# Combine the returns into a multivariate data frame
+multivariate_returns <- data.frame(
+  effr,
+  obfr,
+  tgcr,
+  bgcr,
+  sofr
+)
+
+str(multivariate_returns)
+# 'data.frame':	1957 obs. of  5 variables:
+# $ effr: num  36 37 37 36 36 36 36 36 36 36 ...
+# $ obfr: num  37 37 37 37 37 37 37 37 37 37 ...
+# $ tgcr: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ bgcr: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ sofr: num  0 0 0 0 0 0 0 0 0 0 ...
+
+# Create an xts object with the time index
+multivariate_returns_xts <- xts(multivariate_returns, order.by = sdate)
+
+
+# Create a multivariate DCC-GARCH model specification Worked but what is it?
+multivar_dcc_garch_spec <- dccspec(
+  uspec = multispec(
+    replicate(
+      5,
+      ugarchspec(variance.model = list(model = "sGARCH", garchOrder = c(1, 1)))
+    )
+  ),
+  dccOrder = c(1, 1),
+  distribution = "mvnorm"
+)
+
+# Fit the multivariate DCC-GARCH model
+multifit <- dccfit(multivar_dcc_garch_spec, data = multivariate_returns_xts)
+
+
+summary(multifit)
+# Length  Class   Mode 
+# 1 DCCfit     S4 
+
+
+# I got to here 1/18/2024
+conditional_correlation <- rcor(multifit)
+parameter_estimates <- coef(multifit)
+log_likelihood <- logLik(multifit)
+str(multifit)
+# Error in UseMethod("logLik") : 
+# no applicable method for 'logLik' applied to an object of class "c('DCCfit', 'mGARCHfit', 'GARCHfit', 'rGARCH')"
+
+
+# parameter_estimates <- coef(multifit)
+# > parameter_estimates 
+# [effr].mu    [effr].ar1    [effr].ma1  [effr].omega [effr].alpha1  [effr].beta1     [obfr].mu    [obfr].ar1 
+# 7.810890e+00  1.000000e+00 -3.309566e-01  1.871555e+01  3.021599e-01  2.192484e-01  4.999556e+00  1.000000e+00 
+# [obfr].ma1  [obfr].omega [obfr].alpha1  [obfr].beta1     [tgcr].mu    [tgcr].ar1    [tgcr].ma1  [tgcr].omega 
+# -4.221516e-01  2.156197e+01  3.507719e-01  1.516064e-01  1.070882e+02  1.000000e+00 -6.633867e-01  3.124971e+01 
+# [tgcr].alpha1  [tgcr].beta1     [bgcr].mu    [bgcr].ar1    [bgcr].ma1  [bgcr].omega [bgcr].alpha1  [bgcr].beta1 
+# 9.989626e-01  8.171744e-07  5.294456e+01  1.000000e+00 -6.394461e-01  2.554456e+01  7.819888e-01  5.824750e-02 
+# [sofr].mu    [sofr].ar1    [sofr].ma1  [sofr].omega [sofr].alpha1  [sofr].beta1  [Joint]dcca1  [Joint]dccb1 
+# 5
+
+# Convert the parameter_estimates to a data frame
+parameter_estimates_df <- as.data.frame(parameter_estimates)
+
+
+# Create a table using xtable
+parameter_estimates_table <- xtable(parameter_estimates_df)
+
+# Print the table
+print(parameter_estimates_table)
+
+# 3) ------------------- Multivariate garch - add penalty, Duffie-Krishnamurth indes, IOR spreads?
+
+# NOTE: ADD BERTOLINI DAYS VARIABLE h
+
+# Combine the returns into a multivariate data frame
+# multivariate_returns <- data.frame(
+#   effr,
+#   obfr,
+#   tgcr,
+#   bgcr,
+#   sofr
+# )
+
+discount = 1.02
+penalty<-1- rrbp[,2]/discount;
+
+# add #dkindex
+multivariate_returns3 <- data.frame(
+  effr,
+  obfr,
+  tgcr,
+  bgcr,
+  sofr,
+  penalty,
+  iorsofr,
+  rrppsofr,
+)
+
+
+# Create an xts object with the time index library(zoo)
+multivariate_returns_xts3 <- xts(multivariate_returns3, order.by = sdate)
+
+
+# Create a multivariate DCC-GARCH model specification
+multivar_dcc_garch_spec3 <- dccspec(
+  uspec = multispec(
+    replicate(
+      5,
+      ugarchspec(variance.model = list(model = "sGARCH", garchOrder = c(1, 1)))
+    )
+  ),
+  dccOrder = c(1, 1),
+  distribution = "mvnorm"
+)
+
+# Fit the multivariate DCC-GARCH model
+multifit3 <- dccfit(multivar_dcc_garch_spec3, data = multivariate_returns_xts3)
+
+
+summary(multifit3)
+# Length  Class   Mode 
+# 1 DCCfit     S4 
+
+conditional_correlation <- rcor(multifit3)
+parameter_estimates <- coef(multifit3)
+log_likelihood <- logLik(multifit3)
+str(multifit)
+
+
+
+# 2.2 EGARCH 
+# The exponential GARCH (EGARCH) may generally be specified as 
+# This model differs from the GARCH variance structure because of the log of the variance. 
+# The following specification also has been used in the financial literature (Dhamija and 
+#                                                                             Bhalla [24]). 
+# see Dan Nelson
+
+# \epsilon[t]<--\sigma[t]*z[t]
+# log(\sigma^2[t}])<=\omega + $\sum_{i=1}^{p}\alpha[i]*\epsilon^2[t-i] + $\sum_{j=1}^{q} \beta[j] log(\sigma^2[t-j}])$
+#   
+#   or
+# 
+# \epsilon[t]<--\sigma[t]*z[t]
+# log(\sigma^2[t}])<-\omega + \alpha[i] \epsilon[t-i+ \sum_{j=1}^{p}\lamba[j]*\epsilon^2[t-j] + \sum_{i=1}^{p} \gamma[i] (\frac{\|epsilon[t-i]|}{sigma[t-i}}-\sqrt(\frac{2}{n}})])$
+#   
+# Bertolini, Prati --------------------------------------
+# Bertolini et al Time series methodology: 
+#   volatility of interest rates - rises in advance of reserve
+# settlement days - declines in high rate regimes - biweekly periodicity when Fed is perceived as committed to
+# keeping rates close to the target. 
+# 
+# $\nu_t$ is a mean zero, unit variance, i.i.d. error term
+# The emoirical Fed Funds rate
+# $r_t = \mu_t + \sigma_t \nu_t$
+
+\begin{align*}  
+$ \mu_t=r_{t-1}+\delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+$ \mu_t=r_{t-1}+\Phi(r_{t-1}=r_{t-2})+ \Phi(r_{t-2}=r_{t-3}) +delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+\end{align*}                                                                                               
+
+#1
+mu_t <- r_t_minus_1 + delta_s_t
+mu_t <- Kappa_prime * k_t + iota * (asterisk_r_t - as_r_t_minus_1)
+
+#2
+mu_t <- r_t_minus_1 + Phi(r_t_minus_1 == r_t_minus_2) + Phi(r_t_minus_2 == r_t_minus_3) + delta_s_t
+mu_t <- Kappa_prime * k_t + iota * (asterisk_r_t - as_r_t_minus_1)
+
+
+#3
+Variance of the EFFR $\sigma^2_t=E[(r_t-\mu_t)^2]$
+  sigma2_t <- mean((r_t - mu_t)^2)
+In this code:
+  
+#   sigma2_t represents the variable for 
+# r_t and mu_t should be replaced with your actual variables representing 
+# �
+# # �
+# # r 
+# # t
+# # ​
+# # and 
+# # �
+# # �
+# # μ 
+# # t
+# # ​
+# # , respectively.
+# # This code calculates the variance 
+# # �
+# # �
+# # 2
+# # σ 
+# # t
+# # 2
+# # ​
+# # using the formula 
+# # �
+# [
+#   (
+#     �
+#     �
+#     −
+#     �
+#     �
+#   )
+#   2
+# ]
+# E[(r 
+#    t
+#    ​
+#    −μ 
+#    t
+#    ​
+# ) 
+# 2
+# ], where mean calculates the expected value by averaging the squared differences between r_t and mu_t.
+                                                                                              
+#Introduce exponential Garch effects, EGARCH (Nelson 1991)
+#Allow for deviations of persistent log of conditional variance from its unconditional expected value 
+#4
+#   $ -\omega h_t -\psi \nu_t -(1+\gamma N_t)$. Add day if maintenance period effects
+# equation1_result <- -omega * h_t - psi * nu_t - (1 + gamma * N_t)
+# 
+#                                                                                             
+# #The resulting variance for the FFR is
+# #4
+# equation2_result <- log(sigma2_t - omega * h_t - psi * nu_t - (1 + gamma * N_t)) == 
+#   sigma2_t_minus_1 - omega * h_t_minus_1 - psi * nu_t_minus_1 - 
+#   (1 + gamma * N_t_minus_1) + alpha * abs(nu_t_minus_1) + Theta * nu_t_minus_1
+# 
+#     $$log(\sigma^2_t -\omega h_t -\psi \nu_t -(1+\gamma N_t)=\sigma^2_{t=1}  -\omega h_{t-1} -\psi \nu_{t-1}  -(1+\gamma N_{t-1} )+\alpha \abs(\nu_{t-1} ) + \Theta \nu_{t-1} 
+#                                                                                                   
+# #Assume t distributions for innovations $\nu$
+# # Obtain maximum likelihood of the parameters, including the degrees of freedom of the t distribution,  by numerical optimization
+# 
+# # -------------------- SIMPLE MODELS see Mean reversion setup og olsgmm
+# xx1<-rrbp[(bgn+1):edn,2:6]
+# xx2=[rrbp[(bgn+1:edn,2:6] ,SOFR_IOR[(bgn+1):edn], EFFR_IOR[(bgn+1):edn], ONRRP_IOR[(bgn+1):edn]]
+# xx3=[rrbp[(bgn+1:edn,2:6] IOR[(bgn+1):edn] ONRRP[(bgn+1):edn]]
+# #be=rrbplbgn:(edn-1),1)/rrbp(bgn+1:endn(k),1)
+# 
+# #Rates
+# [theta1,sec1,R2,R2adj,vcv,F1] = olsgmm(rrbp(bgn:endn(k)-1,:),xx1,nlag,nw);  % constant
+# #param1 = [theta1 sec1,R2,R2adj,F1]
+# vcv1
+# 
+# [theta2,sec2,R2,R2adj,vcv,F2] = olsgmm(rrbp(bgn:endn(k)-1,:),xx2,nlag,nw);  % constant
+# %param2 = [theta2 sec2,R2,R2adj,F2]
+# vcv
+# 
+# [theta3,sec3,R2,R2adj,vcv,F3] = olsgmm(rrbp(bgn:endn(k)-1,:), xx2,nlag,nw)
+# %param3 = [theta3 sec3 R2,R2adj,vcv,F3]
+# 
+# # ------------ Bertolini EFARCH
+# The resulting variance for the FFR is
+# 
+# r <-rrbp
+# mu <-mean(r)
+# rstar <- targetbp
+# aigma2 <- square(r-mu)
+# $$log(\sigma^2_t -\omega h_t -\psi \nu_t -(1+\gamma N_t)=\sigma^2_{t=1}  -\omega h_{t-1} -\psi \nu_{t-1}  -(1+\gamma N_{t-1} )+\alpha \abs(\nu_{t-1} ) + \Theta \nu_{t-1} 
+#       
+      
+# -----------------Note  
+#Add to garch
+# Analyze the model residuals and check for goodness-of-fit:
+#   R
+# Copy code
+# # Extract the residuals from the model fit
+# residuals <- residuals(egarch_fit)
+# 
+# # Plot the residuals to check for patterns and autocorrelation
+# plot(residuals)
+# Box.test(residuals, lag = 20, type = "Ljung-Box")
+
+
+# # Conduct Ljung-Box test to assess residual autocorrelation
+# Box.test(residuals, lag = 20, type = "Ljung-Box")
+# The Box.test function tests the null hypothesis that the residuals are independently distributed.
+# 
+# Remember that fitting and interpreting time series models, including EGARCH models, require careful consideration of the underlying data and potential model assumptions. It's essential to validate the model and assess its adequacy for your specific use case.
+
+# egarch_spec <- ugarchspec(variance.model = list(model = "eGARCH"), mean.model = list(armaOrder = c(0, 0)))
+# egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbpts)
+# egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbpts)
+# residuals <- residuals(egarch_fit)
+# 
+      
+# --------------- Notes ---------------------
+# is the matrix of element by element products and
+#> A %*% B is the matrix product. 
+#> If x is a vector, then
+#> x %*% A %*% x is a quadratic form.16
+# 
+# > if (expr_1) expr_2 else expr_3
+# > for (name in expr_1) expr_2
+#
+# > xc <- split(x, ind)
+#> yc <- split(y, ind)
+#> for (i in 1:length(yc)) {
+#  plot(xc[[i]], yc[[i]])
+#  abline(lsfit(xc[[i]], yc[[i]]))
+#}
+
+
