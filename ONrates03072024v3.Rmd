@@ -27,6 +27,7 @@ library(bookdown)
 library(zoo)
 # Set global knitr options
 knitr::opts_chunk$set(echo = FALSE)
+#knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, clear environment, echo=TRUE}
@@ -39,7 +40,6 @@ knitr::opts_chunk$set(echo = FALSE)
 #Load the environment from the RDS file
 ```{r, load environment mp, echo=FALSE}
 my_envmp <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")
-#my_envmp <- readRDS("C:/Users/Owner/Documents/Research/MonetaryPolicy/MPResults/LaTeX/my_environmentmp.RDS")
 ```
 ```{r, load environment effr, echo=FALSE}
 my_enveffr <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmenteffr.RDS")
@@ -54,6 +54,10 @@ my_envepisodes <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_e
 my_environmentbox <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmentbox.RDS")
 ```
 
+'''{r, load environment volatile, echo=FALSE}
+my_envvolatile<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
+
+```
 <!--
 https://rstudio.github.io/visual-markdown-editing/technical.html#:~:text=In%20raw%20markdown%2C%20you%20would,to%20escape%20the%20%40%20character).
 
@@ -105,7 +109,6 @@ my_data <- my_envmp$spread_no_na
 str(my_data)
 ``` 
 
-
 ```{r, sdate,echo=FALSE}
 sdate<-as.Date(my_data$Date,"%m/%d/%Y"); 
 ```
@@ -115,11 +118,11 @@ begs <-which(sdate == as.Date("2016-03-04"))[1] # sample start date 3/04/2016
 ends <-which(sdate == as.Date("2022-12-29"))[1] # sample end  date  12/27/2022
 print(begs)
 print(ends)
-#my_data=my_data[begs:ends,]
-#spread_no_na=my_data[begs:ends,]
+my_data=my_data[begs:ends,]
+spread_no_na=my_data[begs:ends,]
 ```
 
-
+spread_no_na<-mydata
 
 ```{r, daily quantile dataframes, echo=FALSE,  cache=FALSE,results='hide'}
 quantiles<-as.data.frame(as.list(my_data))
@@ -129,6 +132,284 @@ quantilesT <- quantiles[c("sdate", "TGCR", "VolumeTGCR", "Percentile01_TGCR", "P
 quantilesB <- quantiles[c("sdate", "BGCR", "VolumeBGCR", "Percentile01_BGCR", "Percentile25_BGCR", "Percentile75_BGCR", "Percentile99_BGCR")]
 quantilesS <- quantiles[c("sdate", "SOFR", "VolumeSOFR", "Percentile01_SOFR", "Percentile25_SOFR", "Percentile75_SOFR", "Percentile99_SOFR")]
 ```
+
+
+```{r, Load rate data frame rrbp, echo=FALSE}
+rrbp <- data.frame(
+  subset(my_data, select = c("EFFR", "OBFR", "TGCR", "BGCR", "SOFR")
+))
+```
+
+```{r, Load volume data frame vold, echo=FALSE}
+vold <- data.frame(
+  subset(my_data, select = c("VolumeEFFR", "VolumeOBFR","VolumeTGCR","VolumeBGCR","VolumeSOFR"))
+)
+```
+
+<!--
+  Yes, in the code snippet you provided, you're creating a data frame `rrbp` by subsetting columns from  another data frame `my_data`. This approach is perfectly valid if you only need a subset of columns for your analysis, and it can be a convenient way to work with specific variables.
+ 
+ However, keep in mind that `rrbp` is a new data frame, and any changes or manipulations you perform on it won't affect the original `my_data` data frame. If you intend to modify or analyze the subset of columns, it's a suitable approach.
+-->
+
+
+
+Make sure to replace `"EFFR", "OBFR", "TGCR", "BGCR", "SOFR"` with the actual column names you want to include in `rrbp`.
+
+```{r,initialize list the lists measure_list1 and measurelist_2 to store matrices, echo=FALSE}
+# Define parameters
+nmat <- 6 # number of matrices
+ncl <- 5# number of columns
+begn<- c(1, 859, 923,  1014, 1519, 1)
+endn<- c(858, 922, 1013, 1518, 1957, 1957)
+sdate[endn] # "2019-07-31" "2019-10-31" "2020-03-16" "2022-03-16" "2023-12-14" "2023-12-14"
+sdate[begn] # "2016-03-04" "2019-08-01" "2019-11-01" "2020-03-17" "2022-03-17" "2016-03-04"
+
+# Start dates
+start_dates <- sdate[begn]
+start_dates
+# End dates
+end_dates <- sdate[endn]
+end_dates
+
+# Define your plot
+plot(x, y, main = "My Plot", xlab = "X-axis", ylab = "Y-axis")
+
+# Access start dates
+start_dates <- sdate[begn]
+
+# Convert dates to strings
+start_dates_strings <- as.character(start_dates)
+
+# Add a label with the first start date to the plot
+text(x = x_coordinate, y = y_coordinate, labels = paste("Start Date:", start_dates_strings[1]), pos = 1)
+
+# Add a label with the second start date to the plot
+text(x = x_coordinate, y = y_coordinate, labels = paste("Start Date:", start_dates_strings[2]), pos = 1)
+
+# Repeat the above steps for the other start dates
+
+# Access end dates
+end_dates <- sdate[endn]
+
+# Convert dates to strings
+end_dates_strings <- as.character(end_dates)
+
+# Add a label with the first end date to the plot
+text(x = x_coordinate, y = y_coordinate, labels = paste("End Date:", end_dates_strings[1]), pos = 3)
+
+# Add a label with the second end date to the plot
+text(x = x_coordinate, y = y_coordinate, labels = paste("End Date:", end_dates_strings[2]), pos = 3)
+
+# Repeat the above steps for the other end dates
+
+# Display the plot
+
+
+# Initialize lists
+measure_list1 <- vector("list", length = nmat)
+measure_list2 <- vector("list", length = nmat)
+```
+
+
+```{r, populate list measure_list1[[1]] <- norm_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-1
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     norm_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # norm_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    norm_measure1[is.na( norm_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- norm_measure1
+    #measure_list2[[k]] <- norm_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+```{r, populate list measure_list1[[2]] <- adjust_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-2
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     adjust_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # adjust_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    adjust_measure1[is.na( adjust_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- adjust_measure1
+    #measure_list2[[k]] <- adjust_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+
+```{r, populate list measure_list1[[3]] <- covid_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-3
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     covid_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # covid_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    covid_measure1[is.na( covid_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- covid_measure1
+    #measure_list2[[k]] <- covid_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+
+```{r, populate list measure_list1[[4]] <- zlb_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-4
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     zlb_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # zlb_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    zlb_measure1[is.na( zlb_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- zlb_measure1
+    #measure_list2[[k]] <- zlb_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+
+```{r, populate list measure_list1[[5]] <- inflation_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-5
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     inflation_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # inflation_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    inflation_measure1[is.na( inflation_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- inflation_measure1
+    #measure_list2[[k]] <- inflation_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+
+```{r, populate list measure_list1[[6]] <- sample_measure1 with matrices based on the provided calculations, echo=FALSE}
+nmat <- 6 # number of matrices
+ncl <- 5 # number of columns
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+
+k<-6
+#for (k in 1:nmat) {
+  bgn <- begn[k]
+  edn <- endn[k]
+  
+  if (bgn >= 1 & bgn < edn) {
+    rows_in_range <- (bgn + 1):edn
+    print(paste("Rows in range for k =", k, ":", rows_in_range))
+    
+    # Debugging: Print dimensions of subsets
+    print(dim(rrbp[rows_in_range, 1:ncl]))
+    print(dim(rrbp[bgn:(edn - 1), 1:ncl]))
+    
+    # Calculate measures for each k
+     sample_measure1 <- log(rrbp[rows_in_range, 1:ncl]) - log(rrbp[bgn:(edn - 1), 1:ncl])
+    # sample_measure2 <- abs(rrbp[rows_in_range, 1:ncl] - rrbp[bgn:(edn - 1), 1:ncl])
+    sample_measure1[is.na( sample_measure1)] <- 0
+    # Assign matrices to the lists
+    measure_list1[[k]] <- sample_measure1
+    #measure_list2[[k]] <- sample_measure2
+  } else {
+    print(paste("Invalid indices for k =", k))
+}
+```
+
+
+
+
 
 # Introduction
 This paper asks how the Federal Reserve Bank adjustment of reserves affects volatility of theFederal Funds rate (FFR) and other wholesale overnight money market rates.The FFR is interest rate at
@@ -1538,8 +1819,8 @@ https://doi.org/10.59576/sr.1083
  
 ```{r, normalcystats, echo=FALSE}
 #1. normalcy   3/4/2016		7/31/2019      4  859
-begn<- c(1, 857, 921,  1030, 1514, 1)
-endn<- c(856, 920, 1029, 1513, 1711, 1710)
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
 k=1
 bgn<-begn[k]
 edn<-endn[k]
@@ -1560,9 +1841,16 @@ selected_columnsE<- Estatsnorm[c("EFFR","VolumeEFFR","Percentile01_EFFR", "Perce
  normchar2 <- xtable(normchar)
  print(normchar2)
 ```
-```{r, norm char table,echo=FALSE} 
-print(normstats)
+
+```{r, norm stats,echo=FALSE}
+median_values = c(Estatsnorm[1], Ostatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1])
+iqr_values = c(Estatsnorm[7] - Estatsnorm[6], Ostatsnorm[5] - Ostatsnorm[4], Tstatsnorm[5] - Tstatsnorm[4], Bstatsnorm[5] - Bstatsnorm[4], Sstatsnorm[5] - Sstatsnorm[4])
+range_values = c(Estats[8] - Estats[5], Ostats[6] - Ostats[3], Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
+normstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values)
+normstats2 <- xtable(normstats)
+print(normstats2)
 ```
+
 The average weighted median for the EFFR during the nomrmalcy period is 124 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 84-85 bp. Daily transaction volume in SOFR (billions of dollars ) is around 350 billion. The money market volumes in TGCR and BGCR around 158-166 billion.  Daily trade volume in EFFR is a low 76 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
 
 The interquartile range for the money market rates TGCR and BGCR are 0.22-0,23 bp, smaller than the 1.22 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 3.3 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
@@ -1686,30 +1974,22 @@ selected\_columnsE & 368.60 & 99.56 & 365.45 & 367.56 & 369.18 & 388.81 \\
 -->
 
 
-```{r, norm stats,echo=FALSE}
-median_values = c(Estatsnorm[1], Ostatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1])
-iqr_values = c(Estatsnorm[7] - Estatsnorm[6], Ostatsnorm[5] - Ostatsnorm[4], Tstatsnorm[5] - Tstatsnorm[4], Bstatsnorm[5] - Bstatsnorm[4], Sstatsnorm[5] - Sstatsnorm[4])
-range_values = c(Estats[8] - Estats[5], Ostats[6] - Ostats[3], Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
-normstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values)
-normstats2 <- xtable(normstats)
-print(normstats2)
-```
 `
 ```{r, adjust characteristics data,echo=FALSE}
 k=2  
-begn<- c(1, 857, 921,  1030, 1514, 1)
-endn<- c(856, 920, 1029, 1513, 1711, 1710)
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
 bgn<-begn[k]
 edn<-endn[k]
 #adjust<-rrbp[bgn:edn,]  # rates plot
 qadjustE=quantilesE[bgn:edn,]
 # stats_adjust<-colMeans(quantilesE[bgn_edn,]     #adjust
 qadjustE=quantilesE[bgn:edn,] # EFFR, FOMC, Target  plot
-Estatsadj <- colMeans(numeric_quantilesE[bgn:edn,], na.rm = TRUE)
-Ostatsadj <- colMeans(numeric_quantilesO[bgn:edn,], na.rm = TRUE)
-Tstatsadj <- colMeans(numeric_quantilesT[bgn:edn,], na.rm = TRUE)
-Bstatsadj <- colMeans(numeric_quantilesB[bgn:edn,], na.rm = TRUE)
-Sstatsadj <- colMeans(numeric_quantilesS[bgn:edn,], na.rm = TRUE)
+Estatsadj <- colMeans(quantilesEnum[bgn:edn,], na.rm = TRUE)
+Ostatsadj <- colMeans(quantilesOnum[bgn:edn,], na.rm = TRUE)
+Tstatsadj <- colMeans(quantilesTnum[bgn:edn,], na.rm = TRUE)
+Bstatsadj <- colMeans(quantilesBnum[bgn:edn,], na.rm = TRUE)
+Sstatsadj <- colMeans(quantilesSnum[bgn:edn,], na.rm = TRUE)
 ```
 
 
@@ -1731,19 +2011,19 @@ print(adjstats2)
 ```
 ```{r, covid characteristics data,echo=FALSE}
 k=3  
-begn<- c(1, 857, 921,  1030, 1514, 1)
-endn<- c(856, 920, 1029, 1513, 1711, 1710)
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
 bgn<-begn[k]
 edn<-endn[k]
 #covid<-rrbp[bgn:edn,]
 qcovidE=quantilesE[bgn:edn,]
 # stats_covid<-colMeans(quantilesE[bgn_edn,]      #covid
 qcovidE=quantilesE[bgn:edn,]
-Estatscovid <- colMeans(numeric_quantilesE[bgn:edn,], na.rm = TRUE)
-Ostatscovid <- colMeans(numeric_quantilesO[bgn:edn,], na.rm = TRUE)
-Tstatscovid <- colMeans(numeric_quantilesT[bgn:edn,], na.rm = TRUE)
-Bstatscovid <- colMeans(numeric_quantilesB[bgn:edn,], na.rm = TRUE)
-Sstatscovid <- colMeans(numeric_quantilesS[bgn:edn,], na.rm = TRUE)
+Estatscovid <- colMeans(quantilesEnum[bgn:edn,], na.rm = TRUE)
+Ostatscovid <- colMeans(quantilesOnum[bgn:edn,], na.rm = TRUE)
+Tstatscovid <- colMeans(quantilesTnum[bgn:edn,], na.rm = TRUE)
+Bstatscovid <- colMeans(quantilesBnum[bgn:edn,], na.rm = TRUE)
+Sstatscovid <- colMeans(quantilesSnum[bgn:edn,], na.rm = TRUE)
 ```
 
 ```{r, covid characteristics,echo=FALSE}
@@ -1763,18 +2043,18 @@ print(covidstats2)
 ```
 ```{r, zlb characteristics data,echo=FALSE}
 k=4 
-begn<- c(1, 857, 921,  1030, 1514, 1)
-endn<- c(856, 920, 1029, 1513, 1711, 1710)
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
 bgn<-begn[k]
 edn<-endn[k]
 #zlb<-rrbp[bgn:edn,]
 qzlbE=quantilesE[bgn:edn,]
 qzlbE=quantilesE[bgn:edn,]
-Estatszlb <- colMeans(numeric_quantilesE[bgn:edn,], na.rm = TRUE)
-Ostatszlb <- colMeans(numeric_quantilesO[bgn:edn,], na.rm = TRUE)
-Tstatszlb <- colMeans(numeric_quantilesT[bgn:edn,], na.rm = TRUE)
-Bstatszlb <- colMeans(numeric_quantilesB[bgn:edn,], na.rm = TRUE)
-Sstatszlb <- colMeans(numeric_quantilesS[bgn:edn,], na.rm = TRUE)
+Estatszlb <- colMeans(quantilesEnum[bgn:edn,], na.rm = TRUE)
+Ostatszlb <- colMeans(quantilesOnum[bgn:edn,], na.rm = TRUE)
+Tstatszlb <- colMeans(quantilesTnum[bgn:edn,], na.rm = TRUE)
+Bstatszlb <- colMeans(quantilesBnum[bgn:edn,], na.rm = TRUE)
+Sstatszlb <- colMeans(quantilesSnum[bgn:edn,], na.rm = TRUE)
 ```
 
 ```{r, zlb characteristics,echo=FALSE}
@@ -1795,18 +2075,18 @@ print(zlbstats2}
 
 ```{r, inflation characteristics data,echo=FALSE}
 k=5 
-begn<- c(1, 857, 921,  1030, 1514, 1)
-endn<- c(856, 920, 1029, 1513, 1711, 1710)
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
 bgn<-begn[k]
 edn<-endn[k]
 #inflation<-rrbp[bgn:edn,]
 qinflationE=quantilesE[bgn:edn,]
 # stats_inflation<-colMeans(quantilesE[bgn_edn,]  #inflation
-Estatsinflation <- colMeans(numeric_quantilesE[bgn:edn,], na.rm = TRUE)
-Ostatsinflation <- colMeans(numeric_quantilesO[bgn:edn,], na.rm = TRUE)
-Tstatsinflation <- colMeans(numeric_quantilesT[bgn:edn,], na.rm = TRUE)
-Bstatsinflation <- colMeans(numeric_quantilesB[bgn:edn,], na.rm = TRUE)
-Sstatsinflation <- colMeans(numeric_quantilesS[bgn:edn,], na.rm = TRUE)
+Estatsinflation <- colMeans(quantilesEnum[bgn:edn,], na.rm = TRUE)
+Ostatsinflation <- colMeans(quantilesOnum[bgn:edn,], na.rm = TRUE)
+Tstatsinflation <- colMeans(quantilesTnum[bgn:edn,], na.rm = TRUE)
+Bstatsinflation <- colMeans(quantilesBnum[bgn:edn,], na.rm = TRUE)
+Sstatsinflation <- colMeans(quantilesSnum[bgn:edn,], na.rm = TRUE)
 ```
 ```{r, inflation characteristics,echo=FALSE}
 selected_columnsE<- Estatsinflation[c("EFFR","VolumeEFFR","Percentile01_EFFR", "Percentile25_EFFR","Percentile75_EFFR","Percentile99_EFFR")]
@@ -2236,48 +2516,49 @@ binflation<-ggplot(boxplot_inflation , aes(x=Group,
 ### Volatile rates
 sample
 
-
-```{r, log pct change rates nday 5, echo=FALSE}
-nmat <- 6
-ncl <- 5
-max_rows <- max(endn - begn) + 1
-
-# Initialize a list to store matrices
-measure_list1 <- vector("list", length = nmat)
-measure_list2 <- vector("list", length = nmat)
-
-for (k in 1:nmat) {
-  bgn <- begn[k]
-  edn <- endn[k]
-  
-  if (bgn >= 1 & bgn < edn) {
-    rows_in_range <- (bgn + 1):edn
-    
-    # Calculate measures for each k
-    measure_list1[[k]] <- log(rrbp[rows_in_range, 2:(1 + ncl)]) - log(rrbp[bgn:(edn - 1), 2:(1 + ncl)])
-    measure_list2[[k]] <- abs(rrbp[rows_in_range, 2:(1 + ncl)] - rrbp[bgn:(edn - 1), 2:(1 + ncl)])
-  } else {
-    print(paste("Invalid indices for k =", k))
-  }
-}
-
+```{r, vol measures, echo=FALSE}
 # Access individual matrices for further analysis or visualization
-norm_measure1 <- measure_list1[[1]]
-adjust_measure1 <- measure_list1[[2]]
-covid_measure1 <- measure_list1[[3]]
-zlb_measure1 <- measure_list1[[4]]
-inflation_measure1 <- measure_list1[[5]]
-sample_measure1 <- measure_list1[[6]]
+volmeasuresnorm <- data.frame(
+  norm_measure1 = norm_measure1)
 
-norm_measure1[is.na(norm_measure1)] <- 0
-adjust_measure1[is.na(adjust_measure1)] <- 0
-covid_measure1[is.na(covid_measure1)] <- 0
-zlb_measure1[is.na(zlb_measure1)] <- 0
-inflation_measure1[is.na(inflation_measure1)] <- 0
-sample_measure1[is.na(sample_measure1)] <- 0
+volmeasuresadjust <- data.frame(
+  adjust_measure1 = adjust_measure1)
 
-#mxq = max(measure1[,1:5])
-#mnq = min(measure1[,1:5])
+volmeasurescovid <- data.frame(
+  covid_measure1 = covid_measure1)
+
+volmeasureszlb <- data.frame(
+  zlb_measure1 = zlb_measure1)
+
+volmeasuresinflation <- data.frame(
+  inflation_measure1 = inflation_measure1)
+
+volmeasuressample <- data.frame(
+  sample_measure1 = sample_measure1)
+```
+volmeasuresnorm <- data.frame(
+  norm_measure1 = measure_list1[[1]]
+)
+
+volmeasuresadjust <- data.frame(
+  adjust_measure1 = measure_list1[[2]]
+  )
+
+volmeasurescovid <- data.frame(
+  covid_measure1 = measure_list1[[3]]
+  )
+
+volmeasureszlb <- data.frame(
+  zlb_measure1 = measure_list1[[4]])
+
+volmeasuresinflation <- data.frame(
+  inflation_measure1 = measure_list1[[5]])
+
+volmeasuressample <- data.frame(
+  sample_measure1 = measure_list1[[6]])
+
+#mxq = max(norm_measure1[,1:5])
+#mnq = min(norm_measure1[,1:5])
 
 my_color_palette <- c("EFFR" = "darkblue", "OBFR" = "darkgreen", "TGCR" = "darkred", "BGCR" = "darkcyan", "SOFR" = "darkorange")
 ```
@@ -2369,52 +2650,138 @@ print(plotsdrates)
  
 # Dispersion, clustering
 Dispersion measures hypothesis 2
-Dispersion of rates imply rates follow different distributions
-Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl propose  dispersion index  $D_t$ of the daily EFFR from upper and lower target rates.
-Duffie and Alonso provide evidence that there exists significant dispersion of the money market rates from the policy rate that suggest problems for transmission of FONC to the broader economy.
-The effectiveness of monetary policy to transmit the desired stance of monetary policy to financial markets and the real economy economy depends on efficient transmission of rate changes to other short rates in wholesale and consumer funding market. 
+Duffie and Krishnamurthy () and Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl ()  study of dispersion of overnight wholesale money market rates from the policy rate that suggests problems for transmission of FONC policy to the broader economy.
 
-## The Duffie Krishnamurthy index
-The Duffie Krishnamurthy index of dispersion of overnight rate,  the weighted mean absolute deviation of the cross-sectional adjusted rates (Figure ~\ref{figure:dispersionDK})   (Table %~\ref{table:dispersionDK}) ) 
-Duffie Krishamurthy ()) measure the dispersion of overnight rates as the absolute deviation of the cross rates of overnight reference and money market rates. This indicator indiates the level of passthrough inefficiency, the passthrough effectiveness of the Federal Reserve’s monetary policy, the transmission of policy to the economy through other short term rates.
+Dispersion of rates imply rates follow different distributions. For the objective of this paper, to understand Fed tolerance for volatility of the FFR, we would need to examine any relation between volatility, the distance of the FFR within its target range. 
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl propose  dispersion index  $D_t$ of the daily EFFR from upper and lower target rates.
+
+The Duffie and Krishnamurthy index of dispersion of overnight rate is the weighted mean absolute deviation of the cross-sectional adjusted rates.  Duffie, Krishnamurthi identify dispersion across money market interest rates as a primary indicator of the level of efficiency in how other key short-term interest rates reflect Fed policy changes. This paper examines the dispersion and volatility of short term rates. They argue that the current setting of U.S.-dollar money markets limits the transmission of Fed policy to the economy.
+
+
+Duffie and Krishnamurthy () and Alonso provide evidence that there exists significant dispersion of the money market rates from the policy rate that suggest problems for transmission of FONC to the broader economy. The effectiveness of monetary policy to transmit the desired stance of monetary policy to financial markets and the real economy economy depends on efficient transmission of rate changes to other short rates in wholesale and consumer funding market. 
+
+## The Duffie Krishnamurthy dispersion index
+The Duffie Krishnamurthy () index of dispersion of overnight rate,  the weighted mean absolute deviation of the cross-sectional adjusted rates. The measure of dispersion of overnight rates is the absolute deviation of the cross rates of overnight reference and money market rates. This index indicates the level of passthrough inefficiency, the passthrough effectiveness of the Federal Reserve’s monetary policy, the transmission of policy to the economy through other short term rates.
 \cite{DuffieKrishnamurthi} 
 
-Their index of rate dispersion $DK_t$ for day t in U.S. short-term money markets is the weighted mean absolute deviation of the cross-sectional distribution of overnight-equivalent rates on that day. $DK_t$ is constructed from overnight equivalent rates $\hat{r}_{i,t}$. Rates are adjusted for term and credit spreads after adjusting for premia associated with credit risk and term structure.frictions associated with imperfect #competition, regulation, infrastructure, and other forms of institutional segmentation within money markets.
-```{r, dkindex calc, echo=FALSE}
+Their index of rate dispersion $DK_t$ for day t in U.S. short-term money markets is the weighted mean absolute deviation of the cross-sectional distribution of overnight-equivalent rates on that day. $DK_t$ is constructed from overnight equivalent rates $\hat{r}_{i,t}$. Rates are adjusted for term and credit spreads after adjusting for premia associated with credit risk and term structure.frictions associated with imperfect #competition, regulation, infrastructure, and other forms of institutional segmentation within money markets. 
+
+
+```{r, Duffie Krishnamurthy dispersion code,  echo=FALSE}
+ncol<-ncol(rrbp)
+T <-nrow(rrbp)
+# Initialize vtot(t) and mrate(t) to zero
+vtot<-0 # zeros(T,1);
+dk <- matrix(0, nrow = T, ncol = ncol)
+dkindex <- numeric(T)
+mrate<-0 #zeros(T,1);
+meanr<-0 #zeros(T,1);
+# Initialize vectors to store results
+meanr<- colMeans(rrbp[,1:ncol])
+# EFFR  OBFR  TGCR  BGCR  SOFR 
+# FALSE FALSE FALSE FALSE FALSE 
+colsumvold <- rowSums(vold[, 1:ncol], na.rm = TRUE)
+  T<-nrow(rrbp)
+  # Calculate dk(t)
+  for (t in 1:T) {
+  for (i in 1:ncol) {
+    dk[t, i] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t,i] - meanr[i])
+  }
+}
+  
+  # Calculate dkindex(t)
+  for (t in 1:T) {
+  dkindex[t] <- sum(dk[t, 1:ncol])
+  }
+
+# Convert the "sdate" column to a Date format
+
+#dk_data <- cbind(sdate, dk, dkindex,TargetDe, TargetUe, EFFR, OBFR, TGCR, BGCR, SOFR )
+#colnames(dk_data) <- c("sdate", "EFFR", "OBFR", "TGCR", "BGCR", "SOFR", "dkindex", "TargetDe", #"TargetUe")
+# dk_data$sdate <- sdate
+# Convert the numeric matrix 'dk_data' to a data frame
+#dkindex <- data.frame(dk_data)
+# Assign names to the columns of 'dk' within 'dk_data'
+#as.Date(dkindex$sdate, format = "%y/%m/%d)
+```
+```{r, dkindexdf,echo=FALSE}
+dkindexdf <- data.frame(
+     sdate = spread_no_na$sdate,
+     dkindex,
+     TargetDe = spread_no_na$TargetDe,
+     TargetUe = spread_no_na$TargetUe,
+     EFFR = spread_no_na$EFFR,
+     OBFR = spread_no_na$OBFR,
+     TGCR = spread_no_na$TGCR,
+     BGCR = spread_no_na$BGCR,
+     OFR = spread_no_na$SOFR
+ )
+str(dkindexdf)
+```
+
+<!--
+rcol <- 6
+ncol <- rcol - 1
+T <- nrow(rrbp)
+
+# Initialize matrices and vectors to store results
+dk <- matrix(0, nrow = T, ncol = ncol)
+dkindex <- numeric(T)
+
+meanr <- colMeans(rrbp[, 1:ncol])
+colsumvold <- rowSums(vold[, 1:ncol], na.rm = TRUE)
+
 # Calculate dk(t)
-rcol<-6
-meanr<- colMeans(rrbp[,2:rcol])
-colsumvold <-rowSums(vold[ , 2:6], na.rm=TRUE)
 for (t in 1:T) {
-  for (i in 2:rcol) {
-    dk[t, i-1] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t, i] - meanr[i-1])
+  for (i in 1:ncol) {
+    dk[t, i] <- (1 / colsumvold[t]) * vold[t, i] * abs(rrbp[t, i] - meanr[i])
   }
 }
 
 # Calculate dkindex(t)
 for (t in 1:T) {
-  dkindex[t] <- sum(dk[t, 1:rcol-1])
-  #dkindex[t] <-rowSums(dk[ t, 1:rcol-1], na.rm=TRUE)
+  dkindex[t] <- sum(dk[t, ])
 }
 ```
 
-```{r, Duffie Krishnamurthy index, echo=FALSE}
-meltdkindex <- melt(dkindex,id="sdate")
-dk <- ggplot(meltdkindex,aes(x=sdate,y=value,colour=variable,group=variable)) + 
-  geom_point(size = 1, shape = 16) +
-  labs(x="Date",  y = "Duffie Krishnamurthy index", color = "Dispersion", shape = "Dispersion") +  
-  scale_y_continuous(breaks = seq(0, mxq, by = 10), limits = c(0, mxq)) + 
-  theme_minimal() + guides(shape = guide_legend(title = "Pct change"))
-# + theme(axis.title.x=element_blank(), axis.text.x= element_text(size=8,vjust =.5))
-print(dk)
+
+```{r, Duffie Krishnamurthy index plot, echo=FALSE}
+# Load the dplyr package
+library(dplyr)
+dkindexdf$group <- rep(c("Duffie-Krishnamurthy index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
+
+# Create a named vector for colors
+colors <- c("Duffie-Krishnamurthy index" = "black",
+            "Lower target FFR" = "blue",
+            "Upper target FFR" = "green",
+            "EFFR" = "black",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
+  geom_point(shape = 16, size = 1) +
+  labs(x = "", y = "basis points", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  theme_minimal()
+print(ggdkindex)
 ```
 
-<!--
+Duffie Krishnamurthy dispersion index $D_t$ at day t is the weighted mean absolute deviation of the cross-sectional adjusted rates distribution on day t  (Figure ~\ref{figure:dispersionDK}) (Table %~\ref{table:dispersionDK}) ). Rates $y_{i,t(m)}$ denote the rate at time t on instrument i, maturing in m days. Since our rate data are daily, I drop the maturity m, so that rates are $y_{t,i}$. First adjust the rate to remove term-structure effects, obtaining the associated "overnight-equivalent” rate as
+$\hat{y_{i,t}} = y_{i,t(m)} − (OISt(m) − OISt(1)), (4.1)$ is the volume-weighted mean rate.
+$v_{i,t} is the estimated outstanding amount of this instrument on day t (dollars).
+ 
+ \begin{align*}
+ D_t =1/ (sum_{i}^{v_{i,t}) X (sum_{i}^{}v_{i,t} abs{\hat{y_{i,t} − \bar{y_t}) (4.2)
+ \bar{y_t} = [(sum_{i}^{n}(v_{i,t}) X \hat{y_{i,t})]/(sum_{i}^{v_{i,t})
+ \end{align*}
+ <!--
   correct eqn
 \begin{equation*}
 DK_t=\frac{1}%{\sum_{i}^{v_{i,t}}+\sum_{i}%^{v_{i,t}} +\hat{r}_{i,t}-%\bar{y}_t
 \end{equation*}
 -->
+
 
 Their results show dispersion ranged between 4 and 7 basis points between the end of 2012 and December 17, 2015. Dispersion increased by over 10 basis points, immediately after the first passthrough event in the current Fed monetary policy setting, when the interest rate paid by the Fed on excess reserves (IOER) was increased from 25 to 50 basis basis points on December 17, 2015.
 
@@ -2423,40 +2790,15 @@ In our sample from 2016 through 2022, the Duffie Krishnamurthy diversity index r
 
 Their measure of dispersion rises to over 50 basis points during December 2018 to mid April 2019. The index triples to 151.14 basis on April 19, 2019 and remains at this high level, reaching a high 254.83 points during the spike in repo rates September 19, 2019. The index tapers off after of the dash for cash on March 17, 2020 after spiking 27.5 basis points. Throughout 2020 and 2021, the index was under 1 point. The level of dispersion rose steadily during March 2022, reaching over 200 basis points during the last part of December 2022 as the FOMC raised the target range for the  Federal Funds rate to fight inflation. The index rose  from 14.57 April 15, 2022 to 209.25 on December 29, 2022.
 
-Duffie and Krishnamurthy argue that the current setting of U.S.-dollar money markets limits the transmission of Fed policy to the economy. For the objective of this paper, to understand Fed tolerance for volatility of the FFR, we would need to examine any relation between volatility, the distance of the FFR within its target range, and this measure of dispersion of rates. 
 
-Duffie, Krishnamurthi identify dispersion across money market interest rates as a primary indicator
-of the level of efficiency in how other key short-term interest rates reflect Fed policy changes. This paper examines the dispersion and volatility of short term rates.
-Duffie and Alonso study of dispersion of overnight wholesale money market rates from the policy rate that suggests problems for transmission of FONC policy to the broader economy.
 
-1. The dispersion index of the five daily rates from 2016 to 2922
+1. The dispersion index of the five daily rates from 2016 to 2023
 #(Figure \ref{figures:})
 follows the pattern set by the FOMC lower and upper target rates. If the Fed implicitly responds to volatility in the FFR through information on wholesale money market rates, our model of volatility of the EFFR should include thise index
 
-2. The weighted mean absolute deviation of the cross-sectional adjusted rate
-distribution on that day. That is,
-Dt =
-1
-P
-i
-vi,t
-X
-i
-vi,t |ybi,t − y¯t
-|, (4.2)
-where vi,t is the estimated outstanding amount of this instrument on day t, in dollars,
-and y¯t
-is the volume-weighted mean rate, defined by
-y¯t =
-P
-i
-P
-vi,t ybi,t
-i
-vi,t
-.
+<!--
 This index has a negative bias, relative to dispersion across all actual money-market
-transactions rates, because it does not incorporate the heterogeneity of individual transaction rates within each segment of money markets.
+transactions rates, because it does not incorporate the heterogeneity of individual transaction rates within each segment of money markets.
 Figure 4.2 shows the variation of the dispersion index Dt over the sample period. As
 shown, dispersion increases in the run-up to the covid pandemican, punctuated by the major disturbance in repo marketsm and the March 2020 dash for cash events, peaking in March 2020. Dispersion
 decreased [when]  but leveled off to a higher value during the zero lower bound period but lower that the covid period. The index rises with the successive  Fed rate increases to tame inflation
@@ -2465,8 +2807,7 @@ decreased [when]  but leveled off to a higher value during the zero lower bound 
 
 4. limitations
 
-<!--
-Table 1
+Table 1  WHAT IS THIS? WHERE?
 provides the results of a time-series regression of dispersion on various explanatory
 variables: the Markit CDX index (as a measure of crisis severity); the target federal
 funds rate (which, in the post-2008 period, is set at the middle of the Fed’s target
@@ -2477,135 +2818,90 @@ since 2014, after which several significant new bank regu
 -->
 
 
-``{r, Duffie Krishnamurthy dispersion,  echo=FALSE}
-rcol <- 5
-
-# Initialize vectors to store results
-dkindex <- numeric(1710)
-meanr> colMeans(rrbp)
-# EFFR  OBFR  TGCR  BGCR  SOFR 
-# FALSE FALSE FALSE FALSE FALSE 
-colsumvold <-rowSums(vold[ , c(1,2,3,4,5)], na.rm=TRUE)
-colsumvold[1:10]
-#[1] 1739 1730 1714 1691 1671 1693 1705 1656 1658 1641
-
-  T<-nrow(rrbp)
-  # Calculate dk(t)
-  for (t in 1:T) {
-  for (i in 1:rcol) {
-    dk[t, i] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t, i] - meanr[i])
-  }
-}
-  
-  # Calculate dkindex(t)
-  for (t in 1:T) {
-  dkindex[t] <- sum(dk[t, 1:rcol])
-  }
-
-# Convert the "sdate" column to a Date format
-dk_data$sdate <- sdate
-dk_data <- cbind(sdate, dk, dkindex,TargetDe, TargetUe)
-# Convert the numeric matrix 'dk_data' to a data frame
-dk_data <- data.frame(dk_data)
-# Assign names to the columns of 'dk' within 'dk_data'
-colnames(dk_data)[2:6] <- c("EFFR", "OBFR", "TGCR", "BGCR", "SOFR")
-# Set column names for 'dk_data'
-colnames(dk_data) <- c("sdate", "EFFR", "OBFR", "TGCR", "BGCR", "SOFR", "dkindex", "TargetDe", "TargetUe")
-
-file_path<-"C:/Users/Zenobia/Documents/Research/MonetaryPolicy/MonetaryPolicy/Data/indices2.csv"
-write.csv(dk_data, file = file_path, row.names = FALSE)
-```
-
-
-#as.Date(dk_data$sdate, format = "%y/%m/%d)
-ggdkindex<-ggplot(dk_data, aes(x = sdate)) +
-  geom_point(aes(y = dk_data[,7], color = "Duffie Krishnamurthy index"), shape = 16, size = 1) + 
-  geom_point(aes(y = TargetDe, color = "Lower target FFR"), shape = 16, size = 1) + 
-  geom_point(aes(y = TargetUe, color = "Upper target FFR"), shape = 16, size = 1) +
- # geom_point(aes(y = rrbp[,3], color = "TGCR"), shape = 16, size = 1) + 
- # geom_point(aes(y = rrbp[,4], color = "BGCR"), shape = 16, size = 1) + 
- # geom_point(aes(y = rrbp[,5], color = "SOFR"), shape = 16, size = 1) + 
-  labs(x = "X-axis", y = "Y-axis", color = "Lines") +
-  scale_color_manual(values = c("Duffie Krishnamurthy index" = "black", "Lower target FFR" = "blue", "Upper target FFR"= "green" )) + 
-  #scale_color_manual(values = c("EFFR" = "black", "OBFR" = "blue", "TGCR" = "green", "BGCR" = "orange", "SOFR" = "red")) + 
-  theme_minimal()
-print(ggdkindex)
-
-Duffie Krishnamurthy dispersion index 
- We let $y_{i,t(m)}$ denote the rate at time t on instrument i, maturing in m days. We first
- adjust the rate to remove term-structure effects, 
- obtaining the associated "overnight-equivalent” rate as
- $yhat_{i,t} = y_{i,t(m)} − (OISt(m) − OISt(1)), (4.1)$
- The dispersion index D at day t as the weighted mean absolute deviation of the cross-sectional adjusted rate
- distribution on that day. That is,
-
- 
- \begin{align*}
- D_t =1/ (sum_{i}^{}v_{i,t}) times 
- (sum_{i}^{}v_{i,t} |yhat_{i,t} − y¯t|) (4.2)
- where vi,t is the estimated outstanding amount of this instrument on day t, in dollars,
- and y_¯t is the volume-weighted mean rate, defined by
- y¯_t = [(sum_{i}^{}(v_{i,t}) times yhat_{i,t})]/(sum_{i}^{}v_{i,t})
- \end{align*}
-
-
-Assuming you have already defined vtot, vold, drates, mrate, meanr, and d vectors
-
-```{r, Duffie Krishnamurthy dispersion index, echo=FALSE}
-T <-nrow(rrbp)
-# Initialize vtot(t) and mrate(t) to zero
-vtot<- zeros(T,1);
-dk<- zeros(T);
-mrate<-zeros(T,1);
-meanr<-zeros(T,1);
-dkindex<-ggplot(metricE, aes(x = sdate)) +
-  geom_point(aes(y = dk[,1], color = "Duffie Krishnamurthy index"), shape = 16, size = 1) + 
-  geom_point(aes(y = targetDe, color = "Lower target FFR"), shape = 16, size = 1) + 
-  geom_point(aes(y = targetUe, color = "Upper target FFR"), shape = 16, size = 1) +
- # geom_point(aes(y = rrbp[,3], color = "TGCR"), shape = 16, size = 1) + 
- # geom_point(aes(y = rrbp[,4], color = "BGCR"), shape = 16, size = 1) + 
- # geom_point(aes(y = rrbp[,5], color = "SOFR"), shape = 16, size = 1) + 
-  labs(x = "X-axis", y = "Y-axis", color = "Lines") +
-  scale_color_manual(values = c("Duffie Krishnamurthy index" = "black", "Lower target FFR" = "blue", "Upper target FFR" )) + 
-  #scale_color_manual(values = c("EFFR" = "black", "OBFR" = "blue", "TGCR" = "green", "BGCR" = "orange", "SOFR" = "red")) + 
-  theme_minimal()
-```
-
-Duffie Kroshnamurthy code
-# Loop from t = begn(k) to t = endn(k)
-#for (t in begn(k):endn(k)) {
-for (t in 1:T) {
-  # Loop from i = 1 to i = 5
-  for (i in 1:5) {
-    # Calculate vtot(t) and mrate(t)
-    vtot[t] <- vtot[t] + vold[t, i]
-    mrate[t] <- mrate[t] + vold[t, i] * rrbp[t, i]
-  }
-  
-  # Calculate meanr(t)
-  meanr[t] <- mrate[t] / vtot[t]
-  
-  # Calculate dk(t)
-  for (i in 1:5) {
-    dk[t] <- dk[t] + (1 / vtot[t]) * vold[t, i] * abs(rrbp[t, i] - meanr[t])
-  }
-}
-
-
-## The Gara index does just this, the distance of the FFR within its target rang
-Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl propose  dispersion index  $D_t$ of the daily EFFR from upper and lower target rates.
+## Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl () measure istance of the Federal Funds rates from FOMC targets
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl () propose  dispersion index  $D_t$ of the daily EFFR from upper and lower target rates.
 The daily value of $D_t$ ,the deviations between the value weighted daily fed funds rate and weighted fed funds rate, the actual policy target (the EFFR, the effective fed funds rate published by the Federal Reserve Bank of New York) FOMC  (Figure), During  2016-2022 managing the policy rate remained within its target range (\ref{fig:dispersionEffrGara}). ADD OBSERVATIONS
 
 The daily value of $D_t$ ,the deviations between the value weighted daily fed funds rate and weighted fed funds rate, the actual policy target (the EFFR, the effective fed funds rate published by the Federal Reserve Bank of New York) FOMC  (Figure), During  2016-2022 managing the policy rate within its target range may have become more challenging during stress in repo markets in 2019 (\ref{fig:dispersionEffrGara}). ADD OBSERVATIONS
 
 
 ```{r, Gara index, echo-FALSE}
+# Initialize 'g' vector
+T=nrow(rrbp)
+g <- array(0,T)
+
+# Loop through 't' values
+
+for (t in 1:T) {
+  if (!is.na(spread_no_na$TargetUe[t]) && !is.na(rrbp[t, 2])) {
+    if (spread_no_na$TargetUe[t] < rrbp[t, 2]) {
+      # Upper target
+      g[t] <- rrbp[t, 2] - spread_no_na$TargetUe[t]
+    } else if (!is.na(spread_no_na$TargetDe[t]) && rrbp[t, 2] < spread_no_na$TargetDe[t]) {
+      # Lower target
+      g[t] <- rrbp[t, 3] - spread_no_na$TargetDe[t]
+    } else {
+      # Handle other cases (if neither condition is met)
+      # You can assign a default value to 'g[t]' or handle it as needed
+    }
+  } else {
+    # Handle cases where 'spread$TargetUe_EFFR[t]' or 'rrbp[t, 2]' is NA
+    # You can assign a default value to 'g[t]' or handle it as needed
+  }
+}
+```
+
+<!--
+T <-nrow(rrbp)
+# Initialize vtot(t) and mrate(t) to zero
+rho_bar_t<- 0
+rho_max_t<- 0
+rho_min_t<- 0
+D<- 0
 # Calculate D_t based on conditions
       if (rho_max_t < rho_bar_t) {
         D_t <- rho_bar_t - rho_max_t
       } else if (rho_bar_t < rho_min_t) {
         D_t <- rho_bar_t - rho_min_t
       }
+-->
+
+```{r,gara index data frame, echo=FALSE}
+garaindexdf <- data.frame(
+  sdate = spread_no_na$sdate,
+  g,
+  TargetDe = spread_no_na$TargetDe,
+  TargetUe = spread_no_na$TargetUe,
+  EFFR = spread_no_na$EFFR,
+  OBFR = spread_no_na$OBFR,
+  TGCR = spread_no_na$TGCR,
+  BGCR = spread_no_na$BGCR,
+  SOFR = spread_no_na$SOFR
+)
+```
+
+```{r, galonso index plot, echo=FALSE}
+garaindexdf$sdate <- as.Date(garaindexdf$sdate)
+
+# Create a variable for group names
+garaindexdf$group <- rep(c("Alonso index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
+
+# Create a named vector for colors
+colors <- c("Alonso index" = "black",
+            "Lower target FFR" = "blue",
+            "Upper target FFR" = "green",
+            "EFFR" = "black",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+ggara <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
+  geom_point(shape = 16, size = 1) +
+  labs(x = "Date", y = "Basis points (bp)", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  theme_minimal()
+
+print(ggara)
 ```
 
 (Figure ~\ref{figure:dispersionGara})   (Table %~\ref{table:dispersionGara}) ) 
@@ -2617,42 +2913,21 @@ FFR < lower target TD $D_t <- rho_bar_t - rho_min_t$
 Otherwise $D_t =0$.
 
 
-
 ## Target rates and quintiles EFFR, SOFR
- The behavior of the EFFR and SOFR offer another view of dispersion. 
+ The behavior of the EFFR and SOFR offer another view of dispersion. Boxplots here? 
 
-1.The EFFR stay within the bounds of the FOMC target rates (left panel of Figure ~\ref{igure:}) and the 35th and 75th percentile (right panel)
-
-2.
-
-3.
-
-4. Limitations
+The EFFR stays within the bounds of the FOMC target rates (left panel of Figure ~\ref{igure:}) and the 35th and 75th percentile (right panel)
 
 
-1.The SOFR stay within the bounds of the FOMC target rates (left panel of Figure ~\ref{igure:}) and the 35th and 75th percentile (right panel)
-
-2.
-
-3.
-
-4. Limitations
+The SOFR stays within the bounds of the FOMC target rates (left panel of Figure ~\ref{igure:}) and the 35th and 75th percentile (right panel)
 
 
-<!-- 1. Start by introducing the figure and its purpose. Briefly explain what the figure represents and why it's important in the context of your study.
-
-2. Figure Description:
-Provide a clear and concise description of the figure. Include relevant details about the data, axes, labels, units, and any key components.
-
-3. Interpretation:
-Discuss the main findings or trends depicted in the figure. Highlight significant patterns, relationships, or differences. Use specific data points to support your interpretations.
-4. Connection to Hypotheses or Research Questions:
-Relate the figure's content to the research questions or hypotheses you're addressing in your study. Explain how the figure's information contributes to answering these questions or testing these hypotheses.
--->
+gara_data <- cbind(sdate, g, TargetDe, TargetUe, EFFR)
+# Convert the numeric matrix 'dk_data' to a data frame
+garaindex <- data.frame(gara_data)
 
 
-
-## Transaction volumes
+# Transaction volumes
 
 # Reserves
 Total reserves in the U. S. banking system now exceed  $\$$3.081237 trillion (Totresns). At the beginning of 2009, reserves were $\$$800 billion, compared to approximately $\$$10 billion pre-crisis. Reserves continued to increase until late 2014. Fed’s quantitative easing programs raised reserves to  a peak of $\$$2.8 trillion in September 2014.  Peak reserves peaked $\$$4.275 at then end of 2021 In November 2022, From late 2017, when the Federal Open Market Committee began implementing its policy of “balance sheet normalization” aggregate reserves began to decline, reaching a low of $\$$1.4 trillion in early September 2019 (Table \ref{table:weeklyreserves}, Figure \ref{fig:weeklyreserves}). 
