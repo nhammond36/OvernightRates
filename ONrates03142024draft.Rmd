@@ -451,6 +451,7 @@ Benzoni
 Cochrane and Piazzesi
 Duffie Krishnamurthy
 
+
 Ideas:
 rate volatility
 mean reversion or not, mean reversion around central tendency
@@ -465,6 +466,154 @@ Rates vs reserve plots, a demand curve
 Determine a regime change
  
 All authors recognize key characteristics of the FFR; Spectacular outliers and autoregressive conditional heteroskedasticity (ARCH) effects, skew, fat tails. 
+
+Hamilton ------------------------------------------------
+Hamilton (1996)  adaption of Nelson's (1991) EGARCH model 
+to the conditional mean and the conditional variance of the daily  Federal Funds rate (FFR), examined the effect of an open-market purchase on the distribution of the FFR. Extreme volatility, large outliers of the FFR. important day effects -the last day of the quarter or the last day of the year, when bank's report balance sheets of assets and liabilities, characerize the data. OMO rather rather than interday arbitration smooths out small fluctuations in the FFR. A small temporary infusion of reserves through an overnight repurchase agreement by the Fed's trading desk lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. 
+
+[repo increases reserves, lowers FFRreverse repo reverses reserves and raises FFR] [repo means dealer deposits (borrowed) reserves collateralized by UST securities?]. 
+
+
+Transaction costs, rather minor institutional market detail, are central to the liquidity effect that enables the Federal Reserve to change the interest rate on .a daily basis.
+
+The importance of the overnight federal funds rate, the shortest-term actively traded security- the base of any term structure, is its centralilty  to finance and monetary policy.
+ 
+Monika Piazzesi -----------------------------------------
+“Bond Yields and the Federal Reserve”, Journal of Political Economy, Volume 113, Issue 2, April 2005, pp. 311-344.  Additional results in the earlier 2001 working paper version: “An Econometric Model of the Yield Curve with Macroeconomic Jump Effects”, NBER Working paper no 8246: theoretical results for deterministic jump times and state-dependent jump size distributions, ; empirical results with 
+
+Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the interest rate target set by the FOMC in a inear-quadratic jump-diffusion model, Using high-frequency data provides information about the exact timing of FOMC meetings to improve bond pricing and to identify monetary policy shocks. Decisions about target moves are result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases  change the conditional distribution of a future Fed move. 
+
+Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC’s policy decisions and describes Fed policy better than Taylor rules.
+That the Fed's estimated policy rule reacts to information contained in the yield curve, especially  information in yields with of two year maturities, implies the Fed reacts to some medium-run forecast of the economy. 
+ 
+The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. based on yield curve information and an arbitrage-free bond market.
+ 
+- 1) latent factors
+- the target set by the Fed is an observable factor in the model and provides a clean measure of the short end of the yield curve. The use of target data avoids having to deal with calendar day effects in very short rates, which typically require lots of parameters
+- 2) Second, the estimated response of yields to policy shocks is strong and slowly declines only with the maturity of the yield
+- 3) The estimated policy rule describes the Fed as reacting to information contained in the yield curve. the most important information is contained in yields with maturities around two years, which suggests that the Fed reacts to some medium-run forecast of the economy. 
+
+- The estimated policy rule displays interest rate smoothing: the target level is autocorrelated. 
+- The rule also displays policy inertia: the Fed only partially adjusts the target to its desired rate. Inertia leads to positive autocorrelation in target changes, because one change is typically followed by additional changes in the same direction over a number of FOMC meetings
+
+- yield data summarize market expectations of future target moves. These market expectations are
+based on a host of variables that are omitted from other rules. 
+yield data are available at higher frequencies and are less affected by
+measurement errors than macroeconomic variables. 
+The model demonstrated the policy inertia, the tendency to continue same policy changes. 
+
+<!--
+The “snake shaped ”volatility of yields:Volatility is high for very short maturities (the head of the snake), rapidly decreases until maturities of around three months (the neck of the snake), then increases until maturities of up to two years (the back of the snake), and finally decreases again (its tail)....explains with policy inertia, tendency to continue same policy changes
+
+
+- with high-frequency data, use information about the exact timing of FOMC meetings to improve bond pricing and to identify monetary policy shocks. 
+- construct a continuous-time model of the joint distribution of bond yields and the interest rate target set by the FOMC.
+- impose no arbitrage and respects the timing of FOMC meetings. Decisions about target moves are made at points in time, resulting in a series of target values that looks like a pure jump process.
+- The arrival intensity of target jumps depends on the FOMC meeting calendar and the state of the economy.
+- estimation methods that exploit data on the entire cross section of yields as opposed to a single
+short rate. Longer yields have the statistical advantage of providing important additional observations, especially in the context of rare policy events. Long yields also have an economic advantage, because they turn out to be inputs in the Fed’s policy rule—its systematic response to the state of the economy
+- policy decision based on information available right before the FOMC starts its meeting. This
+short informational lag provides a recursive identification scheme. The scheme turns the target forecast from right before the FOMC meeting into a high-frequency policy rule and the associated forecast errors into policy shocks.
+- method of simulated maximum likelihood (Pedersen 1995; Santa-Clara 1995) extended
+to jumps
+
+- 1) latent factors
+- the target set by the Fed is an observable factor in the model and provides a clean measure of the short end of the yield curve. The use of target data avoids having to deal with calendar day effects in very short rates, which typically require lots of parameters
+- 2) Second, the estimated response of yields to policy shocks is strong and slowly declines only with the maturity of the yield
+- 3) The estimated policy rule describes the Fed as reacting to information contained in the yield curve. the most important information is contained in yields with maturities around two years, which suggests that the Fed reacts to some medium-run forecast of the economy. 
+
+- The estimated policy rule displays interest rate smoothing: the target level is autocorrelated. 
+- The rule also displays policy inertia: the Fed only partially adjusts the target to its desired rate. Inertia leads to positive autocorrelation in target changes, because one change is typically followed by additional changes in the same direction over a number of FOMC meetings
+
+- yield data summarize market expectations of future target moves. These market expectations are
+based on a host of variables that are omitted from other rules. 
+yield data are available at higher frequencies and are less affected by
+measurement errors than macroeconomic variables.
+- 4) snake shape of the volatility curve, the standard
+deviation of yield changes as a function of maturity. Volatility is high
+for very short maturities (the head of the snake), rapidly decreases until
+maturities of around three months (the neck of the snake), then increases until maturities of up to two years (the back of the snake), and finally decreases again (its tail).
+-->
+ 
+Benzoni et all.-----------------------------
+(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model that includes a time-varying mean reversion factor, a stochastic volatility factor, and a jump process.  The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns.   Stochastic volatility is critical for a good fit. Benzoni identify mean reversion around a central tendency. The stochastic mean  allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior. 
+
+The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
+
+
+
+Bertolini, Bertola, Prati () and Gara () and Benzoni observe that the effect of Fed interventions on the volatility in interbank rates 
+\begin{itemize}
+\item declines in high rate regimes
+\item rises end of quarter, end of year
+\item falls before holidays, rises day after
+\item other observations:
+TS properties.  Many rate changes of half percent or more (annualized), and outliers.  Volatility persistent. maintenace periods, calendar days, end of quarter, end of year, before and after holidays, large rate changes
+\end{itemize}
+
+
+Gara Afonso --------------------------------
+Gara et al model of banks' reserve demand response to shocks to reserves reveals greater sensitivity to rate changes when reserves are scarce. When reserves are ample, [connect idea?] The demand curve is flat around the interest rate paid by the Federal Reserve on reserve balances (the IORB rate), the banks’ opportunity cost of lending in the federal funds market. 
+
+The slope of the demand function is negative as reserves decline. The sensitivity of rates to reserve shocks, becomes increasingly steeper reflecting the The slope is flat when reserves are abundant. increasing scarcity value of reserves. Reserve demand, realized rates against realized reserves, a nonlinear, downward-sloping relationship between prices and quantities, shifts outward over time
+
+\emph{Vertical shift}
+Policy changes shift the curve up and down by moving its lower bound. Increases (descreases) in the (FFR-IORB?) IORB rate shift the demand curve down (up by changing the banks’ opportunity cost of lending in the federal funds market 
+\emph{Horizontal shift}
+Low frequency horizontal shifts in the demand function reflect sensitivity of rates to shocks to reserves.
+(1): for every level of the federal funds rate, they imply an increase in the quantity of aggregate
+reserves demanded by the banking system. As a result of these shifts, the level of reserves at which
+the curve stops being flat and start displaying a negative slope may have moved over time.
+
+These structural changes [which ?] could be interpreted as the horizontal shifts $\ast(q)$ in the demand curve
+
+
+? The visible negative correlation between quantities (reserves) and prices (federal funds rates) suggests  supply shocks tend to dominate demand shocks. 
+
+
+? explains ONRRP: The segmentation of the federal funds market between banks and FHLBs suggests that, under our price normalization, the lower bound of the demand function (1), $\ast(p)$ , should range between the
+ONRRP-IORB spread and zero.
+
+<!--
+Gara plot: GaraAmpleReserves2022
+\begin{comment}
+\begin{figure}[ht]
+\includegraphics[scale=1.0\textwidth]{GaraReserves.png}
+% \includegraphics[scale=0.9, bb=108   268   473   567]{dailyratessample1brush.tex}
+\caption{Reserves normalized by commercial deposits, Federal Fund rate EFFR-IOR spread and reserve demand curve}
+\label{fig:Gara}
+%\centering
+\label{fig:gara}
+\end{figure}
+\end{comment}
+
+derive a function of reserve demand that measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR. The FFR is price at which banks are willing to borrow and lend  reserve balances.The reserve demand function describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system.
+Figure (Panel (b))  to control for changes in FOMC policy, they plot federal funds rate minus the IORB rate versus aggregate reserves. Policy changes shift the curve up and down by moving its lower bound. 
+The visible negative correlation between quantities (reserves) and prices (federal funds rates) suggests  supply shocks tend to dominate demand shocks. Reserve demand, realized rates against realized reserves, is a nonlinear, downward-sloping relationship between prices and quantities that moves outward over time
+-->
+
+
+Bertolini, Bertola, Prati () model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market.[describe model], the high frequency patterns of FF rate volatility  that survive Fed's attempt to manage the FFR within the FOMC target range. 
+They note the immediate response of other key short rates to monetary policy and other shocks. Overnight wholesale money market rates quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+
+\emph{Duffie, Krishnamurthy}
+Krishnamurthy and Vissing Jorgensen find the implicit volatility of overnight reference rates is the results of Fed discretionary policy, quantitative easing (QE), and asset purchases. 
+
+Krishnamuthy provide evidence that dispersion among secured overnight rates impede passthough of monetary policy to the economy. The  effectiveness of monetary policy to transmit the desired stance of monetary policy to financial markets and the real economy economy depends on efficient transmission of rate changes to other short rates in wholesale and consumer funding markets.
+
+
+Mean reverision versus dispersion?
+
+Ample reserves paper?
+
+
+Cochrane and Piazzesi ------------------------------
+regress policy shocks on rates
+
+NOTES --------------------------------------------------------------------------------
+<!--
+Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate. (Bertolini,Bertola, Prati ,) site frictions such as  transactions costs, interbank credit limits, overdraft penalties, obstacles to intra-period arbitrage preclude the FFR from following a martingale process.
+-->
 
 Hamilton ------------------------------------------------
 Hamilton (1996)  adapts's Nelson's (1991) EGARCH model of daily stock return to the conditional mean and the conditional variance of daily FFR federal funds rates and the effect of an open-market purchase on the distribution of the FFR.  The importance of the overnight federal funds rate, the shortest-term actively traded securityc- the base of any term structure, is its centralilty  to finance and monetary policy. Hamilton, as other authors, recognizes the extreme volatility and the large outliers of short-rate data. Hamilton documents important day effects -the last day of the quarter or the last day of the year, when bank's reported balance sheets of assets and liabilities on .
@@ -483,7 +632,7 @@ Both Federal Reserve decisions and financial markets watch and depend on bond yi
 
  
 
-Theshort informational lag before Fed's policy decision based on information available right before the FOMC starts its meeting provides a recursive identification scheme that turns the target forecast from right before the FOMC meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. The Fed extracts information about the state of the economy from the current yield curve. 
+The short informational lag before Fed's policy decision based on information available right before the FOMC starts its meeting provides a recursive identification scheme that turns the target forecast from right before the FOMC meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. The Fed extracts information about the state of the economy from the current yield curve. 
 The high-frequency policy rule based on yield curve information and an arbitrage-free bond market...
 
 The “snake shaped ”volatility of yields:Volatility is high for very short maturities (the head of the snake), rapidly decreases until maturities of around three months (the neck of the snake), then increases until maturities of up to two years (the back of the snake), and finally decreases again (its tail)....explains with policy inertia, tendency to continue same policy changes
@@ -1615,18 +1764,64 @@ January 2024
 4. zlb         3/17/2020- 3/16/2022     1014-1518
 4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
 
-Rates increase steadily from _ basis points during normalcy from March 2016 through July 2019.,In 2019 rates began a three month period  from August to October 2019 (\@ref(fig:fig1).  With the onset of covid, rates  plunge from _ basis points in November 2019 to March 2020. Rates then hover near zero from Mar 2020 to March 2022 during the zero lower bound. Then rates rose in steady 25 or 50 basis point increments from March 2022 to_ in December 2023 as  the Fed fights inflation. Policy inertia is evident in all periods, as the Fed sequentially changes rates in ?? basis points .
+Rates increase steadily from _ basis points during normalcy from March 2016 through July 2019.In 2019 rates began a three month period  from August to October 2019 (\@ref(fig:fig1).  With the onset of covid, rates  plunge from _ basis points in November 2019 to March 2020. Rates then hover near zero from Mar 2020 to March 2022 during the zero lower bound. Then rates rose in steady 25 or 50 basis point increments from March 2022 to_ in December 2023 as  the Fed fights inflation. Policy inertia is evident in all periods, as the Fed sequentially changes rates in ?? basis points .
 
 Chat: In the sample, the average weighted median for the Effective Federal Funds Rate (EFFR) stands at 157 basis points (pb) (\@ref(tab:tab1). Comparatively, other money market rates show a clustering around the median EFFR, with the Tri-Party General Collateral Rate (TGCR), Brokered General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) ranging from 123 to 134 bp. Daily transaction volumes also reflect this pattern, with SOFR leading at approximately $754 billion, followed by TGCR and BGCR at around $300 billion each. EFFR has a notably lower daily trade volume of $79 billion. The percentiles of rates further demonstrate this clustering around EFFR and SOFR.
 
-```{r fig1, fig.cap="Caption for the figure", echo=FALSE}
-# Code to generate the plot
+```{r sampleplot_example, fig.cap="Overnight rates 2016-2023", echo=FALSE}
+rrbp$sdate <- as.Date(rrbp$sdate)
+rrbp <- subset(rrbp, select = -OBFR)
+str(rrbp)
+
+meltrrbp <- melt(rrbp,id="sdate")
+ rates <- ggplot(meltrrbp,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+   geom_point(size = 1) +
+   labs(x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+   scale_y_continuous(breaks = seq(0, 500, by = 50), limits = c(0, 500)) + 
+   theme_minimal() + 
+  guides(shape = guide_legend(title = "Rate"))
+   print(rates)
 ```
 
-```{r tab1, echo=FALSE, results='asis'}
-# Code to generate the table
+
+
+
+```{r sampletable_example, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+Estats_mat <- matrix(Estats, nrow = 8, ncol = 1)
+Tstats_mat <- matrix(Tstats, nrow = 8, ncol = 1)
+Bstats_mat <- matrix(Bstats, nrow = 8, ncol = 1)
+Sstats_mat <- matrix(Sstats, nrow = 8, ncol = 1)
+
+# Combine the matrices into one matrix
+stats <- cbind(Estats_mat, Tstats_mat, Bstats_mat, Sstats_mat)
+
+# Print the combined matrix
+print(stats)
+# Set row names
+rownames(stats) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+# Set column names
+colnames(stats) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+
+# Print the combined matrix
+print(stats)
 ```
-reference  \@ref(fig:fig1).  \@ref(tab:tab1).
+As shown in Figure \@ref(fig:sampleplot_example), the relationship is evident. Table \@ref(tab:sampletable_example) provides a summary of the data.
+
+
+<!--
+r my_plot, fig.cap=This is a plot of data, echo=FALSE
+# Your plotting code here
+
+In this example, "This is a plot of data" is the caption. When you knit your R Markdown document, R Markdown will automatically number the figure and include the figure number in the caption. So if this plot is the first figure in your document, it will be numbered as "Figure 1: This is a plot of data".
+Then, when you want to reference this figure elsewhere in your document, you would use `\@ref(fig:my_plot)`.
+This way, R Markdown handles the numbering of figures automatically, ensuring consistency and accuracy throughout your document.
+
+In this example, "This is a table" is the caption for the table. When you knit your R Markdown document, R Markdown will automatically number the table and include the table number in the caption. So if this table is the first table in your document, it will be numbered as "Table 1: This is a table".
+Then, when you want to reference this table elsewhere in your document, you would use `\@ref(tab:my_table)`.
+Similarly to figures, R Markdown handles the numbering of tables automatically, ensuring consistency and accuracy throughout your document.
+-->
 
 The average weighted median for the EFFR during the sample is 157 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
 
@@ -1643,6 +1838,19 @@ Percentile99\_& 169.06  & 138.75 & 141.19 & 143.53 \\
 
 
 I describe volatility as log percent changes in rates since data are average weighted median values. the median is the best measure of central tendency because it’s the value in the middle of values ordered from low to high. The rate data from the Federal Reserve Data Download Program are average volume weighted medians and select percentiles. The median rather than the mean better represent daily rates since the data have outliers or extreme values. The median and interquartile range, the 75 percentile minus the 25 percentile, summarize a typical value and the variability in the sample.  The range of the data, the 99th ,minus the first percentile, is more sensitive to outliers.
+
+
+```{r ratestats_sample, tab.cap="Rate statistics 2016-2023", echo=FALSE, results='asis'}
+categories = c('EFFR', 'TGCR', 'BGCR', 'SOFR')
+median_values = c(Estats[1], Tstats[1], Bstats[1], Sstats[1])
+iqr_values = c(Estats[7] - Estats[6], Tstats[5] - Tstats[4], Bstats[5] - Bstats[4], Sstats[5] - Sstats[4])
+range_values = c(Estats[8] - Estats[5],  Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
+volume=c(volumessample[1],volumessample[2],volumessample[3],volumessample[4])
+ratesamplestats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME=volume)
+ratesamplestats_table <- xtable(ratesamplestats)
+print(ratesamplestats_table )
+```
+\@ref(tab:ratestats_sample) provides simple statistics of the data.
 
 The interquartile range (IQR), a useful measure of variability for skewed distributions. As the 75th minus the 25thpercentile, the IQR demonstrate where 50 percent of the data lie, showing how clustered are the values.Use the IQR to assess the variability where most of your values lie. Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data spread out further. Conversely, smaller values show that the middle values cluster more tightly. 
 
@@ -1677,7 +1885,7 @@ The range of the data, the 99th minus the first percentile, is more sensitive to
   
   
 ```{r, sample numerica dataframes, echo=FALSE}
-quantilesEnum <- quantilesE[1:nrow(quantilesE), 1:8]
+quantilesEnum <- quantilesE[1:nrow(quantilesE), 2:8]
 quantilesOnum <- quantilesO[, 2:7]
 quantilesTnum <- quantilesT[, 2:7]
 quantilesBnum <- quantilesB[, 2:7]
@@ -1701,11 +1909,9 @@ iqr_values =  c(Estats[7] - Estats[6], Ostats[5] - Ostats[4], Tstats[5] - Tstats
 range_values = c(Estats[8] - Estats[5], Ostats[6] - Ostats[3], Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
 samplestats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values)
 ```
-```{r, 
-knitr::kable(samplestats, caption = "Key statistics rates 2016-2023")
-```
 
-```{r, sample statsdata, echo=FALSE}
+
+```{r tab1, tab.cap="Sample statistics forovernight rates 2016-2023"}
 # Sample data in two lists
 categories = c('EFFR', 'OBFR', 'TGCR', 'BBGCR', 'SOFR')
 median_values = c(Estats[1], Ostats[1], Tstats[1], Bstats[1], Sstats[1])
@@ -1716,12 +1922,18 @@ samplestats2 <- xtable(samplestats)
 print(samplestats2)
 ```
 
-```{r. sample stats, echo=FALSE} 
-knitr::kable(samplestats, caption = "Key statistics rates 2016-2023")
+
+<!--
+plot table references example
+```{r fig1, fig.cap="Caption for Figure 1"}
+plot(1:10)
 ```
-```{r. sample characteristics, echo=FALSE}
-knitr::kable(samplestats, caption = "Descriptive  rates 2016-2023")
+Figure \@ref(fig:fig1) shows..
+
+```{r tab1, tab.cap="Caption for Table 1"}
+head(mtcars)
 ```
+Table \@ref(tab:tab1) shows...
 -->
 
 
@@ -1884,7 +2096,7 @@ endn<-c(858,922,1013,1518,1957,1957)
 k=1
 bgn<-begn[k]
 edn<-endn[k]
-#norm<-rrbp[bgn:edn,]  # duplicate to fix since rates are in qnorm etc
+norm<-rrbp[bgn:edn,]  # duplicate to fix since rates are in qnorm etc
 qnormE=quantilesE[bgn:edn,]
 Estatsnorm <- colMeans(quantilesEnum[bgn:edn,], na.rm = TRUE)
 Ostatsnorm <- colMeans(quantilesOnum[bgn:edn,], na.rm = TRUE)
