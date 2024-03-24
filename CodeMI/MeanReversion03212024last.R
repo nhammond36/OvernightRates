@@ -1657,6 +1657,7 @@ boxplot_sample <- data.frame(
     geom_boxplot(stat = "identity")   
   print(bsample)
   
+  my_environmentbox$sample<-boxplot_sample
   
   # Check
   str(boxplot_sample)
@@ -1688,7 +1689,7 @@ boxplot_sample <- data.frame(
   
   
   # Save the environment to an RDS file
-  saveRDS(my_environmentbox, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_environmentbox.RDS")
+  #saveRDS(my_environmentbox, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_environmentbox.RDS")
   
   # Render the R Markdown document
   #rmarkdown::render("C:/Users/Owner/Documents/Research/MonetaryPolicy/MPResults/LaTeX/ONrates11292023b.Rmd",envir= my_envmp)
