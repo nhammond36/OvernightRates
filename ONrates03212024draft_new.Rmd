@@ -35,8 +35,6 @@ knitr::opts_chunk$set(echo = FALSE)
 #rm(list = ls())
 #rmarkdown::render("C:/Users/Owner/Documents/Research/OvernightRates/ONrates03072024v3.Rmd",envir= my_envmp)
 #rmarkdown::render("C:/Users/Owner/Documents/Research/OvernightRates/ONrates03142024draft.Rmd",envir= #my_envmp)
-
-
 ```
 <!--
 Last chat on rmd error
@@ -165,6 +163,8 @@ my_data=my_data[begs:ends,]
 spread_no_na=my_data[begs:ends,]
 ```
 
+<!--
+quantiles are in my_envepisodes   str(my_envepisodes$quantilesE)
 
 ```{r, daily quantile dataframes, echo=FALSE,  cache=FALSE,results='hide'}
 quantiles<-as.data.frame(as.list(my_data))
@@ -174,6 +174,7 @@ quantilesT <- quantiles[c("sdate", "TGCR", "VolumeTGCR", "Percentile01_TGCR", "P
 quantilesB <- quantiles[c("sdate", "BGCR", "VolumeBGCR", "Percentile01_BGCR", "Percentile25_BGCR", "Percentile75_BGCR", "Percentile99_BGCR")]
 quantilesS <- quantiles[c("sdate", "SOFR", "VolumeSOFR", "Percentile01_SOFR", "Percentile25_SOFR", "Percentile75_SOFR", "Percentile99_SOFR")]
 ```
+-->
 
 ```{r, Load rate data frame rrbp, echo=FALSE}
 rrbp <- data.frame(
@@ -1879,18 +1880,10 @@ In this setup:
 
 Placing the assignments within a code chunk ensures that they are executed in the correct sequence and context within your R Markdown document.
 
-```{r, load_environment_episodes, echo=FALSE}
-# Load RDS file using relative file path
-my_envepisodes <- readRDS("path/to/my_envepisodes.RDS")
-
--->
-
-str(my_envepisode$sampleE)
-```{r sampletable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
-# Sample characterisics quantiles and more -------------------------------------------------
+\@ref(tab:sampletable_characteristics) provides a summary of the data.
+\```{r sampletable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
 # Sample characterisics quantiles and more --------------------------------------------------
-k=6 # amsple period maybe convert to begn later etc
-
+k=6 # sample period maybe convert to begn later etc
 bgn<-1
 edn<-nrow(rrbp)
 print(bgn)
@@ -1903,7 +1896,6 @@ qsampleE=quantilesE[bgn:edn,] # rate specific metrics
 qsampleT=quantilesT[bgn:edn,]
 qsampleB=quantilesB[bgn:edn,]
 qsampleS=quantilesS[bgn:edn,]
-str(sampleE)
 
 
 # Store your data frame in the environment
@@ -1945,9 +1937,23 @@ colnames(stats_sample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(stats_sample)
 ```
 
+
 \@ref(tab:sampletable_metrics) provides a summary of the data.
-```{r sampletable_metrics, tab.cap="Simple statistics 2016-2023", echo=FALSE, results='asis'}
+\```{r sampletable_metrics, tab.cap="Simple statistics 2016-2023", echo=FALSE, results='asis'}
 # Sample data metrics --------------------------------------------------------
+k=6 # sample period maybe convert to begn later etc
+bgn<-1
+edn<-nrow(rrbp)
+print(bgn)
+print(edn)
+sample<-rrbp[bgn:edn,]  # All
+sdate<-spread_no_na$sdate
+sdatesample<-sdate[bgn:edn]
+qsampleE=quantilesE[bgn:edn,] # rate specific metrics 
+qsampleT=quantilesT[bgn:edn,]
+qsampleB=quantilesB[bgn:edn,]
+qsampleS=quantilesS[bgn:edn,]
+
 categories = c('EFFR', 'TGCR', 'BGCR', 'SOFR')
 median_values = c(Estats[1], Tstats[1], Bstats[1], Sstats[1])
 iqr_values = c(Estats[7] - Estats[6], Tstats[5] - Tstats[4], Bstats[5] - Bstats[4], Sstats[5] - Sstats[4]) 
@@ -2020,31 +2026,10 @@ quantilesE2 = subset( quantilesE, select = -c(VolumeEFFR,TargetDe, TargetUe,Perc
  print(quantileseffr)
 ```
 
-quantiles and boxplot?
-Figure \@ref(fig:EFFR and quantiles)
-{r EFFR and quantiles, fig.cap= "EFFR and quantiles 2016-2023",echo=FALSE}
-#Access the data frame stored in the environment
-my_effr <- my_enveffr$melteffr
-``` 
 
-```{r, sofr quantiles, echo=FALSE}
-#Access the data frame stored in the environment
-my_sofr <- my_envsofr$meltsofr
-``` 
-
- (see Figure \@ref(fig:SOFR, FOMC targets 2016-2023-plot)
-```{r SOFR and targets, fig.cap= "SOFR, FOMC targets 2016-2023", echo=FALSE}
-quantilesS2 = subset( quantilesS, select = -c(VolumeSOFR,Percentile01_SOFR, Percentile99_SOFR) ) 
- meltsofr <- melt(quantilesS2,id="sdate")
- quantilessofr <- ggplot(meltsofr,aes(x=sdate,y=value,colour=variable,group=variable)) + geom_point(shape = 16, size = 1)+
-   labs(x="Date", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +   
-   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-   # + theme(axis.title.x=element_blank(), axis.text.x= element_text(size=8,vjust =.5))
- print(quantilessofr)
-```
 
 (see Figure \@ref(fig:Overnight rates quantiles 2016-2023)
-```{r Overnight rates quantiles, daily sample quantile dataframes, echo=FALSE,  cache=FALSE,results='hide'}
+\```{r Overnight rates quantiles, daily sample quantile dataframes, echo=FALSE,  cache=FALSE,results='hide'}
 boxplot_sample <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
   y0 = c(min(quantilesE$EFFR), min(quantilesT$TGCR), min(quantilesB$BGCR), min(quantilesS$SOFR)),
@@ -2056,7 +2041,7 @@ boxplot_sample <- data.frame(
 
 
 (see Figure \@ref(fig:Overnight rates boxplot)
-```{r overnight rates boxplot, fig.cap= "Daily rates 2016-2023", echo=FALSE, warning=FALSE, message=FALSE, fig.height=6, fig.width=8, eval=TRUE, cache=FALSE, dev='png', out.width='80%', , results='hide', fig.pos='H'} 
+\```{r overnight rates boxplot, fig.cap= "Daily rates 2016-2023", echo=FALSE, warning=FALSE, message=FALSE, fig.height=6, fig.width=8, eval=TRUE, cache=FALSE, dev='png', out.width='80%', , results='hide', fig.pos='H'} 
  bsample<-ggplot(boxplot_sample , aes(x=Group,
                    ymin = y0,
                    ymax = y100,
@@ -2142,6 +2127,21 @@ inflation
 # zlb <-rrbp %>% slice(1014:1518)
 # inflation <-rrbp %>% slice(1519:1957)
 
+#1. normalcy   3/4/2016		7/31/2019      4  859
+#2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660 
+#860 - 923
+#3. covid 11/1/2019	    3/16/2020   924  1032
+#4. zlb         3/17/2020- 3/16/2022     1032-1516
+#5. Taming inflation 03/17/2022 - 12/14/2023 1517-1957
+#NO! inflation   5/5/2022		12/14/2023 1517  1714
+# Redo -3 for each position for nrow=1957
+
+ 
+# ------------------------ episode stats
+# 1. average rates and volumes
+# 2. IQR
+# 3. all quantiles
+# 3. Distance from target ?? or average:  below target, above target
 begn<- c(1, 859, 923,  1014, 1519, 1)
 endn<- c(858, 922, 1013, 1518, 1957, 1957)
 
@@ -2156,10 +2156,37 @@ end_dates_strings <- as.character(end_dates)
 ```
 
 ### episode characteristics
+<!--
+\@ref(tab:sampletable_characteristics) provides a summary of the data.
+\```{r sampletable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+\@ref(tab:sampletable_metrics) provides a summary of the data.
+\```{r sampletable_metrics, tab.cap="Simple statistics 2016-2023", echo=FALSE, results='asis'}
+
+-->
 
 
-Table \@ref(tab:normtable_characteristics) provides a summary of the data.
-```{r norm_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+
+<!--
+'data.frame':	1957 obs. of  9 variables:
+ $ sdate            : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" "2016-03-09" ...
+ $ EFFR             : num  36 36 36 36 36 36 36 37 37 37 ...
+ $ VolumeEFFR       : num  75 72 72 75 72 68 67 67 63 63 ...
+ $ TargetUe         : num  50 50 50 50 50 50 50 50 50 50 ...
+ $ TargetDe         : num  25 25 25 25 25 25 25 25 25 25 ...
+ $ Percentile01_EFFR: num  34 34 32 34 35 35 35 35 35 36 ...
+ $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+ $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+ $ Percentile99_EFFR: num  52 50 50 52 75 50 50 50 50 50 ...)
+Table \@ref(tab:norm_characteristics) provides a summary of the data.
+-->
+
+
+str(my_envepisodes$quantilesE)
+str(my_envepisodes$normE)
+str(qnormE)
+
+\@ref(tab:normtable_characteristics) provides a summary of the data.
+\```{r normtable_characteristics, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", echo=FALSE, results='asis'}
 k=1 # normalcy period
 
 bgn<-begn[k]
@@ -2169,11 +2196,11 @@ print(edn)
 norm<-rrbp[bgn:edn,]  # All
 sdatenorm<-sdate[bgn:edn]
 
-qnormE=quantilesE[bgn:edn,] # rate specific metrics 
-qnormT=quantilesT[bgn:edn,]
-qnormB=quantilesB[bgn:edn,]
-qnormS=quantilesS[bgn:edn,]
-str(norm)
+#qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+#qnormT=quantilesT[bgn:edn,] -->
+#qnormB=quantilesB[bgn:edn,] -->
+#qnormS=quantilesS[bgn:edn,] -->
+str(my_envepisodes$normE)
 
 # Store your data frame in the environment
 my_envepisodes$sdatenorm <-sdatenorm
@@ -2182,11 +2209,13 @@ my_envepisodes$normT <-qnormT
 my_envepisodes$normB <-qnormB
 my_envepisodes$normS <-qnormS
 
-Estatsnorm <- colMeans(qnormE[bgn:edn,2:ncol(qnormE)], na.rm = TRUE)
-#Ostatsnorm <- colMeans(qnormO[bgn:edn,,2:ncol(qnormO)], na.rm = TRUE)
-Tstatsnorm <- colMeans(qnormT[bgn:edn,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <- colMeans(qnormB[bgn:edn,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <- colMeans(qnormS[bgn:edn,2:ncol(qnormS)], na.rm = TRUE)
+my_env <-my_envepisodes
+
+Estatsnorm <- colMeans(normE[bgn:edn,2:ncol(qnormE)], na.rm = TRUE)
+#Ostatsnorm <- colMeans(normO[bgn:edn,,2:ncol(qnormO)], na.rm = TRUE)
+Tstatsnorm <- colMeans(normT[bgn:edn,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(normB[bgn:edn,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(normS[bgn:edn,2:ncol(qnormS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
@@ -2210,12 +2239,48 @@ rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target",
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charnorm)
 ```
-
+#normalcy 3/4/2016-7/31/2019 
+ mid cycle adjustment 8/1/2019-10/31/2019
+ covid 11/1/2019-3/16/2020 
+ zlb         3/17/2020-3/16/2022 
+ Taming inflation 03/17/2022-12/14/2023
 
 
 Table \@ref(tab:normtable_metrics) provides a summary of the data.
-```{r norm_metrics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+```{r normtable_metrics, tab.cap="Rate statistics normalcy 3/4/2016-7/31/2019", echo=FALSE, results='asis'}
 # episode stats --------------------------------------------------------
+k=1 # normalcy period
+
+bgn<-begn[k]
+edn<-endn[k]
+print(bgn)
+print(edn)
+norm<-rrbp[bgn:edn,]  # All
+sdatenorm<-sdate[bgn:edn]
+
+#qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+#qnormT=quantilesT[bgn:edn,] -->
+#qnormB=quantilesB[bgn:edn,] -->
+#qnormS=quantilesS[bgn:edn,] -->
+str(my_envepisodes$normE)
+
+# Store your data frame in the environment
+my_envepisodes$sdatenorm <-sdatenorm
+my_envepisodes$normE <-qnormE
+my_envepisodes$normT <-qnormT
+my_envepisodes$normB <-qnormB
+my_envepisodes$normS <-qnormS
+
+my_env <-my_envepisodes
+
+Estatsnorm <- colMeans(normE[bgn:edn,2:ncol(qnormE)], na.rm = TRUE)
+#Ostatsnorm <- colMeans(normO[bgn:edn,,2:ncol(qnormO)], na.rm = TRUE)
+Tstatsnorm <- colMeans(normT[bgn:edn,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(normB[bgn:edn,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(normS[bgn:edn,2:ncol(qnormS)], na.rm = TRUE)
+
+#
+
 # Assuming categories is defined somewhere in your code
 categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 # Assuming Estatsnorm, Tstatsnorm, Bstatsnorm, and Sstatsnorm are correctly calculated
@@ -2265,7 +2330,7 @@ The range of the data, the 9th ,minus the first percentile, is more sensitive to
 
 Adjust--------------------------------
 Table \@ref(tab:adjust_characteristics) provides a summary of the data.
-\```{r adjust_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+\```{r adjust_characteristics, tab.cap="Rate characteristics  mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis'}
 k=2  
 bgn<-begn[k]
 edn<-endn[k]
@@ -2324,7 +2389,7 @@ print(charadj)
 ```
 
 Table \@ref(tab:adjusttable_metrics) provides a summary of the data.
-\```{r adjust_metrics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+\```{r adjust_metrics, tab.cap="Rate statistics  mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis'}
 median_values = c(Estatsadj[1], Tstatsadj[1], Bstatsadj[1], Sstatsadj[1])
 iqr_values = c(Estatsadj[7] - Estatsadj[6],  Tstatsadj[5] - Tstatsadj[4], Bstatsadj[5] - Bstatsadj[4], Sstatsadj[5] - Sstatsadj[4])
 range_values = c(Estatsadj[8] - Estatsadj[5], Tstatsadj[6] - Tstatsadj[3], Bstatsadj[6] - Bstatsadj[3], Sstatsadj[6] - Sstatsadj[3])
@@ -2334,8 +2399,8 @@ print(xtable(adjstats),include.rownames = FALSE)
 
 ```
 
-```{r adjust plots}
-# Plots  rates
+ (see Figure \@ref(fig:EFFR during mid cycle adjustment 8/1/2019-10/31/2019)
+\```{r, fig.cap= "EFFR during mid cycle adjustment 8/1/2019-10/31/2019}
 sdate<-sdateadj
 maxr=max(adjust[,2:ncol(adjust)]) # drop outlier 525
 maxr=260
@@ -2355,9 +2420,10 @@ The interquartile range for the money market rates TGCR and BGCR are under 1 bp,
 
 The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers/ Some 14 to 16 basis points for the EFFR and the money market rates, TGCR, BGCR, and SOFR. 
   
-
+Table \@ref(tab:adjusttable_metrics) provides a summary of the data.
+\```{r adjust_metrics, tab.cap="Rate statistics  mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis'}
 Table \@ref(tab:covidtable_characteristics) provides a summary of the data.
-```{r covidttable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+```{r covidttable_characteristics, tab.cap="Rate characteristic covid 11/1/2019-3/16/2020 ", echo=FALSE, results='asis'}
 # Covid period --------------------------------------
 k=3  
 bgn<-begn[k]
@@ -2411,7 +2477,7 @@ print(charcovid)
 ```
 
 Table \@ref(tab:covid_stats) provides a summary of the data.
-```{r covid_stas, tab.cap="Rate statistics 2016-2023", echo=FALSE, results='asis'}
+```{r covid_stas, tab.cap="Rate statistics covid 11/1/2019-3/16/2020 , echo=FALSE, results='asis'}
 median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
 iqr_values = c(Estatscovid[7] - Estatscovid[6], Tstatscovid[5] - Tstatscovid[4], Bstatscovid[5] - Bstatscovid[4], Sstatscovid[5] - Sstatscovid[4])
 range_values = c(Estatscovid[8] - Estatscovid[5], Tstatscovid[6] - Tstatscovid[3], Bstatscovid[6] - Bstatscovid[3], Sstatscovid[6] - Sstatscovid[3])
@@ -2420,7 +2486,9 @@ covidstats <- data.frame(Category = categories, Median = median_values, IQR = iq
 print(xtable(covidstats), include.rownames = FALSE)
 ```
 
-```{r plot covid}
+
+ (see Figure \@ref(fig:EFFR during covid 11/1/2019-3/16/2020)
+\```{r, fig.cap= "EFFR during covid 11/1/2019-3/16/2020"}
 sdate<-sdatecovid
 maxr=max(covid[,2:ncol(covid)]) # drop outlier 165
 maxr=maxr+5
@@ -2443,9 +2511,11 @@ The interquartile range for the money market rates TGCR and BGCR are .12-.15 bp,
 
 The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers, Some 11 to 12 basis points for  the money market rates, TGCR, BGCR 7.33 for the EEFR and 14.44 for SOFR. 
 
+
+
 zlb-----------------------------------
 Table \@ref(tab:zlbtable_characteristics) provides a summary of the data.
-\```{r zlb_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+\```{r zlb_characteristics, tab.cap="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, results='asis'}
 # zero lower bound period --------------------------------------
 k=4  
 bgn<-begn[k]
@@ -2499,7 +2569,7 @@ print(charzlb)
 ```
 
 Table \@ref(tab:zlbtable_metrics) provides a summary of the data.
-```{r zlb_metrics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+```{r zlb_metrics, tab.cap="Rate statistics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, results='asis'}
 median_values = c(Estatszlb[1], Tstatszlb[1], Bstatszlb[1], Sstatszlb[1])
 iqr_values = c(Estatszlb[7] - Estatszlb[6], Tstatszlb[5] - Tstatszlb[4], Bstatszlb[5] - Bstatszlb[4], Sstatszlb[5] - Sstatszlb[4])
 range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstatszlb[6] - Bstatszlb[3], Sstatszlb[6] - Sstatszlb[3])
@@ -2508,10 +2578,8 @@ zlbstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_
 print(xtable(zlbstats),include.rownames = FALSE)
 ```
 
-
-
-```[r Plot ZLB rates}
-  #print(effrrates_zlb) ?
+ (see Figure \@ref(fig:EFFR during zero lower bound 3/17/2020-3/16/2022")
+\```{r, fig.cap= "EFFR during zero lower bound 3/17/2020-3/16/2022}
 sdate<-sdatezlb
 maxr=max(zlb[,2:ncol(zlb)]) # drop outlier 54
 maxr=maxr+6
@@ -2535,7 +2603,9 @@ The interquartile range for the money market rates TGCR and BGCR are 3.26-3.46 b
 The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers,  Some 23 basis points for the EFFR and 21 for SOFR and the money market rates, TGCR, BGCR, 32-33. 
 
 Inflation------------------------------
-```{r, zlb, echo=FALSE}
+Table \@ref(tab:inflationtable_characteristics) provides a summary of the data.
+\```{r zlb_characteristics, tab.cap="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE, results='asis'}
+sdate<-sdateinflation
 k=5 
 bgn<-begn[k]
 edn<-endn[k]
@@ -2586,6 +2656,43 @@ rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target",
 colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charinflation)
 
+
+Table \@ref(tab:inflationtable_statistics) provides a summary of the data.
+\```{r inflationtable_statistics, tab.cap="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE, results='asis'}
+sdate<-sdateinflation
+k=5 
+bgn<-begn[k]
+edn<-endn[k]
+print(bgn)
+print(edn)
+inflation<-rrbp[bgn:edn,]
+sdateinflation<-sdate[bgn:edn]
+
+qinflationE=quantilesE[bgn:edn,]
+qinflationT=quantilesT[bgn:edn,]
+qinflationB=quantilesB[bgn:edn,]
+qinflationS=quantilesS[bgn:edn,]
+
+
+# Store your data frame in the environment
+my_envepisodes$sdateinflation <-sdateinflation
+my_envepisodes$inflationE <-qinflationE
+my_envepisodes$inflationT <-qinflationT
+my_envepisodes$inflationB <-qinflationB
+my_envepisodes$inflationS <-qinflationS
+
+# stats_inflationust<-colMeans(quantilesE[bgn_edn,]     #inflationust
+Estatsinflation <- colMeans(qinflationE[bgn:edn,2:ncol(qinflationE)], na.rm = TRUE)
+#Ostatsinflation <- colMeans(qinflationO[bgn:edn,,2:ncol(qinflationO)], na.rm = TRUE)
+Tstatsinflation <- colMeans(qinflationT[bgn:edn,2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <- colMeans(qinflationB[bgn:edn,2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <- colMeans(qinflationS[bgn:edn,2:ncol(qinflationS)], na.rm = TRUE)
+
+# Add NA for targets 
+Tstatsinflation2<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
+Bstatsinflation2<-c(Bstatsinflation[1],Bstatsinflation[2], TargetUe=NA, TargetDe=NA,Bstatsinflation[3],Bstatsinflation[4],Bstatsinflation[5],Bstatsinflation[6])
+Sstatsinflation2<-c(Sstatsinflation[1],Sstatsinflation[2], TargetUe=NA, TargetDe=NA,Sstatsinflation[3],Sstatsinflation[4],Sstatsinflation[5],Sstatsinflation[6])
+
 median_values = c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
 iqr_values = c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
 range_values = c(Estatsinflation[8] - Estatsinflation[5], Tstatsinflation[6] - Tstatsinflation[3], Bstatsinflation[6] - Bstatsinflation[3], Sstatsinflation[6] - Sstatsinflation[3])
@@ -2594,7 +2701,8 @@ inflationstats <- data.frame(Category = categories, Median = median_values, IQR 
 print(xtable(inflationstats),include.rownames = FALSE)
 ```
 
-```{r Plot rates}
+ (see Figure \@ref(fig:EFFR during Taming inflation 03/17/2022-12/14/2023")
+\```{r, fig.cap= "EFFR during Taming inflation 03/17/2022-12/14/2023"}
 sdate<-sdateinflation
 maxr=max(inflation[,2:ncol(inflation)]) # 539
 minr=min(inflation[,2:ncol(inflation)]) #0
@@ -2656,9 +2764,6 @@ cat("   \\hline\n")
 cat("\\end{tabular}\n")
 cat("\\end{table}\n")
 ```
-
-
-
 
 
 ###
