@@ -845,11 +845,11 @@ my_envepisodes$zlbB <-qzlbB
 my_envepisodes$zlbS <-qzlbS
 
 # stats_zlbust<-colMeans(quantilesE[bgn_edn,]     #zlbust
-Estatszlb <- colMeans(qzlbE[bgn:edn,2:ncol(qzlbE)], na.rm = TRUE)
-#Ostatszlb <- colMeans(qzlbO[bgn:edn,,2:ncol(qzlbO)], na.rm = TRUE)
-Tstatszlb <- colMeans(qzlbT[bgn:edn,2:ncol(qzlbT)], na.rm = TRUE)
-Bstatszlb <- colMeans(qzlbB[bgn:edn,2:ncol(qzlbB)], na.rm = TRUE)
-Sstatszlb <- colMeans(qzlbS[bgn:edn,2:ncol(qzlbS)], na.rm = TRUE)
+Estatszlb <- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
+#Ostatszlb <- colMeans(qzlbO[,2:ncol(qzlbO)], na.rm = TRUE)
+Tstatszlb <- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
+Bstatszlb <- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
+Sstatszlb <- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatszlb2<-c(Tstatszlb[1],Tstatszlb[2], TargetUe=NA, TargetDe=NA,Tstatszlb[3],Tstatszlb[4],Tstatszlb[5],Tstatszlb[6])
