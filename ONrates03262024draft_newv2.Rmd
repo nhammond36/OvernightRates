@@ -689,8 +689,6 @@ FOMC meeting days and around releases of key macroeconomic aggregates in a conti
 
 Both Federal Reserve decisions and financial markets watch and depend on bond yields. The estimated policy rule describes the Fed as reacting to information contained in the yield curve. the most important information is contained in yields with maturities around two years, which suggests that the Fed reacts to some medium-run forecast of the economy. The policy rule crucially depends on thetwo-year yield and describes Fed policy better than Taylor rules. This yield-based information may underlie the FOMC’s policy decisions. 
 
- 
-
 The short informational lag before Fed's policy decision based on information available right before the FOMC starts its meeting provides a recursive identification scheme that turns the target forecast from right before the FOMC meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. The Fed extracts information about the state of the economy from the current yield curve. 
 The high-frequency policy rule based on yield curve information and an arbitrage-free bond market...
 
@@ -1528,33 +1526,9 @@ Rate volatility survives
 Time series propertie of overnight policy, interbank rates, transactions, and reserves held at the Federal Reserve
 We examine the time series properties of overnight reference rates and their correspondence with the Federal Funds rate, the FOMC policy rate from 2016 through 2023.Transactions, reserves.
 
-For the sample from 2016 through 2023, (Figure \@ref(fig:Daily rates 2016-2022-plot), you can see how closely all overnight rates closely track the EFFR. Fed policy changes are visible in Vertical shifts of the series.I've identifies these shifts with different episodes of Fed policy regimes: derived from visual inspection of the data and the corresponsing policy changes (TABLE?) during each period.  A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) 
+For the sample from 2016 through 2023, all overnight rates closely track the EFFR(Figure \@ref(fig:Daily rates 2016-2022-plot). 
 
-Introduce overnight rates, EFFR, TGCR, BGCR, SOFR. sources NYFed, concoda David Gibbs
-Figure 1. Visible in sample figure 1(and stats?)
-Features of overnight rates closely tracking the EFFR
-Vertical shifts from policy changes
-Horizontal shifts, sensitivity
-Policy inertia
-Tendency to move together
-Mean reverions (around a central tendency Benzoni) Martingale or not: Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate
-
-Monetary Policy across Inflation Regimes
-Valeria Gargiulo, Christ ian Matthes, and Katerina Petrova
-Federal Reserve Bank of New York Staff Reports, no. 1083
-January 2024
-\URL{https://doi.org/10.59576/sr.1083}
-
-Introduce episodes: It helps to look at the behavior of data over regimes
-1. normalcy   3/4/2016		7/31/2019      1  858 
-2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
-3. covid 11/1/2019	    3/16/2020   923  1013
-4. zlb         3/17/2020- 3/16/2022     1014-1518
-4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
-
-Rates increase steadily from _ basis points during normalcy from March 2016 through July 2019.In 2019 rates began a three month period  from August to October 2019 (\@ref(fig:fig1).  With the onset of covid, rates  plunge from _ basis points in November 2019 to March 2020. Rates then hover near zero from Mar 2020 to March 2022 during the zero lower bound. Then rates rose in steady 25 or 50 basis point increments from March 2022 to_ in December 2023 as  the Fed fights inflation. Policy inertia is evident in all periods, as the Fed sequentially changes rates in ?? basis points .
-
-Chat: In the sample, the average weighted median for the Effective Federal Funds Rate (EFFR) stands at 157 basis points (pb) (\@ref(tab:tab1). Comparatively, other money market rates show a clustering around the median EFFR, with the Tri-Party General Collateral Rate (TGCR), Brokered General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) ranging from 123 to 134 bp. Daily transaction volumes also reflect this pattern, with SOFR leading at approximately $754 billion, followed by TGCR and BGCR at around $300 billion each. EFFR has a notably lower daily trade volume of $79 billion. The percentiles of rates further demonstrate this clustering around EFFR and SOFR.
+The average weighted median for the Effective Federal Funds Rate (EFFR) stands at 157 basis points (pb) (\@ref(tab:tab1). Other money market rates clusteraround the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) range from 123 to 134 bp. Daily transaction volumes also reflect this pattern, with SOFR leading at approximately $754 billion, followed by TGCR and BGCR at around $300 billion each. EFFR has a notably lower daily trade volume of $79 billion. The percentiles of rates further demonstrate this clustering around EFFR and SOFR. [ADD VOLUME FIGURE]
 
  Figure \@ref(fig:sampleplot), the relationship is evident. 
 ```{r sampleplot, fig.cap="Overnight rates 2016-2023", echo=FALSE}
@@ -1573,9 +1547,12 @@ meltrrbp <- melt(rrbp,id="sdate")
    print(rates)
 ```
 
-?? hERE?
+
+Fed policy changes are visible in Vertical shifts of the series.
+Rates increase steadily from _ basis points during normalcy from March 2016 through July 2019.In 2019 rates began a three month period  from August to October 2019 (\@ref(fig:fig1).  With the onset of covid, rates  plunge from _ basis points in November 2019 to March 2020. Rates then hover near zero from Mar 2020 to March 2022 during the zero lower bound. Then rates rose in steady 25 or 50 basis point increments from March 2022 to_ in December 2023 as  the Fed fights inflation. Policy inertia is evident in all periods, as the Fed sequentially changes rates in ?? basis points .
 
 
+?? EFFR VS TARGETS HERE?
  Figure \@ref(fig:FOMC targets and EFFR)
 ```{r FOMC targets and EFFR, fig.cap= "EFFR, FOMC targets 2016-2023",echo=FALSE}
 quantilesE2 = subset( quantilesE, select = -c(VolumeEFFR,TargetDe, TargetUe,Percentile01_EFFR,Percentile99_EFFR))
@@ -1591,16 +1568,10 @@ quantilesE2 = subset( quantilesE, select = -c(VolumeEFFR,TargetDe, TargetUe,Perc
 
 
 ## Characteristics of the sample distribution
+The rate data from the Federal Reserve Data Download Program are average volume weighted medians and select percentiles. The median, a measure of central tendency, and quantiles summarize the distribution of rates characterized be extreme value and outliers (\@ref(tab:sampletable_characteristics).
 
-DELETE CHUNK
-As shown in Figure \@ref(fig:sampleplot_characteristics), the relationship is evident. Table 
-```{r sampleplot_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
-# boxplots and or quantiles
-# Discuss quantiles in (\@ref(fig:fig1),  (\@ref(tab:tab1). box plots (summarizes a data set visually using a five-number summary) or quantile plots, histograms, densities
-```
+The median rather than the mean better represent daily rates since the data have outliers or extreme values. The median and interquartile range, the 75 percentile minus the 25 percentile, summarize a typical value and the variability in the sample.  The range of the data, the 99th ,minus the first percentile, is more sensitive to outliers.
 
-
-\@ref(tab:sampletable_characteristics) provides a summary of the data.
 \```{r sampletable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
 # Sample characterisics quantiles and more --------------------------------------------------
 k=6 # sample period maybe convert to begn later etc
@@ -1657,8 +1628,6 @@ colnames(stats_sample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(stats_sample)
 ```
 
-
-
 (see Figure \@ref(fig:Overnight rates quantiles 2016-2023)
 \```{r Overnight rates quantiles, daily sample quantile dataframes, echo=FALSE,  cache=FALSE,results='hide'}
 boxplot_sample <- data.frame(
@@ -1668,6 +1637,10 @@ boxplot_sample <- data.frame(
   y50 = c(median(quantilesE$EFFR), median(quantilesT$TGCR), median(quantilesB$BGCR), median(quantilesS$SOFR)),
   y75 = c(quantile(quantilesE$Percentile75_EFFR, 0.75), quantile(quantilesT$Percentile75_TGCR, 0.75), quantile(quantilesB$Percentile75_BGCR, 0.75), quantile(quantilesS$Percentile75_SOFR, 0.75)),
   y100 = c(max(quantilesE$EFFR), max(quantilesT$TGCR), max(quantilesB$BGCR), max(quantilesS$SOFR)))
+```
+DELETE CHUNK
+As shown in Figure \@ref(fig:sampleplot_characteristics), the relationship is evident. Table 
+```{r sampleplot_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
 ```
 
 
@@ -1684,18 +1657,12 @@ boxplot_sample <- data.frame(
   print(bsample)
 ```
 
+The interquartile range (IQR), and range  better describe distribution rate data With its extreme values and outliers \@ref(tab:sampletable_metrics). The standard deviation of data not normally distributed doesn't capture the dispersion of data from the mean. The IQR, the 75th minus the 25th percentile, contain 50 percent of the data, demonstrates how clustered are the data.  The IQR, a measure of variability for skewed distributions. The IQR as a measure of central tendency, such as the median, helps understand the center and spread of the data because it is less affected by extreme values and outliers. Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
 
-## Stats and dispersion
-The interquartile range (IQR), a useful measure of variability for skewed distributions. As the 75th minus the 25thpercentile, the IQR demonstrate where 50 percent of the data lie, showing how clustered are the values.Use the IQR to assess the variability where most of your values lie. Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data spread out further. Conversely, smaller values show that the middle values cluster more tightly. 
-
-When measuring variability, statisticians prefer using the interquartile range instead of the full data range because extreme values and outliers affect it less. Typically, use the IQR with a measure of central tendency, such as the median, to understand your data’s center and spread. This combination creates a fuller picture of your data’s distribution.
-
-Unlike the more familiar mean and standard deviation, the interquartile range and the median are robust measures. Outliers do not strongly influence either statistic because they don’t depend on every value. Additionally, like the median, the interquartile range is superb for skewed distributions. For normal distributions, you can use the standard deviation to determine the percentage of observations that fall specific distances from the mean. However, that doesn’t work for skewed distributions, and the IQR is an excellent alternative.
-
-The range of the data, here the 99th minus the first percentile illustrate outliers, showing where 98 percent of the data lie. The range is the spread of your data from the lowest to the highest value in the distribution. It is a commonly used measure of variability. While a large range means high variability, a small range means low variability in a distribution.
+The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The range of the data, here the 99th minus the first percentile illustrate outliers, showing where 98 percent of the data lie.
 \url{https://statisticsbyjim.com/basics/interquartile-range/}
 
-\@ref(tab:sampletable_metrics) provides a summary of the data.
+<!--\@ref(tab:sampletable_metrics) provides a summary of the data.-->
 \```{r sampletable_metrics, tab.cap="Simple statistics 2016-2023", echo=FALSE, results='asis'}
 # Sample data metrics --------------------------------------------------------
 k=6 # sample period maybe convert to begn later etc
@@ -1743,11 +1710,11 @@ The range of the data, the 99th minus the first percentile, is more sensitive to
 
 
 ## volatility
-Conditional heteroskedasticity (\url{https://www.investopedia.com/terms/h/heteroskedasticity.asp})
-Heteroskedasticity often arises in two forms: conditional and unconditional. Conditional . 
-? Do my plots of log percent changes, and standard deviation of log percent changes serve
+I describe volatility as 1) log percent changes in rates since data (see Figure \@ref(fig:volatility log percent change) are average weighted median values. Volatility that changes over time demonstrate the heteroskedasticity of overnight rates, and 2) the standard deviation of log percent change in rates over arbitrary periods, i.e number of days (see Figure \@ref(fig:stdev volatility 5day).
 
-I describe volatility as log percent changes in rates since data are average weighted median values. the median is the best measure of central tendency because it’s the value in the middle of values ordered from low to high. The rate data from the Federal Reserve Data Download Program are average volume weighted medians and select percentiles. The median rather than the mean better represent daily rates since the data have outliers or extreme values. The median and interquartile range, the 75 percentile minus the 25 percentile, summarize a typical value and the variability in the sample.  The range of the data, the 99th ,minus the first percentile, is more sensitive to outliers.
+<!--(\url{https://www.investopedia.com/terms/h/heteroskedasticity.asp})
+Heteroskedasticity often arises in two forms: conditional and unconditional. Conditional . 
+? Do my plots of log percent changes, and standard deviation of log percent changes serve-->
 
 <!--
 Mean reversion
@@ -1755,10 +1722,8 @@ Benzoni identify mean reversion around a central tendency. The stochastic mean  
 Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior. 
 -->
 
-Volatility in the sample, the standard deviation of log percent change
-2 plots: log percent change, and stadard deviation of log percent change over arbitrary periods, i.e number of days.
-
-(see Figure \@ref(fig:volatility log percent change)
+[CORRECT CHUNK FOR VOLATILITY PLOT]
+<!-- (see Figure \@ref(fig:volatility log percent change) -->
 ```{r volatility log percent change, fig.cap= "Percent change Daily rates 2016-2023", echo=FALSE}
 df <- as.data.frame(sample_measure1)
 begn<- c(1, 859, 923,  1014, 1519, 1)
@@ -1767,8 +1732,6 @@ bgn<-begn[6]
 edn<-endn[6]-1
 df$sdate <- sdate[bgn:edn]
 ```
-
-This measure of volatility needs work since str(sdrates) 1956 observations five day rolling average. But Rolling every five days so maybe ok
 
 (see Figure \@ref(fig:stdev volatility 5day)
 ```{r stdev volatility 5day, fig.cap= "Rollign standard deviation of percent change daily rates 2016-2023", echo=FALSE}
@@ -1802,17 +1765,39 @@ print(plotsdrates)
 ```
 
 ## Episodes that suggest different policy regimes
-#Discuss plots and statistics of episodes daily epoch rates
+The vertical shifts in rate data from 2016 t0 2023 suggest different episodes of Fed policy regimes.
+The following policy episodes are identified from visual inspection of the data and the corresponsing policy changes (TABLE?) during each period.  A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024)
 
-## Episodes 
-The pattern in rate data from 2016 t0 2023 suggests the following episodes that may correspond with differing policy regimes or external shocks (Figure \@ref(fig:EFFR, FOMC targets 2016-2023-plot):
+The following episodes that may correspond with differing policy regimes or external shocks (Figure \@ref(fig:EFFR, FOMC targets 2016-2023-plot):
+
+1. normalcy   3/4/2016		7/31/2019      1  858 
+2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
+3. covid 11/1/2019	    3/16/2020   923  1013
+4. zlb         3/17/2020- 3/16/2022     1014-1518
+4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
+
+PRESENT CHAR AND STATS JOINTLY AS BELOW
+Table \@ref(tab:combinedtable_characteristics)
+Table \@ref(tab:combinetable_statistics) 
 
 
-normalcy
-adjust 
-covid 
-zlb 
-inflation 
+ <!--
+Introduce overnight rates, EFFR, TGCR, BGCR, SOFR. sources NYFed, concoda David Gibbs
+Figure 1. Visible in sample figure 1(and stats?)
+Features of overnight rates closely tracking the EFFR
+Vertical shifts from policy changes
+Horizontal shifts, sensitivity
+Policy inertia
+Tendency to move together
+Mean reverions (around a central tendency Benzoni) Martingale or not: Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate
+
+Monetary Policy across Inflation Regimes
+Valeria Gargiulo, Christ ian Matthes, and Katerina Petrova
+Federal Reserve Bank of New York Staff Reports, no. 1083
+January 2024
+\URL{https://doi.org/10.59576/sr.1083}
+-->
+
 
 
 ```{r, episode parameters, echo=FALSE}
@@ -2409,6 +2394,8 @@ colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charinflation)
 ```
 
+
+
 Table \@ref(tab:inflationtable_statistics) provides a summary of the data.
 \```{r inflationtable_statistics, tab.cap="Rate characteristics Taming inflation 03/17/2022-12/14/2023", 
 categories <- c("Estatsinflation", "Tstatsinflation", "Bstatsinflation", "Sstatsinflation")
@@ -2475,7 +2462,8 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation
 # Warning Removed 620 rows containing missing values (`geom_point()`) so plot ends in July 2023
 ```
 
-DECIDE WHETHER TO PRESENT CHAR AND STATS FOR EACH EPISODE ALONE OR JOINTLY AS BELOW
+
+<!- Table \@ref(tab:combinedtable_characteristics) -->
 ```{r Combine episode dataframes, include=FALSE}
 # Extract data frames from my_envepisodes and add them to the global environment
 episodesstats <- my_envepisodes$episodesstats
@@ -2529,8 +2517,9 @@ cat("\\end{table}\n")
 
 
 
-This works for episodechar table
-```{r combined tables} 
+
+<!--Table \@ref(tab:combinedtable_statistics) -->
+```{r combinedtable_statistics} 
 # Define variable names
 variable_names <- c("EFFR", "TGCR", "BGCR", "SOFR")
 
