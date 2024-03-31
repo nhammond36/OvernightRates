@@ -1572,6 +1572,59 @@ The rate data from the Federal Reserve Data Download Program are average volume 
 
 The median rather than the mean better represent daily rates since the data have outliers or extreme values. The median and interquartile range, the 75 percentile minus the 25 percentile, summarize a typical value and the variability in the sample.  The range of the data, the 99th ,minus the first percentile, is more sensitive to outliers.
 
+Median rates in the sample cluster around the EFFR at 157 bp,  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.7067-156.15, an ICR of  1.56 basis points, 1.615034, the TGCR and BGCR an even tighter range under one bp, SOHR  4.2, 136.7011-132.5059
+[1] 4.1952
+
+Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR. 
+
+Daily volume in whole rates TBGR and BGCR almost quadruple the transactions in the EFFR: 78.91262,  296.9484 , 311.2315. SOFR transactiosn $754 billion per day dwarf trading in all other overnight reference rates., over double the whole market transactions.
+
+<!--
+$Percentile75_EFFR
+[1] 1.615034  
+$Percentile75_TGCR
+[1] 0.9167092
+
+$Percentile75_BGCR
+[1] 0.9570772
+
+$Percentile01_SGCR NA
+-->
+
+<!--
+              EFFR     TGCR     BGCR     SOFR    
+Rate          156.9688 132.8314 132.8482 134.0756
+Volume        78.91262 296.9484 311.2315 754.3664
+Upper target  170.5161 NA       NA       NA      
+Lower target  145.5161 NA       NA       NA      
+Percentile_01 153.07   124.8942 125.0746 NA      
+Percentile_25 156.1502 132.3551 132.3679 NA      
+Percentile_75 157.7067 133.2718 133.325  129.022 
+Percentile_99 169.0629 138.7547 141.1865 132.5059
+-->
+
+<!--
+Volume 78.91262,  296.9484 , 311.2315  , NA
+Estats_df
+      EFFR VolumeEFFR TargetUe TargetDe Percentile01_EFFR Percentile25_EFFR Percentile75_EFFR
+1 156.9688   78.91262 170.5161 145.5161            153.07          156.1502          157.7067
+  Percentile99_EFFR
+1          169.0629
+> Tstats_df
+Error: object 'Tstats_df' not found
+> Tstats
+             TGCR        VolumeTGCR Percentile01_TGCR Percentile25_TGCR Percentile75_TGCR Percentile99_TGCR 
+         132.8314          296.9484          124.8942          132.3551          133.2718          138.7547 
+> Bstats
+             BGCR        VolumeBGCR Percentile01_BGCR Percentile25_BGCR Percentile75_BGCR Percentile99_BGCR 
+         132.8482          311.2315          125.0746          132.3679          133.3250          141.1865 
+> Sstats
+      SOFR VolumeSGCR TargetUE TargetDE Percentile01_SGCR Percentile25_SGCR Percentile75_SGCR
+1 134.0756   754.3664       NA       NA           129.022          132.5059          136.7011
+  Percentile99_SGCR
+1          143.5335
+
+-->
 \```{r sampletable_characteristics, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
 # Sample characterisics quantiles and more --------------------------------------------------
 k=6 # sample period maybe convert to begn later etc
@@ -1712,6 +1765,9 @@ The range of the data, the 99th minus the first percentile, is more sensitive to
 ## volatility
 I describe volatility as 1) log percent changes in rates since data (see Figure \@ref(fig:volatility log percent change) are average weighted median values. Volatility that changes over time demonstrate the heteroskedasticity of overnight rates, and 2) the standard deviation of log percent change in rates over arbitrary periods, i.e number of days (see Figure \@ref(fig:stdev volatility 5day).
 
+
+From 2016 to 2020, the percent change in overnight rights, although varying daily, is in the range of plus of minus 0.5 percent (\@ref(fig:fig:volatility log percent change)). DUring the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies wildly? withing plu or minus 2 percent.
+
 <!--(\url{https://www.investopedia.com/terms/h/heteroskedasticity.asp})
 Heteroskedasticity often arises in two forms: conditional and unconditional. Conditional . 
 ? Do my plots of log percent changes, and standard deviation of log percent changes serve-->
@@ -1850,6 +1906,87 @@ end_dates_strings <- as.character(end_dates)
 Table \@ref(tab:norm_characteristics) provides a summary of the data.
 -->
 
+The average weighted median for the EFFR during the sample is 157 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within or little more than one basis point. The SOFR, 4 basis points.
+
+Estimating moments of the data show overnight rates are highly skewed with fatter tails.
+
+The interquartile range for the money market rates TGCR and BGCR show 50 percent of the data are closely ? around around the mean.  The TGCR and BGCR are under 1 bp, smaller than the 1.56 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 99th minus the first percentile, is more sensitive to outliers. The range of the EFFR and the money market rates, TGCR, BGCR, and SOFR are some 14 to 16 basis points.
+
+From 2016 to 2020, the percent change in overnight rights, although varying daily, is in the range of plus of minus 0.5 percent \@ref(fig:volatility log percent change)[]GROUP EPISODE VOLATILITY PLOTS] provides a summary of the data.. DUring the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies wildly? withing plu or minus 2 percent.
+
+
+<!--
+stats
+episodeschar
+                   EFFR      TGCR      BGCR      SOFR
+Rate          133.78904  83.82984  83.83566  84.78438
+Volume         75.86364 158.52564 166.42075 350.22028
+Upper target  143.09441        NA        NA        NA
+Lower target  118.09441        NA        NA        NA
+Percentile_01 129.37646  79.88345  79.96620  81.43706
+Percentile_25 133.32634  83.43823  83.45221  83.54779
+Percentile_75 134.54662  83.65618  83.68298  86.84848
+Percentile_99 147.02331  85.50350  88.44172  89.96853
+Rate          133.78904  83.82984  83.83566  84.78438
+Volume         75.86364 158.52564 166.42075 350.22028
+Upper target  143.09441        NA        NA        NA
+Lower target  118.09441        NA        NA        NA
+Percentile_01 129.37646  79.88345  79.96620  81.43706
+Percentile_25 133.32634  83.43823  83.45221  83.54779
+Percentile_75 134.54662  83.65618  83.68298  86.84848
+Percentile_99 147.02331  85.50350  88.44172  89.96853
+Rate          133.78904  83.82984  83.83566  84.78438
+Volume         75.86364 158.52564 166.42075 350.22028
+Upper target  143.09441        NA        NA        NA
+Lower target  118.09441        NA        NA        NA
+Percentile_01 129.37646  79.88345  79.96620  81.43706
+Percentile_25 133.32634  83.43823  83.45221  83.54779
+Percentile_75 134.54662  83.65618  83.68298  86.84848
+Percentile_99 147.02331  85.50350  88.44172  89.96853
+Rate          133.78904  83.82984  83.83566  84.78438
+Volume         75.86364 158.52564 166.42075 350.22028
+Upper target  143.09441        NA        NA        NA
+Lower target  118.09441        NA        NA        NA
+Percentile_01 129.37646  79.88345  79.96620  81.43706
+Percentile_25 133.32634  83.43823  83.45221  83.54779
+Percentile_75 134.54662  83.65618  83.68298  86.84848
+Percentile_99 147.02331  85.50350  88.44172  89.96853
+Rate          133.78904  83.82984  83.83566  84.78438
+Volume         75.86364 158.52564 166.42075 350.22028
+Upper target  143.09441        NA        NA        NA
+Lower target  118.09441        NA        NA        NA
+Percentile_01 129.37646  79.88345  79.96620  81.43706
+Percentile_25 133.32634  83.43823  83.45221  83.54779
+Percentile_75 134.54662  83.65618  83.68298  86.84848
+Percentile_99 147.02331  85.50350  88.44172  89.96853
+> 
+> episodesstats
+      Category    Median       IQR     RANGE    VOLUME
+EFFR      EFFR 150.46154 1.2202797 17.646853  75.86364
+TGCR      TGCR  83.82984 0.2179487  5.620047 158.52564
+BGCR      BGCR  83.83566 0.2307692  8.475524 166.42075
+SOFR      SOFR  84.78438 3.3006993  8.531469 350.22028
+EFFR1     EFFR 133.78904 1.2202797 17.646853  75.86364
+TGCR1     TGCR  83.82984 0.2179487  5.620047 158.52564
+BGCR1     BGCR  83.83566 0.2307692  8.475524 166.42075
+SOFR1     SOFR  84.78438 3.3006993  8.531469 350.22028
+EFFR2     EFFR 133.78904 1.2202797 17.646853  75.86364
+TGCR2     TGCR  83.82984 0.2179487  5.620047 158.52564
+BGCR2     BGCR  83.83566 0.2307692  8.475524 166.42075
+SOFR2     SOFR  84.78438 3.3006993  8.531469 350.22028
+EFFR3     EFFR 133.78904 1.2202797 17.646853  75.86364
+TGCR3     TGCR  83.82984 0.2179487  5.620047 158.52564
+BGCR3     BGCR  83.83566 0.2307692  8.475524 166.42075
+SOFR3     SOFR  84.78438 3.3006993  8.531469 350.22028
+EFFR4     EFFR 133.78904 1.2202797 17.646853  75.86364
+TGCR4     TGCR  83.82984 0.2179487  5.620047 158.52564
+BGCR4     BGCR  83.83566 0.2307692  8.475524 166.42075
+SOFR4     SOFR  84.78438 3.3006993  8.531469 350.22028
+-->
 
 
 \@ref(tab:normtable_characteristics) provides a summary of the data.
@@ -2462,6 +2599,10 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation
 # Warning Removed 620 rows containing missing values (`geom_point()`) so plot ends in July 2023
 ```
 
+see Figure \@ref(fig:EFFR during normalcy period  3/4/2016-7/31/2019-plot)
+\```{r, fig.cap= "Episodes daily rates  3/4/2016-12/14/2023"}
+p<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
+```
 
 <!- Table \@ref(tab:combinedtable_characteristics) -->
 ```{r Combine episode dataframes, include=FALSE}
