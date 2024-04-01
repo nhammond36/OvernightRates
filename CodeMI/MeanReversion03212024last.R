@@ -22,7 +22,7 @@ library(gridExtra)
 #library(MASS)
 library(fitdistrplus)
 library(reshape2)
-#library(bookdown)
+#library(p)
 
 # ------------------- Set up git -----------------------------
 # https://hansenjohnson.org/post/sync-github-repository-with-existing-r-project/
@@ -500,6 +500,27 @@ colnames(stats_sample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 # Print the combined matrix
 print(stats_sample)
 
+
+CORRECT TABLE!
+Estats_df
+      EFFR VolumeEFFR TargetUe TargetDe Percentile01_EFFR Percentile25_EFFR Percentile75_EFFR
+1 156.9688   78.91262 170.5161 145.5161            153.07          156.1502          157.7067
+  Percentile99_EFFR
+1          169.0629
+> Tstats_df
+Error: object 'Tstats_df' not found
+> Tstats
+             TGCR        VolumeTGCR Percentile01_TGCR Percentile25_TGCR Percentile75_TGCR Percentile99_TGCR 
+         132.8314          296.9484          124.8942          132.3551          133.2718          138.7547 
+> Bstats
+             BGCR        VolumeBGCR Percentile01_BGCR Percentile25_BGCR Percentile75_BGCR Percentile99_BGCR 
+         132.8482          311.2315          125.0746          132.3679          133.3250          141.1865 
+> Sstats
+      SOFR VolumeSGCR TargetUE TargetDE Percentile01_SGCR Percentile25_SGCR Percentile75_SGCR
+1 134.0756   754.3664       NA       NA           129.022          132.5059          136.7011
+  Percentile99_SGCR
+1          143.5335
+
 # Sample data metrics --------------------------------------------------------
 categories = c('EFFR', 'TGCR', 'BGCR', 'SOFR')
 median_values = c(Estats[1], Tstats[1], Bstats[1], Sstats[1])
@@ -602,11 +623,11 @@ my_envepisodes$normT <-qnormT
 my_envepisodes$normB <-qnormB
 my_envepisodes$normS <-qnormS
 
-Estatsnorm <- colMeans(qnormE[bgn:edn,2:ncol(qnormE)], na.rm = TRUE)
-#Ostatsnorm <- colMeans(qnormO[bgn:edn,,2:ncol(qnormO)], na.rm = TRUE)
-Tstatsnorm <- colMeans(qnormT[bgn:edn,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <- colMeans(qnormB[bgn:edn,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <- colMeans(qnormS[bgn:edn,2:ncol(qnormS)], na.rm = TRUE)
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+#Ostatsnorm <- colMeans(qnormO[,2:ncol(qnormO)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
@@ -629,7 +650,8 @@ rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charnorm)
-
+print(xtable(charnorm),include.rownames = FALSE)
+my_envepisodes$charnorm <-charnorm
 
 # episode stats --------------------------------------------------------
 # Assuming categories is defined somewhere in your code
@@ -644,8 +666,7 @@ normstats <- data.frame(Category = categories, Median = median_values, IQR = iqr
 
 # Print the table using xtable
 print(xtable(normstats), include.rownames = FALSE)
-
-#
+my_envepisodes$normstats <-normstats
 
 # Plots  rates
 sdate<-sdatenorm
@@ -655,7 +676,7 @@ minr-min(norm[,2:ncol(norm)]) #0
 meltrates_norm <- melt(norm,id="sdate")
 rates_norm <- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape = 16, size = 1) +
-  labs(x="", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  labs(caption= "Normalcy  3/4/2016-7/31/2019",x="", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal()+ guides(shape = guide_legend(title = "Rate"))
 print(rates_norm)
@@ -678,10 +699,6 @@ qadjT=quantilesT[bgn:edn,]
 qadjB=quantilesB[bgn:edn,]
 qadjS=quantilesS[bgn:edn,]
 adjust<-rrbp[bgn:edn,]  # All 
-# my_envepisodes$adjustE <-qadjE
-# my_envepisodes$adjustT <-qadjT
-# my_envepisodes$adjustB <-qadjB
-# my_envepisodes$adjustS <-qadjS
 
 
 # Store your data frame in the environment
@@ -692,11 +709,11 @@ my_envepisodes$adjB <-qadjB
 my_envepisodes$adjS <-qadjS
 
 # stats_adjust<-colMeans(quantilesE[bgn_edn,]     #adjust
-Estatsadj <- colMeans(qadjE[bgn:edn,2:ncol(qadjE)], na.rm = TRUE)
-#Ostatsadj <- colMeans(qadjO[bgn:edn,,2:ncol(qadjO)], na.rm = TRUE)
-Tstatsadj <- colMeans(qadjT[bgn:edn,2:ncol(qadjT)], na.rm = TRUE)
-Bstatsadj <- colMeans(qadjB[bgn:edn,2:ncol(qadjB)], na.rm = TRUE)
-Sstatsadj <- colMeans(qadjS[bgn:edn,2:ncol(qadjS)], na.rm = TRUE)
+Estatsadj <- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+#Ostatsadj <- colMeans(qadjO[,2:ncol(qadjO)], na.rm = TRUE)
+Tstatsadj <- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatsadj2<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
@@ -719,8 +736,7 @@ rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charadj)
-
-
+print(xtable(charadj),include.rownames = FALSE)
 
 median_values = c(Estatsadj[1], Tstatsadj[1], Bstatsadj[1], Sstatsadj[1])
 iqr_values = c(Estatsadj[7] - Estatsadj[6],  Tstatsadj[5] - Tstatsadj[4], Bstatsadj[5] - Bstatsadj[4], Sstatsadj[5] - Sstatsadj[4])
@@ -737,14 +753,15 @@ minr=min(adjust[,2:ncol(adjust)])
 meltrates_adjust <- melt(adjust,id="sdate")
 rates_adjust <- ggplot(meltrates_adjust,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape=16,size=1) +
-  labs(x="", y = "Basis Points (bp)", color = "Rate", linetype = "Rate") +  
+  labs(caption= "Adjustment 8/1/2019-10/31/2019",x="", y = "Basis Points (bp)", color = "Rate", linetype = "Rate") +  
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
 print(rates_adjust)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_adjust.pdf")
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_adjust.png")
 
-
+my_envepisodes$charadj <-charadj
+my_envepisodes$adjstats <-adjstats
 
 # Covid period --------------------------------------
 k=3  
@@ -769,11 +786,11 @@ my_envepisodes$covidB <-qcovidB
 my_envepisodes$covidS <-qcovidS
 
 # stats_covidust<-colMeans(quantilesE[bgn_edn,]     #covidust
-Estatscovid <- colMeans(qcovidE[bgn:edn,2:ncol(qcovidE)], na.rm = TRUE)
-#Ostatscovid <- colMeans(qcovidO[bgn:edn,,2:ncol(qcovidO)], na.rm = TRUE)
-Tstatscovid <- colMeans(qcovidT[bgn:edn,2:ncol(qcovidT)], na.rm = TRUE)
-Bstatscovid <- colMeans(qcovidB[bgn:edn,2:ncol(qcovidB)], na.rm = TRUE)
-Sstatscovid <- colMeans(qcovidS[bgn:edn,2:ncol(qcovidS)], na.rm = TRUE)
+Estatscovid <- colMeans(qcovidE[,2:ncol(qcovidE)], na.rm = TRUE)
+#Ostatscovid <- colMeans(qcovidO[,2:ncol(qcovidO)], na.rm = TRUE)
+Tstatscovid <- colMeans(qcovidT[,2:ncol(qcovidT)], na.rm = TRUE)
+Bstatscovid <- colMeans(qcovidB[,2:ncol(qcovidB)], na.rm = TRUE)
+Sstatscovid <- colMeans(qcovidS[,2:ncol(qcovidS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatscovid2<-c(Tstatscovid[1],Tstatscovid[2], TargetUe=NA, TargetDe=NA,Tstatscovid[3],Tstatscovid[4],Tstatscovid[5],Tstatscovid[6])
@@ -796,6 +813,8 @@ rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charcovid)
+print(xtable(charcovid),include.rownames = FALSE)
+
 
 ##
 
@@ -806,7 +825,11 @@ volume_values = c(Estatscovid[2], Tstatscovid[2], Bstatscovid[2], Sstatscovid[2]
 covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
 print(xtable(covidstats), include.rownames = FALSE)
 
+my_envepisodes$charcovid <-charcovid
+my_envepisodes$covidstats <-covidstats
 
+
+#caption= "Covid 11/1/2019-3/16/2020",
 sdate<-sdatecovid
 maxr=max(covid[,2:ncol(covid)]) # drop outlier 165
 maxr=maxr+5
@@ -815,7 +838,7 @@ minr=minr-3
 meltrates_covid <- melt(covid,id="sdate")
 rates_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape=16,size=1) +
-  labs(x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  labs(caption= "Covid 11/1/2019-3/16/2020",x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
 print(rates_covid)
@@ -872,6 +895,7 @@ rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charzlb)
+print(xtable(charzlb),include.rownames = FALSE)
 
 
 
@@ -881,6 +905,9 @@ range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstat
 volume_values = c(Estatszlb[2], Tstatszlb[2], Bstatszlb[2], Sstatszlb[2])
 zlbstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
 print(xtable(zlbstats),include.rownames = FALSE)
+
+my_envepisodes$charzlb <-charzlb
+my_envepisodes$zlbstats <-zlbstats
 
 # Plot rates
 #```{r ,  EFFR and percentiles, echo=FALSE, fig.cap="Overnight rates EFFR percentiles Zero lower bound"}   
@@ -892,10 +919,15 @@ maxr=max(zlb[,2:ncol(zlb)]) # drop outlier 54
 maxr=maxr+6
 minr=min(zlb[,2:ncol(zlb)]) #0
 
+
+
+# 1. normalcy   3/4/2016		7/31/2019      1  858 
+# 2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
+# 3. covid 11/1/2019	    3/16/2020   923  1013
 meltrates_zlb <- melt(zlb,id="sdate")
 rates_zlb <- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape=16,size=1) +
-  labs(x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  labs(caption= "Zero lower bound 3/17/2020-3/16/2022",x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
   scale_y_continuous(breaks = seq(0, 15, by = 5), limits = c(0, 15)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
 print(rates_zlb)
@@ -927,11 +959,11 @@ my_envepisodes$inflationB <-qinflationB
 my_envepisodes$inflationS <-qinflationS
 
 # stats_inflationust<-colMeans(quantilesE[bgn_edn,]     #inflationust
-Estatsinflation <- colMeans(qinflationE[bgn:edn,2:ncol(qinflationE)], na.rm = TRUE)
-#Ostatsinflation <- colMeans(qinflationO[bgn:edn,,2:ncol(qinflationO)], na.rm = TRUE)
-Tstatsinflation <- colMeans(qinflationT[bgn:edn,2:ncol(qinflationT)], na.rm = TRUE)
-Bstatsinflation <- colMeans(qinflationB[bgn:edn,2:ncol(qinflationB)], na.rm = TRUE)
-Sstatsinflation <- colMeans(qinflationS[bgn:edn,2:ncol(qinflationS)], na.rm = TRUE)
+Estatsinflation <- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
+#Ostatsinflation <- colMeans(qinflationO[,2:ncol(qinflationO)], na.rm = TRUE)
+Tstatsinflation <- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
 
 # Add NA for targets 
 Tstatsinflation2<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
@@ -954,8 +986,9 @@ rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(charinflation)
+print(xtable(charinflation),include.rownames = FALSE)
 
-
+#
 median_values = c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
 iqr_values = c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
 range_values = c(Estatsinflation[8] - Estatsinflation[5], Tstatsinflation[6] - Tstatsinflation[3], Bstatsinflation[6] - Bstatsinflation[3], Sstatsinflation[6] - Sstatsinflation[3])
@@ -963,6 +996,9 @@ volume_values = c(Estatsinflation[2], Tstatsinflation[2], Bstatsinflation[2], Ss
 inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
 print(xtable(inflationstats),include.rownames = FALSE)
 
+
+my_envepisodes$charinflation <-charinflation
+my_envepisodes$inflationstats <-inflationstats
 
 # Plot rates
 sdate<-sdateinflation
@@ -972,7 +1008,7 @@ minr=min(inflation[,2:ncol(inflation)]) #0
 meltrates_inflation <- melt(inflation,id="sdate")
 rates_inflation <- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape=16,size=1) +
-  labs(x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  labs(caption = "Inflation 03/17/2022-12/14/2023", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
   scale_y_continuous(breaks = seq(0, 500, by = 50), limits = c(0, 500)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
 print(rates_inflation)
@@ -980,20 +1016,181 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation.png")
 # Warning Removed 620 rows containing missing values (`geom_point()`) so plot ends in July 2023
 
+# 1. normalcy   3/4/2016		7/31/2019      1  858 
+# 2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
+# 3. covid 11/1/2019	    3/16/2020   923  1013
+# 4. zlb         3/17/2020- 3/16/2022     1014-1518
+# 4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
+
+# Combine plots
+rates_norm + rates_adjust + rates_covid + rates_zlb + rates_inflation
+plot_layout(ncol = 2) +
+plot_annotation( title = 'Overnight rates over different policy regimes', caption = '2016-2023', theme = theme(plot.title = element_text(size = 16)) )
+
+# or
+p<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pdf", p)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", p)
+
+
 # Combine xtable objects
 #combined_xtable <- rbind(x1, x2, x3)
 episodesstats <-rbind(normstats, adjstats,covidstats, zlbstats,inflationstats)
 episodeschar <-rbind(charnorm, charadj,charcovid, charzlb,charinflation)
 
-# Combine the tables
-episodesstats <- rbind(normstats, adjstats, covidstats, zlbstats, inflationstats)
-episodeschar <- rbind(charnorm, charadj, charcovid, charzlb, charinflation)
+# Chat table char 3 THIS IS THE ONE!
+# Load required libraries
+library(xtable)
+
+# Create the data frame
+data <- data.frame(
+  EFFR = c(133.789044, 75.863636, 143.094406, 118.094406, 129.376457, 133.326340, 134.546620, 147.023310,
+           200.093750, 66.843750, 212.890625, 187.890625, 192.078125, 197.250000, 201.906250, 209.750000,
+           150.461538, 71.703297, 168.956044, 143.956044, 145.802198, 149.527473, 151.879121, 157.516484,
+           8.085149, 68.968317, 25.000000, 0.000000, 5.069307, 7.130693, 8.671287, 12.401980,
+           368.601367, 99.564920, 385.649203, 360.649203, 365.448747, 367.562642, 369.177677, 388.813212),
+  TGCR = c(83.829837, 158.525641, NA, NA, 79.883450, 83.438228, 83.656177, 85.503497,
+           206.296875, 466.218750, NA, NA, 191.656250, 205.625000, 206.921875, 214.359375,
+           148.637363, 401.736264, NA, NA, 142.076923, 148.472527, 148.780220, 153.285714,
+           4.586139, 353.603960, NA, NA, 2.079208, 4.520792, 4.645545, 13.291089,
+           362.141230, 455.915718, NA, NA, 340.849658, 360.990888, 364.255125, 373.123007),
+  BGCR = c(83.835664, 166.420746, NA, NA, 79.966200, 83.452214, 83.682984, 88.441725,
+           206.343750, 492.468750, NA, NA, 191.796875, 205.625000, 206.984375, 225.796875,
+           148.637363, 423.186813, NA, NA, 142.296703, 148.472527, 148.890110, 158.318681,
+           4.588119, 376.318812, NA, NA, 2.051485, 4.526733, 4.673267, 13.910891,
+           362.195900, 469.753986, NA, NA, 341.457859, 361.013667, 364.375854, 374.797267),
+  SOFR = c(84.784382, 350.220280, NA, NA, 81.437063, 83.547786, 86.848485, 89.968531,
+           208.218750, 1151.000000, NA, NA, 196.468750, 206.000000, 216.531250, 237.734375,
+           151.186813, 1085.604396, NA, NA, 145.615385, 148.714286, 156.087912, 165.076923,
+           5.409901, 943.722772, NA, NA, 1.570297, 3.920792, 6.970297, 16.011881,
+           364.066059, 1199.936219, NA, NA, 355.364465, 362.034169, 367.712984, 376.717540)
+)
+
+# Assign row names
+row_names <- c("Rate", "Volume", "Upper target", "Lower target", "Percentile_01",
+               "Percentile_25", "Percentile_75", "Percentile_99")
+
+# Assign periods
+periods <- c("Normalcy", "Adjustment", "Covid", "Zero lower bound", "Inflation")
+
+# Create an empty list to store each table
+tables <- list()
+
+# Populate the list with tables for each period
+for (i in seq_along(periods)) {
+  start <- (i - 1) * length(row_names) + 1
+  end <- i * length(row_names)
+  tbl <- data.frame(data[start:end, ])
+  # Add number to "Rate" row name to ensure uniqueness
+  rownames(tbl) <- ifelse(row.names(tbl) == "Rate", "Rate", paste("Rate", seq_len(nrow(tbl)), sep = "_"))
+  tbl$Episode <- ifelse(seq_along(row_names) == 1, paste("\\hline", periods[i], "\\hline"), "")
+  tables[[i]] <- tbl
+}
+
+# Combine tables with period labels
+combined_table <- do.call(rbind, tables)
+
+
+# Print the xtable
+print(xtable(combined_table), include.rownames = TRUE, hline.after = c(0, 8, 16, 24, 32))
+
+
+
+# Chat characteristics table
+# Load required libraries
+library(xtable)
+
+# Create the data frame
+data <- data.frame(
+  EFFR = c(133.789044, 75.863636, 143.094406, 118.094406, 129.376457, 133.326340, 134.546620, 147.023310,
+           200.093750, 66.843750, 212.890625, 187.890625, 192.078125, 197.250000, 201.906250, 209.750000,
+           150.461538, 71.703297, 168.956044, 143.956044, 145.802198, 149.527473, 151.879121, 157.516484,
+           8.085149, 68.968317, 25.000000, 0.000000, 5.069307, 7.130693, 8.671287, 12.401980,
+           368.601367, 99.564920, 385.649203, 360.649203, 365.448747, 367.562642, 369.177677, 388.813212),
+  TGCR = c(83.829837, 158.525641, NA, NA, 79.883450, 83.438228, 83.656177, 85.503497,
+           206.296875, 466.218750, NA, NA, 191.656250, 205.625000, 206.921875, 214.359375,
+           148.637363, 401.736264, NA, NA, 142.076923, 148.472527, 148.780220, 153.285714,
+           4.586139, 353.603960, NA, NA, 2.079208, 4.520792, 4.645545, 13.291089,
+           362.141230, 455.915718, NA, NA, 340.849658, 360.990888, 364.255125, 373.123007),
+  BGCR = c(83.835664, 166.420746, NA, NA, 79.966200, 83.452214, 83.682984, 88.441725,
+           206.343750, 492.468750, NA, NA, 191.796875, 205.625000, 206.984375, 225.796875,
+           148.637363, 423.186813, NA, NA, 142.296703, 148.472527, 148.890110, 158.318681,
+           4.588119, 376.318812, NA, NA, 2.051485, 4.526733, 4.673267, 13.910891,
+           362.195900, 469.753986, NA, NA, 341.457859, 361.013667, 364.375854, 374.797267),
+  SOFR = c(84.784382, 350.220280, NA, NA, 81.437063, 83.547786, 86.848485, 89.968531,
+           208.218750, 1151.000000, NA, NA, 196.468750, 206.000000, 216.531250, 237.734375,
+           151.186813, 1085.604396, NA, NA, 145.615385, 148.714286, 156.087912, 165.076923,
+           5.409901, 943.722772, NA, NA, 1.570297, 3.920792, 6.970297, 16.011881,
+           364.066059, 1199.936219, NA, NA, 355.364465, 362.034169, 367.712984, 376.717540)
+)
+
+# Assign row names
+row_names <- c("Rate", "Volume", "Upper target", "Lower target", "Percentile_01",
+               "Percentile_25", "Percentile_75", "Percentile_99")
+
+# Assign periods
+periods <- c("Normalcy", "Adjustment", "Covid", "Zero lower bound", "Inflation")
+
+# Create an empty list to store each table
+tables <- list()
+
+# Populate the list with tables for each period
+for (i in seq_along(periods)) {
+  start <- (i - 1) * length(row_names) + 1
+  end <- i * length(row_names)
+  tbl <- data.frame(data[start:end, ])
+  rownames(tbl) <- row_names
+  tbl$Episode <- ifelse(seq_along(row_names) == 1, paste("\\hline", periods[i], "\\hline"), "")
+  tables[[i]] <- tbl
+}
+
+# Combine tables with period labels
+combined_table <- do.call(rbind, tables)
+
+# Print the xtable
+print(xtable(combined_table), include.rownames = TRUE, hline.after = c(0, 8, 16, 24, 32))
+
+
+
+# Define variable names for statistics
+variable_names <- c("Normalcy", "Adjustment", "Covid", "Zero lower bound", "Inflation")
+
+# Print timestamp
+cat("Thu Mar 21 21:23:31 2024\n")
+
+# Print LaTeX table environment
+cat("\\begin{table}[ht]\n")
+cat("\\centering\n")
+cat("\\begin{tabular}{rlrrrr}\n")
+cat("  \\hline\n")
+cat(" & Category & Median & IQR & RANGE & VOLUME \\\\ \n")
+cat("  \\hline\n")
+
+# Print table contents (example)
+# Replace this with your actual table content
+for (i in 1:nrow(episodesstats)) {
+  if (grepl("^EFFR", episodesstats[i, "Category"])) {
+    if ((i %% 4) == 1 && i != 1) {
+      cat(variable_names[(i - 1) / 4 + 1], "\n")  # Insert variable name every 4 rows above "EFFR"
+    }
+  }
+  cat(episodesstats[i, "Category"], " & ",
+      episodesstats[i, "Category"], " & ",
+      episodesstats[i, "Median"], " & ",
+      episodesstats[i, "IQR"], " & ",
+      episodesstats[i, "RANGE"], " & ",
+      episodesstats[i, "VOLUME"], " \\\\ \n")
+}
+
+# Print end of LaTeX table environment
+cat("   \\hline\n")
+cat("\\end{tabular}\n")
+cat("\\end{table}\n")
 
 
 
 
-### CHAT
-# Define variable names
+# Define variable names for stats
 variable_names <- c("Normalcy", "Adjustment", "Covid", "Zero lower bound", "Inflation")
 
 # Print timestamp
@@ -1032,6 +1229,10 @@ cat("\\end{table}\n")
 # OLD Print the combined xtable
 #print(xtable(episodesstats),include.rownames = FALSE))
 #print(xtable(episodeschar),include.rownames = FALSE))
+
+my_envepisodes$episodesstats <- episodesstats
+my_envepisodes$episodeschar <- episodeschar
+
 
 saveRDS(my_envepisodes, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
 
