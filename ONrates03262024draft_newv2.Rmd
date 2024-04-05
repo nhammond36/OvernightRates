@@ -30,6 +30,8 @@ knitr::opts_chunk$set(echo = FALSE)
 #knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Machine learning ini R
+\url{https://www.r-bloggers.com/2022/02/beginners-guide-to-machine-learning-in-r-with-step-by-step-tutorial/}
 ```{r, clear environment, echo=TRUE}
 # Clear the environment
 #rm(list = ls())
@@ -1411,6 +1413,34 @@ Federal Reserve Board  | Let’s Close the Gap: Revising Teaching Materials to R
 
 We examine how these shocks, changes in monetary policy.affect rate volatility in different monetary policy regimes.
 FOMC rates changes, monetary regimes, and events over the four year period, 2018-2023 (Table \ref{table:FOMCratechanges}) include changes in the Fed funds rate and the administered rates IOR and the reward rate ON RRP
+\url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/}
+
+\url{https://www.thestreet.com/fed/fed-rate-hikes-2022-2023-timeline-discussion}
+
+\url{https://www.statista.com/statistics/187616/effective-rate-of-us-federal-funds-monthly/}
+<!--
+March 3, 2020: Citing “evolving risks to economic activity” from the coronavirus outbreak, the Fed held an emergency meeting, cutting interest rates by 0.5% to 1.0–1.25%
+March 11, 2020: The World Health Organization (WHO) declares Covid-19 a global pandemic
+March 15, 2020: In another emergency meeting, the Fed slashes rates to zero (a range of 0–0.25%) and launches a $700 billion quantitative easing program
+March 16, 2020: The Dow falls 12.9%, triggering a stock market crash. It would go on to lose a total of 37% before ending the year with a 7.3% gain
+April 2020: U.S. unemployment reaches an average of 14.7%, its highest level since 1948, although job losses for women and minorities are even higher
+August 28, 2020: At an economic symposium in Jackson Hole, the Fed announces a new strategy that calls maximum employment “a broad-based and inclusive goal”
+July 28, 2021: The Fed holds rates steady at near-zero levels, labelling rising inflation a “transitory” phenomenon
+January 26, 2022: Powell states that “labor market conditions are consistent with maximum employment” and predicts future interest rate hikes
+February 24, 2022: Russia invades Ukraine
+March 16, 2022: The Fed makes its first interest rate increase since 2018, raising rates by 0.25% to a level of 0.25–0.50%
+May 5, 2022: The Fed increases interest rates 0.50% to 0.75–1.00% and states that it anticipates ongoing increases to be “appropriate”
+June 2022: Inflation, as measured by the Consumer Price Index (CPI), peaks at 9.1%
+June 16, 2022: The Fed raises rates 0.75% to 1.50–1.75%
+July 28, 2022: The Fed hikes rates another 0.75% to 2.25–2.50%
+September 22, 2022: The Fed delivers another 0.75% rate increase, bringing rates to 3.00–3.25%
+November 3, 2022: It increases rates by 0.75% to 3.75–4.00%, adding that it is “prepared to adjust the stance of monetary policy as appropriate if risks emerge”
+December 15, 2022: This time, the Fed raises rates by 0.5% to 4.25–4.50%
+February 2, 2023: It adds another 0.25% increase to 4.50–4.75%
+March 23, 2023: The Fed increases interest rates by an additional 0.25% to 4.75–5.0% and launches the Bank Term Funding Program, which will aid distressed banks suffering from interest-rate risk
+May 4, 2023: The Fed hikes another 0.25% to 5.00–5.25%
+July 27, 2023: The Fed delivers its final 0.25% increase of 2023, bringing rates to 5.25–5.50%
+-->
 
 \begin{table}[h!]
 \centering
@@ -1442,25 +1472,38 @@ Aug. 1, 2019&		-25	& 2.0 to 2.25\\
 \textbf{2020 Coping with Covid} & \\
 Date & Change &(bps)	$\&$ Federal Funds Rate (pct) \\ [0.5ex]
 \hline
-16-Mar-20&		-100&		0 to 0.25\\	
+16-Mar-20&		-25&		2.000 to 1.25\\	
+ 0.5% to 1.0–1.25%
 3-Mar-20&		-50&		1.0 to 1.25\\	
 \hline		
 \textbf{2022 Taming Inflation} & \\
 Date & Change &(bps)	$\&$ Federal Funds Rate (pct) \\ [0.5ex]
 \hline
-14-Dec-22&		50&		4.25 to 4.50\\	
-2-Nov-22&		75&		3.75 to 4.00\\	
+15-Dec-22&		50&		4.25 to 4.50\\	
+02-Nov-22&		75&		3.75 to 4.00\\	
 21-Sep-22&		75&		3.00 to 3.25\\	
 27-Jul-22&		75&		2.25 to 2.5\\	
 16-Jun-22&		75&		1.5 to 1.75\\	
-5-May-22&		50&		0.75 to 1.00\\	
+05-May-22&		50&		0.75 to 1.00\\	
 17-Mar-22&		25&		0.25 to 0.50\\
+27-Jul-23&    25&   5.25-5.50\\
+04-May-23$    25&   5.00 to 5.25\\
+23-Mar-23&    25&   4.75 to 5.00\\
+02-Feb-23&    25&   4.5 to 4.75\\
 \end{tabular}
 \caption{FOMC rates changes 2018 to 2022}
 \label{table:FOMCratechanges}
 \end{table}
 
 add 2023
+December 15, 2022: This time, the Fed raises rates by 0.5% to 4.25–4.50%
+February 2, 2023: It adds another 0.25% increase to 4.50–4.75%
+
+February 2, 2023: It adds another 0.25% increase to 4.50–4.75%
+March 23, 2023: The Fed increases interest rates by an additional 0.25% to 4.75–5.0% and launches the Bank Term Funding Program, which will aid distressed banks suffering from interest-rate risk
+May 4, 2023: The Fed hikes another 0.25% to 5.00–5.25%
+July 27, 2023: The Fed delivers its final 0.25% increase of 2023, bringing rates to 5.25–5.50%
+
 
 
 Monetary policy shocks, events (Table \ref{table:monetary shocks}) 
@@ -1906,6 +1949,8 @@ end_dates_strings <- as.character(end_dates)
 Table \@ref(tab:norm_characteristics) provides a summary of the data.
 -->
 
+<!--
+tHE SAMPLE,  format
 The average weighted median for the EFFR during the sample is 157 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
 
 The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within or little more than one basis point. The SOFR, 4 basis points.
@@ -1917,78 +1962,149 @@ The interquartile range for the money market rates TGCR and BGCR show 50 percent
 The range of the data, the 99th minus the first percentile, is more sensitive to outliers. The range of the EFFR and the money market rates, TGCR, BGCR, and SOFR are some 14 to 16 basis points.
 
 From 2016 to 2020, the percent change in overnight rights, although varying daily, is in the range of plus of minus 0.5 percent \@ref(fig:volatility log percent change)[]GROUP EPISODE VOLATILITY PLOTS] provides a summary of the data.. DUring the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies wildly? withing plu or minus 2 percent.
-
-
-<!--
-stats
-episodeschar
-                   EFFR      TGCR      BGCR      SOFR
-Rate          133.78904  83.82984  83.83566  84.78438
-Volume         75.86364 158.52564 166.42075 350.22028
-Upper target  143.09441        NA        NA        NA
-Lower target  118.09441        NA        NA        NA
-Percentile_01 129.37646  79.88345  79.96620  81.43706
-Percentile_25 133.32634  83.43823  83.45221  83.54779
-Percentile_75 134.54662  83.65618  83.68298  86.84848
-Percentile_99 147.02331  85.50350  88.44172  89.96853
-Rate          133.78904  83.82984  83.83566  84.78438
-Volume         75.86364 158.52564 166.42075 350.22028
-Upper target  143.09441        NA        NA        NA
-Lower target  118.09441        NA        NA        NA
-Percentile_01 129.37646  79.88345  79.96620  81.43706
-Percentile_25 133.32634  83.43823  83.45221  83.54779
-Percentile_75 134.54662  83.65618  83.68298  86.84848
-Percentile_99 147.02331  85.50350  88.44172  89.96853
-Rate          133.78904  83.82984  83.83566  84.78438
-Volume         75.86364 158.52564 166.42075 350.22028
-Upper target  143.09441        NA        NA        NA
-Lower target  118.09441        NA        NA        NA
-Percentile_01 129.37646  79.88345  79.96620  81.43706
-Percentile_25 133.32634  83.43823  83.45221  83.54779
-Percentile_75 134.54662  83.65618  83.68298  86.84848
-Percentile_99 147.02331  85.50350  88.44172  89.96853
-Rate          133.78904  83.82984  83.83566  84.78438
-Volume         75.86364 158.52564 166.42075 350.22028
-Upper target  143.09441        NA        NA        NA
-Lower target  118.09441        NA        NA        NA
-Percentile_01 129.37646  79.88345  79.96620  81.43706
-Percentile_25 133.32634  83.43823  83.45221  83.54779
-Percentile_75 134.54662  83.65618  83.68298  86.84848
-Percentile_99 147.02331  85.50350  88.44172  89.96853
-Rate          133.78904  83.82984  83.83566  84.78438
-Volume         75.86364 158.52564 166.42075 350.22028
-Upper target  143.09441        NA        NA        NA
-Lower target  118.09441        NA        NA        NA
-Percentile_01 129.37646  79.88345  79.96620  81.43706
-Percentile_25 133.32634  83.43823  83.45221  83.54779
-Percentile_75 134.54662  83.65618  83.68298  86.84848
-Percentile_99 147.02331  85.50350  88.44172  89.96853
-> 
-> episodesstats
-      Category    Median       IQR     RANGE    VOLUME
-EFFR      EFFR 150.46154 1.2202797 17.646853  75.86364
-TGCR      TGCR  83.82984 0.2179487  5.620047 158.52564
-BGCR      BGCR  83.83566 0.2307692  8.475524 166.42075
-SOFR      SOFR  84.78438 3.3006993  8.531469 350.22028
-EFFR1     EFFR 133.78904 1.2202797 17.646853  75.86364
-TGCR1     TGCR  83.82984 0.2179487  5.620047 158.52564
-BGCR1     BGCR  83.83566 0.2307692  8.475524 166.42075
-SOFR1     SOFR  84.78438 3.3006993  8.531469 350.22028
-EFFR2     EFFR 133.78904 1.2202797 17.646853  75.86364
-TGCR2     TGCR  83.82984 0.2179487  5.620047 158.52564
-BGCR2     BGCR  83.83566 0.2307692  8.475524 166.42075
-SOFR2     SOFR  84.78438 3.3006993  8.531469 350.22028
-EFFR3     EFFR 133.78904 1.2202797 17.646853  75.86364
-TGCR3     TGCR  83.82984 0.2179487  5.620047 158.52564
-BGCR3     BGCR  83.83566 0.2307692  8.475524 166.42075
-SOFR3     SOFR  84.78438 3.3006993  8.531469 350.22028
-EFFR4     EFFR 133.78904 1.2202797 17.646853  75.86364
-TGCR4     TGCR  83.82984 0.2179487  5.620047 158.52564
-BGCR4     BGCR  83.83566 0.2307692  8.475524 166.42075
-SOFR4     SOFR  84.78438 3.3006993  8.531469 350.22028
 -->
 
 
+Normal
+Among the episodes, the average weighted median for the EFFR. respectively the five episodes normalcy, adjustment, covid, zero lower bound, and infaltion, was 133.78, 200.09, 150.46, 8.08, and 368.60 bp. As in the sample, TGCR,BGCR and SOFR, cluster around the EFFR except in the normalcy and zero lower bound periods, some 50 percent orless.
+
+ Daily transaction SOFR volumes - 385.64 (billions of dollars) dwarf the similar volume in the other rates volume in SOFR 75.86, 66.84, 71.70, 68.97 (billions of dollars) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within or little more than one basis point. The SOFR, 4 basis points.
+
+Estimating moments of the data show overnight rates are highly skewed with fatter tails.
+
+The interquartile range for SOFR exceed that for the EFFR and the money market rates TGCR and BGCR; fifty percent of SOFR rates lie within 10.53 bp during adjustment, 7.37 during covid, and 5.68 during inflation.The middle 50 percent of the data is more tighly clustered for all other rates in all episodes.
+
+The range of the data, the 99th minus the first percentile, shows extensive to outliers. The smalles is 5.62 TGCR during normalcy. Most ranges are double digit to 41.26 percent SOFR data as outliers during the adjustment period. In contrast, in The range of the EFFR and the money market rates, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points.
+
+From 2016 to 2020, the percent change in overnight rights, although varying daily, is in the range of plus of minus 0.5 percent \@ref(fig:volatility log percent change)[]GROUP EPISODE VOLATILITY PLOTS] provides a summary of the data.From  2020 to 2022, DUring the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies plus or minus 2 percent. Volatiliy falls graduation during the fight against inflation.
+
+<!--
+episodeschar
+                    EFFR       TGCR       BGCR        SOFR
+Rate          133.789044  83.829837  83.835664   84.784382
+Volume         75.863636 158.525641 166.420746  350.220280
+Upper target  143.094406         NA         NA          NA
+Lower target  118.094406         NA         NA          NA
+Percentile_01 129.376457  79.883450  79.966200   81.437063
+Percentile_25 133.326340  83.438228  83.452214   83.547786
+Percentile_75 134.546620  83.656177  83.682984   86.848485
+Percentile_99 147.023310  85.503497  88.441725   89.968531
+Rate          200.093750 206.296875 206.343750  208.218750
+Volume         66.843750 466.218750 492.468750 1151.000000
+Upper target  212.890625         NA         NA          NA
+Lower target  187.890625         NA         NA          NA
+Percentile_01 192.078125 191.656250 191.796875  196.468750
+Percentile_25 197.250000 205.625000 205.625000  206.000000
+Percentile_75 201.906250 206.921875 206.984375  216.531250
+Percentile_99 209.750000 214.359375 225.796875  237.734375
+Rate          150.461538 148.637363 148.637363  151.186813
+Volume         71.703297 401.736264 423.186813 1085.604396
+Upper target  168.956044         NA         NA          NA
+Lower target  143.956044         NA         NA          NA
+Percentile_01 145.802198 142.076923 142.296703  145.615385
+Percentile_25 149.527473 148.472527 148.472527  148.714286
+Percentile_75 151.879121 148.780220 148.890110  156.087912
+Percentile_99 157.516484 153.285714 158.318681  165.076923
+Rate            8.085149   4.586139   4.588119    5.409901
+Volume         68.968317 353.603960 376.318812  943.722772
+Upper target   25.000000         NA         NA          NA
+Lower target    0.000000         NA         NA          NA
+Percentile_01   5.069307   2.079208   2.051485    1.570297
+Percentile_25   7.130693   4.520792   4.526733    3.920792
+Percentile_75   8.671287   4.645545   4.673267    6.970297
+Percentile_99  12.401980  13.291089  13.910891   16.011881
+Rate          368.601367 362.141230 362.195900  364.066059
+Volume         99.564920 455.915718 469.753986 1199.936219
+Upper target  385.649203         NA         NA          NA
+Lower target  360.649203         NA         NA          NA
+Percentile_01 365.448747 340.849658 341.457859  355.364465
+Percentile_25 367.562642 360.990888 361.013667  362.034169
+Percentile_75 369.177677 364.255125 364.375854  367.712984
+Percentile_99 388.813212 373.123007 374.797267  376.717540
+ 
+episodesstats
+      Category     Median        IQR     RANGE     VOLUME
+EFFR      EFFR 133.789044  1.2202797 17.646853   75.86364
+TGCR      TGCR  83.829837  0.2179487  5.620047  158.52564
+BGCR      BGCR  83.835664  0.2307692  8.475524  166.42075
+SOFR      SOFR  84.784382  3.3006993  8.531469  350.22028
+EFFR1     EFFR 200.093750  4.6562500 17.671875   66.84375
+TGCR1     TGCR 206.296875  1.2968750 22.703125  466.21875
+BGCR1     BGCR 206.343750  1.3593750 34.000000  492.46875
+SOFR1     SOFR 208.218750 10.5312500 41.265625 1151.00000
+EFFR2     EFFR 150.461538  2.3516484 11.714286   71.70330
+TGCR2     TGCR 148.637363  0.3076923 11.208791  401.73626
+BGCR2     BGCR 148.637363  0.4175824 16.021978  423.18681
+SOFR2     SOFR 151.186813  7.3736264 19.461538 1085.60440
+EFFR3     EFFR   8.085149  1.5405941  7.332673   68.96832
+TGCR3     TGCR   4.586139  0.1247525 11.211881  353.60396
+BGCR3     BGCR   4.588119  0.1465347 11.859406  376.31881
+SOFR3     SOFR   5.409901  3.0495050 14.441584  943.72277
+EFFR4     EFFR 368.601367  1.6150342 23.364465   99.56492
+TGCR4     TGCR 362.141230  3.2642369 32.273349  455.91572
+BGCR4     BGCR 362.195900  3.3621868 33.339408  469.75399
+SOFR4     SOFR 364.066059  5.6788155 21.353075 1199.93622
+-->
+
+TRY THIS:
+\@ref(tab:normtable_characteristicsV2) provides a summary of the data.
+\```{r normtable_characteristicsV2, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", echo=FALSE, results='asis'}
+data <- data.frame(
+  EFFR = c(133.789044, 75.863636, 143.094406, 118.094406, 129.376457, 133.326340, 134.546620, 147.023310,
+           200.093750, 66.843750, 212.890625, 187.890625, 192.078125, 197.250000, 201.906250, 209.750000,
+           150.461538, 71.703297, 168.956044, 143.956044, 145.802198, 149.527473, 151.879121, 157.516484,
+           8.085149, 68.968317, 25.000000, 0.000000, 5.069307, 7.130693, 8.671287, 12.401980,
+           368.601367, 99.564920, 385.649203, 360.649203, 365.448747, 367.562642, 369.177677, 388.813212),
+  TGCR = c(83.829837, 158.525641, NA, NA, 79.883450, 83.438228, 83.656177, 85.503497,
+           206.296875, 466.218750, NA, NA, 191.656250, 205.625000, 206.921875, 214.359375,
+           148.637363, 401.736264, NA, NA, 142.076923, 148.472527, 148.780220, 153.285714,
+           4.586139, 353.603960, NA, NA, 2.079208, 4.520792, 4.645545, 13.291089,
+           362.141230, 455.915718, NA, NA, 340.849658, 360.990888, 364.255125, 373.123007),
+  BGCR = c(83.835664, 166.420746, NA, NA, 79.966200, 83.452214, 83.682984, 88.441725,
+           206.343750, 492.468750, NA, NA, 191.796875, 205.625000, 206.984375, 225.796875,
+           148.637363, 423.186813, NA, NA, 142.296703, 148.472527, 148.890110, 158.318681,
+           4.588119, 376.318812, NA, NA, 2.051485, 4.526733, 4.673267, 13.910891,
+           362.195900, 469.753986, NA, NA, 341.457859, 361.013667, 364.375854, 374.797267),
+  SOFR = c(84.784382, 350.220280, NA, NA, 81.437063, 83.547786, 86.848485, 89.968531,
+           208.218750, 1151.000000, NA, NA, 196.468750, 206.000000, 216.531250, 237.734375,
+           151.186813, 1085.604396, NA, NA, 145.615385, 148.714286, 156.087912, 165.076923,
+           5.409901, 943.722772, NA, NA, 1.570297, 3.920792, 6.970297, 16.011881,
+           364.066059, 1199.936219, NA, NA, 355.364465, 362.034169, 367.712984, 376.717540)
+)
+
+# Assign row names
+row_names <- c("Rate", "Volume", "Upper target", "Lower target", "Percentile_01",
+               "Percentile_25", "Percentile_75", "Percentile_99")
+
+# Assign periods
+periods <- c("Normalcy", "Adjustment", "Covid", "Zero lower bound", "Inflation")
+
+# Create an empty list to store each table
+tables <- list()
+
+# Populate the list with tables for each period
+for (i in seq_along(periods)) {
+  start <- (i - 1) * length(row_names) + 1
+  end <- i * length(row_names)
+  tbl <- data.frame(data[start:end, ])
+  # Add number to "Rate" row name to ensure uniqueness
+  rownames(tbl) <- ifelse(row.names(tbl) == "Rate", "Rate", paste("Rate", seq_len(nrow(tbl)), sep = "_"))
+  tbl$Episode <- ifelse(seq_along(row_names) == 1, paste("\\hline", periods[i], "\\hline"), "")
+  tables[[i]] <- tbl
+}
+
+# Combine tables with period labels
+combined_table <- do.call(rbind, tables)
+
+
+# Print the xtable
+print(xtable(combined_table), include.rownames = TRUE, hline.after = c(0, 8, 16, 24, 32))
+```
+
+iNSTEAD OF THIS
+##
 \@ref(tab:normtable_characteristics) provides a summary of the data.
 \```{r normtable_characteristics, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", echo=FALSE, results='asis'}
 k=1 # normalcy period
@@ -2547,7 +2663,7 @@ inflation<-rrbp[bgn:edn,]
 sdateinflation<-sdate[bgn:edn]
 
 qinflationE=quantilesE[bgn:edn,]
-qinflationT=quantilesT[bgn:edn,]
+qinflationT=quantilesT[bgn:edn,]str
 qinflationB=quantilesB[bgn:edn,]
 qinflationS=quantilesS[bgn:edn,]
 
@@ -2559,19 +2675,20 @@ my_envepisodes$inflationT <-qinflationT
 my_envepisodes$inflationB <-qinflationB
 my_envepisodes$inflationS <-qinflationS
 
-# stats_inflationust<-colMeans(quantilesE[bgn_edn,]     #inflationust
+# char_inflation<-colMeans(quantilesE[bgn_edn,]     #inflation
 Estatsinflation <- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
 #Ostatsinflation <- colMeans(qinflationO[,2:ncol(qinflationO)], na.rm = TRUE)
 Tstatsinflation <- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
 Bstatsinflation <- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
 Sstatsinflation <- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
+print(xtable(charinflation),include.rownames = FALSE)
 
 # Add NA for targets 
 Tstatsinflation2<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
 Bstatsinflation2<-c(Bstatsinflation[1],Bstatsinflation[2], TargetUe=NA, TargetDe=NA,Bstatsinflation[3],Bstatsinflation[4],Bstatsinflation[5],Bstatsinflation[6])
 Sstatsinflation2<-c(Sstatsinflation[1],Sstatsinflation[2], TargetUe=NA, TargetDe=NA,Sstatsinflation[3],Sstatsinflation[4],Sstatsinflation[5],Sstatsinflation[6])
 
-
+# stats_inflationust<-colMeans(quantilesE[bgn_edn,]     #inflationust
 IS THIS TO BE A SEPARATE CODECHUNK?
 median_values = c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
 iqr_values = c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
@@ -2616,7 +2733,7 @@ episodeschar <- my_envepisodes$episodeschar
 #combined_stats <- rbind(episodesstats)
 #combined_char <- rbind(episodeschar)
 #OLD
-#episodeschar <-rbind(charnorm, charadj,charcovid, charzlb,charinflation)
+episodeschar <-rbind(charnorm, charadj,charcovid, charzlb,charinflation)
 #episodesstats <-rbind( normstats, adjstats,covidstats, zlbstats,inflationstats) # 
 
 #CHAT
@@ -2660,7 +2777,7 @@ cat("\\end{table}\n")
 
 
 <!--Table \@ref(tab:combinedtable_statistics) -->
-```{r combinedtable_statistics} 
+```{r combinedtable_characteristics} 
 # Define variable names
 variable_names <- c("EFFR", "TGCR", "BGCR", "SOFR")
 
@@ -2948,6 +3065,36 @@ rates_zlb <- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=vari
 print(rates_zlb)
 ```
 
+[MISSING INFLATION PLOT]
+(see Figure \@ref(fig:EFFR during inflation period 3/17/2020-3/16/2022
+```{r, fig.cap= "EFFR during inflation period 3/17/2022-12/14/2023"}
+sdate<-sdateinflation
+maxr=max(inflation[,2:ncol(inflation)]) # 539
+minr=min(inflation[,2:ncol(inflation)]) #0
+
+meltrates_inflation <- melt(inflation,id="sdate")
+rates_inflation <- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Inflation 03/17/2022-12/14/2023", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  scale_y_continuous(breaks = seq(0, maxr, by = 50), limits = c(0, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(rates_inflation)                
+```
+
+(see Figure \@ref(fig:Rates during different polic episodes)
+```{r, fig.cap= "Rates during different polic episodes"}
+# Combine episode percent change plots
+prates<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
+print(prates)
+```
+
+(see Figure \@ref(fig:Percent change in rates)
+```{r, fig.cap= "Percent change in rates"}
+pctchange<-(logchange_rates_norm )/ (logchange_rates_adjust) / (logchange_rates_covid) / (logchange_rates_zlb)/ (logchange_rates_inflation )
+print(pctchange)
+```
+
+[WHAT ARE THESE, QUANTILES ACCOMPANY BOX PLOTS]
 ```{r, inflation , echo=FALSE}
 #5. inflation  03/17/2022 - 12/14/2023 1517-1960  Correct with new end point
 rates=2
@@ -3127,33 +3274,47 @@ $v_{i,t} is the estimated outstanding amount of this instrument on day t (dollar
  \right)
  \end{align*}
 
-<!--
 ```{r, Duffie Krishnamurthy dispersion code,  echo=FALSE}
-ncol<-ncol(rrbp) # 5 if sdate ow 4 (and no OBFR)
-T <-nrow(rrbp)
-vtot<-0 ;
-dk <- matrix(0, nrow = T, ncol = ncol)
-dkindex <- numeric(T)
-mrate<-0 
-meanr<-0 
-print(dim(vold))
-# Initialize vectors to store results
-meanr<- colMeans(rrbp[,2:ncol])
-# EFFR  OBFR  TGCR  BGCR  SOFR 
-colsumvold <- rowSums(vold[, 1:4], na.rm = TRUE)
-  T<-nrow(rrbp)
-  # Calculate dk(t)
-  for (t in 1:T) {
-  for (i in 1:ncol-1) {
-    #dk[t, i] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t,i] - meanr[i])
-  }  # if sdate is in rrbp and vold
-}
-  # Calculate dkindex(t)
-  for (t in 1:T) {
-  dkindex[t] <- sum(dk[t, 1:ncol-1])
-  }
+# Initialize vtot(t) and mrate(t) to zero
+# Assuming 'dk' is your data frame or matrix
+# Specify the number of columns to sum (e.g., the first 5 columns)
 
-# Convert the "sdate" column to a Date format
+
+# Initialize vectors to store results
+T<-nrow(rrbp)
+rcol<-5
+meanr<- colMeans(rrbp[,2:rcol])
+print(meanr)
+# EFFR     OBFR     TGCR     BGCR     SOFR 
+# 156.2080 155.5207 132.0189 132.0358 133.2616 
+ 
+#colsumvold <-rowSums(vold[ , c(2,3,4,5,6)], na.rm=TRUE)
+colsumvold <-rowSums(vold[ , 2:rcol], na.rm=TRUE)
+print(colsumvold)
+colsumvold[1:10]
+#[1] 1739 1730 1714 1691 1671 1693 1705 1656 1658 1641
+
+# Initialize a w x t array
+dk <- array(0, dim = c(T,rcol-1))
+nrow(dk) #[1] 1957
+dkindex<-array(0,T)
+nrow(dkindex) # [1] 1957
+ 
+#vold and rrbp col1=sdate, cols 2:6 EFFR OBFR  TGCR BGCRSOFR
+T<-nrow(rrbp)
+rcol<-ncol(rrbp)
+# Calculate dk(t)
+for (t in 1:T) {
+  for (i in 2:rcol) {
+    dk[t, i-1] <- (1 / colsumvold[t]) * vold[t,i]*abs(rrbp[t, i] - meanr[i-1])
+  }
+}
+
+# Calculate dkindex(t)
+for (t in 1:T) {
+  dkindex[t] <- sum(dk[t, 1:rcol-1])
+}
+
 ```
 ```{r, dkindexdf,echo=FALSE}
 dkindexdf <- data.frame(
@@ -3169,46 +3330,52 @@ dkindexdf <- data.frame(
  )
 str(dkindexdf)
 ```
+(see Figure \@ref{fig:Duffie Krishnamurthy index})
+```{r, Duffie Krishnamurthy index, echo=FALSE}
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "circle")
 
-
-```{r, Duffie Krishnamurthy index plot, echo=FALSE}
-# Load the dplyr package
-library(dplyr)
-dkindexdf$group <- rep(c("Duffie-Krishnamurthy index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
-
-# Create a named vector for colors
+# Modify color vector
 colors <- c("Duffie-Krishnamurthy index" = "black",
-            "Lower target FFR" = "blue",
-            "Upper target FFR" = "green",
-            "EFFR" = "black",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
+            "EFFR" = "blue",
             "TGCR" = "green",
             "BGCR" = "orange",
             "SOFR" = "red")
 
-ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
-  geom_point(shape = 16, size = 1) +
-  labs(x = "", y = "basis points", color = "Lines") +
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(aes(shape = shape), size = 3) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
   scale_color_manual(name = "Legend Title", values = colors) +
+  #scale_shape_manual(name = "Legend Title", values = c("triangle", "circle")) +
+  guides(shape = guide_legend(override.aes = list(fill = NA))) +
   theme_minimal()
 print(ggdkindex)
+
 ```
---> 
 
 Their results show dispersion ranged between 4 and 7 basis points between the end of 2012 and December 17, 2015. Dispersion increased by over 10 basis points, immediately after the first passthrough event in the current Fed monetary policy setting, when the interest rate paid by the Fed on excess reserves (IOER) was increased from 25 to 50 basis basis points on December 17, 2015.
 
+The Duffie-Krishnamurthy seems to track the clustering over overnight rates (see Figure \@ref{fig:Duffie Krishnamurthy index}). The index reaches a maximum of 401.12 on 2023-12-01, a low of 10.03 2018-03-30. 
+
+<!--
+max(dkindex)
+[1] 401.1328  "2023-12-01"  row 1948
+> min(dkindex)
+[1] 10.03117 sdate[522]
+[1] "2018-03-30"
+-->
+
+REVIEW row <- which(dkindex==401.1328) 
 In our sample from 2016 through 2022, the Duffie Krishnamurthy diversity index registers low dispersion, under 4 basis points, among the five overnight rates  EFFR, OBFR, TGCR, BGCR, and SOHR during 2016 and the first quarter of 2017 before jumping to around 5 during the last 2 weeks of March 2017 
 %(Figure \ref{fig:dispersionDK}.
 
 Their measure of dispersion rises to over 50 basis points during December 2018 to mid April 2019. The index triples to 151.14 basis on April 19, 2019 and remains at this high level, reaching a high 254.83 points during the spike in repo rates September 19, 2019. The index tapers off after of the dash for cash on March 17, 2020 after spiking 27.5 basis points. Throughout 2020 and 2021, the index was under 1 point. The level of dispersion rose steadily during March 2022, reaching over 200 basis points during the last part of December 2022 as the FOMC raised the target range for the  Federal Funds rate to fight inflation. The index rose  from 14.57 April 15, 2022 to 209.25 on December 29, 2022.
 
-[add Dispersion 2023]
-
-1. ?? The dispersion index of the five daily rates from 2016 to 2023
-#(Figure \ref{figures:})
-
-
 <!--
-
 Table 1  WHAT IS THIS? WHERE?
 provides the results of a time-series regression of dispersion on various explanatory
 variables: the Markit CDX index (as a measure of crisis severity); the target federal
@@ -3258,7 +3425,7 @@ shown, dispersion increases in the run-up to the covid pandemic, punctuated by t
 decreased [when]  but leveled off to a higher value during the zero lower bound period but lower that the covid period. The index rises with the successive  Fed rate increases to tame inflation
 
 3. If the Fed implicitly responds to volatility in the FFR through information on wholesale money market rates, our model of volatility of the EFFR should include thise index
-
+-->
 
 
 
