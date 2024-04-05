@@ -32,6 +32,7 @@ library(timeDate)
 library(quantmod)
 library(DescTools)
 library(chron)
+library(patchwork)
 
 
 ###installing and loading multiple packages
@@ -49,6 +50,11 @@ invisible(lapply(list.packages, require, character.only = TRUE))
 # - then when you start a new project in RStudio, use the version control option, enter your repo URL, and you're good to go.
 
 
+ue<-spread_no_na$TargetUE
+de<-spread_no_na$TargetDE
+spread_no_na$targetUE[is.infinite(spread_no_na$targetUE)] <- 0
+spread_no_na$targetDE[is.infinite(spread_no_na$targetDE)] <- 0
+
 # --------------- READ DATA ------------------
 redo<-0 # load rate data from RDS files
 redo<-1 # redo data 
@@ -58,10 +64,37 @@ if (redo ==0 ) {
   my_envmp <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")#Access the data frame stored in the environment
   spread_no_na <- my_envmp$spread_no_na
   str(spread_no_na)
-  print("redo=")
 } else {
   print("redo==1")
-
+  
+# Find outlier-------------------------------
+  ue=spread_no_na$TargetUe
+  max(ue)
+  de=spread_no_na$TargetDe
+  max(de)
+  # Find row numbers where spread$TargetUE meets a condition (for example, equals 0)
+  rownum <- which(spread_no_na$sdate ==  "2019-09-17")
+  # Find rows where spread$TargetUE equals 0
+  rows_with_zero <- subset(spread_no_na, TargetUe == 0)
+  
+  rownum <- which(spread_no_na$sdate ==  "2019-09-17")
+  > rownum
+  [1] 891
+  > spread_no_na[891,]
+  Date EFFR OBFR TGCR BGCR SOFR Percentile01_EFFR Percentile01_OBFR Percentile01_TGCR Percentile01_BGCR
+  894 9/17/2019  230  225  525  525  525               205               187               200               200
+  Percentile01_SOFR Percentile25_EFFR Percentile25_OBFR Percentile25_TGCR Percentile25_BGCR
+  894               225               215               210               500               500
+  Percentile25_SOFR Percentile75_EFFR Percentile75_OBFR Percentile75_TGCR Percentile75_BGCR
+  894               500               250               250               550               550
+  Percentile75_SOFR Percentile99_EFFR Percentile99_OBFR Percentile99_TGCR Percentile99_BGCR
+  894               585               400               555               585               800
+  Percentile99_SOFR TargetDe TargetUe VolumeEFFR VolumeOBFR VolumeTGCR VolumeBGCR VolumeSOFR RRPONTSYAWARD
+  894               900      200      225         61        141        509        533       1177           200
+  IORR      sdate
+  894  210 2019-09-17
+  
+#--------------------------------------------------
 # or redo rates data
 spread<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_1142024v3.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
 # Convert to numeric and replace non-numeric values with NA
@@ -169,46 +202,7 @@ quantilesS <- spread_no_na[, c("sdate","SOFR","VolumeSOFR","Percentile01_SOFR","
 #
 # plot daily sample volumes
 #
-# plot daily epoch rates
-#begn = [4 860 924  1033 1517 4];
-#endn = [859 923 1032 1516 1714 1714];
-#1. normalcy   3/4/2016		7/31/2019      1  858 
-#2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660  859 - 922
-#3. covid 11/1/2019	    3/16/2020   923  1013
-#4. zlb         3/17/2020- 3/16/2022     1014-1518
-#4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
-
-
-# normalcy <-rrbp %>% slice(1:858)
-# adjust <-rrbp %>% slice(859:922)
-# covid <-rrbp %>% slice(923:1013)
-# zlb <-rrbp %>% slice(1014:1518)
-# inflation <-rrbp %>% slice(1519:1957)
-
-begn<- c(1, 859, 923,  1014, 1519, 1)
-endn<- c(858, 922, 1013, 1518, 1957, 1957)
-
-sdate[begn] # "2016-03-04" "2019-08-01" "2019-11-01" "2020-03-17" "2022-03-17" "2016-03-04"
-sdate[endn] # "2019-07-31" "2019-10-31" "2020-03-16" "2022-03-16" "2023-12-14" "2023-12-14"
-
-# ExAMPLES
-sdate[begn[1]] #[1] "2016-03-04"
-sdate[begn[2]] #[1] "2019-08-01"
-# Start dates
-
-start_dates
-# End dates
-end_dates <- sdateplot[endn]
-end_dates
-
-# Define your plot
-start_dates <-sdate[begn[k]]
-end_dates <-sdate[endn[k]]
-start_dates_strings <- as.character(start_dates)
-end_dates_strings <- as.character(end_dates)
-text(x = x_coordinate, y = y_coordinate, labels = paste("Start Date:", start_dates_strings[1]), pos = 1)
-text(x = x_coordinate, y = y_coordinate, labels = paste("End Date:", end_dates_strings[1]), pos = 1)
-
+# plot
 # CHAT -------------------------------------
 # plot(x, y, main = "My Plot", xlab = "X-axis", ylab = "Y-axis")
 # 
@@ -460,18 +454,20 @@ start_dates <-sdate[begn[k]]
 end_dates <-sdate[endn[k]]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
-title <- paste("Log percent change in rates during normalcy period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+title <- paste("Percent change rates normalcy period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+#title <- paste("Log percent change in rates during normalcy period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
 
 # Create a scatter plot using ggplot2
-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+logchange_rates_norm<-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
   geom_point() +
-  labs(title = title,
+  labs(caption = title,
        x = "",
        y = "Value",
        color = "Variable") +
   theme_minimal()
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_norm.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_norm.png")
+print(logchange_rates_norm)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates2_norm.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates2_norm.png")
 
 # adjust episode
 k=2
@@ -483,23 +479,26 @@ df$sdate <- sdate[bgn:edn]
 
 # Reshape the data to long format
 df_long <- gather(df, key = "Variable", value = "Value", -sdate)
-start_dates <-sdate[begn[k]]
-end_dates <-sdate[endn[k]]
+#df_long <- gather(df, key = "Variable", valuesdat = "Value", -sdate)
+start_dates <-sdate[bgn]
+end_dates <-sdate[edn]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
-title <- paste("Log percent change in rates during adjustment period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+title <- paste("Percent change rates adjustment period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+#title <- paste("Log percent change in rates during adjustment period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
 
 
 # Create a scatter plot using ggplot2
-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+logchange_rates_adjust<-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
   geom_point() +
-  labs(title = title,
+  labs(caption = title,
        x = "",
        y = "Value",
        color = "Variable") +
   theme_minimal()
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust.png")
+print(logchange_rates_adjust)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust2.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_adjust2.png")
 # Problem, month instead of date
 
 # covid episode
@@ -517,19 +516,20 @@ start_dates <-sdate[begn[k]]
 end_dates <-sdate[endn[k]]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
-title <- paste("Log percent change in rates during covid period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+title <- paste("Percent change rates covid period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
 
 
 # Create a scatter plot using ggplot2
-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+logchange_rates_covid<-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
   geom_point() +
-  labs(title = title,
+  labs(caption = title,
        x = "",
        y = "Value",
        color = "Variable") +
   theme_minimal()
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid.png")
+print(logchange_rates_covid)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid2.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_covid2.png")
 # month instead of date
 
 # zlb episode
@@ -546,19 +546,20 @@ start_dates <-sdate[begn[k]]
 end_dates <-sdate[endn[k]]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
-title <- paste("Log percent change in rates during zero lower bound period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+title <- paste("Percent change rates zero lower bound period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
 
 
 # Create a scatter plot using ggplot2
-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+logchange_rates_zlb<-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
   geom_point() +
-  labs(title = title,
+  labs(caption = title,
        x = "",
        y = "Value",
        color = "Variable") +
   theme_minimal()
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb.png")
+print(logchange_rates_zlb)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb2.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_zlb2.png")
 
 # Inflation episode
 k=5
@@ -575,21 +576,34 @@ start_dates <-sdate[begn[k]]
 end_dates <-sdate[endn[k]]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
-title <- paste("Log percent change in rates during inflation period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+title <- paste("Percent change rates during inflation period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
 
 
 # Create a scatter plot using ggplot2
-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+df$SOFR[is.infinite(df$SOFR)] <- 0
+df$TGCR[is.infinite(df$TGCR)] <- 0
+df$BGCR[is.infinite(df$BGCR)] <- 0
+maxr<-max(df[,1:4])
+logchange_rates_inflation<- ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
   geom_point() +
-  labs(title = title,
+  labs(caption = title,
        x = "",
        y = "Value",
        color = "Variable") +
-  theme_minimal()
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation.png")
+  scale_y_continuous(breaks = seq(0, maxr, by = 0.05)) + # Set breaks every 10 basis points
+  #scale_y_continuous(breaks = seq(0, maxr, by = 5), limits = c(0, maxr)) + 
+  theme_minimal()+
+  theme(panel.grid = element_blank()) 
+print(logchange_rates_inflation)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation2.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/logchange_rates_inflation2.png")
 
-
+#p<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
+#pctchange<-(logchange_rates_norm | logchange_rates_adjust) / (logchange_rates_covid | logchange_rates_zlb) | logchange_rates_inflation 
+pctchange<-(logchange_rates_norm )/ (logchange_rates_adjust) / (logchange_rates_covid) / (logchange_rates_zlb)/ (logchange_rates_inflation )
+print(pctchange)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pdf", pctchange)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", pctchange)
 
 
 # Full sample
@@ -719,14 +733,14 @@ ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/plotsd
 
 # Initialize vectors to store results
 T<-nrow(rrbp)
-rcol<-6
-meanr<- colMeans(rrbp[,2:6])
+rcol<-5
+meanr<- colMeans(rrbp[,2:rcol])
 print(meanr)
 # EFFR     OBFR     TGCR     BGCR     SOFR 
 # 156.2080 155.5207 132.0189 132.0358 133.2616 
  
 #colsumvold <-rowSums(vold[ , c(2,3,4,5,6)], na.rm=TRUE)
-colsumvold <-rowSums(vold[ , 2:6], na.rm=TRUE)
+colsumvold <-rowSums(vold[ , 2:rcol], na.rm=TRUE)
 print(colsumvold)
 colsumvold[1:10]
 #[1] 1739 1730 1714 1691 1671 1693 1705 1656 1658 1641
@@ -739,6 +753,7 @@ nrow(dkindex) # [1] 1957
  
 #vold and rrbp col1=sdate, cols 2:6 EFFR OBFR  TGCR BGCRSOFR
 T<-nrow(rrbp)
+rcol<-ncol(rrbp)
 # Calculate dk(t)
 for (t in 1:T) {
   for (i in 2:rcol) {
@@ -751,17 +766,6 @@ for (t in 1:T) {
   dkindex[t] <- sum(dk[t, 1:rcol-1])
 }
 
-# ## Calculate dk(t)
-# for (t in 1:T) {
-#   for (i in 1:ncol) {
-#     dk[t, i] <- (1 / colsumvold[t]) * vold[t,i+1]*abs(rrbp[t,i+1] - meanr[i])
-#   }
-# }
-# 
-# # Calculate dkindex(t)
-# for (t in 1:T) {
-#   dkindex[t] <- sum(dk[t, 1:ncol])
-# }
 # ##---------------------
 
 
@@ -771,7 +775,7 @@ dkindexdf <- data.frame(
   TargetDe = spread_no_na$TargetDe,
   TargetUe = spread_no_na$TargetUe,
   EFFR = spread_no_na$EFFR,
-  OBFR = spread_no_na$OBFR,
+  #OBFR = spread_no_na$OBFR,
   TGCR = spread_no_na$TGCR,
   BGCR = spread_no_na$BGCR,
   SOFR = spread_no_na$SOFR
@@ -786,10 +790,10 @@ my_envvolatile$dkindex<-dkindexdf
 
 
 
-mxq = max(dkindex[,1])
-mnq = min(dkindex[,1])
-print(mxq) # 399.8723
-print(mnq) #  10.17096
+mxq = max(dkindex)
+mnq = min(dkindex)
+print(mxq) #  401.1328  OLD 399.8723
+print(mnq) #  10.03117  OLD  10.17096
 
 # meltdkindex <- melt(dkindex,id="sdate")
 # dk <- ggplot(meltdkindex,aes(x=sdate,y=value,colour=variable,group=variable)) + 
@@ -804,20 +808,6 @@ print(mnq) #  10.17096
 # Load the dplyr package
 library(dplyr)
 
-# Modify the data frame using dplyr
-dkindexdf <- data.frame(
-     sdate = spread_no_na$sdate,
-     dkindex,
-     TargetDe = spread_no_na$TargetDe,
-     TargetUe = spread_no_na$TargetUe,
-     EFFR = spread_no_na$EFFR,
-     OBFR = spread_no_na$OBFR,
-     TGCR = spread_no_na$TGCR,
-     BGCR = spread_no_na$BGCR,
-     OFR = spread_no_na$SOFR
- )
-str(dkindexdf)
-
 
 
 # Create a variable for group names
@@ -828,9 +818,9 @@ dkindexdf$sdate <- as.Date(dkindexdf$sdate)
 dkindexdf$group <- rep(c("Duffie-Krishnamurthy index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
 
 # Create a named vector for colors
-colors <- c("Duffie-Krishnamurthy index" = "black",
-            "Lower target FFR" = "blue",
-            "Upper target FFR" = "green",
+colors <- c("Duffie-Krishnamurthy index" = "blue",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
             "EFFR" = "black",
             "TGCR" = "green",
             "BGCR" = "orange",
@@ -838,61 +828,196 @@ colors <- c("Duffie-Krishnamurthy index" = "black",
 
 ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
   geom_point(shape = 16, size = 1) +
-  labs(x = "X-axis", y = "Y-axis", color = "Lines") +
+  labs(x = "", y = "DK index", color = "Lines") +
   scale_color_manual(name = "Legend Title", values = colors) +
   theme_minimal()
-
 print(ggdkindex)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.png")
 
 
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index",  "diamond", "circle")
 
-dkindexdf$group <- rep(c("Duffie-Krishnamurthy index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
-
-# Create a named vector for colors
-colors <- c("Duffie-Krishnamurthy index" = "black",
-            "Lower target FFR" = "blue",
-            "Upper target FFR" = "green",
+# Modify color vector
+colors <- c("Duffie-Krishnamurthy index" = "blue",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
             "EFFR" = "black",
             "TGCR" = "green",
             "BGCR" = "orange",
             "SOFR" = "red")
 
-ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
-  geom_point(shape = 16, size = 1) +
-  labs(x = "X-axis", y = "Y-axis", color = "Lines") +
+str((dkindexdf))
+# 'data.frame':	1957 obs. of  10 variables:
+#   $ sdate   : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" "2016-03-09" ...
+# $ dkindex : num  121 121 121 121 121 ...
+# $ TargetDe: num  25 25 25 25 25 25 25 25 25 25 ...
+# $ TargetUe: num  50 50 50 50 50 50 50 50 50 50 ...
+# $ EFFR    : num  36 36 36 36 36 36 36 37 37 37 ...
+# $ TGCR    : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ BGCR    : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ SOFR    : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ group   : chr  "Duffie-Krishnamurthy index" "Lower target FFR" "Upper target FFR" "EFFR" ...
+# $ shape   : chr  "triangle" "circle" "circle" "circle" ...
+
+nc=ncol(dkindexdf)-2
+maxr<-max(dkindexdf[,2:nc]) # 550
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(shape = 16,size = 2) +
+  geom_line(aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "DK index", color = "Lines") +
   scale_color_manual(name = "Legend Title", values = colors) +
+  scale_y_continuous(breaks = seq(0, maxr, by = 50)) 
+  #scale_shape_manual(name = "Legend Title", values = c("diamond", "circle")) +
   theme_minimal()
 print(ggdkindex)
+rownum <- which(spread_no_na$TargetUe >300)
+print(rownum)
 
 
-#plot B
-# Ensure sdate is of type Date
-dkindexdf$sdate <- as.Date(dkindexdf$sdate)
+# Extract data associated with the plot
+plot_data <- ggplot_build(plot)$data[[1]]
 
-# Create a variable for group names
-dkindexdf$group <- rep(c("Duffie-Krishnamurthy index", "Lower target FFR", "Upper target FFR", "EFFR", "TGCR", "BGCR", "SOFR"), length.out = nrow(dkindexdf))
+# Extract coordinates and values of the symbols
+coordinates <- plot_data$coordinates
+values <- plot_data$y
 
-# Create a named vector for colors
+# Print coordinates and values
+print(coordinates)
+print(values)
+# PLOT I USED:
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "")
+
+# Extract data associated with the plot
+plot_data <- ggplot_build(ggdkindex)$data[[1]]
+#  [891] 382.98404  is DKindex not target rate sdate[891]  [1] "2019-09-17"
+
+# Extract coordinates and values of the symbols
+coordinates <- plot_data$coordinates
+values <- plot_data$y
+
+# Print coordinates and values
+print(coordinates)
+print(values)
+
+
+# Modify color vector
+colors <- c("Duffie-Krishnamurthy index" = "black",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
+            "EFFR" = "blue",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(size = 3) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  scale_shape_manual(name = "Legend Title", values = c("triangle", "")) +
+  theme_minimal()
+
+
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "circle")
+
+# Modify color vector
+colors <- c("Duffie-Krishnamurthy index" = "black",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
+            "EFFR" = "blue",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(aes(shape = shape), size = 3) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  #scale_shape_manual(name = "Legend Title", values = c("triangle", "circle")) +
+  guides(shape = guide_legend(override.aes = list(fill = NA))) +
+  theme_minimal()
+print(ggdkindex)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.png")
+
+
+# Others that didn't work-----------------------------
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "circle")
+
+# Modify color vector
+colors <- c("Duffie-Krishnamurthy index" = "black",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
+            "EFFR" = "blue",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(size = 3) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  scale_shape_manual(name = "Legend Title", values = c("triangle", "circle")) +
+  guides(shape = guide_legend(override.aes = list(fill = NA))) +
+  theme_minimal()
+##
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "circle")
+
+# Modify color vector
+colors <- c("Duffie-Krishnamurthy index" = "black",
+            "Lower target FFR" = "gray",
+            "Upper target FFR" = "gray",
+            "EFFR" = "blue",
+            "TGCR" = "green",
+            "BGCR" = "orange",
+            "SOFR" = "red")
+
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(size = 3) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
+  scale_color_manual(name = "Legend Title", values = colors) +
+  scale_shape_manual(name = "Legend Title", values = c("triangle", "circle")) +
+  guides(shape = guide_legend(override.aes = list(fill = NA))) +
+  theme_minimal()
+##
+
+# Add a column for shape
+dkindexdf$shape <- ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", "triangle", "circle")
+
+# Modify color vector
 colors <- c("Duffie-Krishnamurthy index" = "black",
             "Lower target FFR" = "gray",
             "Upper target FFR" = "gray",
             "EFFR" = "black",
             "TGCR" = "green",
-            "BGCR" = "maroon",
+            "BGCR" = "orange",
             "SOFR" = "red")
 
-ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group)) +
-  geom_point(shape = 16, size = 1) +
-  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")),
-            aes(x = sdate, y = dkindex, group = group, color = group), linewidth = 1) +
-  labs(x = "", y = "basis points (bp)", color = "Lines") +
+# Plot
+ggdkindex <- ggplot(dkindexdf, aes(x = sdate, y = dkindex, color = group, shape = shape)) +
+  geom_point(size = ifelse(dkindexdf$group == "Duffie-Krishnamurthy index", 4, 2)) +
+  geom_line(data = subset(dkindexdf, group %in% c("Lower target FFR", "Upper target FFR")), aes(group = group), linetype = "dashed", color = "gray") +
+  labs(x = "", y = "basis points (normalized by volume)", color = "Lines") +
   scale_color_manual(name = "Legend Title", values = colors) +
+  scale_shape_manual(name = "Legend Title", values = c("triangle", "circle")) +
+  guides(shape = guide_legend(override.aes = list(fill = NA))) +
   theme_minimal()
 print(ggdkindex)
-
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dkindex2024.png")
-
+# Others that didn't work-----------------------------
 
 # Gara distance EFFR from FOMC targets ------------------------------------------
 # Initialize 'g' vector
