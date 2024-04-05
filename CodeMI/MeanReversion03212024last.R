@@ -22,7 +22,7 @@ library(gridExtra)
 #library(MASS)
 library(fitdistrplus)
 library(reshape2)
-#library(p)
+library(patchwork)
 
 # ------------------- Set up git -----------------------------
 # https://hansenjohnson.org/post/sync-github-repository-with-existing-r-project/
@@ -542,6 +542,12 @@ print( xtable(ratesamplestats), include.rownames = FALSE )
 #NO! inflation   5/5/2022		12/14/2023 1517  1714
 # Redo -3 for each position for nrow=1957
 
+# 1. normalcy              3/4/2016-7/31/2019    
+# 2. mid cycle adjustment  8/1/2019-10/31/2019
+# 3. covid                11/1/2019-3/16/2020   
+# 4. zero lower bound      3/17/2020-3/16/2022
+# 5. Taming inflation      3/17/2022-12/14/2023
+
 
 begn<-c(1,859,923,1014,1519,1)
 endn<-c(858,922,1013,1518,1957,1957)
@@ -593,10 +599,6 @@ ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_sample.pdf")
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_sample.png")
 # ------------------------- ADD LATER
-
-
-
-
 
 
 # --------------- epoch plots
@@ -672,7 +674,7 @@ my_envepisodes$normstats <-normstats
 sdate<-sdatenorm
 maxr-max(norm[,2:ncol(norm)]) #224
 maxr=250
-minr-min(norm[,2:ncol(norm)]) #0
+minr=0 #min(norm[,2:ncol(norm)]) #0
 meltrates_norm <- melt(norm,id="sdate")
 rates_norm <- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape = 16, size = 1) +
@@ -1009,7 +1011,7 @@ meltrates_inflation <- melt(inflation,id="sdate")
 rates_inflation <- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_point(shape=16,size=1) +
   labs(caption = "Inflation 03/17/2022-12/14/2023", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
-  scale_y_continuous(breaks = seq(0, 500, by = 50), limits = c(0, 500)) + 
+  scale_y_continuous(breaks = seq(0, maxr, by = 50), limits = c(0, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
 print(rates_inflation)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation.pdf")
@@ -1022,15 +1024,25 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflation
 # 4. zlb         3/17/2020- 3/16/2022     1014-1518
 # 4. Taming inflation 03/17/2022 - 12/14/2023 1519-1957
 
-# Combine plots
+# Combine episode time series plots
 rates_norm + rates_adjust + rates_covid + rates_zlb + rates_inflation
 plot_layout(ncol = 2) +
 plot_annotation( title = 'Overnight rates over different policy regimes', caption = '2016-2023', theme = theme(plot.title = element_text(size = 16)) )
+
+#Another way combined_plot <- plot1 + plot2 + plot3
+# Remove titles from individual plots within the combined plot
+#combined_plot <- combined_plot + theme(plot.title = element_text(hjust = 0))  # Adjust title position to be outside the plot area
 
 # or
 p<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pdf", p)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", p)
+
+# Combine episode percent change plots
+prates<-(rates_norm | rates_adjust | rates_covid) / (rates_zlb | rates_inflation)
+print(prates)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pdf", prates)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", prates)
 
 
 # Combine xtable objects
