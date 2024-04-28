@@ -1,0 +1,1794 @@
+
+---
+title: "ONrates12022023"
+author: "Hammond"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
+output: 
+  bookdown::pdf_document2:
+    toc: true  # Specify whether a table of contents should be included
+    regex: 
+      - "Rate characteristics \\d{1,2}"
+      - "EFFR Key percentiles during sample period\\d{1,2}"
+    keep_tex: true
+    fig_caption: yes
+    number_sections: yes
+    latex_engine: lualatex
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{float}
+echo: false  
+---
+
+<!--
+
+---
+title: "ONrates12022023"
+author: "Hammond"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: yes
+    number_sections: yes
+    #fig_crop: yes
+    latex_engine: lualatex  # Change the LaTeX engine to lualatex
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{float}
+echo: false  
+---
+
+-->
+
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(knitr)
+library(xtable)
+library(tinytex)
+library(reshape2)
+library(bookdown)
+library(gridExtra)
+library(cowplot)
+library(patchwork)
+library(caTools)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r, load environment mp, echo=FALSE, cache=FALSE}
+my_envmp <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmentmp.RDS")
+#saveRDS(my_envmp, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_environmentmp.RDS")
+# rmarkdown::render("C:/Users/Owner/Documents/Research/OvernightRates/ONrates03142024draft.Rmd",envir= my_envmp)
+```
+
+
+```{r, load environment episodes, echo=FALSE, cache=FALSE}
+#rm(my_envepisodes)
+my_envepisodes <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
+# Assign individual variables from the environment to the global environment
+quantilesE <- my_envepisodes$quantilesE
+quantilesT <- my_envepisodes$quantilesT
+quantilesB <- my_envepisodes$quantilesB
+quantilesS <- my_envepisodes$quantilesS
+#saveRDS(my_envepisodes, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
+```
+
+
+```{r, load environment boxplots, echo=FALSE, cache=FALSE}
+my_environmentbox <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envbox.RDS")
+#Correct the assignment
+badjust <- my_environmentbox$adjust
+bcovid <- my_environmentbox$covid
+bzlb <- my_environmentbox$zlb
+binflation <- my_environmentbox$inflation 
+```
+
+```{r, load environment box, echo=FALSE}
+my_environmentbox <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmentbox.RDS")
+```
+
+```{r, load environment volatile, echo=FALSE}
+my_envvolatile <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
+str(my_envvolatile$sample_measure1)
+```
+
+Structure of article: IMRAD:
+Introduction
+Data
+Methodology
+Results and
+Discussion
+
+Conclusion
+Acknowledgements
+References
+Supporting Materials
+
+Warning: LaTeX Warning: Reference `fig:volumesample1' on page 1 undefined on input line 134.
+Warning: LaTeX Warning: Reference `table:FOMCdailyratesstats' on page 1 undefined on input line 134.
+Warning: LaTeX Warning: Reference `fig:samplechar' on page 1 undefined on input line 142.
+Warning: LaTeX Warning: Reference `table:FOMCratechanges' on page 5 undefined on input line 409.
+Warning: LaTeX Warning: Reference `table:FOMCratechanges' on page 5 undefined on input line 432.
+Warning: LaTeX Warning: There were undefined references.
+
+
+
+```{r, main data spread, echo=FALSE}
+#Access the data frame stored in the environment
+my_data <- my_envmp$spread_no_na
+``` 
+
+```{r, sdate,echo=FALSE}
+sdate<-as.Date(my_data$Date,"%m/%d/%Y"); 
+```
+
+```{r, select sample,echo=FALSE}
+begs <-which(sdate == as.Date("2016-03-04"))[1] #sample start date 3/04/2016
+ends <-which(sdate == as.Date("2023-12-14"))[1] #sample end  date  12/27/2022
+my_data=my_data[begs:ends,]
+spread_no_na=my_data[begs:ends,]
+```
+
+```{r, Load rate data frame rrbp, echo=FALSE}
+rrbp <<- data.frame(
+  subset(my_data, select = c("sdate","EFFR","TGCR", "BGCR", "SOFR")
+))
+```
+
+```{r, Load volume data frame vold, echo=FALSE}
+vold <- data.frame(
+  subset(my_data, select = c("VolumeEFFR", "VolumeTGCR","VolumeBGCR","VolumeSOFR"))
+)
+```
+
+
+```{r,initialize list the lists measure_list1 and measurelist_2 to store matrices, echo=FALSE}
+nmat <- 6 #number of matrices
+ncl <- 5#number of columns
+begn<- c(1, 859, 923,  1014, 1519, 1)
+endn<- c(858, 922, 1013, 1518, 1957, 1957)
+start_dates <- sdate[begn]
+end_dates <- sdate[endn]
+start_dates_strings <- as.character(start_dates)
+end_dates_strings <- as.character(end_dates)
+measure_list1 <- vector("list", length = nmat)
+measure_list2 <- vector("list", length = nmat)
+```
+
+my_envvolatile$norm_measure1 <- subset(my_envvolatile$norm_measure1, select = c("EFFR", "TGCR", "BGCR", "SOFR"))
+
+
+
+# Introduction
+Overnight reference rates, the whole money market rates, and the Federal Reserve's policy and adminsitrative ratesshare these features: clustering around the Federal Funds rate (FFR), quick respond to changes in FFR and admistrative rates, interest on reserves (IOR), the overnight reverse repo rate (ONRRP), and large outliers.
+
+That they differ strongly in central tendencies, clustering, outliers under different policy 
+regimes beg we understand the role of monetary shocks and the Fed's preferences for volatility in  managing  the FFR within ranges set by the FOMC. Main features of the U.S. short-term interest rate
+- complex conditional heteroskedasticity
+- fat-tailed innovations
+- pronounced autocorrelation patterns
+
+
+Daily overnight rates include the unsecured rates The effective federal funds rate (EFFR), The 
+Federal funds market consists of domestic unsecured borrowings by depository institutions from 
+other depository institutions and certain other entities, primarily government-sponsored enterprises.
+The EFFR is calculated as a volume-weighted median of overnight federal funds transactions. 
+The OBFR is a measure of wholesale, unsecured, overnight bank funding costs, calculated from 
+federal funds transactions, Eurodollar transactions, and domestic deposit transactions. The 
+federal funds rate is the Fed's policy rate. The effective federal funds rate (EFFR) tracks 
+transactions in the federal funds market. The overnight  bank funding rate (OBFR), similar to 
+the EFFR, is a broad measure of U.S. dollar funding costs for U.S. based banks. The secured 
+overnight funding rate (SOFR) captures transactions in  overnight wholesale funding markets, 
+the tri-party general collateral rate (TGCR) and over the counter broad general collateral rate 
+(BGCR). 
+
+Transactions in the tri party market TGCR is centrally cleared. The BGCR is an over the counter  transactions, serving agents looking for specific cusip numbers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities. replaces LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC). The FICC trades are filtered to remove a portion of transactions considered “specials”. 
+
+The distributions of daily rates rates and transactions transactions, billions of dollars, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \ref{table:FOMCratechanges} ). Data provided by the NY Federal Reserve download program summarize weighted average median rates and quantiles of these distributions. 
+Volatility, as measured by the interquartile range (IQR), the 75th percentile - the 25 percentile of the shows 50 percent of rate data within the IQR. The range of the data, the 99th - the one percentile of the data demonstrates the magnitude of outlier rates.
+
+
+Reserves went through a full expansion-contraction cycle from 2010 to late 2019 and expanded 
+again in early 2020, ranging from $\$$8 trillion  (2010 and 2019) to $\$$19 trillion (2014 and 2021) of banks’ assets. These movements reflect the Federal Reserve balance-sheet expansions in response to 
+the 2008 and 2020 crises, as well as the interim normalization period (2015-2019). 
+
+To manage the build up in liquidity in reserves after the Great financial Crisis (GFC), the Fed 
+initiated the policy regime of ample reserves to  maintain/manage the Fed Funds rate within its 
+target range. Its administrative rates comprise a floor system where  interest on reserves (IOR) 
+paid on bank reserves with the Fed are the ceiling and the overnight reverse repurchase rate 
+(ONRRP rate) is the  floor. The Fed or FOMC also temporarily intervenes in repurchase (repo) and 
+reverse repo to offset high frequency liquidity shocks to keep federal funds rate close to target.
+
+In addition, there has been a dramatice increase in funding through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. In the 1950s, Wall Street dealers originated the non deposit deposit, a repurchase transaction or repo, secured borrowing backed by collateral.The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. Since the 1970s, private parties have created deposit like instruments,  repos and money market funds ,intermediating credit outside the traditional banking system. This allows them to evade regulatory hurdles. The Tri-Party General Collateral Rate (TGCR), the base layer of repos, is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. (Reference CONCODA)
+
+Through repo and reverse repo transactons, the Fed uses the tri party market TGCR for temporary interventions to manage the FFR within its target range by using repos to adding reserves to 
+the system or reverse repos to drain reserves.   (David Gibbs, Education Director Chicago Mercantile Exchange (CME). 
+
+The level of reserves in the banking system can change either because
+1) because funds are transferred between reserves and non-reserve accounts at the Federal
+2) changes in the US Treasury account at the Fed
+3) The Federal Reserve responds to volatility in the federal funds market by adjusting the reserve
+supply to keep the federal funds rate within its target range through these repo and reverse repo operations each day
+
+By trading securities with banks and other counterparites, Federal Reserve purchases or sales of 
+assets from banks change the size of the Federal Reserve balance sheet. In a  repo transaction, 
+Federal Reserve purchases securities, adding assets to its balance sheet and issues reserves by 
+crediting the Federal Reserve accounts of the selling banks. Fed is lends reserves in a reverse 
+repo transaction. When the Federal Reserve lends to counter parties  the Fed sale of securities 
+lower aggregate reserves as funds are debited from depositor accounts. Fed lending constitutes 
+a large volume of lending to RRP counterparties MMFs, liquidity.
+
+%[repo increases reserves, lowers FFR  reverse repo reverses reserves and raises FFR] [repo means 
+%dealer deposits (borrowed) reserves collateralized by UST securities?]. 
+
+This paper describes the dynamics of these rates. A proposed model of volatility to follow, will identify the contribution to central bank rate changes and Fed preferences for offsetting volatility in the FFR when managing its policy rate with the FOMC target range.
+
+Recent literature
+I summarize findings from the literature of how the Federal Reserve Bank adjustment of reserves affects volatility of the Federal Funds rate (FFR) and wholesale overnight money market rates. 
+Work in this area provide evidence of key characteristics of the FFR - time varying volatility or autoregressive conditional heteroskedasticity, spectacular outliers, skew, fat tails. shifts around central tendencies, jumps.
+
+Hamilton (1996) examine the volatility in the Federal Funds market. adapting Nelson's (1991) EGARCH model to estimate the conditional mean and the conditional variance of the daily Federal Funds rate (FFR). He attributes the effect of an open-market purchase to smooth out small fluctuations in the FFR, rather than interday arbitration. A small temporary infusion of reserves through an overnight repurchase agreement by the Fed's trading desk lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves Importannt day effect can produce theextreme volatility, large outliers of the FFR. These include the last day of the quarter or the last day of the year, when bank's report balance sheets of assets and liabilities. 
+
+Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the interest rate target set by the FOMC. the Fed's estimated policy rule reacts to information contained in the yield curve, especially  information in yields with of two year maturities, implying the Fed responds to some medium-run forecast of the economy. Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC’s policy decisions and describes Fed policy better than Taylor rules.
+
+She observes, high-frequency data in a linear-quadratic jump-diffusion model provides information about the exact timing of FOMC meetings. This informationcan improve bond pricing and ability to identify monetary policy shocks. Decisions about target moves are result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move. 
+ 
+The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. based on yield curve information and an arbitrage-free bond market.
+ 
+Findings:
+ 1) latent factors
+ the target set by the Fed is an observable factor in the model and provides a clean measure of the short end of the yield curve. The use of target data avoids having to deal with calendar day effects in very short rates, which typically require lots of parameters
+ 2) Second, the estimated response of yields to policy shocks is strong and slowly declines only with the maturity of the yield
+ 3) The estimated policy rule describes the Fed as reacting to information contained in the yield curve. the most important information is contained in yields with maturities around two years, which suggests that the Fed reacts to some medium-run forecast of the economy. 
+
+* The estimated policy rule displays interest rate smoothing: the target level is autocorrelated. 
+* The rule also displays policy inertia: the Fed only partially adjusts the target to its desired rate. Inertia leads to positive autocorrelation in target changes, because one change is typically followed by additional changes in the same direction over a number of FOMC meetings
+
+* yield data summarize market expectations of future target moves. These market expectations are
+based on a host of variables that are omitted from other rules. 
+yield data are available at higher frequencies and are less affected by
+measurement errors than macroeconomic variables. 
+The model demonstrated the policy inertia, the tendency to continue same policy changes. 
+
+(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model. The model includes a time-varying mean reversion factor, a stochastic volatility factor, and a jump process.  The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns.   Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean  allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior. 
+
+The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
+
+Bertolini, Bertola, Prati () and Gara () and Benzoni observe that the effect of Fed interventions on the volatility in interbank rates 
+* declines in high rate regimes
+* rises end of quarter, end of year
+* falls before holidays, rises day after
+* other observations:
+    - TS properties. Many rate changes of half percent or more (annualized), and outliers. Volatility persistent. maintenace periods, calendar days, end of quarter, end of year, before and after holidays, large rate changes.
+
+Bertolini, Bertola, Prati (2004) model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market.[describe model]. This search was motivated by the puzzle that the high frequency patterns of FF rate volatility survives Fed's attempt to manage the FFR within the FOMC target range. 
+They note the immediate response of other key short rates to monetary policy and other shocks. Overnight wholesale money market rates quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl. Monetary policy implementation with an ample supply of reserves (2020) derive a function of reserve demand that measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR. The FFR is price at which banks are willing to borrow and lend  reserve balances.The reserve demand function describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. model of banks' reserve demand sensitivity  to shocks to reserves is greater when reserves are scarce. The slopeof demand function is negative as reserves decline. When reserves are abundant [connect, the demand curve is flat around the the IORB rate. the interest rate paid by the Federal Reserve on reserve balances. The IORB representsthe banks’ opportunity cost of lending in the federal funds market. 
+
+Reserve demand, portrayed in realized rates against realized reserves, is nonlinear, downward-sloping reflecting a negative relation ship between prices and quantities. The slope oof the demand curve, representing the sensitivity of rates to reserve shocks, becomes increasingly steeper the more scarce are reserves. The slope flattens when reserves are abundant. 
+
+\emph{Vertical shift}
+Policy changes shift the curve up and down by moving its lower bound. Increases (descreases) in the (FFR-IORB?) IORB rate shift the demand curve down (up by changing the banks’ opportunity cost of lending in the federal funds market 
+\emph{Horizontal shift}
+Low frequency horizontal shifts in the demand function reflect sensitivity of rates to shocks to reserves.
+(1): for every level of the federal funds rate, they imply an increase in the quantity of aggregate
+reserves demanded by the banking system. As a result of these shifts, the level of reserves at which
+the curve stops being flat and start displaying a negative slope may have moved over time.
+
+The visible negative correlation between quantities (reserves) and prices (federal funds rates) suggests  supply shocks tend to dominate demand shocks. 
+
+
+ ISSUES
+ Bertolini, Bertola, Prati () and Gara () and Benzoni observe that the effect of Fed interventions on the volatility in interbank rates 
+* declines in high rate regimes
+* rises end of quarter, end of year
+* falls before holidays, rises day after
+* other observations:
+    - TS properties. Many rate changes of half percent or more (annualized), and outliers. Volatility persistent. maintenace periods, calendar days, end of quarter, end of year, before and after holidays, large rate changes
+    - Mean reverision versus dispersion?
+
+
+
+
+Citations
+Adam Copeland | Darrell Duffie | Yilin (David) Yang.  Reserves Were Not So Ample After All. July 2021. Federal Reserve Bank of New York Staff Reports, no. 974
+JEL classification: G14, D47, D8
+
+James D. Hamilton. The Daily Market for Federal Funds. February 1996. Journal of Political Economy, Vol. 104, No. 1 
+Stable URL: \url{https://www.jstor.org/stable/2138958} 
+ Published by: The University of Chicago Press  pp. 26-56
+
+Piazzesi, Monika. Bond Yields and the Federal Reserve. April 2005. Journal of Political Economy, Volume 113, Issue 2, pp. 311-344.
+
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl. Monetary policy implementation with an ample supply of reserves. January, 2020. Federal Reserve Bank Chicago.WP 2020-02
+\url{https://doi.org/10.21033/wp-2020-0}
+
+Bertolini.L, Bertola, Prati. Day-To-DaY_Monetary Policy and the Volatility of the Federal Funds Interest Rate. December 2000.  IMF WOrking Paper WP/00/206
+
+Torben Gustav Andersen, Luca Benzoni,Jesper Lund. Stochastic volatility, mean drift, and jumps in the short-term interest rate. January 2004
+
+%@article{article,
+%author = {Andersen, Torben and Benzoni, Luca and Lund, Jesper},
+%year = {2004},
+%month = {01},
+%pages = {},
+%title = {Stochastic volatility, mean drift, and jumps in the short-term interest rate}
+%}
+
+
+# Monetary policy during the sample period 2016-2023
+* my shocks (FFR changes under episodes)
+* Romer and Romer shocks
+* other external shocks to these markets
+
+In work to follow, the goal is to show how these shocks, changes in monetary policy (Table \ref{table:FOMCratechanges}).affect rate volatility. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+
+Before the financial crisis of 2008, policy was typically based on adjusting the scarcity value of a limited supply of central bank deposits (reserves), but the substantial increase in liquidity resulting from asset purchases in response to the financial crisis of 2008, the Fed experimented with different policy regimes to manage the FFR. Policy continued to evolve with events that occurred during the six year period of our sample 2016-2023. The QE1, QE2, and QE3 asset purchases [PURPOSE] challenged the bank’s ability to control short-term interest rates. Asset purchases under QE resulted in central banks changing their overall frameworks for controlling short-term interest rates.
+
+Policy changes include  FOMC reference rate changes from Libor sot SOFR, paying depositing banks interest on reserves (the administered rates the IORB), creation of standing repo facility, repo and the overnight reverse repo facility (ONRRP). 
+
+FOMC rate changes  occurred during the six year period of our sample 2016-2022 (Table \ref{table:FOMCratechanges}), monetary regimes, and events in Table. 
+
+In 2018 the FOMC adopted target rates, In 2019, the FOMC abandoned active management of scarce reserves and other short term interest rates and adopted a policy of ample reserves.
+
+On October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IOR) to help control the fed funds rate. The IOR rate is the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) facility offering rate is the Fed’s supplementary tool for interest rate control. In the recently established repo facility, July 2021, the Standing Repo Facility (SRF), the Desk purchases securities from a counterparty subject to an agreement to repurchase the securities at a later date,  temporarily increases the supply of reserve balances in the banking system and lowers the FFR. 
+
+The IOR is the Fed’s principal tool for interest rate control. It sets a ceiling on the FFR. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) facility offering rate is the Fed’s supplementary tool for interest rate control.
+
+Each repo transaction is economically similar to a loan collateralized by securities,interest” paid on that loan, is the difference between the original price and the second, higher price. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  temporarily decreases the supply of reserve balances in the banking system and raising the FFR.
+
+The reverse repo facility, the ON RRP facility, is available to a wide range of money market lenders. This facility is particularly important for monetary policy implementation in periods when reserves are elevated. As reserves grow, banks’ willingness to take on additional reserves diminishes, and they reduce the rates they pay for deposits and other funding. In this environment, market rates trade below the IORB rate because nonbank lenders are willing to lend at such rates. For example, the Federal Home Loan Banks (FHLBs), which are important lenders in the fed funds market and not eligible to earn IORB, are willing to lend at rates below the IORB rate rather than leave funds unremunerated in their accounts at the Fed. To provide a floor under the fed funds rate, the FOMC introduced the ON RRP facility.
+Under this ample reserves regime The Federal Reserve manages the the policy rate, the Federal Funds rate (FFR) within its target range. 
+
+In the ample reserves regime introduced in 2019, the Fed adjusts administrative rates, the IOR and the ONRPP, to manage the FFR between the upper and lower target rates set by the Federal Open Market Committee (FOMC).The Fed sets the interest on reserve balances (IOR) paid on deposits held at the bank, and the overnight reverse repurchase facility (ON RRP).  The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy. 
+
+In this  corridor system, the interest on reserves (IOR) is the ceiling, the overnight reverse repo purchase rare (ONRRP) the floor. Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate they can receive from the Fed. The IOR is, in effect, a reservation rate for banks’ intermediation activities.
+
+Similarly, no bank should be borrow at a higher rate than the ONRRP. No bank should lend at a lower rate than the ONRPP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. Competition among borrowers should drive rates to the discount window (DW) rate. 
+
+In the ample reserves regime. the administered rates constitute a “floor” system to manages the FFR within its target range, the upper and lower targets set by the Federal Open Market Committee (FOMC). The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy. The interest on reserves rate (IOR or IORB) is the Fed’s principal tool for interest rate control.the Fed adjusts administrative rates to manages the FFR between the FOMC target upper and lower bounds.The IOR. 
+
+The administered rates, the IOR and the ON RPP,  along with an ample supply of reserves, created a corridor system for managing the Fed Funds rate. The IOR is the ceiling, the ON RRP the floor. No bank would lend at rates on overnight cash lower than the IOR, the rate they can receive from the Fed. Thus Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate. In this sense, the IOR rate is in effect a reservation rate for banks’ intermediation activities,
+No bank should be borrow at a higher rate than the ONRRP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. No bank should lend at a lower rate than the ONRPP. Competition among borrowers should drive rates to the discount window (DW) rate. 
+
+Under the Ample Reserves policy, the Federal Reserve manages the FFR within its desired range in a “floor” system through Temporary open market operations (TOMO), short-term repurchase and reverse repurchase agreements. These Short-term repurchase and reverse repurchase agreements are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the Federal Funds market.
+
+<!--
+%\url{https://libertystreeteconomics.newyorkfed.org/2022/01/how-the-feds-overnight-reverse-repo-facility-w%orks/}
+%How to cite this post:
+%Gara Afonso, Lorie Logan, Antoine Martin, William Riordan, and Patricia Zobel, “How the Fed’s Overnight %Reverse Repo Facility Works,” Federal Reserve Bank of New York Liberty Street Economics, January 11, %2022, \url{https://libertystreeteconomics.newyorkfed.org/2022/1/how-the-feds-overnight-reverse-repo-facil%%ity-works/}.
+-->
+
+
+## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
+
+
+ADD IOR, ONRRP
+
+Changes in the Fed funds rate and the administered rates IOR and the reward rate ON RRP provides a summary of the data (\@ref(tab:FOMC rate changes 2016-2023) .
+
+```{r, tab.cap="FOMC rate changes 2016-2023", echo=FALSE, results='asis'}
+library(xtable)
+fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
+# Set column names based on the first row
+#C:/Users/Owner/Documents/Research/overnightRates/Final data files/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
+# Set column names based on the first row
+colnames(fomc) <- names(fomc)
+print(colnames)
+fdate<-as.Date(fomc$Date,"%d/%m/%Y")
+#Create xtable
+library(xtable)
+xtable_fomc <- xtable(fomc)
+print(xtable_fomc)
+#\textbf{2016 to 2018: Returning to Normalcy}
+#\textbf{2019  Mid-Cycle Adjustment}
+#\textbf{2020 Coping with Covid}
+#\textbf{2022 Taming Inflation}
+```
+
+March 3, 2020: Citing “evolving risks to economic activity” from the coronavirus outbreak, the Fed held an emergency meeting, cutting interest rates by 0.5% to 1.0–1.25%
+March 11, 2020: The World Health Organization (WHO) declares Covid-19 a global pandemic
+March 15, 2020: In another emergency meeting, the Fed slashes rates to zero (a range of 0–0.25%) and launches a $\$$700 billion quantitative easing program
+March 16, 2020: The Dow falls 12.9%, triggering a stock market crash. It would go on to lose a total of 37% before ending the year with a 7.3% gain
+April 2020: U.S. unemployment reaches an average of 14.7%, its highest level since 1948, although job losses for women and minorities are even higher
+August 28, 2020: At an economic symposium in Jackson Hole, the Fed announces a new strategy that calls maximum employment “a broad-based and inclusive goal”
+July 28, 2021: The Fed holds rates steady at near-zero levels, labelling rising inflation a “transitory” phenomenon
+January 26, 2022: Powell states that “labor market conditions are consistent with maximum employment” and predicts future interest rate hikes
+February 24, 2022: Russia invades Ukraine
+March 16, 2022: The Fed makes its first interest rate increase since 2018, raising rates by 0.25% to a level of 0.25–0.50%
+May 5, 2022: The Fed increases interest rates 0.50% to 0.75–1.00% and states that it anticipates ongoing increases to be “appropriate”
+June 2022: Inflation, as measured by the Consumer Price Index (CPI), peaks at 9.1%
+June 16, 2022: The Fed raises rates 0.75% to 1.50–1.75%
+July 28, 2022: The Fed hikes rates another 0.75% to 2.25–2.50%
+September 22, 2022: The Fed delivers another 0.75% rate increase, bringing rates to 3.00–3.25%
+November 3, 2022: It increases rates by 0.75% to 3.75–4.00%, adding that it is “prepared to adjust the stance of monetary policy as appropriate if risks emerge”
+December 15, 2022: This time, the Fed raises rates by 0.5% to 4.25–4.50%
+February 2, 2023: It adds another 0.25% increase to 4.50–4.75%
+March 23, 2023: The Fed increases interest rates by an additional 0.25% to 4.75–5.0% and launches the Bank Term Funding Program, which will aid distressed banks suffering from interest-rate risk
+May 4, 2023: The Fed hikes another 0.25% to 5.00–5.25%
+July 27, 2023: The Fed delivers its final 0.25% increase of 2023, bringing rates to 5.25–5.50%
+
+June 2020 - In June 2020, the Fed set its rate of purchases to at least $\$$80 billion 
+a month in Treasuries and $\$$40 billion in residential and commercial mortgage-backed 
+securities until further notice. 
+
+ December 2020 slow: The Fed updated its guidance in December 2020 to indicate it would 
+ slow these purchases once the economy had made “substantial further progress” toward the 
+ Fed’s goals of maximum employment and price stability. 
+ - November 2021 taper: In November 2021, judging that test had been met, the Fed began 
+ tapering its pace of asset purchases by  $\$$10 billion in Treasuries and $\$$5 billion 
+ in MBS each month. 
+ - December 2021 double taper: At the subsequent FOMC meeting in December 2021, the Fed 
+ doubled its speed of tapering, reducing its bond purchases by $\$$20 billion in Treasuries 
+ and  $\$$10 billion in MBS each month
+
+
+Events:
+
+1) repo rate spike
+    9/16/2019 Repo spike SOHR 2.42 +13 over 9/15, EFFR 2.23 +11
+    9/17/2019 Repo spike    SOFR 5+                  EFFR 2.3   
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/what-happened-in-money-markets-in-september-2019-20200227.html}
+
+On Monday, September 16, SOFR printed at 2.43 percent, 13 basis points higher than the 
+previous business day. With pressures in the repo market spilling over into the fed funds 
+market, the EFFR printed at 2.25 percent, 11 basis points above the Friday print and at the 
+top of the FOMC's target range. On September 17, the EFFR moved above the top of the target 
+range to 2.3 percent and the SOFR increased to above 5 percent.
+
+
+2) Mar 10-18 2020  Dash for cash 
+    3/8/2020 0:00 subtract 5 from coordinate
+    3/15/2020 0:00
+The COVID-19 Pandemic Caused Market Disruptions across Sovereign Bond Markets
+At the start of the COVID-19 pandemic in late February 2020, and in response to the economic 
+repercussions of impending lockdown measures, investors began to demand higher-quality, 
+safe assets. In particular, they shifted their portfolios toward sovereign bonds, and the 
+resulting buying pressure drove sovereign yields to decline broadly. As the crisis intensified 
+in March 2020, however, investors’ demand for cash surged, leading to selling pressure on 
+sovereign bonds and therefore increases in their yields. This down-and-up pattern in yields 
+is illustrated for ten-year U.S., German, U.K., and Japanese bonds in the chart below.
+
+March 15, 2020 On March 15, 2020, the Fed shifted the objective of QE to supporting 
+the economy. It said that it would buy at least $\$$500 billion in Treasury securities and  $\$$200 billion in government-guaranteed mortgage-backed securities over “the coming months.” 
+ -  3/22/2020  March 23, 2020, it made the purchases open-ended, saying it would buy 
+ securities “in the amounts needed to support smooth market functioning and effective 
+ transmission of monetary policy to broader financial conditions,” expanding the stated 
+ purpose of the bond buying to include bolstering the economy. 
+ 
+
+ 
+# Daily overnight rates
+%Intro
+%Observations issues
+%Overnight rates are outliers, heteroskedastic, outliers present, and Extreme or high 
+%volatility of short rates. volatility survives rate the Federal Reserve Bank's (Fed) 
+%management of of the Federal Funds rate.
+%Volatility relative to to prior periods (here daily) 
+%Outliers
+%Rate volatility survives 
+
+
+## Time series properties of overnight policy, interbank rates, transactions, and reserves held at the Federal Reserve
+The time series properties of overnight reference rates from 2016 through 2023 exhibit known qualities  of short rates - the changing volatility or  heteroskedasticity and extreme values outliers (Figure \@ref(fig:Sample rates 3/4/2016-12/14/2023), [TGCR BGCR SOFR] All rates track and cluster around the effective Federal rate (EFFR), What we will explore is the tendency of all rates to respond quickly to changes in the policy rate. 
+
+[INTRO POLIC REGIMES]
+Fed policy changes are visible in Vertical shifts of the series. A Forbes article has described polocy regimes during this period:
+
+1. Normalcy   3/4/2016 to 7/31/2019     
+2. Mid cycle adjustment 8/1/2019 to 10/31/2019 
+3. Covid 11/1/2019 to 3/16/2020   
+4. Zero lower bound 3/17/2020 to 3/16/2022    
+5. Taming inflation 03/17/2022 - 12/14/2023 
+
+I have added the period of the zero lower bound.
+
+During the  during normalcy period the average median EFFR of 157 basis points (bp) increases steadily  from 36 basis points March 2016 from  through 214 bp July 2019 (\@ref(fig:Sample rates 3/4/2016-12/14/2023)).In 2019 rates began a three month decline from August to October 2019.  With the onset of covid, rates  plunge from 157 basis points in November 2019 to 15 bp in March 2020. Rates then hover near zero from Mar 2020 to March 2022 during the zero lower bound. Then rates rose in steadily in 25 or 50 basis point increments from March 2022 to 533 bp in December 2023.   Policy inertia is evident in all periods, as the Fed sequentially changes rates in ?? basis points in all periods but most clearly as  the Fed fights inflation. .
+
+see Figure \@ref(fig:Sample rates 3/4/2016-12/14/2023)
+
+```{r, fig.cap= "Sample rates 3/4/2016-12/14/2023", echo=FALSE, results='asis'}
+#sdate<-rrbp[,1]
+#sdate<-spread_no_na$sdate
+library(ggplot2)
+library(reshape2)
+#sdate<-as.Date(my_data$Date,"%m/%d/%Y")
+#rrbp$sdate<-sdate
+meltrrbp <- melt(rrbp,id="sdate")
+maxr<-539
+meltrrbp <- melt(rrbp, id = "sdate")
+maxr <- 539
+
+ratests_sample <- ggplot(meltrrbp, aes(x = sdate, y = value, colour = variable, shape = variable, group = variable)) + 
+   geom_point(size = 1) +
+   labs(x = "", y = "Basis Points (bp)", color = "Rate") +  
+   scale_y_continuous(breaks = seq(0, maxr, by = 50), limits = c(0, maxr)) + 
+   theme_minimal() + 
+   guides(shape = guide_legend(title = "Rate"))
+print(ratests_sample)
+   #my_envepisodes$ratests_sample<-ratests_sample
+```
+Characteristics of the sample distribution
+The rate data from the Federal Reserve Data Download Program are average volume weighted medians.The median rather than the mean better represent daily rates since the data have outliers or extreme values. 
+
+The median, a measure of central tendency, and quantiles illustrate the change in distribution of rates during difference policy episodes (\@ref(tab:Rate characteristics 2016-2023). The average median EFFR over the full sample is 157 bp.  The money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, SOFR 134 bp.  
+
+<!--
+Establish Mean reversion around a central tendency in daily rates. MR within2,3,...5 days show?
+Is there a relationship to policy iniertia?
+%Benzoni identify mean reversion around a central tendency. The stochastic mean  allows a relatively fast %mean-reversion of the short rate around a highly persistent time-varying central tendency process. 
+%Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating %extreme outlier behavior. 
+-->
+
+The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
+The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
+
+Other money market rates cluster around the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) cluster around the EFFR at 157 bp, Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. Median rates in the sample ] 
+
+The range, the 99th percentile minus the first percentile, more sensitive to outliers, represents 2 percent of the data.The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp. 
+
+Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
+
+The the average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR. [ADD VOLUME FIGURE]
+
+<!--
+              EFFR     TGCR     BGCR     SOFR    
+Rate          156.9688 132.8314 132.8482 134.0756
+Volume        78.91262 296.9484 311.2315 754.3664
+Upper target  170.5161 NA       NA       NA      
+Lower target  145.5161 NA       NA       NA      
+Percentile_01 153.07   124.8942 125.0746 NA      
+Percentile_25 156.1502 132.3551 132.3679 NA      
+Percentile_75 157.7067 133.2718 133.325  129.022 
+Percentile_99 169.0629 138.7547 141.1865 132.5059
+
+
+     EFFR 156.97 1.56 15.99 78.91
+TGCR TGCR 132.83 0.92 13.86 296.95
+BGCR BGCR 132.85 0.96 16.11 311.23
+SOFR SOFR 134.08 4.20 14.51 754.37
+
+Estimating moments of the data show overnight rates are highly skewed with fatter tails.?
+\url{https://statisticsbyjim.com/basics/interquartile-range/}
+-->
+
+See (\@ref(tab:Rate characteristics 2016-2023) provides a summary of the data.
+
+```{r, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+library(xtable)
+k=6 
+bgn<-1
+edn<-nrow(rrbp)
+sdate<-spread_no_na$sdate
+sample<-rrbp[bgn:edn,]  # All
+sdate<-spread_no_na$sdate
+sdatesample<-sdate[bgn:edn]
+qsampleE=quantilesE[bgn:edn,] # rate specific metrics 
+qsampleT=quantilesT[bgn:edn,]
+qsampleB=quantilesB[bgn:edn,]
+qsampleS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdate <- sdate
+my_envepisodes$sampleE <-qsampleE
+my_envepisodes$sampleT <-qsampleT
+my_envepisodes$sampleB <-qsampleB
+my_envepisodes$sampleS <-qsampleS
+
+Estats <- colMeans(qsampleE[bgn:edn,2:ncol(qsampleE)], na.rm = TRUE)
+Tstats <- colMeans(qsampleT[bgn:edn,2:ncol(qsampleT)], na.rm = TRUE)
+Bstats <- colMeans(qsampleB[bgn:edn,2:ncol(qsampleB)], na.rm = TRUE)
+Sstats <- colMeans(qsampleS[bgn:edn,2:ncol(qsampleS)], na.rm = TRUE)
+
+Tstats2<-c(Tstats[1],Tstats[2], TargetUe=NA, TargetDe=NA,Tstats[3],Tstats[4],Tstats[5],Tstats[6])
+Bstats2<-c(Bstats[1],Bstats[2], TargetUe=NA, TargetDe=NA,Bstats[3],Bstats[4],Bstats[5],Bstats[6])
+Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sstats[5],Sstats[6])
+
+Estats_mat <- matrix(Estats, nrow = 8, ncol = 1)
+Tstats_mat <- matrix(Tstats2, nrow = 8, ncol = 1)
+Bstats_mat <- matrix(Bstats2, nrow = 8, ncol = 1)
+Sstats_mat <- matrix(Sstats2, nrow = 8, ncol = 1)
+
+charsample <- cbind(Estats_mat, Tstats_mat, Bstats_mat, Sstats_mat)
+rownames(charsample) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+colnames(charsample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charsample,include.rownames = FALSE)
+```
+
+
+
+```{r, EFFR Key percentiles during sample period 3/4/2016-12/14/2023}
+k=6
+begn<- c(1, 859, 923,  1014, 1519, 1)
+endn<- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+qsampleE=quantilesE[bgn:edn,] # rate specific metrics  -->
+qsampleT=quantilesT[bgn:edn,] 
+qsampleB=quantilesB[bgn:edn,] 
+qsampleS=quantilesS[bgn:edn,] 
+
+Estats <- colMeans(qsampleE[,2:ncol(qsampleE)], na.rm = TRUE)
+#resave qsamplee to env with sdate in position s
+#Ostatssample <- colMeans(qsampleO[,2:ncol(qsampleO)], na.rm = TRUE)
+Tstats <- colMeans(qsampleT[,2:ncol(qsampleT)], na.rm = TRUE)
+Bstats <- colMeans(qsampleB[,2:ncol(qsampleB)], na.rm = TRUE)
+Sstats <- colMeans(qsampleS[,2:ncol(qsampleS)], na.rm = TRUE)
+```
+
+
+See (\@ref(tab:Sample statistics 2016-2023) provides a summary of the data.
+
+```{r, tab.cap="Sample statistics 2016-2023", echo=FALSE, results='asis'}
+library(xtable)
+k=6 
+bgn<-1
+edn<-nrow(rrbp)
+sample<-rrbp[bgn:edn,]  # All
+sdate<-spread_no_na$sdate
+sdatesample<-sdate[bgn:edn]
+qsampleE=quantilesE[bgn:edn,] # rate specific metrics 
+qsampleT=quantilesT[bgn:edn,] 
+qsampleB=quantilesB[bgn:edn,]
+qsampleS=quantilesS[bgn:edn,]
+
+categories = c('EFFR', 'TGCR', 'BGCR', 'SOFR')
+median_values = c(Estats[1], Tstats[1], Bstats[1], Sstats[1])
+iqr_values = c(Estats[7] - Estats[6], Tstats[5] - Tstats[4], Bstats[5] - Bstats[4], Sstats[5] - Sstats[4]) 
+range_values = c(Estats[8] - Estats[5],  Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
+volume=c(Estats[2],Tstats[2],Bstats[2],Sstats[2])
+ratesamplestats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME=volume)
+xtable(ratesamplestats, include.rownames = FALSE )
+```
+
+## volatility
+Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is illustrated by the percent change in overnight rights,iplus of minus 0.5 percent rom 2016 to 2020,  P, extreme values during the periods of the pandemic and the zero lower bound, then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\@ref(fig:volatility Percent change Daily rates 2016-2023)).
+
+OR
+
+From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
+       
+
+ADD the standard deviation of log percent change in rates over arbitrary periods, i.e number of days (see Figure \@ref(fig:stdev volatility 5day).
+
+(see Figure \@ref(fig:volatility Percent change Daily rates 2016-2023)
+
+```{r,  fig.cap= "volatility Percent change Daily rates 2016-2023", echo=FALSE, env=my_envvolatile}
+library(ggplot2)
+sdate<-as.Date(my_data$Date,format="%m/%d/%Y")
+k=6
+my_envvolatile$sample_measure1 <- subset(my_envvolatile$sample_measure1, select = c("EFFR", "TGCR", "BGCR", "SOFR"))
+
+df <- as.data.frame(my_envvolatile$sample_measure1)
+df <- df*100
+df$OBFR <- NULL
+bgn<-1
+edn<-nrow(df)
+
+start_dates <-sdate[bgn]
+end_dates <-sdate[edn]
+sdate<-sdate[(bgn+1):edn]
+
+start_dates_strings <- as.character(start_dates)
+end_dates_strings <- as.character(end_dates)
+title <- paste("Percent change in rates during full sample", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+#figure_number <- 10
+#title <- paste("Figure", figure_number, ": Log percent change in rates during normalcy period", start_dates_strings[1], "to", end_dates_strings[length(end_dates_strings)])
+library(tidyr)
+df$sdate <- sdate[bgn:edn]
+
+#Reshape the data to long format
+df_long <- gather(df, key = "Variable", value = "Value", -sdate)
+
+logchange_rates_sample<-ggplot(df_long, aes(x = sdate, y = Value, color = Variable)) +
+  geom_point() +
+  labs(caption = title,
+       x = "",
+       y = "percent change in basis points",
+       color = "Variable") +
+  #theme(plot.title = element_text(hjust = 0.5))
+  #labs(caption = paste("Figure", figure_number))
+  theme_minimal()
+print(logchange_rates_sample)
+#(see Figure \@ref(fig:stdev volatility 5day)
+```
+
+
+
+## Episodes that suggest different policy regimes
+The vertical shifts in rate data from 2016 to 2023 suggest different episodes of Fed policy regimes.
+The following policy episodes were discussed on a Forbes articel. Policy changes during each period are identified from visual inspection of the data.  A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024)
+
+* normalcy   3/4/2016		7/31/2019      
+* mid cycle adjustment 8/1/2019 - 10/31/2019 737660 
+* covid 11/1/2019	    3/16/2020   
+* zlb         3/17/2020- 3/16/2022     
+* Taming inflation 03/17/2022 - 12/14/2023 
+
+
+```{r, episode parameters, echo=FALSE,results="asis"}
+begn<- c(1, 859, 923,  1014, 1519, 1)
+endn<- c(858, 922, 1013, 1518, 1957, 1957)
+
+start_dates <-sdate[begn[k]]
+end_dates <-sdate[endn[k]]
+start_dates_strings <- as.character(start_dates)
+end_dates_strings <- as.character(end_dates)
+```
+
+## Characteristics of overnight rates during different policy episodes
+The average weighted median for the EFFR during the five episodes normalcy, adjustment, covid, zero lower bound, and inflation, illustrate the changing distribution of rates under different policies. During normalcy, was 133.78 bp, adjustment 200.09 bp, covid 150.46 bp, zero lower bound 8.08 bp, and inflation 368.60 bp.all substiantially different from the sample median EFFR 157 bp, As in the sample, TGCR, BGCR and SOFR cluster around the EFFR except in the normalcy and zero lower bound periods.
+
+<!
+Model discussion from sample
+The difference in the central tendencies as measured by the median, changes dramtically over different policy episodes.  The sampple EFFR of 156.97 bp is  133.79 bp,  200.09 bp,  150.46 bp,  8.08 bp,  368.60 bp  Normalcy Adjust  Covid    Zlb  Inflation
+
+a measure of central tendency, and quantiles illustrate the change in distribution of rates during difference policy episodes (\@ref(tab:Rate characteristics 2016-2023). The average median EFFR over the full sample is 157 bp.  The money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, SOFR 134 bp.  
+ (\@ref(tab:Median rates of policy regimes)
+Median Sample   Normalcy Adjust  Covid    Zlb  Inflation
+EFFR    156.97  133.79   200.09  150.46  8.08  368.60
+TGCR    132.83   83.83   206.30  148.64  4.59  362.14
+BGCR    132.85   83.85   206.34  148.64  4.59  362.20
+SOFR    134.08   84.78   208.22  161.19  5.41  364.07
+
+The clustering of rates also differs among policy episodes.  Fifty percent of the data is within 1.56 bp in the sample but 4.66 bp during the adjustment periods. The dispersion of SOFR is even more diverse among policy regimes.  Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
+
+IQR   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  1.56     1.22    4.66   2.35  1.54  1.62
+TGcr  0.92     0.22    1.3    0.31  0.12  3.26
+BGCR  0.96     0.23    1.36   0.42  0.15  3.36
+SOFR  4.02     3.30   10.53   7.37  3.05  5.68
+
+The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp.  Adjustment, covid, and inflation episodes show higher variablity of rates compared to the same
+
+
+Range   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  15.99     17.65    17.67  11,71   7.33  23.36
+TGcr  13.86      5.62    22.7   11.21  11.21  32.27
+BGCR  16.11      8.48    34.0   16.02  11.85  33.34
+SOFR  14.51      8.53    41.65  19.46  14.44  21.35
+
+<!--
+Establish Mean reversion around a central tendency in daily rates. MR within2,3,...5 days show?
+Is there a relationship to policy iniertia?
+%Benzoni identify mean reversion around a central tendency. The stochastic mean  allows a relatively fast %mean-reversion of the short rate around a highly persistent time-varying central tendency process. 
+%Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating %extreme outlier behavior. 
+-->
+
+The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
+The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
+
+Other money market rates cluster around the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) cluster around the EFFR at 157 bp, Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. Median rates in the sample ] 
+
+The range, the 99th percentile minus the first percentile, more sensitive to outliers, represents 2 percent of the data.The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp. 
+
+Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
+
+The the average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR. [ADD VOLUME FIGURE]
+
+Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is illustrated by the percent change in overnight rights,iplus of minus 0.5 percent rom 2016 to 2020,  P, extreme values during the periods of the pandemic and the zero lower bound, then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\@ref(fig:volatility Percent change Daily rates 2016-2023)).
+
+OR
+
+From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation
+-->
+
+Median Sample   Normalcy Adjust  Covid    Zlb  Inflation
+EFFR    156.97  133.79   200.09  150.46  8.08  368.60
+TGCR    132.83   83.83   206.30  148.64  4.59  362.14
+BGCR    132.85   83.85   206.34  148.64  4.59  362.20
+SOFR    134.08   84.78   208.22  161.19  5.41  364.07
+
+IQR   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  1.56     1.22    4.66   2.35  1.54  1.62
+TGcr  0.92     0.22    1.3    0.31  0.12  3.26
+BGCR  0.96     0.23    1.36   0.42  0.15  3.36
+SOFR  4.02     3.30    10.53   7.37  3.05  5.68
+
+Range   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  15.99     17.65    17.67  11,71   7.33  23.36
+TGcr  13.86      5.62    22.7   11.21  11.21  32.27
+BGCR  16.11      8.48    34.0   16.02  11.85  33.34
+SOFR  14.51      8.53    41.65  19.46  14.44  21.35
+
+
+
+
+
+<!--
+Median rates  EFFR       TGCR       BGCR        SOFR
+Normalcy      133.79  83.83  83.84   84.78
+Adjust        200.09 206.3  206.34  208.22
+Covid         150.46 148.64 148.64  151.19
+Zlb             8.08   4.59   4.59    5.40
+inflation     368.60 362.14 362.2   364.07
+
+SAMPLE
+     EFFR 156.97 1.56 15.99 78.91
+TGCR TGCR 132.83 0.92 13.86 296.95
+BGCR BGCR 132.85 0.96 16.11 311.23
+SOFR SOFR 134.08 4.20 14.51 754.37
+
+Median Sample   Normalcy Adjust  Covid    Zlb  Inflation
+EFFR    156.97  133.79   200.09  150.46  8.08  368.60
+TGCR    132.83   83.83   206.30  148.64  4.59  362.14
+BGCR    132.85   83.85   206.34  148.64  4.59  362.20
+SOFR    134.08   84.78   208.22  161.19  5.41  364.07
+
+IQR   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  1.56     1.22    4.66   2.35  1.54  1.62
+TGcr  0.92     0.22    1.3    0.31  0.12  3.26
+BGCR  0.96     0.23    1.36   0.42  0.15  3.36
+SOFR  4.02    3.30    10.53   7.37  3.05  5.68
+
+Range   Sample   Normalcy Adjust Covid Zlb  Inflation
+EFFR  15.99     17.65    17.67  11,71   7.33  23.36
+TGcr  13.86      5.62    22.7   11.21  11.21  32.27
+BGCR  16.11      8.48    34.0   16.02  11.85  33.34
+SOFR  14.51      8.53    41.65  19.46  14.44  21.35
+
+
+episodesstats
+NOrmalcy 
+      Category     Median        IQR     RANGE     VOLUME
+EFFR      EFFR 133.789044  1.2202797 17.646853   75.86364
+TGCR      TGCR  83.829837  0.2179487  5.620047  158.52564
+BGCR      BGCR  83.835664  0.2307692  8.475524  166.42075
+SOFR      SOFR  84.784382  3.3006993  8.531469  350.22028
+
+Adjust
+EFFR1     EFFR 200.093750  4.6562500 17.671875   66.84375
+TGCR1     TGCR 206.296875  1.2968750 22.703125  466.21875
+BGCR1     BGCR 206.343750  1.3593750 34.000000  492.46875
+SOFR1     SOFR 208.218750 10.5312500 41.265625 1151.00000
+
+Covid
+EFFR2     EFFR 150.461538  2.3516484 11.714286   71.70330
+TGCR2     TGCR 148.637363  0.3076923 11.208791  401.73626
+BGCR2     BGCR 148.637363  0.4175824 16.021978  423.18681
+SOFR2     SOFR 151.186813  7.3736264 19.461538 1085.60440
+
+zlb
+EFFR3     EFFR   8.085149  1.5405941  7.332673   68.96832
+TGCR3     TGCR   4.586139  0.1247525 11.211881  353.60396
+BGCR3     BGCR   4.588119  0.1465347 11.859406  376.31881
+SOFR3     SOFR   5.409901  3.0495050 14.441584  943.72277
+
+inflation
+EFFR4     EFFR 368.601367  1.6150342 23.364465   99.56492
+TGCR4     TGCR 362.141230  3.2642369 32.273349  455.91572
+BGCR4     BGCR 362.195900  3.3621868 33.339408  469.75399
+SOFR4     SOFR 364.066059  5.6788155 21.353075 1199.93622
+--> 
+<!
+Model discussion from sample
+The median, a measure of central tendency, and quantiles illustrate the change in distribution of rates during difference policy episodes (\@ref(tab:Rate characteristics 2016-2023). The average median EFFR over the full sample is 157 bp.  The money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, SOFR 134 bp.  
+
+<!--
+Establish Mean reversion around a central tendency in daily rates. MR within2,3,...5 days show?
+Is there a relationship to policy iniertia?
+%Benzoni identify mean reversion around a central tendency. The stochastic mean  allows a relatively fast %mean-reversion of the short rate around a highly persistent time-varying central tendency process. 
+%Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating %extreme outlier behavior. 
+-->
+
+The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
+The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
+
+Other money market rates cluster around the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) cluster around the EFFR at 157 bp, Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. Median rates in the sample ] 
+
+The range, the 99th percentile minus the first percentile, more sensitive to outliers, represents 2 percent of the data.The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp. 
+
+Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
+
+The the average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR. [ADD VOLUME FIGURE]
+
+Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is illustrated by the percent change in overnight rights,iplus of minus 0.5 percent rom 2016 to 2020,  P, extreme values during the periods of the pandemic and the zero lower bound, then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\@ref(fig:volatility Percent change Daily rates 2016-2023)).
+
+OR
+
+From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation
+-->
+
+<!--
+Median rates  EFFR       TGCR       BGCR        SOFR
+Normalcy      133.79  83.83  83.84   84.78
+Adjust        200.09 206.3  206.34  208.22
+Covid         150.46 148.64 148.64  151.19
+Zlb             8.08   4.59   4.59    5.40
+inflation     368.60 362.14 362.2   364.07
+
+
+episodeschar
+Normalcy 
+
+                    EFFR       TGCR       BGCR        SOFR
+Rate          133.789044  83.829837  83.835664   84.784382
+Volume         75.863636 158.525641 166.420746  350.220280
+Upper target  143.094406         NA         NA          NA
+Lower target  118.094406         NA         NA          NA
+Percentile_01 129.376457  79.883450  79.966200   81.437063
+Percentile_25 133.326340  83.438228  83.452214   83.547786
+Percentile_75 134.546620  83.656177  83.682984   86.848485
+Percentile_99 147.023310  85.503497  88.441725   89.968531
+
+Adjust  
+Rate          200.093750 206.296875 206.343750  208.218750
+Volume         66.843750 466.218750 492.468750 1151.000000
+Upper target  212.890625         NA         NA          NA
+Lower target  187.890625         NA         NA          NA
+Percentile_01 192.078125 191.656250 191.796875  196.468750
+Percentile_25 197.250000 205.625000 205.625000  206.000000
+Percentile_75 201.906250 206.921875 206.984375  216.531250
+Percentile_99 209.750000 214.359375 225.796875  237.734375
+
+Covid 
+Rate          150.461538 148.637363 148.637363  151.186813
+Volume         71.703297 401.736264 423.186813 1085.604396
+Upper target  168.956044         NA         NA          NA
+Lower target  143.956044         NA         NA          NA
+Percentile_01 145.802198 142.076923 142.296703  145.615385
+Percentile_25 149.527473 148.472527 148.472527  148.714286
+Percentile_75 151.879121 148.780220 148.890110  156.087912
+Percentile_99 157.516484 153.285714 158.318681  165.076923
+
+zlb
+Rate            8.085149   4.586139   4.588119    5.409901
+Volume         68.968317 353.603960 376.318812  943.722772
+Upper target   25.000000         NA         NA          NA
+Lower target    0.000000         NA         NA          NA
+Percentile_01   5.069307   2.079208   2.051485    1.570297
+Percentile_25   7.130693   4.520792   4.526733    3.920792
+Percentile_75   8.671287   4.645545   4.673267    6.970297
+Percentile_99  12.401980  13.291089  13.910891   16.011881
+
+inflation
+Rate          368.601367 362.141230 362.195900  364.066059
+Volume         99.564920 455.915718 469.753986 1199.936219
+Upper target  385.649203         NA         NA          NA
+Lower target  360.649203         NA         NA          NA
+Percentile_01 365.448747 340.849658 341.457859  355.364465
+Percentile_25 367.562642 360.990888 361.013667  362.034169
+Percentile_75 369.177677 364.255125 364.375854  367.712984
+Percentile_99 388.813212 373.123007 374.797267  376.717540
+
+episodesstats
+      Category     Median        IQR     RANGE     VOLUME
+EFFR      EFFR 133.789044  1.2202797 17.646853   75.86364
+TGCR      TGCR  83.829837  0.2179487  5.620047  158.52564
+BGCR      BGCR  83.835664  0.2307692  8.475524  166.42075
+SOFR      SOFR  84.784382  3.3006993  8.531469  350.22028
+
+EFFR1     EFFR 200.093750  4.6562500 17.671875   66.84375
+TGCR1     TGCR 206.296875  1.2968750 22.703125  466.21875
+BGCR1     BGCR 206.343750  1.3593750 34.000000  492.46875
+SOFR1     SOFR 208.218750 10.5312500 41.265625 1151.00000
+
+EFFR2     EFFR 150.461538  2.3516484 11.714286   71.70330
+TGCR2     TGCR 148.637363  0.3076923 11.208791  401.73626
+BGCR2     BGCR 148.637363  0.4175824 16.021978  423.18681
+SOFR2     SOFR 151.186813  7.3736264 19.461538 1085.60440
+
+EFFR3     EFFR   8.085149  1.5405941  7.332673   68.96832
+TGCR3     TGCR   4.586139  0.1247525 11.211881  353.60396
+BGCR3     BGCR   4.588119  0.1465347 11.859406  376.31881
+SOFR3     SOFR   5.409901  3.0495050 14.441584  943.72277
+
+EFFR4     EFFR 368.601367  1.6150342 23.364465   99.56492
+TGCR4     TGCR 362.141230  3.2642369 32.273349  455.91572
+BGCR4     BGCR 362.195900  3.3621868 33.339408  469.75399
+SOFR4     SOFR 364.066059  5.6788155 21.353075 1199.93622
+
+COVID
+% latex table generated in R 4.3.2 by xtable 1.8-4 package % Thu Apr 25 15:05:13 2024
+EFFR TGCR BGCR SOFR
+Rate 150.46 148.64 148.64 151.19
+Volume 71.70 401.74 423.19 1085.60
+Upper target 168.96
+Lower target 143.96
+Percentile_01 145.80 142.08 142.30 145.62
+Percentile_25 149.53 148.47 148.47 148.71
+Percentile_75 151.88 148.78 148.89 156.09
+Percentile_99 157.52 153.29 158.32 165.08
+Table @ref(tab:Rate statistics covid 11/1/2019-3/16/2020) provides a summary of the data.
+% latex table generated in R 4.3.2 by xtable 1.8-4 package % Thu Apr 25 15:05:13 2024
+Category Median IQR RANGE VOLUME
+EFFR Estatscovid 150.46 2.35 11.71 71.70
+TGCR Tstatscovid 148.64 0.31 11.21 401.74
+BGCR Bstatscovid 148.64 0.42 16.02 423.19
+SOFR Sstatscovid 151.19 7.37 19.46 1085.60
+(see Figure @ref(fig:Rates during covid 11/1/2019-3/16/2020
+
+ZLB
+
+INFLATION
+-->
+
+
+
+Daily transaction SOFR volumes, 385.64 (billions of dollars), dwarf the similar volume in the other rates volume in SOFR $\$$75.86, $\$$66.84, $\$$71.70, $\$$68.97 (billions of dollars) is around $\$$754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR as do their medians.
+
+The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within one basis point. The SOFR, 4 basis points.
+
+Estimating moments of the data show overnight rates are highly skewed with fatter tails.
+
+The interquartile range for SOFR exceeds that for the EFFR and the money market rates TGCR and BGCR; fifty percent of SOFR rates lie within 10.53 bp during adjustment, 7.37 during covid, and 5.68 during inflation.The middle 50 percent of the data is more tighly clustered for all other rates in all episodes.
+
+The range of the data, the 99th minus the first percentile, illustrates the extensive outliers, typical of short rates. The smallest is 5.62 TGCR during normalcy. Most ranges are double digit to 41.26 percent SOFR data as outliers during the adjustment period. In contrast, the range of the EFFR and the money market rates, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points.
+
+From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
+       
+\@ref(tab:Rate characteristics normalcy 3/4/2016-7/31/2019) provides a summary of the data.
+
+```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", echo=FALSE, results='asis'}
+library(xtable)
+k=1 
+begn <- c(1, 859, 923, 1014, 1519, 1) 
+endn <- c(858, 922, 1013, 1518, 1957, 1957) 
+bgn<-begn[k] 
+edn<-endn[k] 
+norm<-rrbp[bgn:edn,] 
+sdatenorm<-sdate[bgn:edn]
+
+qnormE=quantilesE[bgn:edn,]
+qnormT=quantilesT[bgn:edn,]
+qnormB=quantilesB[bgn:edn,] 
+qnormS=quantilesS[bgn:edn,] 
+
+my_envepisodes$sdatenorm <-sdatenorm
+my_envepisodes$normE <-qnormE
+my_envepisodes$normT <-qnormT
+my_envepisodes$normB <-qnormB
+my_envepisodes$normS <-qnormS
+
+#Estatsnorm <- colMeans(qnormE[,1:ncol(qnormE)-1], na.rm = TRUE)
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
+Bstatsnorm2<-c(Bstatsnorm[1],Bstatsnorm[2], TargetUe=NA, TargetDe=NA,Bstatsnorm[3],Bstatsnorm[4],Bstatsnorm[5],Bstatsnorm[6])
+Sstatsnorm2<-c(Sstatsnorm[1],Sstatsnorm[2], TargetUe=NA, TargetDe=NA,Sstatsnorm[3],Sstatsnorm[4],Sstatsnorm[5],Sstatsnorm[6])
+
+Estatsnorm_mat <- matrix(Estatsnorm, nrow = 8, ncol = 1)
+Tstatsnorm_mat <- matrix(Tstatsnorm2, nrow = 8, ncol = 1)
+Bstatsnorm_mat <- matrix(Bstatsnorm2, nrow = 8, ncol = 1)
+Sstatsnorm_mat <- matrix(Sstatsnorm2, nrow = 8, ncol = 1)
+
+charnorm <- cbind(Estatsnorm_mat, Tstatsnorm_mat, Bstatsnorm_mat, Sstatsnorm_mat)
+rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charnorm)
+```
+
+ (see Figure \@ref(fig:Rates during normalcy 3/04/2016-7/31/2019)
+ 
+```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+k=1
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+norm<-rrbp[bgn:edn,]
+maxr<-max(norm[,2:ncol(norm)]) 
+minr<-min(norm[,2:ncol(norm)])
+meltrates_norm <- melt(norm,id="sdate")
+ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Normalcy 3/04/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(ratests_norm)
+```
+
+Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
+
+```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", echo=FALSE,results='asis'}
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+library(xtable)
+k <- 1 
+bgn <- begn[k]
+edn <- endn[k]
+norm <- rrbp[bgn:edn,]  # All
+sdatenorm <- sdate[bgn:edn]
+
+qnormE <- quantilesE[bgn:edn,] 
+qnormT <- quantilesT[bgn:edn,]
+qnormB <- quantilesB[bgn:edn,] 
+qnormS <- quantilesS[bgn:edn,] 
+
+my_envepisodes$sdatenorm <- sdatenorm
+my_envepisodes$normE <- qnormE
+my_envepisodes$normT <- qnormT
+my_envepisodes$normB <- qnormB
+my_envepisodes$normS <- qnormS
+
+Estatsnorm <<- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <<- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <<- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <<- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+median_values <- c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1])
+iqr_values <- c(Estatsnorm[7] - Estatsnorm[6], Tstatsnorm[5] - Tstatsnorm[4], Bstatsnorm[5] - Bstatsnorm[4], Sstatsnorm[5] - Sstatsnorm[4])
+range_values <- c(Estatsnorm[8] - Estatsnorm[5], Tstatsnorm[6] - Tstatsnorm[3], Bstatsnorm[6] - Bstatsnorm[3], Sstatsnorm[6] - Sstatsnorm[3])
+volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
+
+normstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+xtable(normstats, include.rownames = FALSE)
+```
+
+```{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
+ratecol=2
+vol=3
+targetup = 3
+targetdown = 4
+p1=6
+p25=7
+p75=8
+p99=9
+normE<-my_envepisodes$norm
+maxr<-max(normE[,ncol(normE)])
+minr<-min(normE[,ncol(normE)])
+```
+
+ (see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
+ 
+```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm, echo=FALSE, results='asis'}
+library(ggplot2)
+normE<-my_envepisodes$norm
+sdate <- normE[, 1]
+data_without_sdate <- normE[, -1]
+maxr<-max(normE[,ncol(normE)]) 
+minr<-min(normE[,ncol(normE)])
+
+meltrates_norm <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+rates_norm <<- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_line() +
+  labs( caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+  scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
+  theme_minimal()
+  #my_envepisodes$rates_norm<-rates_norm
+print(rates_norm)
+```
+
+
+       
+see \@ref(tab:Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
+
+```{r, tab.caption="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis'}
+library(xtable)
+k=2  
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+adjust<-rrbp[bgn:edn,]
+sdateadj<-sdate[bgn:edn]
+
+qadjE=quantilesE[bgn:edn,]
+qadjT=quantilesT[bgn:edn,]
+qadjB=quantilesB[bgn:edn,]
+qadjS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateadj <-sdateadj
+my_envepisodes$adjE <-qadjE
+my_envepisodes$adjT <-qadjT
+my_envepisodes$adjB <-qadjB
+my_envepisodes$adjS <-qadjS
+
+Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
+
+
+Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
+Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
+Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
+
+Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
+Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
+Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
+Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
+
+charadj <- cbind(Estatsadj_mat, Tstatsadj_mat, Bstatsadj_mat, Sstatsadj_mat)
+rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charadj)
+```
+
+see \@ref(tab:Rate statistics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
+
+```{r,  tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis'}
+library(xtable)
+k=2  
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+adjust<-rrbp[bgn:edn,]
+sdateadj<-sdate[bgn:edn]
+
+qadjE=quantilesE[bgn:edn,]
+qadjT=quantilesT[bgn:edn,]
+qadjB=quantilesB[bgn:edn,]
+qadjS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateadj <-sdateadj
+my_envepisodes$adjE <-qadjE
+my_envepisodes$adjT <-qadjT
+my_envepisodes$adjB <-qadjB
+my_envepisodes$adjS <-qadjS
+
+
+Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
+
+Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
+Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
+Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
+
+Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
+Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
+Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
+Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
+
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+median_values <- c(mean(Estatsadj), mean(Tstatsadj), mean(Bstatsadj), mean(Sstatsadj))
+iqr_values <- c(IQR(Estatsadj), IQR(Tstatsadj), IQR(Bstatsadj), IQR(Sstatsadj))
+range_values <- c(max(Estatsadj) - min(Estatsadj), max(Tstatsadj) - min(Tstatsadj), max(Bstatsadj) - min(Bstatsadj), max(Sstatsadj) - min(Sstatsadj))
+volume_values <- c(sum(Estatsadj), sum(Tstatsadj), sum(Bstatsadj), sum(Sstatsadj))
+
+adjstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+xtable(adjstats, include.rownames = FALSE)
+```
+
+see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
+
+```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis'}
+k=2  
+library(ggplot2)
+library(reshape2)
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+adjust<-rrbp[bgn:edn,]
+max(adjust[,2:ncol(adjust)]) 
+min(adjust[,2:ncol(adjust)])
+meltrates_adjust <- melt(adjust,id="sdate")
+ratests_adjust <- ggplot(meltrates_adjust,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Adjustment 8/1/2019-10/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(ratests_adjust)
+#Removed 3 rows containing missing values (`geom_point()`).
+```
+
+The average weighted median for all over night rates are tightly clustered around 148.64-151.18 during covid. The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars) is around $\$$1086 billion. The money market volumes in TGCR and BGCR around 402-423  billion.  Daily trade volume in EFFR is a low 71.7 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+
+```{r, EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE}
+rates=2
+vol=3
+targetup = 4
+targetdown = 5
+p1=6
+p25=7
+p75=8
+p99=9
+qadjE<-my_envepisodes$qadjE
+maxr<-max(qadjE[,rates]) 
+min(qadjE[,rates])
+```
+
+(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
+
+\```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust, echo=FALSE, results='asis'}
+library(ggplot2)
+library(reshape2)
+qadjE<-my_envepisodes$adjust # Using the same data as the first plot
+sdate <- as.Date(qadjE[, 1])
+data_without_sdate<- qadjE[, -1]
+rates=2
+maxr<-max(qadjE[,2]) 
+minr<-min(qadjE[,2]) 
+
+meltrates_adjust <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+meltrates_adjust$variable <- as.factor(meltrates_adjust$variable)
+meltrates_adjust$value <- as.numeric(meltrates_adjust$value)
+rates_adjust <<- ggplot(meltrates_adjust, aes(x = sdate, y=value, colour=variable, group=variable)) +
+  geom_line() +
+  labs(caption= "Adjustment  8/1/2019-10/31/2019",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") +  #Specify date format and breaks
+  theme_minimal()
+print(rates_adjust)
+#my_envepisodes$rates_adjust<-rates_adjust
+```
+
+The interquartile range for the money market rates TGCR and BGCR are under 1 bp, smaller than the 1.56 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers/ Some 14 to 16 basis points for the EFFR and the money market rates, TGCR, BGCR, and SOFR. 
+  
+Duplicate adjustment period text
+The average weighted median for all over night rates are tightly clustered around 148.64-151.18c during covid. The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars ) is around 1086 billion. The money market volumes in TGCR and BGCR around 402-423  billion.  Daily trade volume in EFFR is a low 71.7 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+The interquartile range for the money market rates TGCR and BGCR are 0.22-0,23 bp, smaller than the 1.22 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 3.3 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers/ Some 17.65 basis points for the EFFR and 5.62-8.53the money market rates, TGCR, BGCR, and SOFR. 
+
+
+The average weighted median for the EFFR during the nomrmalcy period is 157 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+The interquartile range for the money market rates TGCR and BGCR are under 1 bp, smaller than the 1.56 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers/ Some 14 to 16 basis points for the EFFR and the money market rates, TGCR, BGCR, and SOFR. 
+
+              
+Table \@ref(tab:Rate characteristics covid 11/1/2019-3/16/2020) provides a summary of the data.
+
+```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE, cache=FALSE, results='asis'}
+library(xtable)
+k=3  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+covid<-rrbp[bgn:edn,]
+sdatecovid<-sdate[bgn:edn]
+
+qcovidE=quantilesE[bgn:edn,]
+qcovidT=quantilesT[bgn:edn,]
+qcovidB=quantilesB[bgn:edn,]
+qcovidS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdatecovid <-sdatecovid
+my_envepisodes$covidE <-qcovidE
+my_envepisodes$covidT <-qcovidT
+my_envepisodes$covidB <-qcovidB
+my_envepisodes$covidS <-qcovidS
+
+covidE<- qcovidE
+covidT<- qcovidT
+covidB<- qcovidB
+covidS<- qcovidS
+
+Estatscovid <<- colMeans(covidE[,2:ncol(qcovidE)], na.rm = TRUE)
+Tstatscovid <<- colMeans(covidT[,2:ncol(qcovidT)], na.rm = TRUE)
+Bstatscovid <<- colMeans(covidB[,2:ncol(qcovidB)], na.rm = TRUE)
+Sstatscovid <<- colMeans(covidS[,2:ncol(qcovidS)], na.rm = TRUE)
+
+Estatscovid2<<-c(Estatscovid[1],Estatscovid[2], TargetUe=NA, TargetDe=NA,Estatscovid[3],Estatscovid[4],Estatscovid[5],Estatscovid[6])
+Tstatscovid2<<-c(Tstatscovid[1],Tstatscovid[2], TargetUe=NA, TargetDe=NA,Tstatscovid[3],Tstatscovid[4],Tstatscovid[5],Tstatscovid[6])
+Bstatscovid2<<-c(Bstatscovid[1],Bstatscovid[2], TargetUe=NA, TargetDe=NA,Bstatscovid[3],Bstatscovid[4],Bstatscovid[5],Bstatscovid[6])
+Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatscovid[3],Sstatscovid[4],Sstatscovid[5],Sstatscovid[6])
+
+Estatscovid_mat <- matrix(Estatscovid, nrow = 8, ncol = 1)
+Tstatscovid_mat <- matrix(Tstatscovid2, nrow = 8, ncol = 1)
+Bstatscovid_mat <- matrix(Bstatscovid2, nrow = 8, ncol = 1)
+Sstatscovid_mat <- matrix(Sstatscovid2, nrow = 8, ncol = 1)
+
+charcovid <- cbind(Estatscovid_mat, Tstatscovid_mat, Bstatscovid_mat, Sstatscovid_mat)
+rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charcovid)  #include.rownames = FALSE)
+```
+
+
+Table \@ref(tab:Rate statistics covid 11/1/2019-3/16/2020) provides a summary of the data.
+
+```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,cache=FALSE, results='asis'}
+library(xtable)
+categories <- c("Estatscovid", "Tstatscovid", "Bstatscovid", "Sstatscovid")
+median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
+iqr_values = c(Estatscovid[7] - Estatscovid[6], Tstatscovid[5] - Tstatscovid[4], Bstatscovid[5] - Bstatscovid[4], Sstatscovid[5] - Sstatscovid[4])
+range_values = c(Estatscovid[8] - Estatscovid[5], Tstatscovid[6] - Tstatscovid[3], Bstatscovid[6] - Bstatscovid[3], Sstatscovid[6] - Sstatscovid[3])
+volume_values = c(Estatscovid[2], Tstatscovid[2], Bstatscovid[2], Sstatscovid[2])
+covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
+
+covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+xtable(covidstats, include.rownames = FALSE)
+```
+
+
+ (see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
+ 
+```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+k=3  
+library(ggplot2)
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+covid<-rrbp[bgn:edn,]
+#sdatecovid<-sdate[bgn:edn]
+#sdate<-sdateadj
+maxr<-525  #max(covid[,2:ncol(covid)]) 
+minr<-0 #min(adjust[,2:ncol(covid)])
+meltrates_covid <- melt(covid,id="sdate")
+ratests_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Covid 11/1/2019-3/16/2020", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(ratests_covid)
+```
+
+
+  The average weighted median for the EFFR during the zero lower bound is 8 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR? 4,6 bp. Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 353-376 billion.  Daily trade volume in EFFR is a low 69 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+  
+```{r, EFFR during covid period 11/1/2019-3/16/2020, echo=FALSE}
+rates=2
+vol=3
+targetup = 3
+targetdown = 4
+p1=6
+p1=7
+p1=8
+p1=9
+qcovidE<-my_envepisodes$covid
+maxr<-max(covid[,2:ncol(covid)]) 
+minr<-min(covid[,2:ncol(covid)])  
+```
+(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
+
+```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,results='asis'}
+library(ggplot2)
+rates=2
+qcovidE<-my_envepisodes$covid # Using the same data as the first plot
+data_without_sdate<- qcovidE[, -1]
+sdate <- as.Date(qcovidE[, 1])
+maxr<-max(qcovidE[,2:ncol(qcovidE)]) 
+minr<-min(qcovidE[,2:ncol(qcovidE)])  
+
+meltrates_covid <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+meltrates_covid$variable <- as.factor(meltrates_covid$variable)
+meltrates_covid$value <- as.numeric(meltrates_covid$value)
+rates_covid <- ggplot(meltrates_covid, aes(x = sdate, y = value, colour = variable, group = variable)) +
+  geom_line() +
+  labs(caption="Covid 11/1/2019-3/16/2020",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+  scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0, maxr)) + 
+  scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") +  
+  theme_minimal()
+print(rates_covid)
+#my_envepisodes$rates_covid<-rates_covid
+```
+The interquartile range for the money market rates TGCR and BGCR are .12-.15 bp, smaller than the 1.54 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers, Some 11 to 12 basis points for  the money market rates, TGCR, BGCR 7.33 for the EEFR and 14.44 for SOFR. 
+
+Table \@ref(tab:Rate characteristics zero lower bound 3/17/2020-3/16/2022) provides a summary of the data.
+
+```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis'}
+library(xtable)
+k=4  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+zlb<-rrbp[bgn:edn,]
+sdatezlb<-sdate[bgn:edn]
+
+qzlbE=quantilesE[bgn:edn,]
+qzlbT=quantilesT[bgn:edn,]
+qzlbB=quantilesB[bgn:edn,]
+qzlbS=quantilesS[bgn:edn,]
+
+
+# Store your data frame in the environment
+my_envepisodes$sdatezlb <-sdatezlb
+my_envepisodes$zlbE <-qzlbE
+my_envepisodes$zlbT <-qzlbT
+my_envepisodes$zlbB <-qzlbB
+my_envepisodes$zlbS <-qzlbS
+
+#Estatszlb <<- colMeans(qzlbE[,1:ncol(qzlbE)-1], na.rm = TRUE)
+Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
+Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
+Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
+Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
+
+Tstatszlb2<<-c(Tstatszlb[1],Tstatszlb[2], TargetUe=NA, TargetDe=NA,Tstatszlb[3],Tstatszlb[4],Tstatszlb[5],Tstatszlb[6])
+Bstatszlb2<<-c(Bstatszlb[1],Bstatszlb[2], TargetUe=NA, TargetDe=NA,Bstatszlb[3],Bstatszlb[4],Bstatszlb[5],Bstatszlb[6])
+Sstatszlb2<<-c(Sstatszlb[1],Sstatszlb[2], TargetUe=NA, TargetDe=NA,Sstatszlb[3],Sstatszlb[4],Sstatszlb[5],Sstatszlb[6])
+
+Estatszlb_mat <- matrix(Estatszlb, nrow = 8, ncol = 1)
+Tstatszlb_mat <- matrix(Tstatszlb2, nrow = 8, ncol = 1)
+Bstatszlb_mat <- matrix(Bstatszlb2, nrow = 8, ncol = 1)
+Sstatszlb_mat <- matrix(Sstatszlb2, nrow = 8, ncol = 1)
+
+charzlb <- cbind(Estatszlb_mat, Tstatszlb_mat, Bstatszlb_mat, Sstatszlb_mat)
+
+rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charzlb) #,include.rownames = FALSE)
+```
+
+see \@ref(tab:Rate statistics zero lower bound 3/17/2020-3/16/2022)
+
+```{r, tab.caption="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis'}
+
+categories <- c("Estatszlb", "Tstatszlb", "Bstatszlb", "Sstatszlb")
+library(xtable)
+
+k=4  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+zlb<-rrbp[bgn:edn,]
+sdatezlb<-sdate[bgn:edn]
+
+qzlbE=quantilesE[bgn:edn,]
+qzlbT=quantilesT[bgn:edn,]
+qzlbB=quantilesB[bgn:edn,]
+qzlbS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdatezlb <-sdatezlb
+my_envepisodes$zlbE <-qzlbE
+my_envepisodes$zlbT <-qzlbT
+my_envepisodes$zlbB <-qzlbB
+my_envepisodes$zlbS <-qzlbS
+
+Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
+#Ostatszlb <<- colMeans(qzlbO[,2:ncol(qzlbO)], na.rm = TRUE)
+Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
+Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
+Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
+
+median_values = c(Estatszlb[1], Tstatszlb[1], Bstatszlb[1], Sstatszlb[1])
+iqr_values = c(Estatszlb[7] - Estatszlb[6], Tstatszlb[5] - Tstatszlb[4], Bstatszlb[5] - Bstatszlb[4], Sstatszlb[5] - Sstatszlb[4])
+range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstatszlb[6] - Bstatszlb[3], Sstatszlb[6] - Sstatszlb[3])
+volume_values = c(Estatszlb[2], Tstatszlb[2], Bstatszlb[2], Sstatszlb[2])
+zlbstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
+xtable(zlbstats, include.rownames = FALSE)
+```
+
+ (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
+ 
+```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+k=4 
+library(ggplot2)
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+zlb<-rrbp[bgn:edn,]
+maxr<-max(zlb[,2:ncol(zlb)]) 
+minr<-min(zlb[,2:ncol(zlb)])
+meltrates_zlb <- melt(zlb,id="sdate")
+ratests_zlb<- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Zero lower bound 3/17/2020-3/16/2022", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(ratests_zlb)
+#zlb<-my_envepisodes$zlb
+```
+  
+The average weighted median for the EFFR during the inflation targeting regime is 368 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 362-364 bp. Daily transaction volume in SOFR (billions of dollars ) is around 1200 billion. The money market volumes in TGCR and BGCR around 456to 470  billion.  Daily trade volume in EFFR is a low 100 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+
+
+```{r, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
+rates=2
+vol=3
+targetup = 3
+targetdown = 4
+p1=6
+p25=7
+p75=8
+p99=9
+zlbE<-my_envepisodes$zlb
+maxr<-max(zlbE[,rates]) #25
+minr<-min(zlbE[,rates]) # 4
+```
+
+(see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022
+
+```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE}
+library(ggplot2)
+qzlbE<-my_envepisodes$zlb
+sdate <- qzlbE[, 1]
+rates=2
+data_without_sdate <- qzlbE[, -1]
+maxr<-max(zlbE[,rates]) 
+minr<-0 
+
+meltrates_zlb<- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+rates_zlb <- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_line() +
+  labs(caption="Zero lower bound 3/17/2020-3/16/2022",x="", y = "rates basis points (bp) volume (billion dollars)", color="Rate") +  
+  scale_y_continuous(breaks = seq(0,maxr, by = 5), limits = c(0,maxr)) + 
+  scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") + 
+  theme_minimal()
+print(rates_zlb)
+#my_envepisodes$rates_zlb<-rates_zlb
+```
+
+The interquartile range for the money market rates TGCR and BGCR are 3.26-3.46 bp, smaller than the 1.62 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 5.68 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+
+The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers,  Some 23 basis points for the EFFR and 21 for SOFR and the money market rates, TGCR, BGCR, 32-33. 
+
+
+Table \@ref(tab:Rate characteristics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
+
+```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE, results='asis'}
+library(xtable)
+k=5 
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+inflation<-rrbp[bgn:edn,]
+sdateinflation<-sdate[bgn:edn]
+
+qinflationE=quantilesE[bgn:edn,]
+qinflationT=quantilesT[bgn:edn,]
+qinflationB=quantilesB[bgn:edn,]
+qinflationS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateinflation <-sdateinflation
+my_envepisodes$inflationE <-qinflationE
+my_envepisodes$inflationT <-qinflationT
+my_envepisodes$inflationB <-qinflationB
+my_envepisodes$inflationS <-qinflationS
+
+#Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
+Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
+Tstatsinflation <<- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
+
+Tstatsinflation2<<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
+Bstatsinflation2<<-c(Bstatsinflation[1],Bstatsinflation[2], TargetUe=NA, TargetDe=NA,Bstatsinflation[3],Bstatsinflation[4],Bstatsinflation[5],Bstatsinflation[6])
+Sstatsinflation2<<-c(Sstatsinflation[1],Sstatsinflation[2], TargetUe=NA, TargetDe=NA,Sstatsinflation[3],Sstatsinflation[4],Sstatsinflation[5],Sstatsinflation[6])
+
+Estatsinflation_mat <- matrix(Estatsinflation, nrow = 8, ncol = 1)
+Tstatsinflation_mat <- matrix(Tstatsinflation2, nrow = 8, ncol = 1)
+Bstatsinflation_mat <- matrix(Bstatsinflation2, nrow = 8, ncol = 1)
+Sstatsinflation_mat <- matrix(Sstatsinflation2, nrow = 8, ncol = 1)
+charinflation <- cbind(Estatsinflation_mat, Tstatsinflation_mat, Bstatsinflation_mat, Sstatsinflation_mat)
+rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charinflation) #include.rownames = FALSE)
+```
+
+
+Table \@ref(tab:Rate statistics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
+
+```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis'}
+library(xtable)
+k <- 5 
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn <- begn[k]
+edn <- endn[k]
+inflation <- rrbp[bgn:edn,]
+sdateinflation <- sdate[bgn:edn]
+categories <- c("Estatsinflation", "Tstatsinflation", "Bstatsinflation", "Sstatsinflation")
+
+qinflationE <- quantilesE[bgn:edn,]
+qinflationT <- quantilesT[bgn:edn,]
+qinflationB <- quantilesB[bgn:edn,]
+qinflationS <- quantilesS[bgn:edn,]
+
+my_envepisodes$sdateinflation <- sdateinflation
+my_envepisodes$inflationE <- qinflationE
+my_envepisodes$inflationT <- qinflationT
+my_envepisodes$inflationB <- qinflationB
+my_envepisodes$inflationS <- qinflationS
+
+Estatsinflation <- colMeans(qinflationE[, 2:ncol(qinflationE)], na.rm = TRUE)
+Tstatsinflation <- colMeans(qinflationT[, 2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <- colMeans(qinflationB[, 2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <- colMeans(qinflationS[, 2:ncol(qinflationS)], na.rm = TRUE)
+
+Tstatsinflation2 <- c(Tstatsinflation[1], Tstatsinflation[2], TargetUe=NA, TargetDe=NA, Tstatsinflation[3], Tstatsinflation[4], Tstatsinflation[5], Tstatsinflation[6])
+Bstatsinflation2 <- c(Bstatsinflation[1], Bstatsinflation[2], TargetUe=NA, TargetDe=NA, Bstatsinflation[3], Bstatsinflation[4], Bstatsinflation[5], Bstatsinflation[6])
+Sstatsinflation2 <- c(Sstatsinflation[1], Sstatsinflation[2], TargetUe=NA, TargetDe=NA, Sstatsinflation[3], Sstatsinflation[4], Sstatsinflation[5], Sstatsinflation[6])
+
+median_values <- c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
+iqr_values <- c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
+range_values <- c(Estatsinflation[8] - Estatsinflation[5], Tstatsinflation[6] - Tstatsinflation[3], Bstatsinflation[6] - Bstatsinflation[3], Sstatsinflation[6] - Sstatsinflation[3])
+volume_values <- c(Estatsinflation[2], Tstatsinflation[2], Bstatsinflation[2], Sstatsinflation[2])
+inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+
+inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", caption.placement="top")
+```
+
+
+ (see Figure \@ref(fig:Rates during Taming inflation 03/17/2022-12/14/2023)
+ 
+```{r, fig.caption= "Rates during Taming inflation 03/17/2022-12/14/2023",echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+k=5
+library(ggplot2)
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+inflation<-rrbp[bgn:edn,]
+maxr<-max(inflation[,2:ncol(inflation)]) 
+minr<-min(inflation[,2:ncol(inflation)])
+meltrates_inflation <- melt(inflation,id="sdate")
+ratests_inflation<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Inflation 03/17/2022-12/14/2023", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 50
+  ), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(ratests_inflation)
+```
+
+
+```{r, EFFR during inflation period 03/17/2022-12/14/2023, echo=FALSE}
+rates=2
+vol=3
+targetup = 4
+targetdown = 5
+p1=6
+p25=7
+p75=8
+p99=9
+qinflationE<-my_envepisodes$inflationE
+maxr<-max(qinflationE[,rates]) 
+min(qinflationE[,rates])
+```
+
+(see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
+
+```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,
+echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+qinflationE<-my_envepisodes$inflation
+sdate <- qinflationE[, 1]
+rates=2
+data_without_sdate <- qinflationE[, -1]
+maxr<-max(qinflationE[,rates]) 
+min(qinflationE[,rates])
+
+meltrates_inflation <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+rates_inflation <- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_line() +
+  labs(caption="Inflation 03/17/2022-12/14/2023",x="", y = "rates basis points (bp) volume (billion dollars)", color="Rate") +  
+  scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0,maxr)) + 
+  theme_minimal()
+print(rates_inflation)
+my_envepisodes$rates_inflation<-rates_inflation
+```
+
+```{r Combine episode dataframes, include=FALSE}
+episodesstats <- my_envepisodes$episodesstats
+episodeschar <- my_envepisodes$episodeschar
+#\url{https://forum.posit.co/t/you-cant-use-macro-parameter-character-in-vertical-mode/143627/2}
+```
+
