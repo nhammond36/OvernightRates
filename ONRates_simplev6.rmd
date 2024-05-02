@@ -1014,7 +1014,7 @@ From 2016 to 2020, the percent change in daily median overnight rights, is in th
        
 \@ref(tab:Rate characteristics normalcy 3/4/2016-7/31/2019) provides a summary of the data.
 
-```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", echo=FALSE}
+```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='asis'}
 library(xtable)
 k=1 
 begn <- c(1, 859, 923, 1014, 1519, 1) 
@@ -1081,7 +1081,7 @@ ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=
 
 Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", echo=FALSE}
+```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
 library(xtable)
@@ -1207,11 +1207,12 @@ rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
+#print.xtable(my_table, comment = FALSE)
 ```
 
 see \@ref(tab:Rate statistics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
 
-```{r,  tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE}
+```{r, tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis'}
 library(xtable)
 k=2  
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1253,7 +1254,8 @@ range_values <- c(max(Estatsadj) - min(Estatsadj), max(Tstatsadj) - min(Tstatsad
 volume_values <- c(sum(Estatsadj), sum(Tstatsadj), sum(Bstatsadj), sum(Sstatsadj))
 
 adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
+#xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", #caption.placement="top")
+print(xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top"))
 ```
 
 see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
@@ -1301,7 +1303,7 @@ minr<-min(qadjE[,rates])
 
 (see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
 
-```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust, echo=FALSE, results='asis'}
+```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE, results='asis'}
 library(ggplot2)                        
 library(reshape2)
 qadjE<-my_envepisodes$adjust # Using the same data as the first plot
@@ -1360,7 +1362,7 @@ The range of the data, the 9th ,minus the first percentile, is more sensitive to
               
 Table \@ref(tab:Rate characteristics covid 11/1/2019-3/16/2020) provides a summary of the data.
 
-```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE} 
+```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis'} 
 library(xtable)
 k=3  
 begn<-c(1,859,923,1014,1519,1)
@@ -1412,7 +1414,7 @@ xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top"
 
 Table \@ref(tab:Rate statistics covid 11/1/2019-3/16/2020) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,cache=FALSE}
+```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis'}
 library(xtable)
 categories <- c("Estatscovid", "Tstatscovid", "Bstatscovid", "Sstatscovid")
 median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
@@ -1674,7 +1676,7 @@ The range of the data, the 9th ,minus the first percentile, is more sensitive to
 
 Table \@ref(tab:Rate characteristics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
 
-```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE}
+```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis'}
 library(xtable)
 k=5 
 begn<-c(1,859,923,1014,1519,1)
@@ -1720,7 +1722,7 @@ xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.p
 
 Table \@ref(tab:Rate statistics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE}
+```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis'}
 library(xtable)
 k <- 5 
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1855,7 +1857,7 @@ medianstats <- list(
 num_rows <- length(medianstats[[1]])
 median_matrix <- sapply(medianstats, "[", 1:num_rows)
 rownames(median_matrix) <- c('EFFR', 'TGCR', 'BGCR', 'SOFR')
-med_table <<- xtable(median_matrix, caption = "Median Stats")
+med_table <<- xtable(median_matrix, caption = "Median reference rates")
 colnames(med_table) <- categories
 print(med_table)
 
@@ -1872,7 +1874,7 @@ iqrstats <- list(
 num_rows <- length(iqrstats[[1]])
 iqr_matrix <- sapply(iqrstats, "[", 1:num_rows)
 rownames(iqr_matrix) <- c('EFFR', 'TGCR', 'BGCR', 'SOFR')
-iqr_table <<- xtable(iqr_matrix, caption = "iqr Stats")
+iqr_table <<- xtable(iqr_matrix, caption = "Interquartile range (IQR)")
 colnames(iqr_table) <- categories
 print(iqr_table)
 
@@ -1892,7 +1894,7 @@ num_rows <- length(rangestats[[1]])
 range_matrix <- sapply(rangestats, "[", 1:num_rows)
 rownames(range_matrix) <- c('EFFR', 'TGCR', 'BGCR', 'SOFR')
 # Create the xtable
-range_table <<- xtable(range_matrix, caption = "range Stats")
+range_table <<- xtable(range_matrix, caption = "Range")
 colnames(range_table) <- categories
 print(range_table)
 
