@@ -303,58 +303,42 @@ The visible negative correlation between quantities (reserves) and prices (feder
 
 
 
-# Monetary policy during the sample period 2016-2023
+# Monetary policy and shocks to short term rates 
+After a brief description of policy, I consider shocks, such as changes in monetary policy
+affect rate volatility. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+
+## Monetary policy during the sample period 2016-2023
+Before the financial crisis of 2008, policy was typically based on adjusting the scarcity value of a limited supply of central bank deposits (reserves). But the response of substantial asset purchases to the financial crisis of 2008 increased in liquidity, leaving the Fed to seek new ways  to manage the FFR. The subsequent experiments with different policy regimes occurent even as events that occurred during the six year period of our sample 2016-2023. Asset purchases under QE,QE1, QE2, and QE3, challenged the bank’s ability to control short-term interest rates. 
+
+The central banks continued to change their overall frameworks for controlling short-term interest rates.
+The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
+
+
+The creation of admistrative rates, interest on reserves (IORB) and ONRRP are...  On October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IOR) to help control the fed funds rate. The IOR rate is the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) facility offering rate is the Fed’s supplementary tool for interest rate control. In 2018 the FOMC adopted target rates, In 2019, the FOMC abandoned active management of scarce reserves and other short term interest rates and adopted a policy of ample reserves.
+
+The IOR is the Fed’s principal tool for interest rate control. It sets a ceiling on the FFR. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) is the Fed’s supplementary tool for interest rate control.
+
+In the recently established repo facility, July 2021, the Standing Repo Facility (SRF), the Desk purchases securities from a counterparty subject to an agreement to repurchase the securities at a later date,  temporarily increases the supply of reserve balances in the banking system and lowers the FFR.  Each repo transaction is economically similar to a loan collateralized by securities,interest” paid on that loan, is the difference between the original price and the second, higher price. 
+
+The reverse repo facility, the ON RRP facility, is available to a wide range of money market lenders.In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse reop transaction temporarily decreases the supply of reserve balances in the banking system and raises the FFR. When reserves are high and continue to  grow, banks’ willingness to take on additional reserves diminishes, and they reduce the rates they pay for deposits and other funding. The reverse repo facility is important for monetary policy during periods of high reserves. In this environment, market rates trade below the IORB rate because nonbank lenders are willing to lend at such rates. For example, the Federal Home Loan Banks (FHLBs), which are important lenders in the fed funds market and not eligible to earn IORB, are willing to lend at rates below the IORB rate rather than leave funds unremunerated in their accounts at the Fed. To provide a floor under the fed funds rate, the FOMC introduced the ON RRP facility.
+
+In the ample reserves regime introduced in 2019, the Fed adjusts administrative rates, the IOR and the ONRPP, to manage the FFR between the upper and lower target rates set by the Federal Open Market Committee (FOMC).Under the Ample Reserves policy, the Federal Reserve manages the FFR within its desired range in a “floor” system through Temporary open market operations (TOMO), short-term repurchase and reverse repurchase agreements. These Short-term repurchase and reverse repurchase agreements are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the Federal Funds market. Under this ample reserves regime The Federal Reserve manages the the policy rate, the Federal Funds rate (FFR) within its target range. The Fed sets the interest on reserve balances (IOR) paid on deposits held at the bank, and the overnight reverse repurchase facility (ON RRP).  The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy. 
+
+In this  corridor system, the interest on reserves (IOR) is the ceiling, the overnight reverse repo purchase rare (ONRRP) the floor.The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy.In the ample reserves regime. the administered rates constitute a “floor” system to manages the FFR within its target range, the upper and lower targets set by the Federal Open Market Committee (FOMC). The interest on reserves rate (IOR or IORB) is the Fed’s principal tool for interest rate control.the Fed adjusts administrative rates to manages the FFR between the FOMC target upper and lower bounds.The IOR.  Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate they can receive from the Fed. The IOR is, in effect, a reservation rate for banks’ intermediation activities.
+
+Similarly, no bank should be borrow at a higher rate than the ONRRP. No bank should lend at a lower rate than the ONRPP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. Competition among borrowers should drive rates to the discount window (DW) rate. 
+
+The administered rates, the IOR and the ON RPP,  along with an ample supply of reserves, created a corridor system for managing the Fed Funds rate. The IOR is the ceiling, the ON RRP the floor. Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate.No bank would lend at rates on overnight cash lower than the IOR, the rate they can receive from the Fed. The IOR rate serves as a reservation rate for banks’ intermediation activities,
+Similarly, no bank should be borrow at a higher rate than the ONRRP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. No bank should lend at a lower rate than the ONRPP. Competition among borrowers should drive rates to the discount window (DW) rate. 
+
+## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
+Candidate shocks occurred during the seven year period of our sample 2016-2022 (Table \@ref{table_fomc}), monetary FOMC rate change regimes, events, macroeconomic announcements during the six year period of our sample 2016-20223
+
 * my shocks (FFR changes under episodes)
 * Romer and Romer shocks
 * other external shocks to these markets
 
-In work to follow, the goal is to show how these shocks, changes in monetary policy (Table \@ref{table_fomc}).affect rate volatility. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
-
-Before the financial crisis of 2008, policy was typically based on adjusting the scarcity value of a limited supply of central bank deposits (reserves), but the substantial increase in liquidity resulting from asset purchases in response to the financial crisis of 2008, the Fed experimented with different policy regimes to manage the FFR. Policy continued to evolve with events that occurred during the six year period of our sample 2016-2023. The QE1, QE2, and QE3 asset purchases [PURPOSE] challenged the bank’s ability to control short-term interest rates. Asset purchases under QE resulted in central banks changing their overall frameworks for controlling short-term interest rates.
-
-Policy changes include  FOMC reference rate changes from Libor sot SOFR, paying depositing banks interest on reserves (the administered rates the IORB), creation of standing repo facility, repo and the overnight reverse repo facility (ONRRP). 
-
-FOMC rate changes  occurred during the six year period of our sample 2016-2022 (Table \@ref{table_fomc}), monetary regimes, and events in Table. 
-
-In 2018 the FOMC adopted target rates, In 2019, the FOMC abandoned active management of scarce reserves and other short term interest rates and adopted a policy of ample reserves.
-
-On October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IOR) to help control the fed funds rate. The IOR rate is the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) facility offering rate is the Fed’s supplementary tool for interest rate control. In the recently established repo facility, July 2021, the Standing Repo Facility (SRF), the Desk purchases securities from a counterparty subject to an agreement to repurchase the securities at a later date,  temporarily increases the supply of reserve balances in the banking system and lowers the FFR. 
-
-The IOR is the Fed’s principal tool for interest rate control. It sets a ceiling on the FFR. In 2013, the Federal Reserve introduced the ONRRP facility to set a floor under the EFFR.The overnight reverse repo rate (ONRRP) facility offering rate is the Fed’s supplementary tool for interest rate control.
-
-Each repo transaction is economically similar to a loan collateralized by securities,interest” paid on that loan, is the difference between the original price and the second, higher price. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  temporarily decreases the supply of reserve balances in the banking system and raising the FFR.
-
-The reverse repo facility, the ON RRP facility, is available to a wide range of money market lenders. This facility is particularly important for monetary policy implementation in periods when reserves are elevated. As reserves grow, banks’ willingness to take on additional reserves diminishes, and they reduce the rates they pay for deposits and other funding. In this environment, market rates trade below the IORB rate because nonbank lenders are willing to lend at such rates. For example, the Federal Home Loan Banks (FHLBs), which are important lenders in the fed funds market and not eligible to earn IORB, are willing to lend at rates below the IORB rate rather than leave funds unremunerated in their accounts at the Fed. To provide a floor under the fed funds rate, the FOMC introduced the ON RRP facility.
-Under this ample reserves regime The Federal Reserve manages the the policy rate, the Federal Funds rate (FFR) within its target range. 
-
-In the ample reserves regime introduced in 2019, the Fed adjusts administrative rates, the IOR and the ONRPP, to manage the FFR between the upper and lower target rates set by the Federal Open Market Committee (FOMC).The Fed sets the interest on reserve balances (IOR) paid on deposits held at the bank, and the overnight reverse repurchase facility (ON RRP).  The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy. 
-
-In this  corridor system, the interest on reserves (IOR) is the ceiling, the overnight reverse repo purchase rare (ONRRP) the floor. Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate they can receive from the Fed. The IOR is, in effect, a reservation rate for banks’ intermediation activities.
-
-Similarly, no bank should be borrow at a higher rate than the ONRRP. No bank should lend at a lower rate than the ONRPP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. Competition among borrowers should drive rates to the discount window (DW) rate. 
-
-In the ample reserves regime. the administered rates constitute a “floor” system to manages the FFR within its target range, the upper and lower targets set by the Federal Open Market Committee (FOMC). The ability to set the IOR and the ONRRP are key for the Fed’s implementation of monetary policy. The interest on reserves rate (IOR or IORB) is the Fed’s principal tool for interest rate control.the Fed adjusts administrative rates to manages the FFR between the FOMC target upper and lower bounds.The IOR. 
-
-The administered rates, the IOR and the ON RPP,  along with an ample supply of reserves, created a corridor system for managing the Fed Funds rate. The IOR is the ceiling, the ON RRP the floor. No bank would lend at rates on overnight cash lower than the IOR, the rate they can receive from the Fed. Thus Banks have little or no incentive to lend their reserves to other banks at rates lower than the IOR rate. In this sense, the IOR rate is in effect a reservation rate for banks’ intermediation activities,
-No bank should be borrow at a higher rate than the ONRRP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the ONRRP. No bank should lend at a lower rate than the ONRPP. Competition among borrowers should drive rates to the discount window (DW) rate. 
-
-Under the Ample Reserves policy, the Federal Reserve manages the FFR within its desired range in a “floor” system through Temporary open market operations (TOMO), short-term repurchase and reverse repurchase agreements. These Short-term repurchase and reverse repurchase agreements are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the Federal Funds market.
-
-<!--
-%\url{https://libertystreeteconomics.newyorkfed.org/2022/01/how-the-feds-overnight-reverse-repo-facility-w%orks/}
-%How to cite this post:
-%Gara Afonso, Lorie Logan, Antoine Martin, William Riordan, and Patricia Zobel, “How the Fed’s Overnight %Reverse Repo Facility Works,” Federal Reserve Bank of New York Liberty Street Economics, January 11, %2022, \url{https://libertystreeteconomics.newyorkfed.org/2022/1/how-the-feds-overnight-reverse-repo-facil%%ity-works/}.
--->
-
-
-## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
-
-
-ADD IOR, ONRRP
-
-Changes in the Fed funds rate and the administered rates IOR and the reward rate ON RRP provides a summary of the data (\@ref{table_fomc}) 
-
-
+Changes in the Fed funds rate and the administered rates IOR and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
 
 ```{r, tab.cap="FOMC rate changes 2016-2023", echo=FALSE, results='asis'}
 library(xtable)
@@ -368,6 +352,67 @@ library(xtable)
 xtable_fomc <- xtable(fomc)
 print(xtable_fomc)
 ```
+
+```{r, tab.cap="FOMC notes_table", echo=FALSE, results='asis'}
+library(xtable)
+
+# Create a data frame with the notes
+notes <- data.frame(
+  Date = c("June 2020", "December 2020", "November 2021", "December 2021", 
+           "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020", 
+           "April 2020", "August 28, 2020", "July 28, 2021", "January 26, 2022", 
+           "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 2022", 
+           "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
+           "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
+           "July 27, 2023"),
+  Event = c("Fed set rate of purchases",
+            "Fed updated guidance",
+            "Fed began tapering",
+            "Fed doubled tapering speed",
+            "Fed emergency rate cut",
+            "WHO declares Covid-19 pandemic",
+            "Fed slashes rates to zero",
+            "Stock market crash",
+            "Highest US unemployment since 1948",
+            "Fed announces new strategy",
+            "Fed holds rates steady",
+            "Powell states labor market conditions",
+            "Russia invades Ukraine",
+            "Fed makes first rate increase since 2018",
+            "Fed increases interest rates",
+            "Inflation peaks",
+            "Fed raises rates",
+            "Fed hikes rates",
+            "Fed delivers another rate increase",
+            "Fed increases rates",
+            "Fed raises rates",
+            "Fed adds another increase",
+            "Fed increases interest rates",
+            "Fed hikes another increase",
+            "Fed delivers final increase of 2023")
+)
+
+# Convert Date column to Date format
+notes$Date <- as.Date(notes$Date, format = "%B %Y")
+
+# Output the data frame as a table
+xtable_notes <- xtable(notes, caption = "Important Events Timeline", align = c("l", "p{10cm}"))
+print(xtable_notes)
+```
+
+June 2020 - In June 2020, the Fed set its rate of purchases to at least $\$$80 billion 
+a month in Treasuries and $\$$40 billion in residential and commercial mortgage-backed 
+securities until further notice. 
+
+ December 2020 slow: The Fed updated its guidance in December 2020 to indicate it would 
+ slow these purchases once the economy had made “substantial further progress” toward the 
+ Fed’s goals of maximum employment and price stability. 
+ - November 2021 taper: In November 2021, judging that test had been met, the Fed began 
+ tapering its pace of asset purchases by  $\$$10 billion in Treasuries and $\$$5 billion 
+ in MBS each month. 
+ - December 2021 double taper: At the subsequent FOMC meeting in December 2021, the Fed 
+ doubled its speed of tapering, reducing its bond purchases by $\$$20 billion in Treasuries 
+ and  $\$$10 billion in MBS each month
 
 March 3, 2020: Citing “evolving risks to economic activity” from the coronavirus outbreak, the Fed held an emergency meeting, cutting interest rates by 0.5% to 1.0–1.25%
 March 11, 2020: The World Health Organization (WHO) declares Covid-19 a global pandemic
@@ -390,21 +435,6 @@ February 2, 2023: It adds another 0.25% increase to 4.50–4.75%
 March 23, 2023: The Fed increases interest rates by an additional 0.25% to 4.75–5.0% and launches the Bank Term Funding Program, which will aid distressed banks suffering from interest-rate risk
 May 4, 2023: The Fed hikes another 0.25% to 5.00–5.25%
 July 27, 2023: The Fed delivers its final 0.25% increase of 2023, bringing rates to 5.25–5.50%
-
-June 2020 - In June 2020, the Fed set its rate of purchases to at least $\$$80 billion 
-a month in Treasuries and $\$$40 billion in residential and commercial mortgage-backed 
-securities until further notice. 
-
- December 2020 slow: The Fed updated its guidance in December 2020 to indicate it would 
- slow these purchases once the economy had made “substantial further progress” toward the 
- Fed’s goals of maximum employment and price stability. 
- - November 2021 taper: In November 2021, judging that test had been met, the Fed began 
- tapering its pace of asset purchases by  $\$$10 billion in Treasuries and $\$$5 billion 
- in MBS each month. 
- - December 2021 double taper: At the subsequent FOMC meeting in December 2021, the Fed 
- doubled its speed of tapering, reducing its bond purchases by $\$$20 billion in Treasuries 
- and  $\$$10 billion in MBS each month
-
 
 Events:
 
@@ -2229,5 +2259,13 @@ article_citation <- list(
   title = "Stochastic volatility, mean drift, and jumps in the short-term interest rate",
   type = "article"
 )
+
+
+<!--
+%\url{https://libertystreeteconomics.newyorkfed.org/2022/01/how-the-feds-overnight-reverse-repo-facility-w%orks/}
+%How to cite this post:
+%Gara Afonso, Lorie Logan, Antoine Martin, William Riordan, and Patricia Zobel, “How the Fed’s Overnight %Reverse Repo Facility Works,” Federal Reserve Bank of New York Liberty Street Economics, January 11, %2022, \url{https://libertystreeteconomics.newyorkfed.org/2022/1/how-the-feds-overnight-reverse-repo-facil%%ity-works/}.
+-->
+
 
 # Appendix
