@@ -372,7 +372,7 @@ dailyvolumes <- ggplot(vold, aes(x = sdate)) +
    scale_y_continuous(breaks = seq(0,maxr, by = 100), limits = c(0, maxr)) +
    #scale_y_continuous(breaks = y_breaks, limits = y_limits) + 
   theme_minimal()
-print(dailyvolumes)
+print(dailyvolumes)  
 my_envepisodes$dailyvolumes<-dailyvolumes
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dailyvolumesline.pdf")
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/dailyvolumesline.png")
@@ -1882,6 +1882,7 @@ library(ggplot2)
                                         middle = y50,
                                         upper = y75,
                                         fill = Group)) +
+    labs(caption = "Sample rates 3/4/2016-12/14/2023", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
     geom_boxplot(stat = "identity") +
     theme(panel.background = element_rect(fill = "white"),
           plot.background = element_rect(fill = "white"))
@@ -2082,19 +2083,22 @@ print(bnormalcy)
   saveRDS(my_environmentbox, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envbox.RDS")
   
   # Combine boxplots
-  pboxplots<-(bnormalcy | badjust | bcovid) / (bzlb | binflation)
+  pboxplots<-(bnormalcy | badjust ) / (bcovid | bzlb) / (binflation | bsample)
   print(pboxplots)
   my_environmentbox$pboxplots<-pboxplots
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/boxplots.pdf")
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/boxplots.png")
+  
   
   
   # Alternative Arrange plots in a 2x3 grid (2 rows, 3 columns)
   plot_grid(
     bnormalcy, badjust, bcovid,
-    bzlb, binflation,
-    labels = c("A", "B", "C", "D", "E"),  # Optional labels for plots
+    bzlb, binflation, bsample,
     ncol = 3  # Number of columns in the grid
   )
  
+  #labels = c("A", "B", "C", "D", "E"),
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pdf", pboxplots)
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", pboxplots)
   
