@@ -100,7 +100,7 @@ my_envvolatile <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_
 ```{r}
 library(knitr)
 fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinalv2.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE, nrows = 40)
-kable(fomc)
+#kable(fomc)
 ```
 
 Structure of article: IMRAD:
@@ -758,8 +758,17 @@ end_dates_strings <- as.character(end_dates)
 ```
 
 ## Characteristics of overnight rates during different policy episodes
-Times series of rates during different policy episodes portray how the distribution of rates changes with monetary policy (Figure).  The median rates illustrate  how the central tendency changes with policy regime (Table). 
+Times series of rates during different policy episodes portray how the distribution of rates changes with monetary policy (Figure \@ref(fig:Time series of rates by policy regime)).  The median rates illustrate  how the central tendency changes with policy regime (Table). 
 
+See (\@ref(fig:Time series of rates by policy regime) provides a summary of the data.
+
+```{r, fig.cap="Time series of rates by policy regime", echo=FALSE, results='asis'}
+library(patchwork)
+pratests<-(ratests_norm | ratests_adjust) / (ratests_covid |ratests_zlb) / ratests_inflation
+print(pratests)
+# The best plots, still not great
+my_envepisodes$pratests<-pratests
+```
 The average weighted median for the EFFR during the five episodes normalcy, adjustment, covid, zero lower bound, and inflation, illustrate the changing distribution of rates under different policies (\@ref(tab:Median rates of policy regimes). During normalcy, the median EFFR was 133.78 bp, adjustment 200.09 bp, covid 150.46 bp, zero lower bound 8.08 bp, and inflation 368.60 bp.all substantially different from the sample median EFFR 157 bp, 
 
 Medians indicate the change of policy but are not very informative of the series. The median EFFR during normalcy, 133.79 bp, steadily increasing from 25 bp o 237 bp. The median rate during the adjustment period, 200.09 bp while rates from 258 bp to 158 bp.  During covid, the median rate is 150.46. Rates  remain at this level then plunge to zero.  Rates during the zero lower bound  where the mideian EFFR is 8.08 bp, are low,between zero and 20 bp, but are volatile.  During inflation, where the median EFFR is 533 bp,  rates rise steady in 25 and 50 bp increments from 25 to 533 bp. 
@@ -795,14 +804,21 @@ BGCR    132.85   83.85   206.34  148.64  4.59  362.20
 SOFR    134.08   84.78   208.22  161.19  5.41  364.07
 ```
 
-See (\@ref(tab:boxplots of rates during policy regimes) provides a summary of the data.
+See (\@ref(fig:boxplots of rates during policy regimes) provides a summary of the data.
 
-```{r, tab.cap="boxplots of rates during policy regimes", echo=FALSE, results='asis'}
+```{r, fig.cap="boxplots of rates during policy regimes", echo=FALSE, results='asis'}
 library(patchwork)
 # Combine boxplots
   pboxplots<-(bnormalcy | badjust ) / (bcovid | bzlb) / (binflation | bsample)
   print(pboxplots)
   my_environmentbox$pboxplots<-pboxplots
+```
+
+See (\@ref(fig: Percentiles of rates during policy regimes) provides a summary of the data.
+
+```{r, fig.cap="Percentiles of rates during policy regimes", echo=FALSE, results='asis'}
+prates <- (rates_norm | rates_adjust |rates_covid ) / (rates_zlb | rates_inflation)
+print(prates)
 ```
 The IQR and range provide more information about the series, clustering and extreme values (\@ref(tab:IQR of rates during policy regimes)). . As in the sample (), the TGCR, BGCR and SOFR cluster around the EFFR except during zero lower bound periods. The wholesale  rates TGCR and BGCR rates cluster more tightly within 50 percent of the data than the EFFR or SOFR. 1 bp in the sample, 0.22 bp during normalcy; 1.3-1.4 bp during covid, between 0.12 and 0.15 during the the zero lower bound (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. SoFR rates have the largest spread within 50 percent of the data, reaching 10 bp during the adjustment period (\@ref(tab:boxplots of rates during policy regimes).
 
@@ -1941,8 +1957,6 @@ inflation_plots <- grid.arrange(ratests_inflation, rates_inflation, ncol=1)
 grid.text("Taming inflation 03/17/2022-12/14/2023", x = 0.5, y = -0.1, just = "center")
 print(inflation_plots)
 ```
-
-
 
 ```{r Combine episode dataframes, include=FALSE}
 episodesstats <- my_envepisodes$episodesstats
