@@ -210,7 +210,7 @@ paid on bank reserves with the Fed are the ceiling and the overnight reverse rep
 (ONRRP rate) is the  floor. The Fed or FOMC also temporarily intervenes in repurchase (repo) and 
 reverse repo to offset high frequency liquidity shocks to keep federal funds rate close to target.
 
-In addition, there has been a dramatice increase in funding through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. In the 1950s, Wall Street dealers originated the non deposit deposit, a repurchase transaction or repo, secured borrowing backed by collateral.The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. Since the 1970s, private parties have created deposit like instruments,  repos and money market funds ,intermediating credit outside the traditional banking system. This allows them to evade regulatory hurdles. The Tri-Party General Collateral Rate (TGCR), the base layer of repos, is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. (Reference CONCODA)
+In addition, there has been a dramatic increase in funding through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. In the 1950s, Wall Street dealers originated the non deposit deposit, a repurchase transaction or repo, secured borrowing backed by collateral.The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. Since the 1970s, private parties have created deposit like instruments,  repos and money market funds,intermediating credit outside the traditional banking system. This allows them to evade regulatory hurdles. The Tri-Party General Collateral Rate (TGCR), the base layer of repos, is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. (Reference CONCODA)
 
 Through repo and reverse repo transactons, the Fed uses the tri party market TGCR for temporary interventions to manage the FFR within its target range by using repos to adding reserves to 
 the system or reverse repos to drain reserves.   (David Gibbs, Education Director Chicago Mercantile Exchange (CME). 
@@ -356,52 +356,11 @@ print(xtable_fomc)
 ```{r, tab.cap="FOMC notes_table", echo=FALSE, results='asis'}
 library(xtable)
 
-
 dates <- c("3-Mar-20", "11-Mar-20", "15-Mar-20", "16-Mar-20", "Apr-20", "Jun-20", "28-Aug-20", 
            "Dec-20", "28-Jul-21", "Nov-21", "December 2021", "26-Jan-22", "24-Feb-22", "16-Mar-22", 
            "5-May-22", "Jun-22", "16-Jun-22", "28-Jul-22", "22-Sep-22", "3-Nov-22", "15-Dec-22", 
            "2-Feb-23", "23-Mar-23", "4-May-23", "27-Jul-23")
 
-# Create a dataframe
-Date <- data.frame(Dates = as.Date(dates, format = "%d-%b-%y"))
-#nrow(Date) 25
-# Print the dataframe
-print(Date)
-
-# Create a vector of events
-events <- c("Citing “evolving risks to economic activity” from the coronavirus outbreak, the Fed held an emergency meeting, cutting interest rates by 0.5% to 1.0–1.25%", 
-            "The World Health Organization (WHO) declares Covid-19 a global pandemic", 
-            "In another emergency meeting, the Fed slashes rates to zero (a range of 0–0.25%) and launches a $700 billion quantitative easing program", 
-            "The Dow falls 12.9%, triggering a stock market crash. It would go on to lose a total of 37% before ending the year with a 7.3% gain", 
-            "U.S. unemployment reaches an average of 14.7%, its highest level since 1948, although job losses for women and minorities are even higher", 
-            "The Fed set its rate of purchases to at least $80 billion a month in Treasuries and $40 billion in residential and commercial morgage backed securities until further notice", 
-            "At an economic symposium in Jackson Hole, the Fed announces a new strategy that calls maximum employment “a broad-based and inclusive goal”", 
-            "The Fed update ists guidance ro indicate it would slow these purchases once the economy had made “substantial further progress” toward the  Fed’s goals of maximum employment and price stability.", 
-            "The Fed holds rates steady at near-zero levels, labelling rising inflation a “transitory” phenomenon", 
-            "Tapering its pace of asset purchases by $10 billion in Treasuries and $5 billion in MBS each month", 
-            "Double taper: At the subsequent FOMC meeting in December 2021, the Fed doubled its speed of tapering, reducing its bond purchases by $20 billion in Treasuries  and  $10 billion in MBS each month", 
-            "Powell states that “labor market conditions are consistent with maximum employment” and predicts future interest rate hikes", 
-            "Russia invades Ukraine", 
-            "The Fed makes its first interest rate increase since 2018, raising rates by 0.25% to a level of 0.25–0.50%", 
-            "The Fed increases interest rates 0.50% to 0.75–1.00% and states that it anticipates ongoing increases to be “appropriate”", 
-            "Inflation, as measured by the Consumer Price Index (CPI), peaks at 9.1%", 
-            "The Fed raises rates 0.75% to 1.50–1.75%", 
-            "The Fed hikes rates another 0.75% to 2.25–2.50%", 
-            "The Fed delivers another 0.75% rate increase, bringing rates to 3.00–3.25%", 
-            "Fed increases rates by 0.75% to 3.75–4.00%, adding that it is “prepared to adjust the stance of monetary policy as appropriate if risks emerge”", 
-            "The Fed raises rates by 0.5% to 4.25–4.50%", 
-            "The Fed adds another 0.25% increase to 4.50–4.75%", 
-            "The Fed increases interest rates by an additional 0.25% to 4.75–5.0% and launches the Bank Term Funding Program, which will aid distressed banks suffering from interest-rate risk", 
-            "The Fed hikes another 0.25% to 5.00–5.25%", 
-            "The Fed delivers its final 0.25% increase of 2023, bringing rates to 5.25–5.50%")
-
-# Create a dataframe
-Event <- data.frame(Event = events)
-#nrow(Event) 25
-# Print the dataframe
-print(Event)
-
-notes <- data.frame(Date,Event)
 
 # Create a data frame with the notes
 notes <- data.frame(
@@ -411,7 +370,7 @@ notes <- data.frame(
            "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 2022", 
            "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
            "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
-           "July 27, 2023"))
+           "July 27, 2023"),
   Event = c("Fed set rate of purchases",
             "Fed updated guidance",
             "Fed began tapering",
@@ -436,11 +395,13 @@ notes <- data.frame(
             "Fed adds another increase",
             "Fed increases interest rates",
             "Fed hikes another increase",
-            "Fed delivers final increase of 2023")
+            "Fed delivers final increase of 2023"))
 
 
 # Create a dataframe with 'Date' and 'Event' columns
-notes_df <- data.frame(Date = as.Date(notes_with_valid_dates$Date, origin = "1970-01-01"), 
+
+
+notes<- data.frame(Date = as.Date(notes_with_valid_dates$Date, origin = "1970-01-01"), 
                        Event = c("Fed emergency rate cut",
                                  "WHO declares Covid-19 pandemic",
                                  "Fed slashes rates to zero",
@@ -455,14 +416,14 @@ notes_df <- data.frame(Date = as.Date(notes_with_valid_dates$Date, origin = "197
                                  "Fed hikes rates",
                                  "Fed delivers another rate increase",
                                  "Fed increases rates",
-                                 "Fed raises rates",
+                                                                                                   "Fed raises rates",
                                  "Fed adds another increase",
                                  "Fed increases interest rates",
                                  "Fed hikes another increase",
-                                 "Fed delivers final increase of 2023"))
+                                 "Fed delivers final increase of 2023")
 
 # Print the dataframe
-print(notes_df)
+str(notes)
 
 # Load the lubridate package
 library(lubridate)
@@ -479,6 +440,7 @@ dates <- c("June 2020", "December 2020", "November 2021", "December 2021",
            "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
            "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
            "July 27, 2023")
+
 
 # Create a function to parse dates flexibly
 parse_flexible_date <- function(date_string) {
@@ -509,7 +471,8 @@ notes_with_valid_dates <- notes[valid_indices & !is.na(parsed_dates), ]
 
 # Parse dates directly and assign to Date column in filtered notes dataframe
 notes_with_valid_dates$Date <- as.Date(notes_with_valid_dates$Date, origin = "1970-01-01")
-
+#Error in charToDate(x) : 
+#character string is not in a standard unambiguous format
 
 # Convert the Date column to character strings
 notes_with_valid_dates$Date <- as.character(notes_with_valid_dates$Date)
@@ -658,32 +621,98 @@ the economy. It said that it would buy at least $\$$500 billion in Treasury secu
 %Volatility relative to to prior periods (here daily) 
 
 ## Time series properties of overnight policy, interbank rates, transactions, and reserves held at the Federal Reserve
-The focus of this examination of overnight reference rates from 2016 through 2023 is the notable behavior of the wholesale credit market rate, the median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) to \@ref(fig:Sample rates 3/4/2016-12/14/2023)
-- track and cluster around the policy rate, the effective Federal rate (EFFR)
-- the tendency of all rates to respond quickly to changes in the EFFR
+(Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023))
+The focus of this examination of overnight rates orimary funding markets respond to changes in FOMC policy.overnight reference rates from 2016 through 2023 is the behavior of the wholesale credit market rate, the median Tri-Party General Collateral Rate (TGCR), the base layer of repos, repurchase agreement (repo) transactions secured by Treasury securities where the Fed conducts both  borrowing and lending operations and primary dealers, the borrowers,   obtain chespest rates from asset managers the  lenders, then lend at a spread in other repomarkets,. (Reference CONCODA), the Broad General Collateral Rate (BGCR) where primary dealers intermediate cash to leveraged investors (hedge funds), and Secured Overnight Financing Rate (SOFR),The Tri-Party General Collateral Rate (TGCR), the base layer of repos, is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. (Reference CONCODA) to \@ref(fig:Sample rates 3/4/2016-12/14/2023),  These funding rates track and cluster around the policy rate, the effective Federal rate (EFFR),  respond quickly to changes in the EFFR or the administered rates IOR and ONRRP. These overnight reference rates share known qualities  of short rates,highly skewed, changing volatility or heteroskedasticity and and fat tails due to extreme outliers
 
-In addition, these overnight reference rates share known qualities  of short rates 
-- the changing volatility or heteroskedasticity and 
- - outliers
- 
+```{r, EFFR Key percentiles of the sample 3/4/2016-12/14/2023}
+my_envepisodes$sdate <- sdate
+my_envepisodes$sampleE <-qsampleE
+my_envepisodes$sampleT <-qsampleT
+my_envepisodes$sampleB <-qsampleB
+my_envepisodes$sampleS <-qsampleS
 
-Characteristics of the sample distribution
-The rate data from the Federal Reserve Data Download Program are average volume weighted medians.The median rather than the mean better represent daily rates since the data have outliers or extreme values.
-The the average median rates and percentiles illustrate both the tendency of other rates to cluster around the EFFR and the presence of outliers.
+Estats <- colMeans(qsampleE[bgn:edn,2:ncol(qsampleE)], na.rm = TRUE)
+#Ostats <- colMeans(qsampleO[bgn:edn,,2:ncol(qsampleO)], na.rm = TRUE)
+Tstats <- colMeans(qsampleT[bgn:edn,2:ncol(qsampleT)], na.rm = TRUE)
+Bstats <- colMeans(qsampleB[bgn:edn,2:ncol(qsampleB)], na.rm = TRUE)
+Sstatssample <- colMeans(qsampleS[bgn:edn,2:ncol(qsampleS)], na.rm = TRUE)
 
-The median, a measure of central tendency, and quantiles locate the clustering and range of values in the data. The average median EFFR over the full sample is 157 basis point (bp).  The money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, SOFR 134 bp.  
+# Add NA for targets 
+Tstats2<-c(Tstats[1],Tstats[2], TargetUe=NA, TargetDe=NA,Tstats[3],Tstats[4],Tstats[5],Tstats[6])
+Bstats2<-c(Bstats[1],Bstats[2], TargetUe=NA, TargetDe=NA,Bstats[3],Bstats[4],Bstats[5],Bstats[6])
+Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sstats[5],Sstats[6])
+```
 
-Money market rates cluster around the median EFFR.The interquartile range (IQR), the 75th percentile minus the 25th percentile, a measure of variability for skewed distributions, captures where 50 percent of the data lie. The IQR shows how clustered are these reference rates. Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  4.2 (136.70-132.50).S maller values if the IQR show that the middle values cluster more tightly.  Based on the middle half of the distribution, The IQR is less influenced by extreme values. 
 
-Outliers are described by the range of the data.  A common measure of variability, a large range means high variability, a small range means low variability. The range, the 99th percentile minus the first percentile, is more sensitive to outliers. The range represents 2 percent of the data, the spread of the data from the lowest to the highest value in the distribution. The magnitude of outliers in all rates 1s 14 to 16 bp.  
+```{r , fig.caption="EFFR Key percentiles of the sample 3/4/2016-12/14/2023",echo=FALSE,results='asis'}
+boxplot_sample <- data.frame(
+  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
+  y0 = c(Estats[5], Tstats[3], Bstats[3], Sstats[3]),
+  y25 = c(Estats[6], Tstats[4], Bstats[4], Sstats[4]),
+  y50 = c(Estats[1], Tstats[1] , Bstats[1] , Sstats[1]) ,
+  y75 = c(Estats[7], Tstats[5], Bstats[5], Sstats[5]),
+  y100 = c(Estats[8], Tstats[6], Bstats[6], Sstats[6]))
 
-??The most extreme values  are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. 
+library(ggplot2)
+  bsample <- ggplot(boxplot_sample, aes(x = Group,
+                                        ymin = y0,
+                                        ymax = y100,
+                                        lower = y25,
+                                        middle = y50,
+                                        upper = y75,
+                                        fill = Group)) +
+    geom_boxplot(stat = "identity") +
+    theme(panel.background = element_rect(fill = "white"),
+          plot.background = element_rect(fill = "white"))
+  print(bsample)
+```
+
+The rate data from the Federal Reserve Data Download Program are average volume weighted medians.The median rather than the mean better represent daily rates since there are outliers in rate data (Figure \@ref(fig:EFFR Key percentiles of the sample 3/4/2016-12/14/2023)).  The median is a measure of central tendency, the IQR, the 75th minus the 25 percentile of the data how cluseres are 50 percent of the data, and the  range. the 99th minus the one percentile,tell us the magnitude of the outliers, some two percent of the values of rates in the data (Table (\@ref(tab:Rate characteristics 2016-2023) ). .
+
+The average median rates represent the central tendency of rates  (Table \@ref(tab:Sample statistics 2016-2023)).The funding rates stay close the the policy rate, the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, the SOFR benchmark 134 bp.  
+
+The interquartile range (IQR), the 75th percentile minus the 25th percentile, a measure of variability for skewed distributions, describe rates cluster around the median rate, capturing where 50 percent of the data lie. Based on the middle half of the distribution, the IQR is less influenced by extreme values. The IQR shows how clustered are these reference rates. Smaller values show that the middle values cluster more tightly.Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  4.2 (136.70-132.50).  
+
+Outliers are described by The range of the data,the 99th percentile minus the first percentile, is a measure of variability that tell us the extreme values of outliers in rates. A large range means high variability, a small range means low variability. More sensitive to outliers, the range represents 2 percent of the data, the spread of the data from the lowest to the highest value in the distribution. The magnitude of outliers in all rates 1s 14 to 16 bp.  
+
+CHECK The most extreme values  are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. 
 
 
 The EFFR is on average within the FOMC target range, 145.52 to 170.52. [WHERE?]
 
-The volume of SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
+The volume of SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). EFFR has a notably lower daily trade volume of $\$$79 billion. 
 
+
+
+<!--
+Duplicate material.  Check before delete
+
+The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
+The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
+
+Other money market rates cluster around the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) cluster around the EFFR at 157 bp, Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. Median rates in the sample ] 
+
+The range, the 99th percentile minus the first percentile, more sensitive to outliers, represents 2 percent of the data.The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp. 
+
+Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
+
+The the average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR. [ADD VOLUME FIGURE]
+
+More duplication:
+
+Daily transaction SOFR volumes, 385.64 (billions of dollars), dwarf the similar volume in the other rates volume in SOFR $\$$75.86, $\$$66.84, $\$$71.70, $\$$68.97 (billions of dollars) is around $\$$754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR as do their medians.
+
+The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within one basis point. The SOFR, 4 basis points.
+
+Estimating moments of the data show overnight rates are highly skewed with fatter tails.
+
+The interquartile range for SOFR exceeds that for the EFFR and the money market rates TGCR and BGCR; fifty percent of SOFR rates lie within 10.53 bp during adjustment, 7.37 during covid, and 5.68 during inflation.The middle 50 percent of the data is more tighly clustered for all other rates in all episodes.
+
+The range of the data, the 99th minus the first percentile, illustrates the extensive outliers, typical of short rates. The smallest is 5.62 TGCR during normalcy. Most ranges are double digit to 41.26 percent SOFR data as outliers during the adjustment period. In contrast, the range of the EFFR and the money market rates, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points.
+
+From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
+       
+-->
 see Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)
 
 ```{r, fig.cap= "Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, results='asis'}
@@ -801,8 +830,6 @@ colnames(charsample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charsample,include.rownames = FALSE)
 ```
 
-
-
 ```{r, EFFR Key percentiles during sample period 3/4/2016-12/14/2023}
 k=6
 begn<- c(1, 859, 923,  1014, 1519, 1)
@@ -848,7 +875,7 @@ xtable(ratesamplestats,include.rownames = FALSE, caption="Sample 3/04/2016-12/14
 ```
 
 ## Volatility
-Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is illustrated by the percent change in overnight rates. From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
+To examine heteroskedasticity of overnight rates, the cnange in volatility by the percent change in overnight rates. From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
        
 Estimating moments of the data show overnight rates are highly skewed with fatter tails.?
 \url{https://statisticsbyjim.com/basics/interquartile-range/}
@@ -933,19 +960,6 @@ Is there a relationship to policy iniertia?
 %Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating %extreme outlier behavior. 
 -->
 
-The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
-The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
-
-Other money market rates cluster around the median EFFR. The median Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR), and Secured Overnight Financing Rate (SOFR) cluster around the EFFR at 157 bp, Outliers that make up two percent of the data, the highest minus lowest rates are 23.36, 13.86, 16.11, and 14.51 basis point for the wholesale rates TGCR, BGCR, and SOFR.  TGCR and BGCR 132.83 and 132.84, SOFR 134.08. [range from 123 to 134 bp. Median rates in the sample ] 
-
-The range, the 99th percentile minus the first percentile, more sensitive to outliers, represents 2 percent of the data.The range is the spread of the data from the lowest to the highest value in the distribution. A common measure of variability, a large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp. 
-
-Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each. EFFR has a notably lower daily trade volume of $\$$79 billion. 
-
-The the average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR. [ADD VOLUME FIGURE]
-
-
--->
 
 <!--
 Median rates  EFFR       TGCR       BGCR        SOFR
@@ -954,7 +968,6 @@ Adjust        200.09 206.3  206.34  208.22
 Covid         150.46 148.64 148.64  151.19
 Zlb             8.08   4.59   4.59    5.40
 inflation     368.60 362.14 362.2   364.07
-
 
 episodeschar
 Normalcy 
@@ -1056,25 +1069,10 @@ BGCR Bstatscovid 148.64 0.42 16.02 423.19
 SOFR Sstatscovid 151.19 7.37 19.46 1085.60
 (see Figure @ref(fig:Rates during covid 11/1/2019-3/16/2020
 
-ZLB
-
-INFLATION
 -->
 
+## episodes
 
-
-Daily transaction SOFR volumes, 385.64 (billions of dollars), dwarf the similar volume in the other rates volume in SOFR $\$$75.86, $\$$66.84, $\$$71.70, $\$$68.97 (billions of dollars) is around $\$$754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR as do their medians.
-
-The interquartile range (IQR) indicated half the data are clustered tightly around median rates. Half the the EFFR, TGCR, and BGCR rates are within one basis point. The SOFR, 4 basis points.
-
-Estimating moments of the data show overnight rates are highly skewed with fatter tails.
-
-The interquartile range for SOFR exceeds that for the EFFR and the money market rates TGCR and BGCR; fifty percent of SOFR rates lie within 10.53 bp during adjustment, 7.37 during covid, and 5.68 during inflation.The middle 50 percent of the data is more tighly clustered for all other rates in all episodes.
-
-The range of the data, the 99th minus the first percentile, illustrates the extensive outliers, typical of short rates. The smallest is 5.62 TGCR during normalcy. Most ranges are double digit to 41.26 percent SOFR data as outliers during the adjustment period. In contrast, the range of the EFFR and the money market rates, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points.
-
-From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
-       
 \@ref(tab:Rate characteristics normalcy 3/4/2016-7/31/2019) provides a summary of the data.
 
 ```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='asis'}
@@ -1344,9 +1342,6 @@ ratests_adjust <- ggplot(meltrates_adjust,aes(x=sdate,y=value,colour=variable,gr
 #Removed 3 rows containing missing values (`geom_point()`).
 ```
 
-The average weighted median for all over night rates are tightly clustered around 148.64-151.18 during covid. The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars) is around $\$$1086 billion. The money market volumes in TGCR and BGCR around 402-423  billion.  Daily trade volume in EFFR is a low 71.7 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
-
-
 ```{r, EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
 rates=2
 vol=3
@@ -1403,6 +1398,10 @@ grid.text("Adjustment period 8/1/2019-10/31/2019", x = 0.5, y = -0.1, just = "ce
 print(adjust_plots)
 ```
 
+<!--
+CONFUSION
+
+The average weighted median for all over night rates are tightly clustered around 148.64-151.18 during covid. The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. Daily transaction volume in SOFR (billions of dollars) is around $\$$1086 billion. The money market volumes in TGCR and BGCR around 402-423  billion.  Daily trade volume in EFFR is a low 71.7 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
 
 The interquartile range for the money market rates TGCR and BGCR are under 1 bp, smaller than the 1.56 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
 
@@ -1421,6 +1420,7 @@ The average weighted median for the EFFR during the nomrmalcy period is 157 basi
 The interquartile range for the money market rates TGCR and BGCR are under 1 bp, smaller than the 1.56 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 4.2 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
 
 The range of the data, the 9th ,minus the first percentile, is more sensitive to outliers/ Some 14 to 16 basis points for the EFFR and the money market rates, TGCR, BGCR, and SOFR. 
+-->
 
               
 Table \@ref(tab:Rate characteristics covid 11/1/2019-3/16/2020) provides a summary of the data.
@@ -2013,52 +2013,7 @@ print(pratests)
 my_envepisodes$pratests<-pratests
 ```
 
-# boxplots
-```{r, EFFR Key percentiles of the sample 3/4/2016-12/14/2023}
-my_envepisodes$sdate <- sdate
-my_envepisodes$sampleE <-qsampleE
-my_envepisodes$sampleT <-qsampleT
-my_envepisodes$sampleB <-qsampleB
-my_envepisodes$sampleS <-qsampleS
-
-Estats <- colMeans(qsampleE[bgn:edn,2:ncol(qsampleE)], na.rm = TRUE)
-#Ostats <- colMeans(qsampleO[bgn:edn,,2:ncol(qsampleO)], na.rm = TRUE)
-Tstats <- colMeans(qsampleT[bgn:edn,2:ncol(qsampleT)], na.rm = TRUE)
-Bstats <- colMeans(qsampleB[bgn:edn,2:ncol(qsampleB)], na.rm = TRUE)
-Sstatssample <- colMeans(qsampleS[bgn:edn,2:ncol(qsampleS)], na.rm = TRUE)
-
-# Add NA for targets 
-Tstats2<-c(Tstats[1],Tstats[2], TargetUe=NA, TargetDe=NA,Tstats[3],Tstats[4],Tstats[5],Tstats[6])
-Bstats2<-c(Bstats[1],Bstats[2], TargetUe=NA, TargetDe=NA,Bstats[3],Bstats[4],Bstats[5],Bstats[6])
-Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sstats[5],Sstats[6])
-```
-
-
-```{r , fig.caption="EFFR Key percentiles of the sample 3/4/2016-12/14/2023",echo=FALSE,results='asis'}
-boxplot_sample <- data.frame(
-  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
-  y0 = c(Estats[5], Tstats[3], Bstats[3], Sstats[3]),
-  y25 = c(Estats[6], Tstats[4], Bstats[4], Sstats[4]),
-  y50 = c(Estats[1], Tstats[1] , Bstats[1] , Sstats[1]) ,
-  y75 = c(Estats[7], Tstats[5], Bstats[5], Sstats[5]),
-  y100 = c(Estats[8], Tstats[6], Bstats[6], Sstats[6]))
-
-library(ggplot2)
-  bsample <- ggplot(boxplot_sample, aes(x = Group,
-                                        ymin = y0,
-                                        ymax = y100,
-                                        lower = y25,
-                                        middle = y50,
-                                        upper = y75,
-                                        fill = Group)) +
-    geom_boxplot(stat = "identity") +
-    theme(panel.background = element_rect(fill = "white"),
-          plot.background = element_rect(fill = "white"))
-  print(bsample)
-```
-
-
-
+# boxplots episodes
 ```{r, EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019}
 qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
 qnormT=quantilesT[bgn:edn,] 
@@ -2330,10 +2285,10 @@ prates <- (rates_norm | rates_adjust |rates_covid ) / (rates_zlb | rates_inflati
 print(prates)
 ```
 
-# Episode percentilesfind old title  ------------------------------------
-The average weighted median for the EFFR during the five episodes normalcy, adjustment, covid, zero lower bound, and inflation, illustrate the changing distribution of rates under different policies (\@ref(tab:Median rates of policy regimes). During normalcy, the median EFFR was 133.78 bp, adjustment 200.09 bp, covid 150.46 bp, zero lower bound 8.08 bp, and inflation 368.60 bp.all substantially different from the sample median EFFR 157 bp, 
+# Episode percentiles  ------------------------------------
+The average weighted median for the EFFR during the five episodes normalcy, adjustment, covid, zero lower bound, and inflation, illustrate the changing distribution of rates under different policies but, due the to the range of rates during each policy episode, are not very informative of the series. (\@ref(tab:Median rates of policy regimes). During normalcy, the median EFFR was 133.78 bp, adjustment 200.09 bp, covid 150.46 bp, zero lower bound 8.08 bp, and inflation 368.60 bp.all substantially different from the sample median EFFR 157 bp, 
 
-Medians indicate the change of policy but are not very informative of the series. The median EFFR during normalcy, 133.79 bp, steadily increasing from 25 bp o 237 bp. The median rate during the adjustment period, 200.09 bp while rates from 258 bp to 158 bp.  During covid, the median rate is 150.46. Rates  remain at this level then plunge to zero.  Rates during the zero lower bound  where the mideian EFFR is 8.08 bp, are low,between zero and 20 bp, but are volatile.  During inflation, where the median EFFR is 533 bp,  rates rise steady in 25 and 50 bp increments from 25 to 533 bp. 
+The median EFFR during normalcy, 133.79 bp, steadily increasing from 25 bp o 237 bp. The median rate during the adjustment period, 200.09 bp, declines from 258 bp to 158 bp.  During covid, the median rate is 150.46. Rates  remain at this level then plunge to zero.  The median EFFR is 8.08 bp during the zero lower bound.  But rates a both low and highly variable, anywhere between zero and 20 bp,  During inflation, the median EFFR is 533 bp,  but rates rise steadily in 25 and 50 bp increments from 25 to 533 bp. 
 
 
 see \@ref(tab:Median of rates during policy regimes) provides a summary of the data.
@@ -2366,12 +2321,7 @@ BGCR    132.85   83.85   206.34  148.64  4.59  362.20
 SOFR    134.08   84.78   208.22  161.19  5.41  364.07
 ```
 
-
-The IQR and range provide more information about the series, clustering and extreme values (\@ref(tab:IQR of rates during policy regimes)). . As in the sample (), the TGCR, BGCR and SOFR cluster around the EFFR except during zero lower bound periods. The wholesale  rates TGCR and BGCR rates cluster more tightly within 50 percent of the data than the EFFR or SOFR. 1 bp in the sample, 0.22 bp during normalcy; 1.3-1.4 bp during covid, between 0.12 and 0.15 during the the zero lower bound (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. SoFR rates have the largest spread within 50 percent of the data, reaching 10 bp during the adjustment period (\@ref(tab:boxplots of rates during policy regimes).
-
-Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
-
-
+The IQR and range provide more information about the series, clustering and extreme values (\@ref(tab:IQR of rates during policy regimes)). The IQR shows where 50 percent of the data like and how clustered they are around the median. Larger values indicate that the central portion of rates are further spread out, smaller values show that the middle values cluster more tightly. As in the sample (), the TGCR, BGCR and SOFR cluster around the EFFR except during zero lower bound periods. The wholesale  rates TGCR and BGCR rates cluster more tightly than the EFFR or SOFR. 1 bp in the sample, 0.22 bp during normalcy; 1.3-1.4 bp during covid, between 0.12 and 0.15 during the the zero lower bound (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. SoFR rates have the largest spread around the median rate, reaching 10 bp during the adjustment period (\@ref(tab:boxplots of rates during policy regimes).
 
 
 see \@ref(tab:IQR of rates during policy regimes) provides a summary of the data.
@@ -2402,9 +2352,7 @@ BGCR  0.96     0.23    1.36   0.42  0.15  3.36
 SOFR  4.02     3.30   10.53   7.37  3.05  5.68
 -->
 
-The range tells us about the outliers under different policies (Table \@ref(tab: Range of rates during policy regimes). Outliers during the covid and zero lower bound are within or less than the range of values in the sample. The magnitude of outliers in the sample 1s 14 to 16 bp.The magnitude of outliers is greatest duing the Fed's attemp to contain inflation.
-
-A large range means high variability, a small range means low variability.The magnitude of outliers in all rates 1s 14 to 16 bp.  Adjustment, covid, and inflation episodes show higher variablity of rates compared to the same
+The range tells us about the outliers under different policies (Table \@ref(tab: Range of rates during policy regimes).A large range means high variability, a small range means low variability. The magnitude of outliers in the sample is 14 to 16 bp. Outliers during the covid and zero lower bound are within or less than the range of values in the sample. The magnitude of outliers is greatest duing the Fed's attempt to contain inflation. ?? Adjustment, covid, and inflation episodes show higher variablity of rates compared to the same
 
 (\@ref(tab: Range of rates during policy regimes)
 
