@@ -363,6 +363,125 @@ dates <- c("3-Mar-20", "11-Mar-20", "15-Mar-20", "16-Mar-20", "Apr-20", "Jun-20"
 
 
 # Create a data frame with the notes
+
+
+# Create a dataframe with 'Date' and 'Event' columns
+
+
+notes<- data.frame(Date = as.Date(notes_with_valid_dates$Date, origin = "1970-01-01"), 
+                       Event = c("Fed emergency rate cut",
+                                 "WHO declares Covid-19 pandemic",
+                                 "Fed slashes rates to zero",
+                                 "Stock market crash",
+                                 "Fed announces new strategy",
+                                 "Fed holds rates steady",
+                                 "Powell states labor market conditions",
+                                 "Russia invades Ukraine",
+                                 "Fed makes first rate increase since 2018",
+                                 "Fed increases interest rates",
+                                 "Fed raises rates",
+                                 "Fed hikes rates",
+                                 "Fed delivers another rate increase",
+                                 "Fed increases rates",
+                                 "Fed raises rates",
+                                 "Fed adds another increase",
+                                 "Fed increases interest rates",
+                                 "Fed hikes another increase",
+                                 "Fed delivers final increase of 2023")
+
+# Print the dataframe
+str(notes)
+
+# Start here, delete above when sure -------------------------------------
+# Load the lubridate package
+library(lubridate)
+# Create a dataframe with 'Date' and 'Event' columns
+
+# Start here May 11, add lines for notes df aboce
+# Create a function to parse dates flexibly
+# Load the lubridate package
+
+# if we can use formats June 2020
+dates <- c("June 2020", "December 2020", 
+           "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020", 
+           "April 2020", "August 28, 2020", "July 28, 2021", "November 2021", "December 2021", 
+           "January 26, 2022", "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 2022", 
+           "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
+           "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
+           "July 27, 2023")
+# If note, convert to June 1, 2020
+dates <- c("June 1, 2020", "December11, 2020", 
+           "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020", 
+           "April 2020", "August 28, 2020", "July 28, 2021", "November 1, 2021", "December 1, 2021", 
+           "January 26, 2022", "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 1, 2022", 
+           "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
+           "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
+           "July 27, 2023")
+
+
+# Create a function to parse dates flexibly
+parse_flexible_date <- function(date_string) {
+  # Try parsing date using different formats
+  parsed_date <- NA
+  formats <- c("%B %Y", "%B %d, %Y", "%B %d, %Y", "%Y-%m-%d")
+  for (format in formats) {
+    parsed_date <- as.Date(date_string, format = format, tryFormats = format)
+    if (!is.na(parsed_date)) {
+      break
+    }
+  }
+  # Print parsed date for debugging
+  print(parsed_date)
+  return(parsed_date)
+}
+
+# Apply parse_flexible_date function to dates
+parsed_dates <- sapply(dates, parse_flexible_date)
+
+valid_indices <- !is.na(parsed_dates)
+                        
+# Filter valid indices from parsed dates
+valid_parsed_dates <- parsed_dates[valid_indices]
+
+# Filter notes dataframe to include only rows with valid parsed dates
+notes_with_valid_dates <- notes[valid_indices & !is.na(parsed_dates), ]
+# why does this have 24 obs, 2 vairables Date  Event
+
+
+# Convert the Date column to character strings
+notes_with_valid_dates$Date <- as.character(notes_with_valid_dates$Date)
+
+Events<- c("Fed set rate of purchases",
+            "Fed updated guidance",
+            "Fed began tapering",
+            "Fed doubled tapering speed",
+            "Fed emergency rate cut",
+            "WHO declares Covid-19 pandemic",
+            "Fed slashes rates to zero",
+            "Stock market crash",
+            "Highest US unemployment since 1948",
+            "Fed announces new strategy",
+            "Fed holds rates steady",
+            "Powell states labor market conditions",
+            "Russia invades Ukraine",
+            "Fed makes first rate increase since 2018",
+            "Fed increases interest rates",
+            "Inflation peaks",
+            "Fed raises rates",
+            "Fed hikes rates",
+            "Fed delivers another rate increase",
+            "Fed increases rates",
+            "Fed raises rates",
+            "Fed adds another increase",
+            "Fed increases interest rates",
+            "Fed hikes another increase",
+            "Fed delivers final increase of 2023")
+
+
+notes_with_valid_dates$Event<-Events
+notes<- data.frame(Date = notes_with_valid_dates$Date, Event = notes_with_valid_dates$Event)
+
+#____________________ so I dont need this? ------------------------
 notes <- data.frame(
   Date = c("June 2020", "December 2020", "November 2021", "December 2021", 
            "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020", 
@@ -396,86 +515,8 @@ notes <- data.frame(
             "Fed increases interest rates",
             "Fed hikes another increase",
             "Fed delivers final increase of 2023"))
+#____________________ so I dont need this? ------------------------
 
-
-# Create a dataframe with 'Date' and 'Event' columns
-
-
-notes<- data.frame(Date = as.Date(notes_with_valid_dates$Date, origin = "1970-01-01"), 
-                       Event = c("Fed emergency rate cut",
-                                 "WHO declares Covid-19 pandemic",
-                                 "Fed slashes rates to zero",
-                                 "Stock market crash",
-                                 "Fed announces new strategy",
-                                 "Fed holds rates steady",
-                                 "Powell states labor market conditions",
-                                 "Russia invades Ukraine",
-                                 "Fed makes first rate increase since 2018",
-                                 "Fed increases interest rates",
-                                 "Fed raises rates",
-                                 "Fed hikes rates",
-                                 "Fed delivers another rate increase",
-                                 "Fed increases rates",
-                                                                                                   "Fed raises rates",
-                                 "Fed adds another increase",
-                                 "Fed increases interest rates",
-                                 "Fed hikes another increase",
-                                 "Fed delivers final increase of 2023")
-
-# Print the dataframe
-str(notes)
-
-# Load the lubridate package
-library(lubridate)
-# Create a dataframe with 'Date' and 'Event' columns
-notes_df <- data.frame(Date = notes_with_valid_dates$Date, Event = notes_with_valid_dates$Event)
-
-# Create a function to parse dates flexibly
-# Load the lubridate package
-
-dates <- c("June 2020", "December 2020", "November 2021", "December 2021", 
-           "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020", 
-           "April 2020", "August 28, 2020", "July 28, 2021", "January 26, 2022", 
-           "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 2022", 
-           "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022", 
-           "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023", 
-           "July 27, 2023")
-
-
-# Create a function to parse dates flexibly
-parse_flexible_date <- function(date_string) {
-  # Try parsing date using different formats
-  parsed_date <- NA
-  formats <- c("%B %Y", "%B %d, %Y", "%B %d, %Y", "%Y-%m-%d")
-  for (format in formats) {
-    parsed_date <- as.Date(date_string, format = format, tryFormats = format)
-    if (!is.na(parsed_date)) {
-      break
-    }
-  }
-  # Print parsed date for debugging
-  print(parsed_date)
-  return(parsed_date)
-}
-
-# Apply parse_flexible_date function to dates
-parsed_dates <- sapply(dates, parse_flexible_date)
-
-valid_indices <- !is.na(parsed_dates)
-                        
-# Filter valid indices from parsed dates
-valid_parsed_dates <- parsed_dates[valid_indices]
-
-# Filter notes dataframe to include only rows with valid parsed dates
-notes_with_valid_dates <- notes[valid_indices & !is.na(parsed_dates), ]
-
-# Parse dates directly and assign to Date column in filtered notes dataframe
-notes_with_valid_dates$Date <- as.Date(notes_with_valid_dates$Date, origin = "1970-01-01")
-#Error in charToDate(x) : 
-#character string is not in a standard unambiguous format
-
-# Convert the Date column to character strings
-notes_with_valid_dates$Date <- as.character(notes_with_valid_dates$Date)
 # Create the table with the modified Date column
 xtable_notes <- xtable(notes_with_valid_dates, caption = "Important Events Timeline")
 print(xtable_notes)
@@ -511,6 +552,11 @@ notes_with_valid_dates <- notes[which(valid_indices), ]
 
 # Parse dates directly and assign to Date column in filtered notes dataframe
 notes_with_valid_dates$Date <- as.Date(notes_with_valid_dates$Date, origin = "1970-01-01")
+
+
+# Create a dataframe with 'Date' and 'Event' columns
+notes_df <- data.frame(Date = notes_with_valid_dates$Date, Event = notes_with_valid_dates$Event)
+
 
 # Convert the Date column to character strings
 notes_with_valid_dates$Date <- as.character(notes_with_valid_dates$Date)
