@@ -409,8 +409,6 @@ rownames(stats_sample) <- c("Rate", "Volume", "Upper target", "Lower target",
 colnames(stats_sample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 print(stats_sample)
 
-
-
 # Sample data metrics --------------------------------------------------------
 categories = c('EFFR', 'TGCR', 'BGCR', 'SOFR')
 median_values = c(Estats[1], Tstats[1], Bstats[1], Sstats[1])
@@ -496,7 +494,6 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_sample.pn
 # --------------- epoch plots
 #1. normalcy   3/4/2016		7/31/2019      4  859
 k=1 # normalcy period
-
 bgn<-begn[k]
 edn<-endn[k]
 print(bgn)
@@ -943,6 +940,55 @@ pratests4 <-grid.arrange(
 print(pratests4)
 
 # Quintile plots--------------------------------
+# Sample
+# OLD
+melteffr <- melt(quantilesE,id="sdate")
+maxr<-max(quantilesE[,2:ncol(quantilesE)])
+quantileseffr <- ggplot(melteffr,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape = 16, size = 1) +
+  labs(x="",  y = "Basis Points (bp),volume $billions", color = "Rate", shape = "Rate") +  
+  scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+print(quantileseffr)
+
+
+
+#{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
+ratecol=2
+vol=3
+targetup = 3
+targetdown = 4
+p1=6
+p25=7
+p75=8
+p99=9
+normE<-
+maxr<-max(quantilesE[,ncol(quantilesE)])
+minr<-min(quantilesE[,ncol(quantilesE)]
+          
+          #(see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
+          #{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis'}
+          library(ggplot2)
+          sample<-quantilesE
+          sdate <- quantilesE[, 1]
+          data_without_sdate <- quantilesE[, -1]
+          #maxr<-max(normE[,ncol(quantilesE)]) 
+          #minr<-min(normE[,ncol(quantilesE)])
+          
+          meltrates_sample <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+          rates_sample <<- ggplot(meltrates_sample, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+            geom_line() +
+            labs( caption = "Sample 3/4/2016-12/14/2023", x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+            scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
+            theme_minimal()
+          #my_envepisodes$rates_sample<-rates_sample
+          print(rates_sample)
+          ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/samplequantiles.pdf",rates_sample)
+          ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/samplequantiles.png",rates_sample)
+          
+
+
+
 # NORMALCY -------------------------------------------
 #{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
 ratecol=2
@@ -983,6 +1029,33 @@ minr<-min(normE[,ncol(normE)]
  grid.text("Normalcy period 3/4/2016-7/31/2019", x = 0.5, y = -0.1, just = "center")
  print(norm_plots)
 
+ # IQR as ribbon plot-------------------------------
+ 
+ 
+ rates=2
+ vol=3
+ targetup = 4
+ targetdown = 5
+ p1=6
+ p25=7
+ p75=8
+ p99=9
+ library(ggplot2)
+ normE<-my_envepisodes$norm
+ sdate <- normE[, 1]
+ data_without_sdate <- normE[, -1]
+ maxr<-max(normE[,ncol(normE)]) 
+ minr<-min(normE[,ncol(normE)])
+ 
+ meltrates_norm <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+ rates_norm <<- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+   geom_line() +
+   labs( caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+   scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
+   theme_minimal()
+ #my_envepisodes$rates_norm<-rates_norm
+ print(rates_norm)
+ 
  # ADJUST -------------------------------------------
  #{r, EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
  rates=2
@@ -2823,17 +2896,17 @@ data_rrbp2 <- data.frame(sdate = rep(sdate, ncol(y_matrix)),
 
 
 # ---------------------------------------
-percentile <-ggplot(metricE, aes(x = sdate)) +
-geom_line(aes(y = normalcy, color = "EFFR", linetype ="solid", linewidth = 1.5, alpha = 1.25) + 
-              #geom_area(aes(ymin = metricE[,4]*100, ymax= metricE[,5]*100)
+percentile <-ggplot(normE, aes(x = sdate)) +
+#geom_line(aes(y = normalcy, color = "EFFR", linetype ="solid", linewidth = 1.5, alpha = 1.25) + 
+              #geom_area(aes(ymin = normE[,4], ymax= normE[,5])
               #          ,fill = "Area between 25th and 75th percentile"), alpha = 0.5) +
-              geom_line(aes(y = metricE[,4]*100, color = "25 pct", linetype = "dashed", linewidth = 1, alpha = 0.8) + 
-                          geom_line(aes(y = metricE[,5]*100, color = "75 pct", linetype ="dashed", linewidth = 1, alpha = 0.8) + 
-                                      #geom_line(aes(y = metricE[,4]*100), color = "green") +
-                                      #geom_line(aes(y = metricE[,5]*100), color = "blue") +
+              geom_line(aes(y = normE[,2]*, color = "25 pct", linetype = "solid", color = "black",linewidth = 1, alpha = 0.8) + 
+                          #geom_line(aes(y = normE[,5]*100, color = "75 pct", linetype ="dashed", linewidth = 1, alpha = 0.8) + 
+                                      geom_line(aes(y = normE[,4]), color = "green") +
+                                      geom_line(aes(y = normE[,5], color = "green") +
                                       geom_ribbon(aes(x = sdate,
-                                                      ymin = metricE[,4]*100,
-                                                      ymax = metricE[,5]*100),
+                                                      ymin = normE[,7],
+                                                      ymax = normE[,8]),
                                                   fill ="grey80")+
                                       labs(x = "Date", y = "basis points (bp)", color = "Lines") + 
                                       #ylim= c(0,450)+
@@ -2841,6 +2914,21 @@ geom_line(aes(y = normalcy, color = "EFFR", linetype ="solid", linewidth = 1.5, 
   #scale_color_manual(values = c("EFFR" = "blue, "25 pct" = "grey", "75 pct" = "grey" )) + 
                                       #scale_color_manual(values = c("EFFR" = "black","Lower target" = "green","Upper target" = "blue", "25 pct" = "grey", "75 pct" = "grey" )) + 
                                       theme_minimal()# 
+                                      
+percentile <-ggplot(normE, aes(x = sdate)) +
+geom_line(aes(y = normE[,2], color = "EFFR", linetype ="solid", color = "black",linewidth = 1.5, alpha = 1.25) + 
+geom_line(aes(y = normE[,4], color = "green",linetype ="solid",linewidth = 1) +
+geom_line(aes(y = normE[,5], color = "green",linetype ="solid",linewidth = 1) +
+geom_line(aes(y = normE[,7], color = "25 pct", linetype = "solid", color = "magenta",linewidth = 1, alpha = 0.8) + 
+geom_line(aes(y = normE[,8], color = "75 pct", linetype = "solid", color = "magenta",linewidth = 1, alpha = 0.8) +
+geom_ribbon(aes(x = sdate, ymin = normE[,7], ymax = normE[,8]), fill ="grey80")+
+labs(x = "Date", y = "basis points (bp)", color = "Lines") + 
+#ylim= c(0,450)+
+#scale_color_manual(values = c("EFFR" = "blue))
+#scale_color_manual(values = c("EFFR" = "blue, "25 pct" = "grey", "75 pct" = "grey" )) + 
+#scale_color_manual(values = c("EFFR" = "black","Lower target" = "green","Upper target" = "blue", "25 pct" = "grey", "75 pct" = "grey" )) + 
+theme_minimal()
+print(percentile)
 
 # -------------------------------------- DELETE OLS GMM -----------------------------------------
 
