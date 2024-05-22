@@ -1164,10 +1164,62 @@ ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=
 #print(ratests_norm)
 ```
 
-<!--
-Forgot
-see \@ref(tab:Rate characteristics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
--->
+
+```{r, tab.caption="Rate characteristics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE}
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+library(xtable)
+#1. normalcy   3/4/2016		7/31/2019      4  859
+k=1 # normalcy period
+bgn<-begn[k]
+edn<-endn[k]
+print(bgn)
+print(edn)
+norm<-rrbp[bgn:edn,]  # All
+sdatenorm<-sdate[bgn:edn]
+
+qnormE=quantilesE[bgn:edn,] # rate specific metrics 
+qnormT=quantilesT[bgn:edn,]
+qnormB=quantilesB[bgn:edn,]
+qnormS=quantilesS[bgn:edn,]
+str(norm)
+
+# Store your data frame in the environment
+my_envepisodes$sdatenorm <-sdatenorm
+my_envepisodes$normE <-qnormE
+my_envepisodes$normT <-qnormT
+my_envepisodes$normB <-qnormB
+my_envepisodes$normS <-qnormS
+
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+#Ostatsnorm <- colMeans(qnormO[,2:ncol(qnormO)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+# Add NA for targets 
+Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
+Bstatsnorm2<-c(Bstatsnorm[1],Bstatsnorm[2], TargetUe=NA, TargetDe=NA,Bstatsnorm[3],Bstatsnorm[4],Bstatsnorm[5],Bstatsnorm[6])
+Sstatsnorm2<-c(Sstatsnorm[1],Sstatsnorm[2], TargetUe=NA, TargetDe=NA,Sstatsnorm[3],Sstatsnorm[4],Sstatsnorm[5],Sstatsnorm[6])
+
+# episode characteristics NEW---------------------------------
+Estatsnorm_mat <- matrix(Estatsnorm, nrow = 8, ncol = 1)
+Tstatsnorm_mat <- matrix(Tstatsnorm2, nrow = 8, ncol = 1)
+Bstatsnorm_mat <- matrix(Bstatsnorm2, nrow = 8, ncol = 1)
+Sstatsnorm_mat <- matrix(Sstatsnorm2, nrow = 8, ncol = 1)
+
+# Combine the matrices into one matrix
+charnorm <- cbind(Estatsnorm_mat, Tstatsnorm_mat, Bstatsnorm_mat, Sstatsnorm_mat)
+print(charnorm)
+# Set row names
+rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+print(charnorm)
+print(xtable(charnorm),include.rownames = FALSE)
+my_envepisodes$charnorm <-charnorm
+```
 
 Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
 
@@ -2001,29 +2053,47 @@ print(stacked_table)
 
 
 
-## Episodes that suggest different policy regimes
+
+# Characteristics of overnight rates during different policy episodes
+Times series of rates during different policy episodes portray how the distribution of rates changes with monetary policy (Figure \@ref(fig:Time series of rates by policy regime)).  The median rates illustrate  how the central tendency changes with policy regime (Table). 
+
+See (\@ref(fig:Time series of rates by policy regime) provides a summary of the data
 The vertical shifts in rates throughout  from 2016 to 2023 suggest or illustrate the change in distribution of rates during difference policy episodes (\@ref(tab:Rate characteristics 2016-2023). 
 
-The following policy episodes were discussed in a Forbes article. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024)
+The following policy episodes were discussed in a Forbes article. I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024)
 
-
-1. Normalcy   3/4/2016 to 7/31/2019     
-2. Mid cycle adjustment 8/1/2019 to 10/31/2019 
-3. Covid 11/1/2019 to 3/16/2020   
-4. Zero lower bound 3/17/2020 to 3/16/2022    
-5. Taming inflation 03/17/2022 - 12/14/2023 
-
-* normalcy   3/4/2016		7/31/2019      
-* mid cycle adjustment 8/1/2019 - 10/31/2019 737660 
-* covid 11/1/2019	    3/16/2020   
-* zlb         3/17/2020- 3/16/2022     
+* Normalcy   3/4/2016 to 7/31/2019     
+* Mid cycle adjustment 8/1/2019 to 10/31/2019 
+* Covid 11/1/2019 to 3/16/2020   
+* Zero lower bound 3/17/2020 to 3/16/2022    
 * Taming inflation 03/17/2022 - 12/14/2023 
 
+Average median rates for the sample are 157 bp for the EFFR, and some 133-134 bp for the money market rates and SOFR.
 
-I have added the period of the zero lower bound.
+During the  during normalcy period the average median EFFR of 157 basis points (bp) increases steadily  from 36 basis points March 2016 to 214 bp July 2019 (\@ref(fig:Sample rates 3/4/2016-12/14/2023)).In 2019 rates during the adjustment period began a three month decline from August to October 2019.  Median EFFR is 184 bp during covid, rates plunge from 157 basis points in November 2019 to 15 bp in March 2020. Rates then hover near zero from March 2020 to March 2022 during the zero lower bound. Median rates during the inflation episode increased 233 percent of the the sample average as the Fed raised the FFR  in 25 or 50 basis point to tame inflation. Rtes rose steadily from March 2022 to 533 bp in December 2023.   Policy inertia,  Fed sequentially changes in rates is evident in all periods but most clearly as  the Fed fights inflation. The change median rates TGCR. BGCR, and SOFR is similar to the change in the median EFFR
 
-During the  during normalcy period the average median EFFR of 157 basis points (bp) increases steadily  from 36 basis points March 2016 to 214 bp July 2019 (\@ref(fig:Sample rates 3/4/2016-12/14/2023)).In 2019 rates during the adjustment period began a three month decline from August to October 2019.  With the onset of covid, rates plunge from 157 basis points in November 2019 to 15 bp in March 2020. Rates then hover near zero from March 2020 to March 2022 during the zero lower bound. Then, as the Fed attempted to tame inflation, rates rose in steadily in 25 or 50 basis point increments from March 2022 to 533 bp in December 2023.   Policy inertia,  Fed sequentially changes in rates is evident in all periods,in all periods but most clearly as  the Fed fights inflation.
 
+EFFR 156.97 133.79 183.59 150.46 8.09 368.60
+TGCR 132.83 83.83 248.51 148.64 4.59 362.14
+BGCR 132.85 83.84 254.84 148.64 4.59 362.20
+SOFR 134.08 84.78 369.33 151.19 5.41 364.07
+
+
+for the sample, with the exception of SOFR are tightly clustered about their median values                            , 1.5 bp for the EFFR, and under one bpfor the money market rates .
+ThE IQR shows all rates across policy episodes except SOFR, are tightly clustered around their median, under 2.35 bp, except during the adjustment, The money market rates are the most tightly clustered under 1 bp, hitting lows of 0.12 to 0,42. SOFR, the exception shows greater variability, both in the sample and in all episodes, reaching 27 bp during the adjustment period. 
+
+EFFR1 1.56 1.22 12.84 2.35 1.54 1.62
+TGCR1 0.92 0.22  6.71 0.31 0.12 3.26
+BGCR1 0.96 0.23 15.29 0.42 0.15 3.36
+SOFR1 4.20 3.30 25.88 7.37 3.05 5.68
+
+for the sample, outliers range from 14 to 16 bp for all rates. Outliers soar during the period of adjustment, the EFFR 146 bp, the money market rates 275-300 bop, SOFR a whopping 954 bp. Outliers  during covid and the zero lower bound are lower than the sample range. OUtliers are larger than the sample during the taming of inflation 21 to 33 bp. But again SOFR shows the most variability in all episodes
+
+
+EFFR2 15.99 17.65 146.05 11.71  7.33 23.36
+TGCR2 13.86  5.62 274.56 11.21 11.21 32.27
+BGCR2 16.11  8.48 300.67 16.02 11.86 33.34
+SOFR2 14.51  8.53 954.53 19.46 14.44 21.35
 
 
 ```{r, episode parameters, echo=FALSE,results="asis"}
