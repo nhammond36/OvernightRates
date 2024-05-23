@@ -1139,88 +1139,7 @@ rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target",
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
 print(charnorm, include.rownames = FALSE, caption.placement = "top")
-
 ```
-
- (see Figure \@ref(fig:Rates during normalcy 3/04/2016-7/31/2019)
- 
-```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,results='asis'}
-library(ggplot2)
-library(reshape2)
-k=1
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn<-begn[k]
-edn<-endn[k]
-norm<-rrbp[bgn:edn,]
-maxr<-max(norm[,2:ncol(norm)]) 
-minr<-min(norm[,2:ncol(norm)])
-meltrates_norm <- melt(norm,id="sdate")
-ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
-  geom_point(shape=16,size=1) +
-  labs(caption = "Normalcy 3/04/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
-  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
-  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-#print(ratests_norm)
-```
-
-
-```{r, tab.caption="Rate characteristics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE}
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-library(xtable)
-#1. normalcy   3/4/2016		7/31/2019      4  859
-k=1 # normalcy period
-bgn<-begn[k]
-edn<-endn[k]
-print(bgn)
-print(edn)
-norm<-rrbp[bgn:edn,]  # All
-sdatenorm<-sdate[bgn:edn]
-
-qnormE=quantilesE[bgn:edn,] # rate specific metrics 
-qnormT=quantilesT[bgn:edn,]
-qnormB=quantilesB[bgn:edn,]
-qnormS=quantilesS[bgn:edn,]
-str(norm)
-
-# Store your data frame in the environment
-my_envepisodes$sdatenorm <-sdatenorm
-my_envepisodes$normE <-qnormE
-my_envepisodes$normT <-qnormT
-my_envepisodes$normB <-qnormB
-my_envepisodes$normS <-qnormS
-
-Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
-#Ostatsnorm <- colMeans(qnormO[,2:ncol(qnormO)], na.rm = TRUE)
-Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
-
-# Add NA for targets 
-Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
-Bstatsnorm2<-c(Bstatsnorm[1],Bstatsnorm[2], TargetUe=NA, TargetDe=NA,Bstatsnorm[3],Bstatsnorm[4],Bstatsnorm[5],Bstatsnorm[6])
-Sstatsnorm2<-c(Sstatsnorm[1],Sstatsnorm[2], TargetUe=NA, TargetDe=NA,Sstatsnorm[3],Sstatsnorm[4],Sstatsnorm[5],Sstatsnorm[6])
-
-# episode characteristics NEW---------------------------------
-Estatsnorm_mat <- matrix(Estatsnorm, nrow = 8, ncol = 1)
-Tstatsnorm_mat <- matrix(Tstatsnorm2, nrow = 8, ncol = 1)
-Bstatsnorm_mat <- matrix(Bstatsnorm2, nrow = 8, ncol = 1)
-Sstatsnorm_mat <- matrix(Sstatsnorm2, nrow = 8, ncol = 1)
-
-# Combine the matrices into one matrix
-charnorm <- cbind(Estatsnorm_mat, Tstatsnorm_mat, Bstatsnorm_mat, Sstatsnorm_mat)
-print(charnorm)
-# Set row names
-rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target", 
-                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
-
-colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-print(charnorm)
-print(xtable(charnorm),include.rownames = FALSE)
-my_envepisodes$charnorm <-charnorm
-```
-
 Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
 
 ```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE}
@@ -1259,6 +1178,28 @@ normstats <<- data.frame(Category = categories, Median = median_values, IQR = iq
 xtable(normstats[, -1], caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
 print(normstats[, -1], include.rownames = FALSE, caption.placement = "top")
 ```
+ (see Figure \@ref(fig:Rates during normalcy 3/04/2016-7/31/2019)
+ 
+```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,results='asis'}
+library(ggplot2)
+library(reshape2)
+k=1
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+norm<-rrbp[bgn:edn,]
+maxr<-max(norm[,2:ncol(norm)]) 
+minr<-min(norm[,2:ncol(norm)])
+meltrates_norm <- melt(norm,id="sdate")
+ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+  geom_point(shape=16,size=1) +
+  labs(caption = "Normalcy 3/04/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
+  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
+  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+#print(ratests_norm)
+```
+
 
 ```{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
 ratecol=2
