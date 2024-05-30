@@ -369,6 +369,9 @@ affect rate volatility. How that volatility may very under different monetary po
 
 
 # Monetary policy during the sample period 2016-2023
+Before the financial crisis of 2008, policy was typically based on adjusting the scarcity value of a limited supply of central bank deposits (reserves). After the Great Financial Crisis (GFC), asset purchases under QE,QE1, QE2, and QE3, left the bank the looking for ways to manage the FFR after this major increase in liquidity.This challenge to the bank’s ability to control short-term interest rates led
+subsequent experiments with different policy regimes occurred during the six year period of our sample 2016-2023.[THESE ARE They are relate to episodes] 
+
 Before the financial crisis of 2008, policy was implemented through changing reserves through open market operations where the Federal Reserve traded reserves and securities in the interbank federal funds market. Then came the Great Finance Crisis (GFC) where the Fed addressed the financial instablity and shocks to the economy with a flood  of asset purchases, quantitative easing, funded by US Treasury sail of Treasury bills.  Sated with this major increase in liquidity, the Fed tried different policy experiments to regain control over its policy rate, the Federal Funds rate (FFR). These experiments overlapped with the period of this study the FFR and money market rates from 2016 through 2023.
 
 From 2010 to late 2019, reserves went through a full expansion-contraction cycle  and expanded 
@@ -381,18 +384,29 @@ the 2008 and 2020 crises, as well as the interim normalization period from 2015 
 the U.S, central bank’s QE (quantitative easing) replaced a large chunk of the bank’s Treasury holdings with reserve balances. A paradigm shift had unfolded. Since the megabanks, though primarily JPMorgan, had absorbed most of the Fed’s QE purchases, they had become swamped in reserves, never needing to borrow in the Fed Funds market
 ----
 
-<!--
-was typically based on adjusting the scarcity value of a limited supply of central bank reserves. After the Great Financial Crisis (GFC), asset purchases under QE,QE1, QE2, and QE3, left the bank the looking for ways to manage the FFR after this major increase in liquidity.This challenge to the bank’s ability to control short-term interest rates led
-subsequent experiments with different policy regimes occurred during the six year period of our sample 2016-2023.[THESE ARE They are relate to episodes] 
-To manage the build up in liquidity in reserves after the Great financial Crisis (GFC), 
--->
+ Reserves went through a full expansion-contraction cycle from 2010 to late 2019 and expanded 
+again in early 2020, ranging from $\$$8 trillion  (2010 and 2019) to $\$$19 trillion (2014 and 2021) of banks’ assets. These movements reflect the Federal Reserve balance-sheet expansions in response to 
+the 2008 and 2020 crises, as well as the interim normalization period (2015-2019). 
 
-in 2019, the FOMC abandoned active management of scarce reserves and other short term interest rates and adopted a policy of ample reserve to  manage the Fed Funds rate within its target range adopted by the FOMC in 2018.Interest on reserves (IORB) mandated by Congress in 2018 paid on bank reserves  and a repurchase facility. In 2013, the Federal Reserve introduced the O/N RRP facility providing the Fed’s supplementary tool for interest rate control.  October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate is the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts.The IORB is the Fed’s principal tool for interest rate control.  
+--- Concoda
+the U.S, central bank’s QE (quantitative easing) replaced a large amount of the bank’s Treasury holdings in its System Open Market Account (SOMA)  with reserve balances.  The megabanks, primarily JPMorgan, become swamped in reserves absorbing most of the Fed’s QE purchases. There was no need to borrow in the Fed Funds market
+----
+in 2019, the FOMC abandoned active management of scarce reserves and other short term interest rates and adopted a policy of ample reserves to  manage the Fed Funds rate within its target range 
+To manage the build up in liquidity in reserves after the Great financial Crisis (GFC), the Fed 
+initiated the policy regime of ample reserves to  maintain/manage the Fed Funds rate within its 
+target range adopted by the FOMC in 2018.  October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts gave banks an incentive for a short term investment..The IORB is the Fed’s principal tool for interest rate control.  
+In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the O/N RRP facility providing the Fed’s supplementary tool for interest rate control. 
+
+Its administrative rates comprise a floor system where  interest on reserves (IORB) 
+paid on bank reserves with the Fed are the ceiling and the overnight reverse repurchase rate 
+(O/N RRP rate) is the  floor. The Fed or FOMC also temporarily intervenes in repurchase (repo) and 
+reverse repo to offset high frequency liquidity shocks to keep federal funds rate close to target.
 
 The creation of administrative rates, interest on reserves (IORB) and O/N RRP are a change that led the Fed to manage the FFR within a corridor system defined by FOMC target rates.Together these administrative rates created  a floor system for managing the FFR where the IORB is the ceiling and the overnight reverse repurchase rate (O/N RRP rate) the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate. In this environment, market rates trade below the IORB rate because nonbank lenders are willing to lend at such rates. For example, the Federal Home Loan Banks (FHLBs), which are important lenders in the fed funds market and not eligible to earn IORB, are willing to lend at rates below the IORB rate rather than leave funds unremunerated in their accounts at the Fed. To provide a floor under the fed funds rate, the FOMC introduced the ON RRP facility.Fed pays the cash lender an overnight interest rate,  O/N RRP reward rate. Considered the risk-free repo rate, nobody is willing to lend below it. O/N RRP therefore keeps rates within the Fed’s policy target range while creating a floor,  Rates can still drop below what the Fed pays via its O/N RRP facility as not all entities have access to the Fed’s facility.
 
 Similarly, no bank should be borrow at a higher rate than the O/N RRP. No bank should lend at a lower rate than the ONRPP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the O/N RRP. Competition among borrowers should drive rates to the discount window (DW) rate. 
 
+But changes in these administered rates also change spreads change trading patterns in these funding markets. When SOFR  the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat. When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades.
 <!--
 ALTERNATIVE TEXT
 In the ample reserves regime introduced in 2019, the Fed adjusts administrative rates, the IORB and the O/ N RPP, to manage the FFR between the upper and lower target rates set by the Federal Open Market Committee (FOMC).Under the Ample Reserves policy, the Federal Reserve manages the FFR within its desired range in a “floor” system through Temporary open market operations (TOMO), short-term repurchase and reverse repurchase agreements. These short-term repurchase and reverse repurchase agreements are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the Federal Funds market. Under this ample reserves regime The Federal Reserve manages the the policy rate, the Federal Funds rate (FFR) within its target range. The Fed sets the interest on reserve balances (IORB) paid on deposits held at the bank, and the overnight reverse repurchase facility (ON RRP).  The ability to set the IORB and the O/N RRP are key for the Fed’s implementation of monetary policy. 
@@ -401,39 +415,61 @@ The administered rates, the IORB and the O/N RPP,  along with an ample supply of
 In this  corridor system, the interest on reserves (IORB) is the ceiling, the overnight reverse repo purchase rare (O/N RRP) the floor.The ability to set the IORB and the O/N RRP are key for the Fed’s implementation of monetary policy.In the ample reserves regime. the administered rates constitute a “floor” system to manages the FFR within its target range, the upper and lower targets set by the Federal Open Market Committee (FOMC). The interest on reserves rate (IORB or IORB) is the Fed’s principal tool for interest rate control.the Fed adjusts administrative rates to manages the FFR between the FOMC target upper and lower bounds.The IORB.  Banks have little or no incentive to lend their reserves to other banks at rates lower than the IORB rate they can receive from the Fed. The IORB is, in effect, a reservation rate for banks’ intermediation activities.The IORB rate serves as a reservation rate for banks’ intermediation activities,
 -->
 
+
+\emph(The Fed's involvement in repurchase market)
+Concurrently, Sinc {DATES} there has been a dramatic increase in funding primary dealers and other financial participants through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. [DATES]
+
+
+\url{https://www.richmondfed.org/publications/research/economic_brief/2021/eb_21-31#:~:text=The%20Fed's%20Involvement%20in%20the%20Repo%20Market&text=The%20Fed%20supplied%20reserves%20by,temporary%20holdings%20of%20Treasury%20securities}
+\url{https://www.sifma.org/resources/research/us-repo-statistics/}
+\url{https://www.newyorkfed.org/markets/domestic-market-operations/monetary-policy-implementation/repo-reverse-repo-agreements}
+
+since the 1920s, The Fed has used repo transactions to manage the reserves held by commercial banks with the Fed. over time, repo operationS  became the Fed's primary means of adjusting bank reserves in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
+
+The changes that resulted from the financial crisis removed the need for the Fed to engage in daily reserve management and, by extension, the need for the Fed to actively participate in the repo market for that purpose.
+
+The Fed's large scale asset purchases (LSAP), the response to the financial crisis of 2008,increased the supply of reserves through outright purchases of securities rather than repo transactions, making reserve requirements unnecessary:
+- LSAP, funded largely by the issuance of new reserves, created post GFC excess liquidity and abundance of recereces, reducing the Fed's use of repos  altered reserves and the 
+- The Fed's ability to pay interest on reserves (IORB) made reserves an attractive short-term investment.
+
+
+\emph{Repurchase and reverse purchase transactions}
+When the Fed is the counterparty to an exchange of securities for reserves, the Fed loans reserves to the counterparty in exchange for a security as collateral. Reserves decrease as the counterparty's account at the Fed isdebited and the Federal Funds rate increases.  In a reverse repo transaction, the Fed lends securities to a counterparty, increasing reserves by a deposit in their account, and lowering the Federal Funds rates. Through these "reserve injections," the Fed was able to 
+
 To manage the FFR, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions to offset high frequency liquidity shocks to keep federal funds rate within the FOMC target range.
 Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
 
-Concurrently, there has been a dramatic increase in funding primary dealers and other financial participants through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. 
+\emph{the reverse repurchase facility}
+Fed opened its RRP (reverse repo) facility in 2013 to address this excess liquidity. The excess liquidity from reserves  push the fed funds rate below the bottom of the Fed's target range. To reduce the likelihood of below-target rates, the Fed introduced programmatic repo transactions with a wide range of financial firms in 2013. This program — the Overnight Reverse Repo Program (ON RRP) — allows eligible counterparties to lend excess funds to the Fed through repo transactions at a specified rate, ensuring that repo rates (and other short-term money market rates, by extension) remain close to or above the ON RRP rate.
+
+Fed opened its RRP (reverse repo) facility in 2013. The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio.The reverse repo facility is available to a wide range of money market lenders.In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily in? decreases the supply of reserve balances in the banking system and lowers? raises the FFR. The reverse repo facility is important for monetary policy during periods of high reserves when banks’ willingness to take on additional reserves diminishes, and they reduce the rates they pay for deposits and other funding.  
+
+<!-- 
+The ON RRP facility has been effective in helping maintain control of the fed funds rate well within the target policy range. More recently, however, one of the ON RRP's primary uses has been to absorb funds that would otherwise end up as reserves on bank balance sheets, with the Fed effectively becoming the largest borrower in the repo market, as seen in Figure 1.
+
+An important shift linked to the ON RRP is that the Fed now directly interacts with a much broader set of institutions in the repo market. Traditionally, primary dealers were the only admissible counterparties in open market operations. Access to the ON RRP, however, has been extended to banks, GSEs and other qualified financial institutions. Through this expansion, MMFs have become the main repo counterparty.3
+
+While it can be attractive to MMFs, the ON RRP interest rate has been set lower than the IOR that banks earn, making the participation in the program uneconomical for banks. An important consequence of this relative pricing is that the stock of bank reserves is now heavily influenced by flows in and out of MMFs.
+-->
+
+\emph{the Standing Repo Facility (RCF)}
+Significant disruptions occurred during the period as the Fed reduced its balance sheets.
+In 2019, repo, Fed Funds, and FX swap rates spiked during a cash shortage, prompted by scarce bank reserves, constrained dealer balance sheets, and a segmented repo market, surpassing the Fed’s upper rate boundaries. The Fed iniated the Standing Repo Facility (SRF) allowing the U.S. central bank’s primary dealers and other approved counterparties to borrow cash from the Fed, secured against U.S. Treasuries, and then distributed emergency funds to cash borrowers further down the hierarchy.  the Fed transformed the SRF into a permanent facility.
 
 
+\emph{Other changes}
 The central banks continued to change their overall frameworks for controlling short-term interest rates.
 The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
 
-The Fed initiated a Standing Repo Facility (SRF) allowing the U.S. central bank’s primary dealers and other approved counterparties to borrow cash from the Fed, secured against U.S. Treasuries, and then distributed emergency funds to cash borrowers further down the hierarchy.  the Fed transformed the SRF into a permanent facility. The SRF provided dealers with liquidity after the September 2019 spike in repo rates Fed Funds, and FX swap rates during a cash shortage, prompted by scarce bank reserves, that constrained dealer balance sheets, and a segmented repo market, surpassing the Fed’s upper rate boundaries. ??? TheFFR >  IORB.  In the SRF, the Desk purchases securities from a counterparty subject to an agreement to repurchase the securities at a later date,  These purchases temporarily increase the supply of reserve balances in the banking system and lower the FFR.  Each repo transaction is economically similar to a loan collateralized by securities,interest” paid on that loan, is the difference between the original price and the second, higher price. 
-
-
-Fed opened its RRP (reverse repo) facility in 2013. The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio.The reverse repo facility, the O/N RRP ,was established [to, in response to]. It is available to a wide range of money market lenders.In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily in? decreases the supply of reserve balances in the banking system and lowers? raises the FFR. The reverse repo facility is important for monetary policy during periods of high reserves when banks’ willingness to take on additional reserves diminishes, and they reduce the rates they pay for deposits and other funding.  
 
 
 
-[Concoda notes here?]
-The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
-
----------------- relocate
-But changes in these administered rates also change spreads change trading patterns in these funding markets. When SOFR  the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
-When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades.
---------------------------------------------------------
-
-
-
-
-
-Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidit
+Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity
 •	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the O/N RRP.
+
 * QE expansion QE1-4
 •	April 2021 Fed unwound QE by exempting reserves and US Treasuries from the Supplementary Leverage Ratio (SLR). The onset of the Covid-19 pandemic in early 2020 drastically increased uncertainty throughout the economy. This led to turmoil in various financial markets, evidenced by the Dow Jones Industrial Average in March 2020 posting its largest single-day drop since the 2008 global financial crisis. Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets.1 Government agencies took action to stabilize financial markets and the economy.
-On April 1, 2020, as part of efforts to restore stability in markets and economy, the Federal Reserve announced an interim final rule, set to expire on March 31, 2021, that would temporarily exclude U.S. Treasuries and deposits at Federal Reserve Banks from the calculation of the Supplementary Leverage Ratio (SLR). One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses."2 The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. 
+On April 1, 2020, as part of efforts to restore stability in markets and economy, the Federal Reserve announced an interim final rule, set to expire on March 31, 2021, that would temporarily exclude U.S. Treasuries and deposits at Federal Reserve Banks from the calculation of the Supplementary Leverage Ratio (SLR). One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. 
 
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/impact-of-leverage-ratio-relief-announcement-and-expiry-on-bank-stock-prices-20230629.html}
 April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
@@ -444,6 +480,9 @@ April 2021, the Federal Reserve began unwinding measures that enabled its larges
 •	MMFs inflows into O/N RRP continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs
 Between January 2021 and June 2022, money market funds' (MMFs') investments in the Federal Reserve's Overnight Reverse Repurchase (ON RRP) facility rose by $2 trillion, while their private repo lending fell by almost $500 billion. These sizable shifts give us an opportunity to examine how monetary policy implementation and the ON RRP facility interact with the private repo market. 
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
+
+The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+
 
 •	start of 2023, the RRP balance was housing a whopping $2.5 trillion in excess liquidity
 •	June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
