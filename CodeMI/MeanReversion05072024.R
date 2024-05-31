@@ -1051,8 +1051,8 @@ minr<-min(normE[,ncol(normE)]
    scale_fill_manual(values = c("IQR" = "grey")) +
    theme_minimal()
  print(rates_normiqr)
- ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.pdf", prates)
- ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.png", prates)
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.pdf")
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.png")
  
  ##see Figure \@ref(fig:Reference rates during normalcy period 3/4/2016-7/31/2019)
  #```{r,Reference rates during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
@@ -1146,8 +1146,8 @@ minr<-min(normE[,ncol(normE)]
   
   
   print(rates_qadjiqr)
-  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.pdf", prates)
-  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.png", prates)
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.pdf")
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.png")
   
   
   #see Figure \@ref(fig:Reference rates during adjustment period 8/1/2019-10/31/2019)
@@ -1214,8 +1214,8 @@ minr<-min(normE[,ncol(normE)]
      theme_minimal()
    
    print(rates_covidiqr)
-   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.pdf", prates)
-   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.png", prates)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.pdf")
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.png")
    
    
    
@@ -1277,8 +1277,8 @@ minr<-min(normE[,ncol(normE)]
      theme_minimal()
    
    print(rates_qzlbiqr)
-   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.pdf", prates)
-   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.png", prates)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.pdf")
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.png")
    
    
    see Figure \@ref(fig:Reference rates during zero lower bound (zlb) period 3/17/2020-3/16/202)
@@ -1339,8 +1339,8 @@ minr<-min(normE[,ncol(normE)]
       theme_minimal()
     
     print(rates_qinflationiqr)
-    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.pdf", prates)
-    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.png", prates)
+    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.pdf")
+    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.png")
     
     
     #(see Figure \@ref(fig:Reference rates during Taming inflation 03/17/2022-12/14/2023)
