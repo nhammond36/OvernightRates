@@ -1021,6 +1021,39 @@ minr<-min(normE[,ncol(normE)]
  #my_envepisodes$rates_norm<-rates_norm
  print(rates_norm)
  
+ # rates_normiqr
+ iqr_norm<-normE$Percentile75_EFFR-normE$Percentile25_EFFR
+ range_norm<-normE$Percentile99_EFFR-normE$Percentile01_EFFR
+ normE$iqr_norm<-iqr_norm
+ normE$range_norm<-range_norm  
+ 
+ # Load ggplot2 library
+ library(ggplot2)
+ 
+ # Assuming 'normE' is your data frame
+ 
+ # Subset the data frame to include only the variables you want to plot
+ subset_normE <- normE[, c("EFFR", "VolumeEFFR", "TargetUe", "TargetDe", "Percentile75_EFFR", "Percentile25_EFFR")]
+ 
+ # Convert sdate to character to avoid issues with ggplot2
+ subset_normE$sdate <- as.character(normE$sdate)
+ 
+ # Create the plot
+ rates_normiqr <- ggplot(subset_normE, aes(x = sdate)) +
+   geom_line(aes(y = EFFR, color = "EFFR")) +
+   geom_line(aes(y = VolumeEFFR, color = "VolumeEFFR")) +
+   geom_line(aes(y = TargetUe, color = "TargetUe")) +
+   geom_line(aes(y = TargetDe, color = "TargetDe")) +
+   geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+   geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+   labs( caption = "Normalcy 3/4/2016-7/31/2019",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+   scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+   scale_fill_manual(values = c("IQR" = "grey")) +
+   theme_minimal()
+ print(rates_normiqr)
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.pdf", prates)
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqr.png", prates)
+ 
  ##see Figure \@ref(fig:Reference rates during normalcy period 3/4/2016-7/31/2019)
  #```{r,Reference rates during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
  library(gridExtra)
@@ -1029,23 +1062,6 @@ minr<-min(normE[,ncol(normE)]
  grid.text("Normalcy period 3/4/2016-7/31/2019", x = 0.5, y = -0.1, just = "center")
  print(norm_plots)
 
- # IQR as ribbon plot-------------------------------
- 
- 
- rates=2
- vol=3
- targetup = 4
- targetdown = 5
- p1=6
- p25=7
- p75=8
- p99=9
- library(ggplot2)
- normE<-my_envepisodes$norm
- sdate <- normE[, 1]
- data_without_sdate <- normE[, -1]
- maxr<-max(normE[,ncol(normE)]) 
- minr<-min(normE[,ncol(normE)])
  
  meltrates_norm <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
  rates_norm <<- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variable, group = variable)) + 
@@ -1099,6 +1115,41 @@ minr<-min(normE[,ncol(normE)]
   #print(rates_adjust)
   #my_envepisodes$rates_adjust<-rates_adjust
   
+  
+  # Subset the data frame to include only the variables you want to plot
+  subset_qadjE <- qadjE[, c("EFFR", "VolumeEFFR", "Percentile75_EFFR", "Percentile25_EFFR")]
+  
+  # Convert sdate to character to avoid issues with ggplot2
+  subset_qadjE$sdate <- as.character(qadjE$sdate)
+  
+  rates_qadjiqr <- ggplot(subset_qadjE, aes(x = sdate)) +
+    geom_line(aes(y =  subset_qadjE$EFFR, color = "EFFR")) +
+    geom_line(aes(y =  subset_qadjE$VolumeEFFR, color = "VolumeEFFR")) +
+    geom_ribbon(aes(ymin = subset_qadjE$Percentile25_EFFR, ymax =  subset_qadjE$Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+    geom_line(aes(y =  subset_qadjE$Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+    labs( caption = "Adjust 8/1/2019-10/31/2019",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+    scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+    scale_fill_manual(values = c("IQR" = "grey")) +
+    theme_minimal()
+  #-------------
+  rates_adjiqr <- ggplot(subset_qadjE, aes(x = sdate)) +
+    geom_line(aes(y = EFFR, color = "EFFR")) +
+    geom_line(aes(y = VolumeEFFR, color = "VolumeEFFR")) +
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+    geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+    labs(caption = "Adjust 8/1/2019-10/31/2019",x = "", y = "basis points (bp) volume (billion dollars)", color = "rates" , fill = "Ribbon") +
+    scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+    scale_fill_manual(values = c("IQR" = "grey")) +
+    theme_minimal()
+  
+  print(rates_adjiqr)
+  
+  
+  print(rates_qadjiqr)
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.pdf", prates)
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qadjiqr.png", prates)
+  
+  
   #see Figure \@ref(fig:Reference rates during adjustment period 8/1/2019-10/31/2019)
   #```{r,Reference rates during adjustment period 8/1/2019-10/31/2019, echo=FALSE}
   library(gridExtra)
@@ -1144,6 +1195,30 @@ minr<-min(normE[,ncol(normE)]
    #print(rates_covid)
    #my_envepisodes$rates_covid<-rates_covid
    
+   library(ggplot2)
+   subset_covidE <- qcovidE[, c("EFFR", "VolumeEFFR", "TargetUe", "TargetDe", "Percentile75_EFFR", "Percentile25_EFFR")]
+   
+   # Ensure sdate is in Date format
+   subset_covidE$sdate <- as.Date(qcovidE$sdate)
+   # Create the plot
+   rates_covidiqr <- ggplot(subset_covidE, aes(x = sdate)) +
+     geom_line(aes(y = EFFR, color = "EFFR")) +
+     geom_line(aes(y = VolumeEFFR, color = "VolumeEFFR")) +
+     geom_line(aes(y = TargetUe, color = "TargetUe")) +
+     geom_line(aes(y = TargetDe, color = "TargetDe")) +
+     geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+     geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+     labs(caption="Covid 11/1/2019-3/16/2020",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+     scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+     scale_fill_manual(values = c("IQR" = "grey")) +
+     theme_minimal()
+   
+   print(rates_covidiqr)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.pdf", prates)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_covidiqr.png", prates)
+   
+   
+   
    #see Figure \@ref(fig:Reference rates during covid period 11/1/2019-3/16/2020)
    #{r,Reference rates during Covid period 11/1/2019-3/16/2020, echo=FALSE}
    library(gridExtra)
@@ -1187,6 +1262,25 @@ minr<-min(normE[,ncol(normE)]
    #print(rates_zlb)
    #my_envepisodes$rates_zlb<-rates_zlb
    
+   subset_qzlbE <- qzlbE[, c("EFFR", "VolumeEFFR", "Percentile75_EFFR", "Percentile25_EFFR")]
+   # Ensure sdate is in Date format
+   subset_qzlbE$sdate <- as.Date(qzlbE$sdate)
+   # Create the plot
+   rates_qzlbiqr <- ggplot(subset_qzlbE, aes(x = sdate)) +
+     geom_line(aes(y = EFFR, color = "EFFR")) +
+     geom_line(aes(y = VolumeEFFR, color = "VolumeEFFR")) +
+     geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+     geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+     labs(caption="Zero lower bound 3/17/2020-3/16/2022",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+     scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+     scale_fill_manual(values = c("IQR" = "grey")) +
+     theme_minimal()
+   
+   print(rates_qzlbiqr)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.pdf", prates)
+   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qzlbiqr.png", prates)
+   
+   
    see Figure \@ref(fig:Reference rates during zero lower bound (zlb) period 3/17/2020-3/16/202)
    #{r,Reference rates during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
    library(gridExtra)
@@ -1229,6 +1323,25 @@ minr<-min(normE[,ncol(normE)]
       theme_minimal()
     #print(rates_inflation)
     #my_envepisodes$rates_inflation<-rates_inflation
+    
+    subset_qinflationE <- qinflationE[, c("EFFR", "VolumeEFFR", "Percentile75_EFFR", "Percentile25_EFFR")]
+    # Ensure sdate is in Date format
+    subset_qinflationE$sdate <- as.Date(qinflationE$sdate)
+    # Create the plot
+    rates_qinflationiqr <- ggplot(subset_qinflationE, aes(x = sdate)) +
+      geom_line(aes(y = EFFR, color = "EFFR")) +
+      geom_line(aes(y = VolumeEFFR, color = "VolumeEFFR")) +
+      geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 1) +
+      geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+      labs(caption="Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+      scale_color_manual(values = c("EFFR" = "red", "VolumeEFFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+      scale_fill_manual(values = c("IQR" = "grey")) +
+      theme_minimal()
+    
+    print(rates_qinflationiqr)
+    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.pdf", prates)
+    ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_qinflationiqr.png", prates)
+    
     
     #(see Figure \@ref(fig:Reference rates during Taming inflation 03/17/2022-12/14/2023)
     #{r,Reference rates during Taming inflation 03/17/2022-12/14/2023, echo=FALSE}
