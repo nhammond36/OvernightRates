@@ -1362,7 +1362,183 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pd
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", prates)
 
 
+# ------------ do SOFR, TGCR, BCGR IQR
+# rates_normiqr
+iqr_normS<-quantilesS$Percentile75_SOFR-normE$Percentile25_SOFR
+range_normS<-quantilesS$Percentile99_SOFR-quantilesS$Percentile01_SOFR
+normS$iqr_norm<-iqr_normS
+normS$range_norm<-range_normS  
 
+# Load ggplot2 library
+library(ggplot2)
+library(dplyr)
+
+# Check the column names in quantilesS to ensure they are correct
+names(quantilesS)
+quantilesS$SOFR[1784]=481
+
+#NORMALCY
+k=1
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+# Create the subset using dplyr::select
+subset_normS <- quantilesS[bgn:edn,] %>%
+  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
+subset_normS$sdate<-quantilesS[bgn:edn,1]
+# Convert sdate to character to avoid issues with ggplot2
+subset_normS$sdate <- as.Date(subset_normS$sdate)
+
+maxr<-max(subset_normS$SOFR)
+# Create the plot
+rates_normiqrS <- ggplot(subset_normS, aes(x = sdate)) +
+  geom_line(aes(y = SOFR, color = "SOFR")) +
+  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
+  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
+  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
+  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+  labs( caption = "SOFR Normalcy 3/4/2016-7/31/2019",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
+  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
+  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+  scale_fill_manual(values = c("IQR" = "grey")) +
+  theme_minimal()
+print(rates_normiqrS)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqrS.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqrS.png")
+
+#ADJUST
+# INFLATION
+k=5
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+# Create the subset using dplyr::select
+subset_inflationS <- quantilesS[bgn:edn,] %>%
+  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
+subset_inflationS$sdate<-quantilesS[bgn:edn,1]
+# Convert sdate to character to avoid issues with ggplot2
+subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
+
+maxr<-max(subset_inflationS$SOFR)
+# Create the plot
+rates_inflationiqrS2 <- ggplot(subset_inflationS, aes(x = sdate)) +
+  geom_line(aes(y = SOFR, color = "SOFR")) +
+  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
+  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
+  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
+  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
+  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
+  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+  scale_fill_manual(values = c("IQR" = "grey")) +
+  theme_minimal()
+print(rates_inflationiqrS2)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS2.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS2.png")
+
+
+#COVID
+# INFLATION
+k=5
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+# Create the subset using dplyr::select
+subset_inflationS <- quantilesS[bgn:edn,] %>%
+  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
+subset_inflationS$sdate<-quantilesS[bgn:edn,1]
+# Convert sdate to character to avoid issues with ggplot2
+subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
+
+maxr<-max(subset_inflationS$SOFR)
+# Create the plot
+rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
+  geom_line(aes(y = SOFR, color = "SOFR")) +
+  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
+  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
+  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
+  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
+  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
+  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+  scale_fill_manual(values = c("IQR" = "grey")) +
+  theme_minimal()
+print(rates_inflationiqrS)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
+
+
+#ZLB
+# INFLATION
+k=5
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+# Create the subset using dplyr::select
+subset_inflationS <- quantilesS[bgn:edn,] %>%
+  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
+subset_inflationS$sdate<-quantilesS[bgn:edn,1]
+# Convert sdate to character to avoid issues with ggplot2
+subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
+
+maxr<-max(subset_inflationS$SOFR)
+# Create the plot
+rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
+  geom_line(aes(y = SOFR, color = "SOFR")) +
+  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
+  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
+  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
+  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
+  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
+  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+  scale_fill_manual(values = c("IQR" = "grey")) +
+  theme_minimal()
+print(rates_inflationiqrS)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
+
+
+# INFLATION
+k=5
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+# Create the subset using dplyr::select
+subset_inflationS <- quantilesS[bgn:edn,] %>%
+  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
+subset_inflationS$sdate<-quantilesS[bgn:edn,1]
+# Convert sdate to character to avoid issues with ggplot2
+subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
+
+maxr<-max(subset_inflationS$SOFR)
+# Create the plot
+rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
+  geom_line(aes(y = SOFR, color = "SOFR")) +
+  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
+  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
+  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
+  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
+  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
+  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
+  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
+  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
+  scale_fill_manual(values = c("IQR" = "grey")) +
+  theme_minimal()
+print(rates_inflationiqrS)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
+
+#---------------------------------------
 # Combine xtable objects
 #combined_xtable <- rbind(x1, x2, x3)
 episodesstats <-rbind(normstats, adjstats,covidstats, zlbstats,inflationstats)
