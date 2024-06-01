@@ -120,6 +120,7 @@ Time series properties of overnight policy, interbank rates, transactions, and r
     volatility
 
 Reference rate behavior during different policy episodes
+Methodology
 
 References
 
@@ -187,48 +188,21 @@ my_envvolatile$norm_measure1 <- subset(my_envvolatile$norm_measure1, select = c(
 
 
 # Introduction
-Repo detail--------------------------------------
-Daily trillions of dollars are transacted in :the market for repurchase agreements.The repo market has grown into a $4 trillion-a-day funding market to provide liquidity to the Fed’s primary dealers, large broker-dealers, and other financial participants GSEs, MMF, Primary dealers play an important function intermediating US Treasury debt through these markets.
+How monetary policy impacts money market rates in the market for repurchase agreements also reveals how the US central bank, the Federal Reserve, manages the policy rate, the Federal Funds rate (FFR). The administered rates for setting policy, interest on reserves (IORB) and the overnight reverse repo rate are also important tools for managing the FFR..
 
-In triparty repo, the “base layer” of repo markets. Here, nearly all players operate solely as cash lenders or borrowers.  The Federal Reserve is also active in triparty repo, as it uses the venue to conduct open market operations. The Fed is the only major participant to engage in both triparty repo borrowing and lending.Other participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in triparty repo, then lend at a spread in other repo markets.
+Events after the Great Financial Crisis (GFC), the excess liquidity created by quantitative easing, the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves (through the tri-party repurchase market) and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
+
+The $4 trillion-a-day funding market through repurchase transactions provide liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. The Fed also manages its policy rate as both a lender and borrower. Identifying the behavior and relation of rates in these markets is important to understanding the monetary system.  the tri-party general collaterial rate (TGCR), is repo’s primary funding market, the more lucrative OTC dealer to customer  broad general collateral rate (BGCR), and the Secured Overnight Financing Rate (SOFR), the Fed’s broadest measure of repo rates. In triparty repo, the “base layer” of repo markets. Here, nearly all players operate solely as cash lenders or borrowers.  The Federal Reserve is also active in triparty repo, as it uses the venue to conduct open market operations. The Fed is the only major participant to engage in both triparty repo borrowing and lending.Other participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in triparty repo, then lend at a spread in other repo markets.
 
 
 1) triparty (yellow)_— the major dealer funding market, 
 2) GCF — the interdealer repo market (green), and 
 3) bilateral BGCR — the dealer-to-customer or “specific collateral” repo market ( blue).
 [See concoda repo part 2]
---------------------------------------
 
-
-This paper explores the impact of monetary policy on money market rates in the market for repurchase agreements, a $4 trillion-a-day funding market providing liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Identifying the behavior and relation of rates in these markets is important to understanding the monetary system.
-
-These overnight reference rates share known qualities  of short rates
-
-- highly skewed, changing volatility or heteroskedasticity and and fat tails due to extreme outliers
-- All rates track and cluster around the Federal Funds rates (FFR) or effective Federal rate (EFFR)
-- Money market rates quickly respond to changes in the FFR
-- The volatility of short rates survives rate the Federal Reserve Bank's (Fed) 
-management of of the Federal Funds rate (Bertolini, Prati)
-- aribtrage opportunities to invest in repo when SOFR exceeds IOR
-
-Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repos used to fund loans, obtain leverage, and many other functions. A repurchase transaction or repo, a loan secured by collateral.The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. Since the 1970s, private parties have created deposit like instruments,  repos and money market funds,intermediating credit outside the traditional banking system. Primary dealers required to finance US Treasury issuance use inventory or borrow from the Fed in repo transactions. The repo market provides liquidity to other financial players. 
-
-The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements.Through repo and reverse repo transactions, the Fed uses the tri party market TGCR for temporary interventions to manage the FFR within its target range by using repos to adding reserves to the system to lower the FFR or reverse repos to drain reserves raise FFR. (David Gibbs, Education Director Chicago Mercantile Exchange (CME). 
-By trading securities with banks and other counterparites, Federal Reserve purchases or sales of 
-assets from banks change the size of the Federal Reserve balance sheet. In a  repo transaction, 
-Federal Reserve purchases securities, adding assets to its balance sheet and issues reserves by 
-crediting the Federal Reserve accounts of the selling banks. Fed is lends reserves in a reverse 
-repo transaction. When the Federal Reserve lends to counter parties  the Fed sale of securities 
-lower aggregate reserves as funds are debited from depositor accounts. Fed lending constitutes 
-a large volume of lending to RRP counterparties MMFs, liquidity.
-
-%[repo increases reserves, lowers FFR  reverse repo reverses reserves and raises FFR] [repo means 
-%dealer deposits (borrowed) reserves collateralized by UST securities?]. 
- 
-The distributions of daily reference rates and billions of dollars in transactions, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \@ref{table_fomc}). Data provided by the NY Federal Reserve download program summarize weighted average median rates and quantiles of these distributions. How do policy changes affect the distributions: medians, clustering IQR, outliers Range, time varying volatility
-
+The policy and money market rates, share known qualities  of short rates
 The Federal Reserve changes its policy rate, the Federal Funds rate and administered rates, 
-The federal funds market rate, the tri-party general collaterial rate (TGCR) repo’s primary funding market, the dealer to customer over the counter broad general collateral rate (BGCR), and the Secured Overnight Financing Rate (SOFR), the Fed’s broadest measure of repo rates, have similar features:
+and money market rates have similar features:
 * Money market rates cluster around the Federal Funds rate (FFR)
 * These rates quickly response to changes in the FFR and administrative rates, interest on reserves (IORB), the overnight reverse repo rate (ON/RRP)
 * Lke the FFR, there is a central tendency to cluster around their median rates
@@ -239,48 +213,38 @@ Main features of the U.S. short-term interest rate
 - fat-tailed innovations (outliers?)
 - pronounced autocorrelation patterns
 
-This paper describes the dynamics of these rates. A proposed model of volatility to follow, will identify the contribution to central bank rate changes and Fed preferences for offsetting volatility in the FFR when managing its policy rate with the FOMC target range.
-Comparing different policy regimes, we hope to elucidate the Fed's preferences for volatility in  managing the FFR within ranges set by the FOMC. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+- All rates track and cluster around the Federal Funds rates (FFR) or effective Federal rate (EFFR)
+- Money market rates quickly respond to changes in the FFR
+- highly skewed, changing volatility or heteroskedasticity and and fat tails due to extreme outliers
+- The volatility of short rates survives  the Federal Reserve Bank's (Fed) 
+management of of the Federal Funds rate (Bertolini, Prati)
+-  Outliers fat tails
+- arbitrage opportunities to invest in repo when SOFR exceeds IOR
 
- 
- 
----------------------------
 The level of reserves in the banking system can change either because
 1) because funds are transferred between reserves and non-reserve accounts at the Federal
 2) changes in the US Treasury account at the Fed
 3) The Federal Reserve responds to volatility in the federal funds market by adjusting the reserve
 supply to keep the federal funds rate within its target range through these repo and reverse repo operations each day
 
------------------------- Concoda notes to integrate:
-the U.S, central bank’s QE (quantitative easing) replaced a large chunk of the bank’s Treasury holdings with reserve balances. A paradigm shift had unfolded. Since the megabanks, though primarily JPMorgan, had absorbed most of the Fed’s QE purchases, they had become swamped in reserves, never needing to borrow in the Fed Funds market
+ 
+Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repos used to fund loans, obtain leverage, and many other functions. A repurchase transaction or repo, a loan secured by collateral.The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. Since the 1970s, private parties have created deposit like instruments,  repos and money market funds,intermediating credit outside the traditional banking system. Primary dealers required to finance US Treasury issuance use inventory or borrow from the Fed in repo transactions. The repo market provides liquidity to other financial players. 
 
-[INSERT Concado ONRPP history]
-April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
-
-•	When the U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations, money market funds (MMFs) turned to the RRP, 
-•	MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
-
-MMFs began to park more investor cash in the U.S. central bank’s facility instead of lending it to private sector entities. At the same time, borrowers were spoilt for choice, with more cash than they could readily absorb. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.
-
-When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
-•	When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades,
-•	repo rates have had to rise above both O/N RRP and IORB for banks to fund repo trades
-
-wrt to banks, As the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. Yet even Wall Street’s presence proved insufficient to create stable repo markets. Another level in the Fed’s repo hierarchy was needed.
+The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements.Through repo and reverse repo transactions in the tri party market (TGCR), the Fed uses the  to adjust reserves and the FFR.  using repos to adding reserves to the system to lower the FFR or reverse repos to drain reserves raise FFR. (David Gibbs, Education Director Chicago Mercantile Exchange (CME). By trading securities with banks and other counterparites, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. In a  repo transaction, 
+Federal Reserve purchases securities, adding assets to its balance sheet and issues reserves by 
+crediting the Federal Reserve accounts of the selling banks. Fed is lends reserves in a reverse 
+repo transaction. When the Federal Reserve lends to counter parties  the Fed sale of securities 
+lower aggregate reserves as funds are debited from depositor accounts. Fed lending constitutes 
+a large volume of lending to RRP counterparties MMFs, liquidity.
 
 
-• Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity
-•	However, large U.S. Treasury issuance in June 2023, however market, provided returns greater the O/NRPP, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain, the primary RRP drainers, MMFs, bought Treasuries. 
-•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+The distributions of daily reference rates and billions of dollars in transactions, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \@ref{table_fomc}). Data provided by the NY Federal Reserve download program summarize weighted average median rates and quantiles of these distributions. How do policy changes affect the distributions: medians, clustering IQR, outliers Range, time varying volatility
 
-
-Once the surplus of cash in the Fed’s RRP facility dries up, the stability of the triparty repo market will once again be tested. The Fed’s QT (quantitative tightening) and the U.S. Treasury’s giant debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 “repocalypse”. Sensing a recurrence, a large number of banks have begun signing up to the Fed’s standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.
-
-Fed Repo facility
---------------------------------------
-
-
-
+This paper describes the dynamics of these rates and proposes model of volatility joint with monetary policy. Comparing different policy regimes, we hope to elucidate the Fed's preferences for volatility in  managing the FFR within ranges set by the FOMC. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+ 
+Section  1 reviews monetary policy over the seven year period, 2016-2023 , narrates FOMC rate changes, monetary regimes, and events. defines monetary shocks.
+Section 2 reviews the time series properties of daily policy and money market rates, and transactions and reserves held at the Federal Reserve from 3/4/2016-12/14/2023 and during different policy episodes
+Methodology. Section 3 discusses methodology.
 
 
 <!--
@@ -462,7 +426,36 @@ The central banks continued to change their overall frameworks for controlling s
 The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
 
 
+<!-
+------------------------ Concoda notes to integrate:
+Daily trillions of dollars are transacted in :the market for repurchase agreements.The repo market has grown into a $4 trillion-a-day funding market to provide liquidity to the Fed’s primary dealers, large broker-dealers, and other financial participants GSEs, MMF, Primary dealers play an important function intermediating US Treasury debt through these markets.
 
+
+the U.S, central bank’s QE (quantitative easing) replaced a large chunk of the bank’s Treasury holdings with reserve balances. A paradigm shift had unfolded. Since the megabanks, though primarily JPMorgan, had absorbed most of the Fed’s QE purchases, they had become swamped in reserves, never needing to borrow in the Fed Funds market
+
+[INSERT Concado ONRPP history]
+April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
+
+•	When the U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations, money market funds (MMFs) turned to the RRP, 
+•	MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
+
+MMFs began to park more investor cash in the U.S. central bank’s facility instead of lending it to private sector entities. At the same time, borrowers were spoilt for choice, with more cash than they could readily absorb. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.
+
+When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
+•	When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades,
+•	repo rates have had to rise above both O/N RRP and IORB for banks to fund repo trades
+
+wrt to banks, As the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. Yet even Wall Street’s presence proved insufficient to create stable repo markets. Another level in the Fed’s repo hierarchy was needed.
+
+
+• Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity
+•	However, large U.S. Treasury issuance in June 2023, however market, provided returns greater the O/NRPP, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain, the primary RRP drainers, MMFs, bought Treasuries. 
+•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+
+
+Once the surplus of cash in the Fed’s RRP facility dries up, the stability of the triparty repo market will once again be tested. The Fed’s QT (quantitative tightening) and the U.S. Treasury’s giant debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 “repocalypse”. Sensing a recurrence, a large number of banks have begun signing up to the Fed’s standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.
+
+Fed Repo facility
 
 Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity
 •	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the O/N RRP.
@@ -498,9 +491,10 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 
 •	the RRP drain had entered beast mode.
 •	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+-->
 
 # FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
-Candidate shocks occurred during the seven year period of our sample 2016-2022 (Table \@ref{table_fomc}), include monetary FOMC rate change regimes, events such as the March 2020 dash for cash, and macroeconomic announcements during the seven year period of our sample 2016-2023
+Candidate shocks occurred during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}), include monetary FOMC rate changes, policy regimes, events such as the March 2020 dash for cash, and macroeconomic announcements. 
 
 The shocks in Table encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
 
