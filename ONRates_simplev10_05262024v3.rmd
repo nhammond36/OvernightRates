@@ -2524,12 +2524,31 @@ The IQR and range provide more information about the series, clustering and extr
 
 
 \emph{Variability: clustering of funding rates  around their median (IQR)}
-The interquartile range (IQR), a measure of variability of how tigthly the 50 percent of data between the 75th and 25 percentiles, cluster around their medians. Small IQR values  of EFFR and the money market rates cluster more tightly around their median values, 1.54 bp for the EFFR, and under one bp for the money market rates (middle panel Table). SOFR exhibits the greater variability; for the sample as a whole a high 4 bp and in all episodes, reaching 10 bp during the adjustment period.
+Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values (Table \@ref(tab: IQR of rates during policy regimes). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates (middle panel Table). 
+
+Fifty percent of EFFR rates range from 1.22 during normalcy to 4.66 bp during the adjustment periods.
+EFFR  1.56     1.22    4.66   2.35  1.54  1.62
+
+The money market rates TDCR and BGCR are more densely culstered around their median values, under 1 bp in the same, under 0.12 to 0.23 in normalcy and zero lower bound, more disperse, over 1 bp during the adjustment and over 3bp during the inflation episode.
+TGcr  0.92     0.22    1.3    0.31  0.12  3.26
+BGCR  0.96     0.23    1.36   0.42  0.15  3.36
+
+SOFR exhibits the greater variability; for the sample as a whole a high 4 bp and in all episodes. The dispersion of SOFR is even more diverse among policy regimes. SoFR rates have the largest spread around the median rate, reaching over 10 bp during the adjustment period. SOFR is more tightly clustered around its median during normaly, 3.30 bp and the zero lower bound  3.05 bp, but 7.37 bp during covid and 5.68 bp during inflation
+
+<!--
+REVIEW AND DELETE
+much lower during during covid,  between 1.3-1.4 bp and the zero lower bound. 0.12 and 0.15 bp. during the the zero lower bound 0.22 bp during normalcy;  (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. 
+
+INFLATION The interquartile range for the money market rates TGCR and BGCR are 3.26-3.46 bp, smaller than the 1.62 bp of the policy rate, EFFR. 
+
+COVID OR ZLB?
+Table \@ref(tab:Rate characteristics zero lower bound 3/17/2020-3/16/2022) provides a summary of the data.
+The interquartile range for the money market rates TGCR and BGCR are 0.22-0,23 bp, smaller than the 1.22 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 3.3 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
+-->
+
 [ADD BOXPLOTS] (\@ref(tab:boxplots of rates during policy regimes).
 
-
-The wholesale rates TGCR and BGCR rates cluster more tightly than the EFFR or SOFR. 1 bp in the sample, much lower during during covid,  between 1.3-1.4 bp and the zero lower bound. 0.12 and 0.15 bp. during the the zero lower bound 0.22 bp during normalcy;  (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. Fifty percent of EFFR rates are within EFFR 1.56 bp in the sample, and ranges from 1.22 during normalcy to 4.66 bp during the adjustment periods. SoFR rates have the largest spread around the median rate, reaching 10 bp during the adjustment period. The dispersion of SOFR is even more diverse among policy regimes. 
-
+ 
 <!--
 IQR   Sample   Normalcy Adjust Covid Zlb  Inflation
 EFFR  1.56     1.22    4.66   2.35  1.54  1.62
@@ -2538,17 +2557,12 @@ BGCR  0.96     0.23    1.36   0.42  0.15  3.36
 SOFR  4.02     3.30   10.53   7.37  3.05  5.68
 -->
 
+<!--
+Compare with sample discription, then delete
 \emph{Variability: clustering of funding rates  around their median (IQR)}
 The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
 The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
-
-
-INFLATION The interquartile range for the money market rates TGCR and BGCR are 3.26-3.46 bp, smaller than the 1.62 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 5.68 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
-
-COVID OR ZLB?
-Table \@ref(tab:Rate characteristics zero lower bound 3/17/2020-3/16/2022) provides a summary of the data.
-The interquartile range for the money market rates TGCR and BGCR are 0.22-0,23 bp, smaller than the 1.22 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 3.3 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
-
+-->
 
 
 \emph{Outliers}
