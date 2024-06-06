@@ -188,9 +188,12 @@ my_envvolatile$norm_measure1 <- subset(my_envvolatile$norm_measure1, select = c(
 
 
 # Introduction
-  How monetary policy impacts volatility of rates in the market for repurchase agreements also reveals how the Federal Reserve preference for volatility as it manages the policy rate, the Federal Funds rate (FFR). The Fed's  open market operations through repurchase transactions. maintain the federal funds (fed funds) rate within the FOMC’s target range. One puzzle the the survival of the Federal Reserve Bank's (Fed) FFR management of of the Federal Funds rate survives the volatility of short rates. 
-  
-  
+  How monetary policy impacts volatility of rates in the market for repurchase agreements also reveals how the Federal Reserve preference for volatility as it manages the policy rate, the Federal Funds rate (FFR) with the target rates specified by the FOMC. The Fed's  open market operations through repurchase transactions. maintain the federal funds (fed funds) rate within the FOMC’s target range. One puzzle the the survival of the Federal Reserve Bank's (Fed) FFR management of of the Federal Funds rate survives the volatility of short rates. 
+
+<!--  
+Another inquiry is how much the Federal Reserve is willing to offset volatility in the FFR as it manages the FFR with the target rates specified by the FOMC.
+-->
+
   Events after the Great Financial Crisis (GFC), the excess liquidity created by quantitative easing, the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
 
    The daily $4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among policy and money market rates is important to understanding the monetary system.
@@ -231,21 +234,19 @@ This paper describes the dynamics of these rates and proposes a model of volatil
 Section  1 reviews monetary policy over the seven year period, 2016-2023  and narrates FOMC rate changes, monetary regimes, and events in order to define monetary shocks.
 Section 2 reviews the time series properties of daily policy and money market rates, and transactions and reserves held at the Federal Reserve from 3/4/2016-12/14/2023. Section 3 describes rate behavior during different policy episodes.  Section 3 discusses methodology. Section 4 Results.  Section 5 Conclusions.  Sections 3-5 are in progress.
 
-
-
 <!--
 key characteristics of the FFR - time varying volatility or autoregressive conditional heteroskedasticity, spectacular outliers, skew, fat tails. shifts around central tendencies, jumps.
 -->
 
-Hamilton (1996) adapting Nelson's (1991) EGARCH model to estimate the conditional mean and the conditional variance of the daily Federal Funds rate (FFR). He attributes the greater effect an open-market purchase to smooth out small fluctuations in the FFR, rather than interday arbitration. Adding reserves through an overnight repurchase agreement lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. He identifies important day effectx, the last day of the quarter or the last day of the year, in producing the extreme volatility, large outliers of the FFR. 
+Hamilton (1996) estimates the conditional mean and the conditional variance of the daily Federal Funds rate (FFR) in an adaption of Nelson's (1991) EGARCH model. He attributes the greater effect an open-market purchase to smooth out small fluctuations in the FFR, rather than interday arbitrage. Adding reserves through an overnight repurchase agreement lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. He identifies important day effect, the last day of the quarter or the last day of the year, in producing the extreme volatility, large outliers of the FFR. 
 
-Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC  interest rate target for the FFR.She observes, high-frequency data in a linear-quadratic jump-diffusion model provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
+Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC  interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
 
-Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC’s policy decisions and describes Fed policy better than Taylor rules.The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. based on yield curve information and an arbitrage-free bond market.
+Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC’s policy decisions and describes Fed policy better than Taylor rules.The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. 
  
 Decisions about target moves result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move. 
  
-
+<!--
 Findings:
  1) latent factors
  the target set by the Fed is an observable factor in the model and provides a clean measure of the short end of the yield curve. The use of target data avoids having to deal with calendar day effects in very short rates, which typically require lots of parameters
@@ -260,22 +261,34 @@ based on a host of variables that are omitted from other rules.
 yield data are available at higher frequencies and are less affected by
 measurement errors than macroeconomic variables. 
 The model demonstrated the policy inertia, the tendency to continue same policy changes. 
+-->
 
-(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model, a time-varying mean reversion factor, a stochastic volatility factor, and a jump process.  The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns. Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean  allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavIORB. 
+(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model, a time-varying mean reversion factor, a stochastic volatility factor, and a jump process.  The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns. Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean  allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior. 
 
 The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
 
-Bertolini, Bertola, Prati () and Gara () and Benzoni observe that the effect of Fed interventions on the volatility in interbank rates 
+Bertolini, Bertola, Prati (), Garaet al  () and Benzoni observe these effect of Fed interventions on the volatility in interbank rates 
 * declines in high rate regimes
 * rises end of quarter, end of year
 * falls before holidays, rises day after
-* Many rate changes are half percent or more (annualized)
+* many rate changes are half percent or more (annualized)
 * outliers
 * Volatility persistent like Hamilton, end of quarter, end of year, before and after holidays, large rate changes.
 
-Bertolini, Bertola, Prati (2004) model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market.[describe model]. This search was motivated by the puzzle that the high frequency patterns of FFR volatility survives Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+<!--
+    - TS properties. Many rate changes of half percent or more (annualized), and outliers. Volatility persistent. maintenace periods, calendar days, end of quarter, end of year, before and after holidays, large rate changes
+    - Mean reversion versus dispersion?
+-->
 
-Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl derive a function of reserve demand that measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR under the Fed's policy of ample supply of reserves (2020) . The FFR is price at which banks are willing to borrow and lend  reserve balances.The reserve demand function describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. Banks' reserve demand sensitivity  to shocks to reserves is greater when reserves are scarce. The slope of demand function is negative as reserves decline. When reserves are abundant [connect, the demand curve is flat around the the IORB rate paid by the Federal Reserve on reserve balancesthe banks’ opportunity cost of lending in the federal funds market. 
+
+Bertolini, Bertola, Prati (2004) model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market. This search was motivated by the puzzle that the high frequency patterns of FFR volatility survives Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl derive a function of reserve demand that describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. The function measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR under the Fed's policy of ample supply of reserves (2020). The FFR is price at which banks are willing to borrow and lend  reserve balances.The Banks' reserve demand sensitivity to shocks to reserves is greater when reserves are scarce. 
+
+Policy changes shift the curve up and down by moving its lower bound. Increases (decreases) in the (FFR-IORB) IORB rate shift the demand curve down (up by changing the banks’ opportunity cost of lending in the federal funds market. Low frequency horizontal shifts in the demand function reflect sensitivity of rates to shocks to reserves
+
+<!--
+The slope of demand function is negative as reserves decline. When reserves are abundant [connect, the demand curve is flat around the the IORB rate paid by the Federal Reserve on reserve balancesthe banks’ opportunity cost of lending in the federal funds market. 
 
 The reserve demand function, realized rates against realized reserves, is nonlinear, downward-sloping reflecting a negative relation ship between prices and quantities. The slope of the demand curve, representing the sensitivity of rates to reserve shocks, becomes increasingly steeper the more scarce are reserves. The slope flattens when reserves are abundant. 
 
@@ -287,22 +300,14 @@ Low frequency horizontal shifts in the demand function reflect sensitivity of ra
 reserves demanded by the banking system Increase. As a result of these shifts, the level of reserves at which the curve stops being flat and start displaying a negative slope may have moved over time.
 
 The visible negative correlation between quantities (reserves) and prices (federal funds rates) suggests  supply shocks tend to dominate demand shocks. 
+-->
 
-
- ISSUES
- Bertolini, Bertola, Prati () and Gara () and Benzoni observe that the effect of Fed interventions on the volatility in interbank rates 
-* declines in high rate regimes
-* rises end of quarter and or  end of year
-* falls before holidays and or rises day after
-* other observations
-    - TS properties. Many rate changes of half percent or more (annualized), and outliers. Volatility persistent. maintenace periods, calendar days, end of quarter, end of year, before and after holidays, large rate changes
-    - Mean reversion versus dispersion?
 
 
 
 The  Romer and Romer (2023) narrative approach to macroeconomic identification identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospectivedevelopments in real activity. However, this approach would exclude shochs such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
 
-Javorscinski () 
+Jaroscinski (2002) 
 Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
 
 Estimating the Fed's unconventional policy shocks
@@ -510,13 +515,12 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
 Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}), include FOMC rate and administered rate changes, different policy experiments , events such as the March 2020 dash for cash, and macroeconomic announcements. 
 
-The  Romer and Romer (2023) narrative approach to macroeconomic identification from quality sources,then incorporate the evidence into a statistical framework.  looking for times when monetary policymakers changed 
-money growth and interest rates for reasons unrelated to current or prospective real economic 
-activity. Policy “shocks” in the sense that monetary policy is not being driven by output 
-or other factors affecting output.
-In identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospective developments in real activity. However, this approach would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
+The  Romer and Romer (2023) narrative approach to macroeconomic identification from quality sources,then incorporate the evidence into a statistical framework.  Their criteria formonetary shocks are times when monetary policymakers changed money growth and interest rates for reasons unrelated to current or prospective real economic  activity. These changeson policy are “shocks” in the sense that monetary policy is not being driven by output  or other factors affecting output.
+
+However, this approach would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
 
 <!--
+In identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospective developments in real activity. 
 Romer and Romer use historical minutes  and transcripts of Federal Reserve policymaking meetings to identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospective developments in real activity. Their sources are historical minutes and transcripts of Federal Reserve policy making meetings 
 - “Record of Policy 
 Actions” (very similar to what are now called the FOMC “Minutes”) 
@@ -526,17 +530,21 @@ Actions” (very similar to what are now called the FOMC “Minutes”)
 Romer and Romer regress the variable of impact like GDP or inflation on a current and past index of shocks - positive if contractionary, negative i expansionary, or zero if no impact.
 -->
 
-Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate unexpected news conveyed in the announcement. News could be the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy. They represent different structural shocks that may affect the economy differently.
+Another source of shocks is found the literature began by (see Campbell et al., 2012) that identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Public statements of FOMC intentions—forward guidance—can substitute for lower rates at the zero bound the issue they address. The authors distinguish between Odyssean forward guidance, which publicly commits the FOMC to a future action, and Delphic forward guidance, which merely forecasts macroeconomic performance and likely monetary policy actions. 
 
-Estimating the Fed's unconventional policy shocks
+Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate unexpected news conveyed in the announcement. News could be the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy. They represent different structural shocks that may affect the economy differently.
+
 Javorscinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (see Campbell et al., 2012).
+
+Monika Piazzesi (2005) takes this approach  in a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR, a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks
 
 <!--
 so it is crucial to disentangle their effects.
 Since Kuttner (2001), many papers 
 Previous literature on high-frequency reactions of financial variables to central bank announcements has ignored it, treating the shocks explicitly or implicitly as Gaussian. This paper is, to my knowledge, the first attempt to tap this valuable source of information.
 -->
-He estimates high-frequency reactions of financial variables, such as interest rates and stock prices, to FOMC announcements. Usually very small, but sometimes very large.  Exploting these fat tails or excess kurtosis} implies that these data may contain information about the nature of the underlying structural shocks. Given the importance of the Fed policies, it is vital to exploit this available information as well as possible. 
+
+Jarocinski (2022) estimates high-frequency reactions of financial variables, such as interest rates and stock prices, to FOMC announcements. Usually very small, but sometimes very large.  Exploting these fat tails or excess kurtosis} implies that these data may contain information about the nature of the underlying structural shocks. Given the importance of the Fed policies, it is vital to exploit this available information as well as possible. 
 
 His baseline model expresses surprises, high-frequency reactions to FOMC announcements), in near-term fed funds futures, 2 and 10-year Treasury yields and the S$\&$P500 stock index as linear combinations of four Student-t distributed shocks}. (These four shocks are very precisely estimated and) These four shocks ex post have natural economic interpretations:
 1.  the standard monetary policy shock raises the near-term fed funds futures, with a diminishing effect on longer maturities, and depresses stock prices.
@@ -544,13 +552,15 @@ His baseline model expresses surprises, high-frequency reactions to FOMC announc
 3. The asset purchase shock increases the 10-year Treasury yield the most and plays a large role in some of the most important asset purchase announcements. 
 4. Delphic forward guidance shock (Campbell et al. 2012)  has a similar impact on the yield curve as the Odyssean forward guidance shock, but triggers an increase, rather than a decrease, in the stock prices.
 
+<!--
 Other exercises that find very similar four shocks
 - estimation on the principal components of a larger dataset and 
 - a variety of other modifications of the baseline model.
+-->
 
-
+<!--
 Definitions Maybe in policy discussion?
-* Forward guidance refers to central bank public communication about the likely future path of short-term interest rates, largely aimed at guiding financial markets
+Forward guidance refers to central bank public communication about the likely future path of short-term interest rates, largely aimed at guiding financial markets
 
 the difference between Delphic and Odyssean forward guidance?
 Statements or forecasts about the likely future direction of monetary policy are known as Delphic forward guidance, after the oracles at the Temple of Apollo at Delphi, a definition first offered by Chicago Fed President Charles Evans and co-authors. When the Fed releases its Summary of Economic Projections, for instance, policymakers signal how they believe rates may change, but they explicitly aren’t making a commitment. Delphic guidance, which has become common among central banks around the world, helps markets and the public better understand policymakers’ outlook and how they are likely to respond to changes in the economy.
@@ -562,13 +572,10 @@ Odyssean forward guidance is a type of policy guidance that involves a clear com
 
 Odyssean forward guidance can have a greater impact on the economy and markets than other types of forward guidance, such as Delphic guidance. Delphic guidance, on the other hand, is more like a forecast of future economic conditions. Odyssean forward guidance can be especially useful when short-term interest rates are near zero and the Fed is looking for other ways to stimulate the economy. However, it can also limit the Fed's flexibility in responding to economic changes. 
 
-
 Delphic shocks
-
-* 
 Jul 27, 2023 — Stronger, explicit commitments about the path of future policy are known as Odyssean, a reference to Odysseus binding himself to the mast in Homer's epic poem. This form of guidance—for instance, a pledge not to raise short-term rates for “a considerable period”—can have a bigger impact on the markets and the economy than Delphic guidance. It is particularly useful when short-term interest rates are at or near the zero lower bound and the Fed is looking for other ways to stimulate the economy. But making such commitments can limit the Fed's flexibility in responding to changes in the economy.
 
-* Brookings Institution
+ Brookings Institution
 Macroeconomic Effects of FOMC Forward Guidance | Brookings
 \url{https://www.brookings.edu/articles/what-is-forward-guidance/#:~:text=Stronger%2C%20explicit%20commitments%20about%20the,to%20changes%20in%20the%20economy.|
 We examine how public statements of FOMC intentions—forward guidance—can substitute for lower rates at the zero bound. We distinguish between Odyssean forward guidance, which publicly commits the FOMC to a future action, and Delphic forward guidance, which merely forecasts macroeconomic performance and likely monetary ...
@@ -590,15 +597,15 @@ Forward Guidance and Expectation Formation: A Narrative Approach.  Christopher S
 Forward Guidance and Expectation Formation: A Narrative Approach.  Christopher S.Sutherland
 \url{https://www.bis.org/publ/work1024.htm}
 Delphic forward. guidance is a statement that provides direct information about the probable state of monetary policy. in the future. Odyssean forward guidance is a statement that clearly indicates a commitment to a state. of monetary policy in the future.
--->
 
-
-* Marek Jaracinski Estimating the Fed’s unconventional policy shocks. JME May 2024 \url{https://doi.org/10.1016/j.jmoneco.2024.01.001}
+* Marek Jarocinski Estimating the Fed’s unconventional policy shocks. JME May 2024 \url{https://doi.org/10.1016/j.jmoneco.2024.01.001}
 \url{https://www.sciencedirect.com/science/article/abs/pii/S0304393224000011}
 \url{https://marekjarocinski.github.io/identkurto/identkurto.html}
 For git: \url{https://github.com/marekjarocinski/identkurto_update_202401.git}
 
 \url{https://github.com/marekjarocinski/identkurto_update_202401/blob/main/README.md}
+-->
+
 <!--
 Updating the Fed conventional and unconventional policy shocks from: Marek Jarocinski "Estimating the Fed's Unconventional Monetary Policy Shocks," Journal of Monetary Economics, doi:10.1016/j.jmoneco.2024.01.001
 Updated shocks (January 1991 - January 2024):
@@ -609,8 +616,9 @@ main.m - Matlab script (calls other Matlab functions)
 Source data:
 fomc_surprises_jk.csv - narrow window (30 minutes) surprises around FOMC announcements from 1988 to 2024 updated by Jarocinski and Karadi.
 These codes were tested using Matlab R2023b.
+-->
 
-The shocks (Table \@ref{table:FOMC rate changes 2016-202})encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
+The shocks (Table \@ref{table:FOMC rate changes 2016-202}) encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
 
 
 
@@ -710,7 +718,7 @@ xtable_notes <- xtable(notes, caption = "Important Events Timeline")
 #xtable_notes <- xtable(notes_with_valid_dates, caption = "Important Events Timeline")
 print(xtable_notes)
 ```
-
+<!--
 June 2020 - In June 2020, the Fed set its rate of purchases to at least $\$$80 billion 
 a month in Treasuries and $\$$40 billion in residential and commercial mortgage-backed 
 securities until further notice. 
@@ -806,6 +814,7 @@ the economy. It said that it would buy at least $\$$500 billion in Treasury secu
 
 
 # Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve
+-->
 
 <!--
 Balance Sheet normalization Program 2018-2020 reduce balance sheet $10 billion per month, gradually increase $50b per month
@@ -884,8 +893,8 @@ SOFR SOFR 134.08 4.20 14.51 754.37
 The lines or ribbon in Figure show the EFFR is on average within the FOMC target range, 145.52 to 170.52 trough out the sample. Only one 5.25 when?? [indicate where in percentile plots]
 FIND THIS CHART OR DOES IT EXIST IN rates_sample. aka samplequantiles
 -->
-The volume of SOFR transactions, $\$$754 billion per day, dwarf trading in all other FFR and money market rates. EFFR has a notably lower daily trade volume of $\$$79 billion,  TGCR and BGCR at around $\$$300 billion each (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). 
 
+The volume of SOFR transactions, \$754 billion per day, dwarf trading in all other FFR and money market rates. EFFR has a notably lower daily trade volume of \$79 billion,  TGCR and BGCR at around \$300 billion each (TGCR 296.95, BGCR 311.23). (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). 
 
 <!--
 IS THIS ABOUT EPISODES?
@@ -898,7 +907,7 @@ The range of the data, the 99th minus the first percentile, illustrates the exte
 -->
 
 
-```{r, fig.cap= "Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, results='asis'}
+```{r, fig.cap= "Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE,, warning=FALSE, message=FALSE, results='asis'}
 #sdate<-rrbp[,1]
 #sdate<-spread_no_na$sdate
 library(ggplot2)
@@ -1030,7 +1039,7 @@ Is there a relationship to policy iniertia?
 
 
 
-```{r, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis'}
+```{r, tab.cap="Rate characteristics 2016-2023", echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=6 
 bgn<-1
@@ -1069,7 +1078,7 @@ rownames(charsample) <- c("Rate", "Volume", "Upper target", "Lower target",
                      "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
 colnames(charsample) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charsample, caption = "Rate characteristics 2016-2023", label = "tab:Rate characteristics 2016-2023")
-print(xtable(charsample),type = "latex", digits = c(2, 2, 2, 2),include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charsample),type = "latex", digits = c(2, 2, 2, 2),include.rownames = FALSE, caption.placement = "top")
 #kable(charsample, format = "latex", caption = "Adjustment 8/1/2019-10/31/2019")
 ```
 
@@ -1094,7 +1103,7 @@ Sstats <- colMeans(qsampleS[,2:ncol(qsampleS)], na.rm = TRUE)
 ```
 
 
-```{r, tab.cap="Sample statistics 2016-2023", echo=FALSE, results='asis'}
+```{r, tab.cap="Sample statistics 2016-2023", echo=FALSE, results='asis',,warning=FALSE, message=FALSE}
 library(xtable)
 k=6 
 bgn<-1
@@ -1113,8 +1122,9 @@ iqr_values = c(Estats[7] - Estats[6], Tstats[5] - Tstats[4], Bstats[5] - Bstats[
 range_values = c(Estats[8] - Estats[5],  Tstats[6] - Tstats[3], Bstats[6] - Bstats[3], Sstats[6] - Sstats[3])
 volume=c(Estats[2],Tstats[2],Bstats[2],Sstats[2])
 ratesamplestats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME=volume)
+row.names(ratesamplestats) <- NULL
 xtable(ratesamplestats,include.rownames = FALSE, caption="Sample 3/04/2016-12/14/2023", caption.placement="top")
-print(xtable(ratesamplestats), type = "latex",digits = c(2, 2, 2, 2), include.rownames = FALSE, caption.placement = "top")
+#print(xtable(ratesamplestats), type = "latex",digits = c(2, 2, 2, 2), include.rownames = FALSE, caption.placement = "top")
 ```
 
 
@@ -1309,11 +1319,11 @@ SOFR Sstatscovid 151.19 7.37 19.46 1085.60
 
 -->
 
-## Reference rate behavior during different policy episodes
+# Reference rate behavior during different policy episodes
 
 \@ref(tab:Rate characteristics normalcy 3/4/2016-7/31/2019) provides a summary of the data.
 
-```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='asis'}
+```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='markup',results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=1 
 begn <- c(1, 859, 923, 1014, 1519, 1) 
@@ -1354,11 +1364,13 @@ rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target",
                      "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
-print(xtable(charnorm), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charnorm), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
+<!--
 Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
+-->
 
-```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE}
+```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
 library(xtable)
@@ -1391,17 +1403,17 @@ range_values <- c(Estatsnorm[8] - Estatsnorm[5], Tstatsnorm[6] - Tstatsnorm[3], 
 volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
 
 normstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-xtable(normstats[, -1], caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
-print(xtable(normstats[, -1]),type = "latex", include.rownames = FALSE, caption.placement = "top")
+xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
+row.names(normstats) <- NULL
+#tabnorm<--xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
+#xtable(normstats[, -1], caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
+# Print the xtable object
+#print(tabnorm, include.rownames = FALSE)
+#print(xtable(normstats),type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
-<!--
-adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
-print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
- (see Figure \@ref(fig:Rates during normalcy 3/04/2016-7/31/2019)
- -->
+
  
-```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,results='asis'}
+```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
 k=1
@@ -1438,7 +1450,7 @@ minr<-min(normE[,ncol(normE)])
 
  (see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
  
-```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis'}
+```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 normE<-my_envepisodes$norm
 sdate <- normE[, 1]
@@ -1469,7 +1481,7 @@ print(norm_plots)
 
 see \@ref(tab:Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
 
-```{r, tab.caption="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis'}
+```{r, tab.caption="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=2  
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1512,12 +1524,12 @@ rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
-print(xtable(charadj), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charadj), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 see \@ref(tab:Rate statistics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis'}
+```{r, tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=2  
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1559,13 +1571,15 @@ range_values <- c(max(Estatsadj) - min(Estatsadj), max(Tstatsadj) - min(Tstatsad
 volume_values <- c(sum(Estatsadj), sum(Tstatsadj), sum(Bstatsadj), sum(Sstatsadj))
 
 adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+#row.names(adjstats) <- categories
+row.names(adjstats) <- NULL
 xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
-print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top")
+#print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment #8/1/2019-10/31/2019", caption.placement="top")
 ```
 
 see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
 
-```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis'}
+```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 k=2  
 library(ggplot2)
 library(reshape2)
@@ -1605,7 +1619,7 @@ minr<-min(qadjE[,rates])
 
 (see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
 
-```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE, results='asis'}
+```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)                        
 library(reshape2)
 qadjE<-my_envepisodes$adjust # Using the same data as the first plot
@@ -1644,7 +1658,7 @@ print(adjust_plots)
               
 Table \@ref(tab:Rate characteristics covid 11/1/2019-3/16/2020) provides a summary of the data.
 
-```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis'} 
+```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
 library(xtable)
 k=3  
 begn<-c(1,859,923,1014,1519,1)
@@ -1691,15 +1705,15 @@ rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top")
-print(xtable(charcovid), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charcovid), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 
 Table \@ref(tab:Rate statistics covid 11/1/2019-3/16/2020) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis'}
+```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
-categories <- c("Estatscovid", "Tstatscovid", "Bstatscovid", "Sstatscovid")
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
 iqr_values = c(Estatscovid[7] - Estatscovid[6], Tstatscovid[5] - Tstatscovid[4], Bstatscovid[5] - Bstatscovid[4], Sstatscovid[5] - Sstatscovid[4])
 range_values = c(Estatscovid[8] - Estatscovid[5], Tstatscovid[6] - Tstatscovid[3], Bstatscovid[6] - Bstatscovid[3], Sstatscovid[6] - Sstatscovid[3])
@@ -1707,6 +1721,8 @@ volume_values = c(Estatscovid[2], Tstatscovid[2], Bstatscovid[2], Sstatscovid[2]
 covidstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
 
 covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+#row.names(covidstats) <- categories
+row.names(covidstats) <- NULL
 xtable(covidstats, include.rownames = FALSE)
 print(xtable(covidstats),type = "latex",include.rownames = FALSE, caption.placement = "top")
 ```
@@ -1714,7 +1730,7 @@ print(xtable(covidstats),type = "latex",include.rownames = FALSE, caption.placem
 
  (see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
  
-```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,results='asis'}
+```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
 k=3  
@@ -1755,7 +1771,7 @@ minr<-min(covid[,2:ncol(covid)])
 ```
 (see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
 
-```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,results='asis'}
+```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 rates=2
 qcovidE<-my_envepisodes$covid # Using the same data as the first plot
@@ -1787,7 +1803,7 @@ grid.text("Covid period 11/1/2019-3/16/2020", x = 0.5, y = -0.1, just = "center"
 print(covid_plots)
 ```
 
-```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis'}
+```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=4  
 begn<-c(1,859,923,1014,1519,1)
@@ -1832,14 +1848,13 @@ rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", caption.placement="top")
-print(xtable(charzlb),type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charzlb),type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 see \@ref(tab:Rate statistics zero lower bound 3/17/2020-3/16/2022)
 
-```{r, tab.caption="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis'}
-
-categories <- c("Estatszlb", "Tstatszlb", "Bstatszlb", "Sstatszlb")
+```{r, tab.caption="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 library(xtable)
 
 k=4  
@@ -1872,13 +1887,15 @@ iqr_values = c(Estatszlb[7] - Estatszlb[6], Tstatszlb[5] - Tstatszlb[4], Bstatsz
 range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstatszlb[6] - Bstatszlb[3], Sstatszlb[6] - Sstatszlb[3])
 volume_values = c(Estatszlb[2], Tstatszlb[2], Bstatszlb[2], Sstatszlb[2])
 zlbstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
+#row.names(zlbstats) <- categories
+row.names(zlbstats) <- NULL
 xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bound 03/17/2020-03/16/2022", caption.placement="top")
-print(xtable(zlbstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(zlbstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
  (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
  
-```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis'}
+```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
 k=4 
@@ -1917,7 +1934,7 @@ minr<-min(zlbE[,rates]) # 4
 
 see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
 
-```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE}
+```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE,warning=FALSE, message=FALSE}
 library(ggplot2)
 qzlbE<-my_envepisodes$zlb
 sdate <- qzlbE[, 1]
@@ -1948,7 +1965,7 @@ print(zlb_plots)
 ```
 <!--Move to 2400-->
 
-```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis'}
+```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=5 
 begn<-c(1,859,923,1014,1519,1)
@@ -1989,13 +2006,13 @@ rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target",
 colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.placement="top")
 #include.rownames = FALSE
-print(xtable(charinflation), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(charinflation), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 
 Table \@ref(tab:Rate statistics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
 
-```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis'}
+```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k <- 5 
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -2004,7 +2021,7 @@ bgn <- begn[k]
 edn <- endn[k]
 inflation <- rrbp[bgn:edn,]
 sdateinflation <- sdate[bgn:edn]
-categories <- c("Estatsinflation", "Tstatsinflation", "Bstatsinflation", "Sstatsinflation")
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 
 qinflationE <- quantilesE[bgn:edn,]
 qinflationT <- quantilesT[bgn:edn,]
@@ -2033,14 +2050,15 @@ volume_values <- c(Estatsinflation[2], Tstatsinflation[2], Bstatsinflation[2], S
 inflationstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
 
 inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+row.names(inflationstats) <- NULL
 xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", caption.placement="top")
-print(xtable(inflationstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
+#print(xtable(inflationstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 
  (see Figure \@ref(fig:Rates during Taming inflation 03/17/2022-12/14/2023)
  
-```{r, fig.caption= "Rates during Taming inflation 03/17/2022-12/14/2023",echo=FALSE,results='asis'}
+```{r, fig.caption= "Rates during Taming inflation 03/17/2022-12/14/2023",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
 k=5
@@ -2079,7 +2097,7 @@ min(qinflationE[,rates])
 
 (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
 
-```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE}
+```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE,warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
 qinflationE<-my_envepisodes$inflation
@@ -2394,7 +2412,7 @@ prates <- (rates_norm | rates_adjust |rates_covid ) / (rates_zlb | rates_inflati
 print(prates)
 ```
 
-# Reference rate behavior during different policy episodes
+
 
 ```{r, episode parameters, echo=FALSE,results="asis"}
 begn<- c(1, 859, 923,  1014, 1519, 1)
@@ -2573,10 +2591,12 @@ OR
 
 From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)). During the pandemic (covid 11/1/2019-3/16/2020) until the Fed began its fight to contain inflation in 2023, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation
 
-\emph(VOlume)
-Daily volume in wholesale  rates TBGR  $\$$296.95 billion,and BGCR $\$$296.95 billion, almost quadruple the transactions in the EFFR: $\$$78.91 billion,  , $\$$311.23 billion. SOFR transactions, $\$$754 billion per day, dwarf trading in all other overnight reference rates. with SOFR leading at approximately $\$$754 billion, followed by TGCR and BGCR at around $\$$300 billion each.The money market volumes in TGCR and BGCR around 353-376 billion Daily trade volume in EFFR is a low 69 billion.   volume of $\$$79 billion. (69?)
+\emph(Volume)
+Daily volume in wholesale  rates TBGR  \$296.95 billion,and BGCR \$311.23 billion, almost quadruple the transactions in the EFFR: \$78.91 billion. SOFR transactions, \$754 billion per day, dwarf trading in all other overnight reference rates.
 
+<!--
 Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+-->
 
 <!--
 DO FOR EPISODES 
@@ -2588,36 +2608,7 @@ INFLATION Daily transaction volume in SOFR (billions of dollars ) is around 1200
  [ADD VOLUME FIGURE]
  -->
 
-<!--
-DELETE THIS DISASTER!!
-The median, a measure of central tendency, and quantiles illustrate the change in distribution of rates during difference policy episodes (\@ref(tab:Rate characteristics 2016-2023). The average median EFFR over the full sample is 157 bp.  The money market rates about 132-134 bp, TGCR  132  bp,  BGCR 133 bp, SOFR 134 bp.  
-During the periods of covid, the zero lower bound and the Fed's fight to control inflation, DUring covid, median money market rates TGCR and BGCR (149 bp) and SOFR (151 bp) are close to the median EFFR - 150.46. DUring the zero lower bound 8.09, and 368.60 bp.  During the normalcy and adjustment regimes, they diverge, 84-85 bp versus 134 bp of the EFFR. 
-The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp.
-During covid, he average weighted median for all over night rates are tightly clustered around 148.64-151.18 
 
-Median rates change with monetary policy. Within in each episode, policy inertia, sequential changes in rates by the FED, is evident in all periods but most clearly as  the Fed fights inflation. 
-
-Text to check:
-During the during normalcy period with an average median EFFR of 157 basis points (bp), increases steadilyfrom 36 basis points March 2016 to 214 bp July 2019 (\@ref(fig:Sample rates 3/4/2016-12/14/2023)). In 2019 rates during the adjustment period began a three month decline from August to October 2019.  . 
--->
-
-<!--
-EFFR 156.97 133.79 183.59 150.46 8.09 368.60
-TGCR 132.83  83.83 248.51 148.64 4.59 362.14
-BGCR 132.85  83.84 254.84 148.64 4.59 362.20
-SOFR 134.08  84.78 369.33 151.19 5.41 364.07
--->
-
-<!--
-Additional taxt - CHECK
-The median EFFR during normalcy, 133.79 bp (lower than the sample median 157), steadily increased from 25 bp o 237 bp. The median rate during the adjustment period, 200.09 bp, declines from 258 bp to 158 bp.  During covid, the median rate is 150.46. Rates  remain at this level then plunge to zero.  The median EFFR is 8.08 bp during the zero lower bound.  But rates a both low and highly variable, anywhere between zero and 20 bp,  During inflation, the median EFFR is 533 bp,  but rates rise steadily in 25 and 50 bp increments from 25 to 533 bp. 
-
-The average weighted median for the EFFR during the inflation targeting regime is 368 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 362-364 bp. 
-
-
-NORMALCY
-The average weighted median for the EFFR during the normalcy period is 157 basis points (pb). The average weighted medians of other money market rates cluster around the median EFFR - TGCR,BGCR and SOFR 123-134 bp. 
--->
 
 <!--
 Establish Mean reversion around a central tendency in daily rates. MR within2,3,...5 days show?
@@ -2667,7 +2658,21 @@ article_citation <- list(
   type = "article"
 )
 
+<!-
+Campbell, Jeffrey R., Charles L. Evans, Jonas D. M. Fisher, and Alejandro Justiniano (2012) “Macroeconomic Effects of Federal Reserve Forward Guidance,” Brookings Papers on Economic Activity, 1–80, https://EconPapers.repec.org/RePEc:
+bin:bpeajo:v:43:y:2012:i:2012-01:p:1-80.
+-->
 
+article_citation <- list(
+  author = c("Campbell, Jeffrey R., Charles L. Evans, Jonas D. M. Fisher, and Alejandro Justiniano"),
+  year = 2012,
+  month = 04,
+  title = "Macroeconomic Effects of Federal Reserve Forward Guidance",
+  volume = "113",
+  issue = "2",
+  pages = "1-80",
+  type = "Brookings Papers on Economic Activity"
+)
 article_citation <- list(
   author = c("Piazzesi, Monika"),
   year = 2005,
