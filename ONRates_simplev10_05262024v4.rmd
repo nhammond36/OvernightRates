@@ -195,7 +195,7 @@ Another inquiry is how much the Federal Reserve is willing to offset volatility 
 
   Events after the Great Financial Crisis (GFC), the excess liquidity created by quantitative easing, the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
 
-   The daily $4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among policy and money market rates is important to understanding the monetary system.
+   The daily $4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among these reference rates, policy and money market rates, is important to understanding the monetary system.
 
 The repurchase funding markets are:
 -  triparty TGCR — the major dealer funding market
@@ -304,7 +304,7 @@ The visible negative correlation between quantities (reserves) and prices (feder
 
 The  Romer and Romer (2023) narrative approach to macroeconomic identification identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospectivedevelopments in real activity. However, this approach would exclude shochs such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
 
-Jaroscinski (2002) 
+Jarocinski (2002) 
 Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
 
 Estimating the Fed's unconventional policy shocks Javorscinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
@@ -834,19 +834,21 @@ The vertical shifts in all rates suggest that daily rate and volume data from th
 • zlb 3/17/2020 to 3/16/2022 QE4 2020-2021 $1.5 trillion reverse repurchase transactions
 • Taming inflation 03/17/2022 to 12/14/2023 
 
+I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024).
+
 During a period of normalcy, a series of 25 basis point (bp) increase rates from 2016 to mid 2019,a mid cycle adjustment with plus or minus 25 bp from August to November 2019, a series of 25 bp increases with QE during covid from November 2019  to mid March 2020,  the zero lower bound period in 2020-2021, and sequential rate increases during the taming of inflation mid March 2022 to mid December 2023.
 
-During this period [DATES], repurchase and reverse repurchase funding markets became a major source of liquidity for primary dealers,hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed (or Treasury?) are required to intermediate new US Treasury issuance. They frequent the tri-party market with the lower Tri-Party General Collateral Rate (TGCR), where transactions are secured by Treasury securities (figure  \@ref(fig:Sample rates 3/4/2016-12/14/2023)).  The tri party market is the base layer of repurchase agreement transactions or repos. The TGCR is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities.The Fed conducts OMO in the tri party market, both  borrowing and lending. Primary dealers, the borrowers, obtain cheapest rates from lenders, asset managers in the tri party, then lend at a spread in other repo markets. (Reference CONCODA) at the higher broad General Collateral Rate (BGCR),  the market where primary dealers intermediate cash to leveraged investors (hedge funds). The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of overnight.
+Repurchase and reverse repurchase funding markets became a major source of liquidity for primary dealers,hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed (or Treasury?) are required to intermediate new US Treasury issuance. They frequent the tri-party market with the lower Tri-Party General Collateral Rate (TGCR), where transactions are secured by Treasury securities (figure  \@ref(fig:Sample rates 3/4/2016-12/14/2023)).  The tri party market is the base layer of repurchase agreement transactions or repos. The TGCR is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities.The Fed conducts OMO in the tri party market, both  borrowing and lending. Primary dealers, the borrowers, obtain cheapest rates from lenders, asset managers in the tri party, then lend at a spread in other repo markets. (Reference CONCODA) at the higher broad General Collateral Rate (BGCR),  the market where primary dealers intermediate cash to leveraged investors (hedge funds). The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of overnight.
 
 <!--
 (Reference CONCODA) 
 -->
 
 ## The history or rates from 3/4/2016-12/14/2023
-The rate data from the Federal Reserve Data Download Program, average volume weighted medians, better measure the central tendency of daily rates with outliers and skewed distributions. The Interquartile range (IQR), the 75th minus the 25 percentile of the data contains 50 percent of the data. Less influenced by extreme values, the IQR is a measure of variability that describes how tightly rates cluster around their median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outliers (Table (\@ref(tab:Rate characteristics 2016-2023) ), the extreme values in rates (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).the box plot
+The rate data from the Federal Reserve Data Download Program, average volume weighted medians, better measure the central tendency of daily rates with outliers and skewed distributions. The Interquartile range (IQR), the 75th minus the 25 percentile of the data contains 50 percent of the data. Less influenced by extreme values, the IQR is a measure of variability that describes how tightly rates cluster around their median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outliers (Table (\@ref(tab:Rate characteristics 2016-2023) ), the extreme values in rates.
 
 \emph{Funding rates track the FFR}
-Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). The similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR) 132  bp,  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR),  benchmark that replaced Libor, 134 bp. The percentiles of rates reflect the same clustering around the EFFR.
+Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). The similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR) 132  bp,  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR),  benchmark that replaced Libor, 134 bp. The percentiles of rates reflect the same clustering around the EFFR  (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).
 
 <!--
 
@@ -903,7 +905,7 @@ The range of the data, the 99th minus the first percentile, illustrates the exte
 -->
 
 
-```{r, fig.cap= "Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r, fig.cap="Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
 #sdate<-rrbp[,1]
 #sdate<-spread_no_na$sdate
 library(ggplot2)
@@ -963,7 +965,7 @@ Bstats2<-c(Bstats[1],Bstats[2], TargetUe=NA, TargetDe=NA,Bstats[3],Bstats[4],Bst
 Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sstats[5],Sstats[6])
 ```
 
-```{r , fig.caption="EFFR IQR and range of the sample 3/4/2016-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.caption="EFFR IQR and range of the sample 3/4/2016-12/14/2023",echo=FALSE,warning=FALSE, message=FALSE, fig.num=TRUE,results='asis'}
 boxplot_sample <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
   y0 = c(Estats[5], Tstats[3], Bstats[3], Sstats[3]),
@@ -987,7 +989,7 @@ library(ggplot2)
   print(bsample)
 ```
 
-```{r, fig.cap= "EFFR percentiles of the sample 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, results='asis'}
+```{r, fig.cap= "EFFR percentiles of the sample 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE,  results='asis'}
   library(ggplot2)
           sample<-quantilesE
           sdate <- quantilesE[, 1]
@@ -1007,7 +1009,7 @@ library(ggplot2)
 #cat("\\vspace{10pt}", "\\caption{Sample 3/4/2016-12/14/2023}", "\\label{fig:sample_caption}", "\n")         
 ```
 
-```{r, fig.cap= "Sample volumes of overnight rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, results='asis'}
+```{r, fig.cap= "Sample volumes of overnight rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE,  results='asis'}
 y_breaks =25 
 #str(vold)
 maxr<-max(vold[,2:ncol(vold)]) #1850
@@ -1131,7 +1133,7 @@ the standard deviation of log percent change in rates over arbitrary periods, i.
 (see Figure \@ref(fig:volatility Percent change Daily rates 2016-2023)
 -->
 
-```{r,  fig.cap= "Volatility percent change daily rates 2016-2023", echo=FALSE,fig.num=TRUE,results='asis'}
+```{r,  fig.cap= "Volatility percent change daily rates 2016-2023", echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, results='asis'}
 #env=my_envvolatile
 library(ggplot2)
 sdate<-as.Date(my_data$Date,format="%m/%d/%Y")
@@ -1199,7 +1201,7 @@ SOFR4     SOFR 364.066059  5.6788155 21.353075 1199.93622
 
 <!--
 Establish Mean reversion around a central tendency in daily rates. MR within2,3,...5 days show?
-Is there a relationship to policy iniertia?
+Is there a relationship to policy inertia?
 %Benzoni identify mean reversion around a central tendency. The stochastic mean  allows a relatively fast %mean-reversion of the short rate around a highly persistent time-varying central tendency process. 
 %Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating %extreme outlier behavior. 
 -->
@@ -1757,7 +1759,7 @@ ratests_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,grou
   labs(caption = "Covid 11/1/2019-3/16/2020", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-#print(ratests_covid)
+print(ratests_covid)
 ```
 <!--
 \emph{Funding rates cluster around the FFR}
@@ -1797,10 +1799,12 @@ rates_covid <- ggplot(meltrates_covid, aes(x = sdate, y = value, colour = variab
   scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0, maxr)) + 
   scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") +  
   theme_minimal()
-#print(rates_covid)
+print(rates_covid)
 #my_envepisodes$rates_covid<-rates_covid
 ```
 
+<!--
+Doesnt work
  see Figure \@ref(fig:Reference rates during covid period 11/1/2019-3/16/2020)
 
 ```{r,Reference rates during Covid period 11/1/2019-3/16/2020, echo=FALSE}
@@ -1810,6 +1814,8 @@ covid_plots <- grid.arrange(ratests_covid, rates_covid, ncol=1)
 grid.text("Covid period 11/1/2019-3/16/2020", x = 0.5, y = -0.1, just = "center")
 print(covid_plots)
 ```
+-->
+
 
 ```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1921,7 +1927,7 @@ ratests_zlb<- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=var
   labs(caption = "Zero lower bound 3/17/2020-3/16/2022", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-#print(ratests_zlb)
+print(ratests_zlb)
 #zlb<-my_envepisodes$zlb
 ```
 
@@ -1961,7 +1967,8 @@ rates_zlb <- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=vari
 print(rates_zlb)
 #my_envepisodes$rates_zlb<-rates_zlb
 ```
-
+<!--
+Doesn't work
  see Figure \@ref(fig:Reference rates during zero lower bound (zlb) period 3/17/2020-3/16/202)
 
 ```{r,Reference rates during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
@@ -1971,6 +1978,7 @@ zlb_plots <- grid.arrange(ratests_zlb, rates_zlb, ncol=1)
 grid.text("Zero lower bound (zlb) period 3/17/2020-3/16/2022", x = 0.5, y = -0.1, just = "center")
 print(zlb_plots)
 ```
+-->
 <!--Move to 2400-->
 
 ```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
@@ -2063,8 +2071,9 @@ xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming
 #print(xtable(inflationstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
-
+<!--
  (see Figure \@ref(fig:Rates during Taming inflation 03/17/2022-12/14/2023)
+-->
  
 ```{r, fig.caption= "Rates during Taming inflation 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -2085,7 +2094,7 @@ ratests_inflation<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
   scale_y_continuous(breaks = seq(minr, maxr, by = 50
   ), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-#print(ratests_inflation)
+print(ratests_inflation)
 ```
 
 
@@ -2102,8 +2111,9 @@ qinflationE<-my_envepisodes$inflationE
 maxr<-max(qinflationE[,rates]) 
 min(qinflationE[,rates])
 ```
-
+<!--
 (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
+-->
 
 ```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -2121,9 +2131,11 @@ rates_inflation <<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
   labs(caption="Inflation 03/17/2022-12/14/2023",x="", y = "rates basis points (bp) volume (billion dollars)", color="Rate") +  
   scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0,maxr)) + 
   theme_minimal()
-#print(rates_inflation)
+print(rates_inflation)
 #my_envepisodes$rates_inflation<-rates_inflation
 ```
+
+<!--
  (see Figure \@ref(fig:Reference rates during Taming inflation 03/17/2022-12/14/2023)
  
 ```{r,Reference rates during Taming inflation 03/17/2022-12/14/2023, echo=FALSE}
@@ -2133,7 +2145,7 @@ inflation_plots <- grid.arrange(ratests_inflation, rates_inflation, ncol=1)
 grid.text("Taming inflation 03/17/2022-12/14/2023", x = 0.5, y = -0.1, just = "center")
 print(inflation_plots)
 ```
-
+-->
 
 <!-- boxplots episodes
 -->
@@ -2150,7 +2162,10 @@ Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
 Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
 Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 ```
+
+<!--
 (see Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
+-->
 
 ```{r , fig.caption= "EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
 library(ggplot2)
@@ -2172,7 +2187,8 @@ bnormalcy <<- ggplot(boxplot_normalcy , aes(x=Group,
   labs(caption = "Normalcy 3/4/2016-7/31/2019", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
   geom_boxplot(stat = "identity") +
   theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"))
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
 print(bnormalcy)
   my_environmentbox$norm <-bnormalcy
 ```
@@ -2209,8 +2225,6 @@ Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],S
 ```
 
 
-(see Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
-
 ```{r , fig.caption= "EFFR Key percentiles during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
  library(ggplot2)
  boxplot_adjust<- data.frame(
@@ -2231,7 +2245,8 @@ Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],S
     labs(caption = "Mid cycle adjustment 8/1/2019-10/31/2019", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
     geom_boxplot(stat = "identity") +  
   theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"))
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
   print(badjust)
 my_environmentbox$adjust <- badjust
 ```
@@ -2252,7 +2267,6 @@ Tstatscovid2<-c(Tstatscovid[1],Tstatscovid[2], TargetUe=NA, TargetDe=NA,Tstatsco
 Bstatscovid2<-c(Bstatscovid[1],Bstatscovid[2], TargetUe=NA, TargetDe=NA,Bstatscovid[3],Bstatscovid[4],Bstatscovid[5],Bstatscovid[6])
 Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatscovid[3],Sstatscovid[4],Sstatscovid[5],Sstatscovid[6])
 ```
-(see Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
 
 ```{r , fig.caption= "EFFR Key percentiles during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
  library(ggplot2)
@@ -2274,7 +2288,8 @@ Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatsco
     labs(caption = "Covid 11/1/2019-3/16/2020", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
     geom_boxplot(stat = "identity") +  
   theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"))
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
   print(bcovid)
   my_environmentbox$covid <-  bcovid #boxplot_covid
 ```
@@ -2305,8 +2320,6 @@ Sstatszlb <- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
 ```
 
 
-(see Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
-
 ```{r , fig.caption= "EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
 library(ggplot2)
 boxplot_zlb <- data.frame(
@@ -2327,7 +2340,8 @@ boxplot_zlb <- data.frame(
     labs(caption = "Zero lower bound  3/17/2020-3/16/2022", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
     geom_boxplot(stat = "identity") +
   theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"))
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
   print(bzlb)
   my_environmentbox$zlb <-  bzlb 
 ```
@@ -2355,8 +2369,6 @@ Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
 Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
 ```
 
-(see Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
-div style="text-align: center;">
 
 ```{r , fig.caption= "EFFR Key percentiles during inflation period 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
 library(ggplot2)
@@ -2378,7 +2390,8 @@ boxplot_inflation <- data.frame(
     labs(caption = "Inflation 03/17/2022-12/14/2023", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
     geom_boxplot(stat = "identity") +
   theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"))
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
   print(binflation)
   my_environmentbox$inflation <-binflation
 ```
@@ -2502,7 +2515,7 @@ print(stacked_table)
 The vertical shifts in rates throughout  from 2016 to 2023 suggest changes in distribution of rates during difference policy episodes (Figure \@ref(fig:Time series of rates by policy regime)).The average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR.
 
 <!--
-The following policy episodes were discussed in a Forbes article. I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024)
+The following policy episodes were discussed in a Forbes article
 -->
 
 I report charactertistics and statistics for these separate episodes:
@@ -2555,9 +2568,14 @@ BGCR  0.96     0.23    1.36   0.42  0.15  3.36
 -->
 
 SOFR exhibits the greater variability; for the sample as a whole, IQR for SOFR is a high 4 bp.  The dispersion of SOFR is even more diverse among policy regimes. SoFR rates have the largest spread around the median rate, reaching over 10 bp during the adjustment period. SOFR is more tightly clustered around its median during normalcy, 3.30 bp and the zero lower bound  3.05 bp, but 7.37 bp during covid and 5.68 bp during inflation. Concoda reports [reference] in February 2023, some 25\% of repo trades were based on SOFR) a trillion dollar volume giving the Fed greater influence in global finance [check this claim from concoda]. However, .NYFed data reveal SOFR rates to attain the largest spread in outliers versus tri party or bilateral repo.  (\url{https://www.concoda.com/p/the-silent-monetary-revolution?r=dsye&utm_campaign=post&utm_medium=web})
-
+(Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
+(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
+(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
+(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
+(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
 
 <!--
+div style="text-align: center;"> for box plots
 Not true in the repo spike during the pandemic, LIBOR skyrocketed above the Fed Funds rate, echoing stress in the unsecured debt markets while SOFR, failed to reveal the disturbance (check against the NYFed data)
 9/16/2019	2.25	2.18	2.42	2.42
 9/17/2019	2.3	2.25	5.25	5.25
@@ -2677,9 +2695,374 @@ The mean drift may be indicative of slowly evolving inflationary expectations (G
 
 Estimating the Fed's unconventional policy shocks Javorscinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
-
-
 [Alvarez] metrics for kurtosis 
+
+<!--
+NOTES --------------------------------------------------------------------------------
+<!--
+Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate. (Bertolini,Bertola, Prati ,) site frictions such as  transactions costs, interbank credit limits, overdraft penalties, obstacles to intra-period arbitrage preclude the FFR from following a martingale process.
+-->
+
+
+!<--
+2. Affine Term Structure Models in the Handbook of Financial Econometrics, Elsevier
+Monika Piazzesi
+Department of Economics, Stanford University, Stanford, California
+
+Several aspects of bond
+yields, however, set them apart from other variables typically used inVAR studies. One
+aspect is that bonds are assets, and that bonds with many different maturities are traded at
+the same time. Bonds with long maturities are risky when held over short horizons, and
+risk-averse investors demand compensation for bearing such risk.Arbitrage opportunities
+in these markets exist unless long yields are risk-adjusted expectations of average future
+short rates. Movements in the cross section of yields are therefore closely tied together.
+These ties show up as cross-equation restrictions in a yield-VAR. Another aspect of yields is
+that they are not normally distributed, at least not until recently. This makes it difficult
+to compute the risk-adjusted expected value of future short rates.
+
+Term structure models capture exactly these aspects of bond yields. They impose the
+cross-equation restrictions implied by no-arbitrage and allow yields to be nonnormal.
+The word “affine term structure model” is often used in different ways. I will use the
+word to describe any arbitrage-free model in which bond yields are affine (constant plus-linear) functions of some state vector x.
+1 Affine models are thus a special class of
+term structure models, which write the yield $y(\tau)$ of a $\tau$-period bond as
+$y(\tau) = A(\tau) + B(\tau)x$
+for coefficients $A(\tau) and B(\tau)$ that depend on maturity $\tau$. The functions $A(\tau) and B(\tau)$
+make these yield equations consistent with each other for different values of $\tau$. The
+functions also make the yield equations consistent with the state dynamics.
+
+
+The functional form of bond yields is obtained from computing risk-adjusted expectations of future short rates.Therefore, restrictive assumptions have to be made on the risk-adjusted dynamics of the state
+vector. More concretely,the risk-adjusted process for the state vector needs to be an affine
+diffusion, a process with affine instantaneous mean and variance.
+
+Why Care About Bond Yields: 
+forecasting
+monetary policy
+debt policy
+derivative pricing and hedging 
+computed from a given
+model of the yield curve (see the references in Duffie et al.,2000). Banks need to manage
+the risk of paying short-term interest rates on deposits while receiving long-term interest
+rates on loans.
+
+policy shocks on long-term bonds outside of a yield-curve model.
+More patience is required to estimate a system of yield equations in a way that ensures
+no-arbitrage. The cross-equation restrictions have to be derived from parameters that
+describe the state dynamics and risk premia. Although the model is affine in the state
+vector x,the functions $A(\tau) and B(\tau)$ are nonlinear functions of the underlying parameters
+
+Cross-equation restrictions have many advantages. First, these restrictions ensure that
+the yield dynamics are consistent. $A(\tau) and B(\tau)$ make yield equations consistent with
+each other in the cross section and the time series. 
+
+Second, term structure models allow us to separate risk premia from expectations
+about future short rates.
+
+EH under which expected excess bond returns are zero. Modified versions of the EH have been tested under which expected excess returns are constant. These tests compare, e.g., the ratio of the likelihood function with and without restrictions implied by the EH (for references, see Bekaert and Hodrick,
+2001).The evidence suggests that expected returns on long bonds are on average higher
+than on short bonds and that they are time-varying. Cross-equation restrictions are then
+needed to model these risk premia.
+Third, unrestricted regressions imply that the number of variables needed to describe
+the yield curve equals the number of yields in the regression.
+
+2. BASICS
+2.1. Bond Pricing in Continuous Time
+Term structure modeling determines the price of zero-coupon bonds
+The pricing relation (2.2) shows that any yield-curve model consists of two ingredients:
+(i) the change of measure from Q to $Q^{\ast}$ and
+(ii) the dynamics of the short rate r under $Q^{\ast}$.
+In so-called factor models of the yield curve,(ii) is replaced by the following assumption:
+(ii)' the short rate r is a function R(x) of x and $x \in R^N$ is a time-homogeneous Markov process under $Q^{\ast}$.
+This means that x is the relevant state vector, a vector of factors. This modified (ii)
+assumption implies that the conditional expectation in (2.2) is some function F of time-to-maturity $\tau$ and the state x_t at time t, or
+$P(\tau)_t = F(x_t, \tau)$.
+To capture certain features of yield data (e.g., seasonalities around macroeconomic
+news releases), I will later consider functions R that also depend on time t and time-inhomogeneous Markov processes x, in which case $P^{\tau}_t = F(x_t, t,\tau)$ separately depends on t and $\tau$ (in addition to x_t)
+
+
+The payoff of zero-coupon bonds is 1 unit at maturity, so their price is
+CORRECT (2.2)
+where $E^{\ast}$ denotes expectation under $Q{\ast}$. Standard results show that if there exists a risk-neutral probability measure  $Q{\ast}$, a system of asset prices is arbitrage free
+
+The big advantage of pricing bonds (or any other assets) in continuous time is Ito’s
+Lemma. The lemma says that smooth functions F of some Ito process x and time t are
+again Ito processes (see Duffie, 2001, Chapter 5 for details). The lemma thus preserves
+the Ito property even if F is nonlinear. Ito’s Lemma allows me to turn the problem
+of solving the conditional expectation in (2.2) into the problem of solving a PDE for
+the bond price $F(x, \tau)$. The trick of computing (2.2) by solving a PDE is called the
+Feynman–Kac approach.
+
+2.2. Local Expectations Hypothesis
+The LEH states that the pricing relation (2.2) holds under the data-generating measure
+Q. Bond yields are thus given by
+LEH : 3) CORRECT (2.4)
+where $S = \int_{t}^{t+\tau} ru du$ (as above). The LEH therefore amounts to risk-neutral pricing: the data-generating measure Q and the risk-neutral measure $Q{\ast}$ coincide. This means that
+expected excess returns on long bonds are zero.
+The LEH is not the same as the more prominent EH, which states that bond yields
+$y^{\tau}_t$ are expected values of average future short rates, or
+EH : $\gamma^{\tau}_t = \frac{E_t(S)}{\tau}$. (2.5)
+
+The difference between the two hypotheses (2.4) and (2.5) is due to Jensen’s inequality.
+For example, suppose that the short rate is Gaussian under Q = $Q^{\ast}$, which implies that
+Affine Term Structure Models S is also Gaussian (as the sum of Gaussians). With this normality assumption, Eq. (2.4) becomes  CORRECT
+which differs from (2.5) because of the variance term.
+
+3. AFFINE MODELS
+Affine term structure models make functional-form assumptions in step (ii)' of yield curve modeling, which lead to tractable pricing formulas.The functional-form assumptions are on the short-rate function R(x) and the process x for the state vector under the
+risk-neutral measure. The functional form is affine in both cases:
+• R(x) is affine 
+• x is an affine diffusion under $Q^{\ast}$:
+• the drift $\mu^{\ast}_x(x)$  is affine
+• the variance matrix $\sigma^{\ast}_x(x) \sigma^{\ast}_x(x)'$ is affine.
+
+These functional forms are for coefficients under the risk-neutral measure. In particular,
+the drift $\mu_x(x)$ is affine under the data-generating measure only when $\sigma_x(x) \sigma_\xi(x)$ is
+affine, which can be seen from (2.12). The next sections make these assumptions more
+precise and show that bond prices $F(x,\tau)$ are exponential-affine in x. In this setting,
+yields are thus affine in x which explains the name of this class of models.
+
+3.1. Affine Short Rate
+The functional form of the short rate is made precise in the following assumption.
+Assumption 1 The short rate is given by
+$r = R(x) = \delta_0 +  \delta_1 x$
+for 4) CORRECT
+
+The choice of short-rate parameters [CORRECT 5] depends on the number of factors in
+the model.The short rate usually is the factor in one-factor models, which means 5 The short rate in one-factor models is Markov. In N-factor models, the
+short rate alone is not Markov, but the short rate together with N-1 yields is typically
+Markov.The short rate often serves as one of the factors in multidimensional models. In
+this case, we still have 5 . Long yields still depend on the other
+factors because the expected future path of the short rate depends on the current state
+x in (2.2), when the short rate covaries with these other factors under the risk-neutral
+measure.
+-->
+
+<!--
+Bertolini, Bertola, Prati () and Gara () observe the effect of Fed interventions on the volatility in interbank rates. Add
+(Schuhlhofer et all propose efficiency in the ample reserves regime adopted (date) address the tradeoff the Fed makes to minimize the frequency of operations, volatility of interest rates, and balance sheet costs 
+
+that daily money market rates hover around Fed targets and quickly revert to them in times of shocks.Bertolini et al note the tendency of short term rates to hover around official targets and quickly revert to them in times of shocks.
+
+Bertolini et al Time series methodology: 
+volatility of interest rates - rises in advance of reserve
+settlement days - declines in high rate regimes - biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
+
+Although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+-->
+
+
+<!--
+USE this in paper outline:  Section II provides a brief review of the current operation of re-
+ serve requirements and the federal funds market in the United
+ States. Section III develops a time-series description of daily changes
+ in the federal funds rate. 
+-->
+ 
+ <!--
+ Hamilton ----------------------
+ Section IV proposes a theoretical model of the federal funds market that
+ could account for these features as a result of line limits, transaction
+ costs, and weekend accounting conventions.
+ 
+ These results suggest that there is little, if any, interday speculation
+ that would smooth out small fluctuations in the federal funds rate. A
+ small temporary infusion of reserves through an overnight re-
+ purchase agreement by the Fed's trading desk lowers that day's fed-
+ eral funds rate by inducing movement along a schedule that repre-
+ sents lending banks' liquidity benefit from holding excess reserves.
+ 
+ The ability of the repurchase agreement to affect the interest does
+ not depend on whether the open-market operation is anticipated in
+ advance. 
+ 
+ A small temporary infusion of reserves through an overnight repurchase agreement by the Fed's trading desk, whether or not the open-market operation is anticipated in advance, lowers that day's federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. [repo means dealer deposits (borrowed) reserves collateralized by UST securities?]
+ 
+Hamilton provides valuable evidence of  end-of-quarter and end-of-year effects since bank balance sheets are publically available, providing a snapshot of an institution's assets on the last day of the
+quarter or the last day of the year. Fridays, the federal funds market is soft. A federal funds loan on a Friday has a 3-day term rather than a 1-day term, and it is not altogether surprising that if the 
+martingale hypothesis fails, its failure might show up in part in the appearance of something different about Fridays. 
+
+Hamilton (1996) adapts Nelson's (1991) model of daily stock return in a model of the conditional mean and the conditional variance of  the FFR federal funds rate. The volatility consequences of upward and downward moves in interest rates are asymmetric. There is controversy if the FFR and overight rates, follow a random walk. Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate. (Bertolini,Bertola, Prati ,) site frictions such as  transactions costs, interbank credit limits, overdraft penalties, obstacles to intra-period arbitrage preclude the FFR from following a martingale process.
+
+His empirical description of the time-series process that generates the
+ daily federal funds rate, simultaneously modeling the conditional
+ mean, variance, and overall shape of the probability distribution of
+ daily changes in the federal funds rate. These results are then used
+ to understand what happens to the federal funds rate when the Fed
+ makes an open-market purchase
+ 
+Mondays are independently estimated to be days of federal funds increases. If we accept the idea that the level of the  federal funds rate tends to be a little low on Fridays, the change from Friday to Monday by implication would be bigger than average.
+
+ 
+ I conclude that transaction costs, rather than a minor institu-
+ tional detail of this particular market, lie at the heart of the liquidity
+ effect that enables the Federal Reserve to change the interest rate on
+ a daily basis
+ 
+end-of-quarter and end-of-year effects as well. Public scrutiny of
+ many enterprises is based on their balance sheets, which typically
+ represent a snapshot of an institution's assets on the last day of the
+ quarter or the last day of the year. Some institutions appear willing
+ to hold certain assets on December 30 that they are unwilling to hold
+ on December 31. At the end of the year, there is a surge in asset
+ turnover and in corporations drawing on bank lines of credit, which
+ can generate a huge demand for short-term loans of good funds
+ around that date; see Allen and Saunders (1992) for further discus-
+ sion. Again at a minimum we want to allow for increased variability
+ of the federal funds rate at the end of the quarter and possibly tempo-
+ rary departures from the martingale hypothesis on these days as well
+ 
+ 
+ The model  In modeling the conditional mean, recall that the martingale hy-
+ pothesis does not restrict the process followed by it if t corresponds
+ to the first Thursday of a maintenance period. The last day of a
+ quarter may likewise reflect special circumstances, with limited substi-
+ tutability with reserves held on the day before or after. Thus if t is
+ the first day of a maintenance period or the first day of a quarter, I
+ describe the conditional mean for the federal funds rate with a pth-
+ order autoregression:
+ 
+ The mean 
+ \begin{align*}
+ i_t=\mu_t +\sigma_t \nu_t
+ \mu_t = i_{t-1} + \eta_{s_t} + \beta h_t
+ #y¯_t = [(sum_{i}^{}(v_{i,t}) times yhat_{i,t})]/(sum_{i}^{}v_{i,t})
+ \end{align*}
+ where re $s_t$ E {1, 2, . . ., 10} indicates which day of the maintenance
+ period is associated with observation t.
+  
+  Thus $\eta_2$ corresponds to the average change in the federal funds rate
+ between the first Thursday and Friday of a maintenance period,
+ whereas $\eta_10$ gives the average change of the federal funds rate on
+ settlement Wednesday. Under the martingale hypothesis, $\eta_j$ = 0 for j=2, 3, .. ., 10.
+ 
+ 
+To describe at', the conditional variance of the federal funds rate,
+ I adapt Nelson's (1991) model of daily stock returns
+ $log(\sigma^2_t)-\xi_{s_t}-\kappa h_t = (sum_{j=1}^{\tau}(log(\sigma^2_{t-j}) -\xi_{t-j}-\kappa h_{t-j} =
+ (\alpha abs(\nu_{t-1})-E(abs(\nu_{t-1})) + \chi\nu_{t-1})$  or $hi or \zeta$
+ 
+Empirical resultspp 38-44 
+ He finds deviations of the FFR from the FOMC target tend to dissipate quickly. (same for other rates?).  S fraction - ) of the cumulative change over the preceding two days is reversed on
+ day t:
+ $\mu_t = \eta_1 + i_{t-l} + \fi(i_{t-1} - i_{t - 3} + I'h_t $ (12)
+ 
+ the unconditional variance has the same value for days 2-7,
+ $ \xi_2 = \xi_2= cdot \xi_7 $ (13)
+ the generalized autoregressive conditional heteroskedasticity
+ effects are integrated:
+ $\delta_2 + \delta_2  + cdot + \delta_\tau= 1$
+ 
+Two magnitudes most useful for describing the conditional variance are (1) the conditional variance on the previous day and (2) the average deviation during the maintenance period (eqn 12)
+ 
+  The autoregressive coefficients that characterize the first day of a new maintenance pe-
+ riod or new quarter take the following form: some fraction - ) of
+ the cumulative change over the preceding two days is reversed on
+ day t. That is, these observations are described with the following
+ special case of (4):
+ $\mu_t = 91 + i_{t-l} + 4k(i_{t-1} - i_{t - 3} + I'h_t $ (12)
+ where I estimate + = - 0.81. This is clearly related to the conclusion
+ by Rudebusch (1994) that deviations of the funds rate from the value
+ targeted by the Fed tend to dissipate quickly. M
+ 
+ \url{https://bookdown.org/dalzelnm/bookdown-demo/mathematical-notation-in-r.html}
+ $Y_i \sim N( \mu, \sigma)$ makes  Yi∼N(μ,σ)
+ gridExtra::grid.arrange(g1,g2, g1,g2, ncol = 2)
+ .
+ The vector $h_t$ is a collection of zero-one dummy variables incorporating calendar effects.
+ Calendar effects nine elements of h_t :
+ t holidays (as captured by the first four elements of ht) matter for
+ the mean parameters (I) but not for the variance parameters (K). By
+ contrast, the end-of-quarter and end-of-year effects on the variance
+ were very dramati
+  j 1 Kj Meaning
+ 1 -.028 {.00} t precedes a 1-day holiday
+ (.020)
+ 2 -.031 {.00} t precedes a 3-day holiday
+ (.011)
+ 3 .023 {.00} t follows a 1-day holiday
+ (.020)
+ 4 .171 {.00} t follows a 3-day holiday
+ (.017)
+ 5 {.00} .853 t is the last day of quarter 1, 2, 3, or 4
+ (.379)
+ 6 {.00} .975 t is the last day of the year
+ (.765)
+ 7 {.00} 1.550 t is the day before, on, or after the last day of quarter 1,
+ (.216) 2, or 3
+ 8 {.00} {1.550} t is 2 days before, 1 day before, on, 1 day after, or 2 days
+ after the end of the year
+ 9 {.185} {.00} t is day 9 but precedes a 1-day holida
+ 
+  MAXIMUM LIKELIHOOD ESTIMATES OF OTHER PARAMETERS IN EQUATIONS
+ (7), (12), AND (15)
+ Parameter Value Meaning
+ $\fi$- .811 Fraction of $i_{t-1} - i_{t-3}$ that is expected to be reversed if t is
+ (.021) first day of a new period
+  $\delta$- .793 Weight on the previous day's log variance in determining
+ (.046) today's log variance
+   $\alpha$-.316 Weight on the absolute value of the previous day's innova-
+ (.036) tion in determining today's log variance
+ $\x$ .341 Additional effect of a positive previous day's innovation in
+ (.083) determining today's log variance
+  $\rho$- .861 Fraction of innovations drawn from distribution 1
+ (.026)
+ j 1{1.00} Standard deviation of distribution 1
+ T2 2.915 Standard deviation of distribution 2
+ (.200
+
+
+Fridays, the federal funds market is soft  the eta's
+ A federal funds loan on a Friday has a 3-day term rather
+ than a 1-day term, and it is not altogether surprising that if the mar-
+ tingale hypothesis fails, its failure might show up in part in the ap-
+ pearance of something different about Fridays. Likewise, days 3 and
+ 8 are both Mondays, and both are independently estimated to be days
+ of federal funds increases. If we accept the idea that the level of the
+ federal funds rate tends to be a little low on Fridays, the change from
+ Friday to Monday by implication would be bigger than average
+
+ proposes a complete
+ empirical description of the time-series process that generates the
+ daily federal funds rate, simultaneously modeling the conditional
+ mean, variance, and overall shape of the probability distribution of
+ daily changes in the federal funds rate. These results are then used
+ to understand what happens to the federal funds rate when the Fed
+ makes an open-market purchasThe federal funds market is a good place to start for an understand-
+ ing of either finance or monetary policy. From the point of view of
+ finance, overnight federal funds represent the shortest-term security
+ that is actively traded and thus form the base of any term structure
+ relation. Indeed, recent papers by Balduzzi, Bertola, and Foresi
+ (1993), Roberds, Runkle, and Whiteman (1994), and Rudebusch
+ (1994) suggest that several well-known puzzles in the term structure
+ of interest rates can be resolved by tracking these relations back to
+ daily changes in the federal funds rate.
+ From the point of view of monetary policy, the daily operating
+ procedures of the Federal Reserve System are also defined in terms
+ of the federal funds market. An open-market purchase injects neThe federal funds market is a good place to start for an understand-
+ ing of either finance or monetary policy. From the point of view of
+ finance, overnight federal funds represent the shortest-term security
+ that is actively traded and thus form the base of any term structure
+ relation. Indeed, recent papers by Balduzzi, Bertola, and Foresi
+ (1993), Roberds, Runkle, and Whiteman (1994), and Rudebusch
+ (1994) suggest that several well-known puzzles in the term structure
+ of interest rates can be resolved by tracking these relations back to
+ daily changes in the federal funds rate.
+ From the point of view of monetary policy, the daily operating
+ procedures of the Federal Reserve System are also defined in terms
+ of the federal funds market. An open-market purchase injects ne
+ a consensus as to the nature of predictable changes in
+ the federal funds rate or the economic forces that produce them.
+ Earlier researchers have agreed that this daily interest rate fails to
+ follow a martingale, However,
+ none of these studies made allowance for the spectacular outliers
+ and autoregressive conditional heteroskedasticity (ARCH) effects that
+ characterize these data, and apart from Campbell (1987), none of-
+ fered a detailed description of how the findings could be reconciled
+ with profit maximization by banks.
+-->
+
+
 # Results
 # Conclusion
 
@@ -2789,11 +3172,18 @@ article_citation <- list(
   type = "NBER Working Paper 31170"
 )
 
+\url{http://www.nber.org/papers/w31170}
 
-Christina D. Romer
- Romer
-Working Paper 31170
-http://www.nber.org/papers/w31170
+article_citation <- list(
+  author = c("Bianchi,Francesco", "Ludvigsony, Sydney C.","Ma,Sai"),
+  year = 2024,
+  month = 01,
+  title = "Monetary-Based Asset Pricing: A Mixed-Frequency Structural
+Approach",
+  type = "NBER Working Paper "
+)
+
+
 
 article_citation <- list(
   author = c("Javorscinski, Marek),
