@@ -424,16 +424,24 @@ The  FOMC reference rate changes from Libor to SOFR,was one such policy change.
 \emph{Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity}
 April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio). The onset of the Covid-19 pandemic in early 2020 led to turmoil in various financial markets.  Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets. Government agencies took action to stabilize financial markets and the economy.
 
+In June 2022, the Federal Reserve started reducing the size of its balance sheet, which had expanded to
+just under \$9 trillion in response to the COVID-19 pandemic. However, whereas banks’ reserves at the
+Federal Reserve have decreased, the investment of money market funds (MMFs) at the Federal Reserve’s
+overnight reverse repo (ON RRP) facility has continued to increase, reaching \$2.4 trillion in September
+2022. 
+
+ Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to ON RRP.The Fed’s ON RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both ON RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+
+Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in  December  2023 (urrently 	\439.81 billion , 5/31/2024).
+
+<!--
  The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR expired March 31, 2021 
 
 How monetary policy and the ON RRP facility interact with the private repo market is illustrated by MMFs use of the facility. The MMFs use of the ON RRP facility increased by $2 trillion between January 2021 and June 2022, MMFs'heir private repo lending fell by almost $500 billion. T
+
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
-
-  Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.The Fed’s O/N RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
-
-Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the O/N RPP rate, ending the safe asset deficit. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. 
-)
- RRP balance has plunged below $800 billion,  12/14/2023.   (It is currently 	439.81, 5/31/2024).
+-->
+ 
 <!--
 [CHECK and is fast approaching the zero bound] 	769.35.
 \url{https://libertystreeteconomics.newyorkfed.org/2023/12/dropping-like-a-stone-on-rrp-take-up-in-the-second-half-of-2023/}
@@ -820,8 +828,7 @@ QE4 2020-2021? $1,5 trillion through reverse repurchase transactions, short term
 The distributions of daily reference rates and billions of dollars in transactions, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \@ref{table_fomc}), altering medians, and variability as mesured by clustering around their medians, outliers, and time varying volatility
 -->
 # Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve
-Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the FFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)). Their 
-medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
+Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the EFFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)). Their medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
 <!--
 Another inquiry is how much the Federal Reserve is willing to offset volatility in the FFR as it manages the FFR with the target rates specified by the FOMC.
 -->
@@ -840,7 +847,7 @@ I have added the period of the zero lower bound. A more rigorous approach to ide
 During a period of normalcy, a series of 25 basis point (bp) increase rates from 2016 to mid 2019,a mid cycle adjustment with plus or minus 25 bp from August to November 2019, a series of 25 bp increases with QE during covid from November 2019  to mid March 2020,  the zero lower bound period in 2020-2021, and sequential rate increases during the taming of inflation mid March 2022 to mid December 2023.
 -->
 
-Repurchase and reverse repurchase funding markets became a major source of liquidity for primary dealers,hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed (or Treasury?) are required to intermediate new US Treasury issuance. They frequent the tri-party market with the lower Tri-Party General Collateral Rate (TGCR), where transactions are secured by Treasury securities (figure  \@ref(fig:Sample rates 3/4/2016-12/14/2023)).  The tri party market is the base layer of repurchase agreement transactions or repos. The TGCR is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities.The Fed conducts OMO in the tri party market, both  borrowing and lending. Primary dealers, the borrowers, obtain cheapest rates from lenders, asset managers in the tri party, then lend at a spread in other repo markets. (Reference CONCODA) at the higher broad General Collateral Rate (BGCR),  the market where primary dealers intermediate cash to leveraged investors (hedge funds). The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of overnight.
+Repurchase and reverse repurchase funding markets have become a major source of funding for primary dealers, hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed are required to intermediate new US Treasury issues. Primary dealers borrow at cheaper rates from lenders, asset managers in the tri party and the Fed, then lend at a spread in other repo markets. Loans are secured by collateral. They lend at the higher broad General Collateral Rate (BGCR) to leveraged investors such as hedge funds.The Fed conducts OMO in the tri party market, both  borrowing and lending.  The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of borrowing overnight.
 
 <!--
 \url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/}
@@ -861,10 +868,10 @@ Nov 2019 thru 2023 4 or 5 reports
 -->
 
 ## The history or rates from 3/4/2016-12/14/2023
-The rate data from the Federal Reserve Data Download Program, average volume weighted medians, better measure the central tendency of daily rates with outliers and skewed distributions. The Interquartile range (IQR), the 75th minus the 25 percentile of the data contains 50 percent of the data. Less influenced by extreme values, the IQR is a measure of variability that describes how tightly rates cluster around their median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outliers (Table (\@ref(tab:Rate characteristics 2016-2023) ), the extreme values in rates.
+The rate data from the Federal Reserve Data Download Program, average volume weighted medians, q better measure of central tendency since daily rates have skewed distributions with outliers. The Interquartile range (IQR), the 75th minus the 25 percentile of the data contains 50 percent of the data. Less influenced by extreme values, the IQR is a measure of variability that describes how tightly rates cluster around their median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outliers (Table (\@ref(tab:Rate characteristics 2016-2023) ), the extreme values in rates.
 
 \emph{Funding rates track the FFR}
-Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). The similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR) 132  bp,  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR),  benchmark that replaced Libor, 134 bp. The percentiles of rates reflect the same clustering around the EFFR  (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).
+Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). Similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR),  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR), 134 bp. The percentiles of rates reflect the same clustering around the EFFR  (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).
 
 <!--
 
@@ -874,10 +881,10 @@ to \@ref(fig:Sample rates 3/4/2016-12/14/2023),
 -->
 
 \emph{Variability: All rates except SOFR cluster tightly around their median (IQR)}
-Small IQRs indicate the FFR and money market rates are tightly clustered around their median values (Figure \@ref(fig:EFFR IQR and range of the sample 3/4/2016-12/14/2023)). Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  shows greater dispersion, 4.2 bp. (136.70-132.50).
+Small IQRs indicate the FFR and money market rates are tightly clustered around their median values (Figure \@ref(fig:EFFR IQR and range of the sample 3/4/2016-12/14/2023)). Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an IQR of  1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  shows greater dispersion, 4.2 bp. (136.70-132.50).
 
 \emph{Outliers}
-The FFR and money market rates are highly skewed with fatter tails.  A large range means high variability, a small range means low variability. the range of the EFFR and the money market rates, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points. The value of outliers, two percent of the data, are 23.36 (EFFR), 13.86 (TGCR), 16.11 (BGCR), and 14.51 (SOFR) basis points.  for the wholesale rates , BGCR, and SOFR. 
+The EFFR and money market rates are skewed with fatter tails.  A large range means high variability, a small range means low variability. The range of the EFFR and the money market rates,two percent of the data, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points -  15.99 (EFFR), 13.86 (TGCR), 16.11 (BGCR), and 14.51 (SOFR) basis points. 
 
 \emph{Volatility} 
 The change in volatility over time, the percent change in median reference rates, indicates heteroskedasticity in rate data. From 2016 to 2020, the percent change in these daily rates, ranges plus of minus 0.5 percent from 2016 to November 2019 (Figure \@ref(fig:Volatility percent change daily rates 2016-2023)). From  2020 to 2022 during the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
@@ -909,7 +916,7 @@ FIND THIS CHART OR DOES IT EXIST IN rates_sample. aka samplequantiles
 -->
 
 \emph{Volume}
-The volume of SOFR transactions, \$754 billion per day, dwarf trading in all other FFR and money market rates. EFFR has a notably lower daily trade volume of \$79 billion,  TGCR and BGCR at around \$300 billion each (TGCR 296.95, BGCR 311.23). (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). 
+The volume of SOFR transactions, \$754 billion per day, dwarf trading in all other EFFR and money market rates. EFFR has a notably lower daily trade volume of \$79 billion,  TGCR and BGCR at around \$300 billion each (TGCR 296.95, BGCR 311.23). (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). 
 
 <!--
 IS THIS ABOUT EPISODES?
@@ -2723,7 +2730,7 @@ From 2016 to 2020, the percent change in daily median overnight rights, is in th
 Daily volume in money market rates TBGR  \$297 billion,and BGCR \$311 billion, almost quadruple the transactions in the EFFR: \$79 billion. SOFR transactions, \$754 billion per day, dwarf trading in all other overnight reference rates.
 
 <!--
-Daily transaction volume in SOFR (billions of dollars ) is around 754 billion. The money market volumes in TGCR and BGCR around 300 billion.  Daily trade volume in EFFR is a low 79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
+Daily transaction volume in SOFR is around \$754 billion. The money market volumes in TGCR and BGCR around \$300 billion.  Daily trade volume in EFFR is a low \$79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
 -->
 
 <!--
