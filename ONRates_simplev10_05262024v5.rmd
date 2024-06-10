@@ -313,9 +313,9 @@ Alvarez metrics for kurtosis
 
 
 # Overnight reference rates and transactions
-   Daily weighted average median rates and quantiles of reference rates, policy and money market rates, are provided by the NY Federal Reserve download program.The effective federal funds rate (EFFR) tracks transactions in the federal funds market. The secured overnight funding rate (SOFR) captures transactions in  overnight wholesale funding markets. 
+   Daily weighted average median rates reference rates, policy and money market rates provided by the NY Federal Reserve download program  comprise the effective federal funds rate (EFFR) that tracks transactions in the federal funds market, the secured overnight funding rate (SOFR) that captures transactions in  overnight wholesale funding markets, and the money market rates - the Tri-Party General Collateral Rate (TGCR) and the  broad general collateral rate (BGCR).
    
-  Repurchase agreements to borrow or lend securities for cash or reserves takes place in the Tri, GCF repo and bilateral markets. The Tri-Party General Collateral Rate (TGCR) is a measure of rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. Transactions in the tri party market are centrally cleared. The over the counter broad general collateral rate (BGCR) measures overnight rates where the U.S. central bank’s dealers trade with their customers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities. replaces LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC).
+  Repurchase agreements to borrow or lend securities for cash or reserves take place in the tri-party, GCF repo, and bilateral markets. The TGCR are rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. Transactions in the tri party market are centrally cleared. The over the counter BGCR rates are the more lucrative rates in which  the U.S. central bank primary  dealers trade with their customers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities replaced LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC).
 
 <!--
 <!--The overnight  bank funding rate (OBFR), similar to the EFFR, is a broad measure of U.S. dollar funding costs for U.S. based banks.
@@ -333,9 +333,9 @@ affect rate volatility. How that volatility may very under different monetary po
 
 
 ## Monetary policy during the sample period 2016-2023
-  Before the Great Financial Crisis (GFC)  of 2008, Federal Reserve policy was conducted by open market operations (OMO), trading a limited supply of central bank deposits (reserves and securities in the interbank Federal Funds market. To address the great financial crisis (GFC), the Fed made large scale asset purchases (LSAPs) from 2008 to 2014 - QE,QE1, QE2, and QE3, funded by US Treasury sale of Treasury bills. LSAPs substituted reserve balances for a large part of its SOMA Treasury holdings. Swamped in reserves, banks had no need to borrow in the Fed Funds market. From 2010 to late 2019, reserves went through a full expansion-contraction cycle  and expanded  again in early 2020, $\$$8 trillion from 2010 and 2019 to $\$$19 trillion (2014 and 2021) of banks’ assets. {?}
+  Before the Great Financial Crisis (GFC)  of 2008, Federal Reserve policy was conducted by open market operations (OMO), trading a limited central reserves and securities in the interbank Federal Funds market. To address the great financial crisis (GFC), the Jed's large scale asset purchases (LSAPs) from 2008 to 2014 - QE,QE1, QE2, and QE3, funded by US Treasury sale of Treasury bills substituted reserve balances for a large part of its SOMA Treasury holdings. But LSAPs resulted in excess liquidity, swamped with reserves, banks had no need to borrow in the Fed Funds market. From 2010 to late 2019, reserves went through a full expansion-contraction cycle. Again in early 2020, reserves grew from $\$$8 trillion from 2010 and 2019 to $\$$19 trillion (2014 and 2021).
 
-  To regain control over the FFR after this major increase in liquidity, the Fed experimented with with different policies during the seven year period of our sample 2016-2023. 
+  To regain control over the FFR after this major increase in liquidity, the Fed experimented with with different policies. 
 
 <!--
  Shortly
@@ -354,28 +354,16 @@ extended in the summer of 2012 and the possibility of more LSAPs remains
 under discussion
 -->
 
- October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts gave banks an incentive for a short term investment.The IORB is the Fed’s principal tool for interest rate control. In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the O/N RRP facility, providing the Fed’s supplementary tool for interest rate control. 
+ October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts is the Fed’s principal tool for interest rate control. In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the overnight reverse repurchase  facility (ON RRP), the Fed’s supplementary tool for interest rate control. 
 
-  In 2019, the FOMC initiated the policy regime of ample reserves to  maintain/manage the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and O/N RRP led the Fed to manage the FFR within a corridor system defined by FOMC target rates.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks to keep the FFR close to target. Together these administrative rates created  a floor system for managing the FFR. IORB is the ceiling and the overnight reverse repurchase rate (O/N RRP rate) the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate.
-
-<!--
-In this environment, market rates trade below the IORB rate because nonbank lenders are willing to lend at such rates. For example, the Federal Home Loan Banks (FHLBs), which are important lenders in the fed funds market and not eligible to earn IORB, are willing to lend at rates below the IORB rate rather than leave funds unremunerated in their accounts at the Fed. To provide a floor under the fed funds rate, the FOMC introduced the ON RRP facility.Fed pays the cash lender an overnight interest rate,  O/N RRP reward rate. Considered the risk-free repo rate, nobody is willing to lend below it. O/N RRP therefore keeps rates within the Fed’s policy target range while creating a floor,  Rates can still drop below what the Fed pays via its O/N RRP facility as not all entities have access to the Fed’s facility.
-
-Similarly, no bank should be borrow at a higher rate than the O/N RRP. No bank should lend at a lower rate than the ONRPP. Banks and non-bank financial institutions should be unwilling to invest funds in private markets below the O/N RRP. Competition among borrowers should drive rates to the discount window (DW) rate.
+In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created  a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate.
 -->
-
+<!--
+ANOTHER ISSUE
 Changes in spreads of administered rates also change trading patterns, investing in these funding markets or keeping reserves with the Fed. When SOFR, the Fed’s broadest measure of repo rates, exceeds O/N RRP, cash lenders returns to private repo, leaving the Fed’s O/N RRP facility. When the spread between SOFR and IORB has widened, funding market participants allocate cash to repo trades. When Treasury bill rates exceed the O/N RRP, investors also abandon the Fed's Reverse Repurchase facility.
-
-<!--
-ALTERNATIVE TEXT
-In the ample reserves regime introduced in 2019, the Fed adjusts administrative rates, the IORB and the O/ N RPP, to manage the FFR between the upper and lower target rates set by the Federal Open Market Committee (FOMC).Under the Ample Reserves policy, the Federal Reserve manages the FFR within its desired range in a “floor” system through Temporary open market operations (TOMO), short-term repurchase and reverse repurchase agreements. These short-term repurchase and reverse repurchase agreements are designed to temporarily add or drain reserves available to the banking system and influence day-to-day trading in the Federal Funds market. Under this ample reserves regime The Federal Reserve manages the the policy rate, the Federal Funds rate (FFR) within its target range. The Fed sets the interest on reserve balances (IORB) paid on deposits held at the bank, and the overnight reverse repurchase facility (ON RRP).  The ability to set the IORB and the O/N RRP are key for the Fed’s implementation of monetary policy. 
-
-The administered rates, the IORB and the O/N RPP,  along with an ample supply of reserves, created a corridor system for managing the Fed Funds rate. The IORB is the ceiling, the O/N RRP the floor.
-In this  corridor system, the interest on reserves (IORB) is the ceiling, the overnight reverse repo purchase rare (O/N RRP) the floor.The ability to set the IORB and the O/N RRP are key for the Fed’s implementation of monetary policy.In the ample reserves regime. the administered rates constitute a “floor” system to manages the FFR within its target range, the upper and lower targets set by the Federal Open Market Committee (FOMC). The interest on reserves rate (IORB or IORB) is the Fed’s principal tool for interest rate control.the Fed adjusts administrative rates to manages the FFR between the FOMC target upper and lower bounds.The IORB.  Banks have little or no incentive to lend their reserves to other banks at rates lower than the IORB rate they can receive from the Fed. The IORB is, in effect, a reservation rate for banks’ intermediation activities.The IORB rate serves as a reservation rate for banks’ intermediation activities,
 -->
 
-
-\emph(The Fed's involvement in repurchase markets)
+\emph{The Fed's involvement in repurchase markets}
 
 <!--
 Concurrently, Sinc {DATES} there has been a dramatic increase in funding primary dealers and other financial participants through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. [DATES]
@@ -394,23 +382,29 @@ Conversely, in a reverse repo transaction, the Desk sells securities to a counte
 To support its policy objectives, the FOMC has established repo and reverse repo facilities. The Overnight Reverse Repo Facility (ON RRP) helps provide a floor under overnight interest rates by acting as an alternative investment for a broad base of money market investors when rates fall below the interest on reserve balances (IORB) rate. The Standing Repo Facility (SRF) serves as a backstop to dampen upward interest rate pressures that can occasionally emerge in overnight U.S. dollar funding markets and spillover into the fed funds market. The Desk generally conducts both the ON RRP and SRF operations each business day.
 -->
 
-   since the 1920s, The Fed used repo transactions to manage the reserves held by commercial banks with the Fed. over time, repo operations  became the Fed's primary means of adjusting bank reserves in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
+   since the 1920s, The Fed used repo transactions to manage the reserves held by commercial banks with the Fed. Repo operations became the Fed's primary means of adjusting bank reserves.
+
+<!--
+   in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
 
    Following the increase in liquidity from the LSAP response to the GFC, the Fed no longer needed to engage in daily reserve management hence, no need for the Fed to actively participate in the repo market to adjust reserves. After 2008, The Fed's ability to pay interest on reserves (IORB) made reserves an attractive short-term investment.
-
+-->
 
 \emph{Repurchase and reverse purchase transactions}
 <!--
 When the Fed is the counterparty to an exchange of securities for reserves, the Fed loans reserves to the counterparty in exchange for a security as collateral. Reserves decrease as the counterparty's account at the Fed isdebited and the Federal Funds rate increases.  In a reverse repo transaction, the Fed lends securities to a counterparty, increasing reserves by a deposit in their account, and lowering the Federal Funds rates. Through these "reserve injections," the Fed was able to 
 -->
 
-When the Fed does manage the FFR to offset high frequency liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions  to keep federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
+To offset liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions  to keep the federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
 
 \emph{the reverse repurchase facility}
-   Fed opened its RRP (reverse repo) facility in 2013 to address the excess liquidity after the GRC that had pushed the fed funds rate below the Fed's target range. To reduce the likelihood of below-target rates, the Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the O/N RRP rate. The reverse repo facility is important for monetary policy during periods of high reserves when banks’ willingness to take on additional reserves diminishes, reducing the rates they pay for deposits and other funding.
+   Fed opened its RRP (reverse repo) facility in 2013 to absorb the excess liquidity after the GRC that drove the Fed Funds rate below the Fed's target range. The Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the ON RRP rate. During periods of high reserves, the reverse repo facility takes up reserves when banks no longer want to take on additional reserves and reducing deposit rates and other funding. 
 
 <!--
-   The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio. The reverse repo facility is available to a wide range of money market lenders.In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily  decreases the supply of reserve balances in the banking system and raises the FFR.   
+   The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio. The reverse repo facility is available to a wide range of money market lenders.In a reverse repo transaction, the 
+   
+   
+   Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily  decreases the supply of reserve balances in the banking system and raises the FFR.   
 
 The ON RRP facility has been effective in helping maintain control of the fed funds rate well within the target policy range. More recently, however, one of the ON RRP's primary uses has been to absorb funds that would otherwise end up as reserves on bank balance sheets, with the Fed effectively becoming the largest borrower in the repo market, as seen in Figure 1.
 
@@ -419,9 +413,8 @@ An important shift linked to the ON RRP is that the Fed now directly interacts w
 While it can be attractive to MMFs, the ON RRP interest rate has been set lower than the IOR that banks earn, making the participation in the program uneconomical for banks. An important consequence of this relative pricing is that the stock of bank reserves is now heavily influenced by flows in and out of MMFs.
 -->
 
-
-\emph{the Standing Repo Facility (RCF)}
-Significant disruptions occurred with the Fed reduced its balance sheets after quantitative easing (QE). The Fed initiated the Standing Repo Facility (SRF) after the 2019 spike in repo, the FFR, and FX swap rates  exceeded the Fed’s upper target rate. Scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
+\emph{the Standing Repo Facility (SRF)}
+The  the 2019 spike in repo rates followed the Fed reduction its balance sheet build up after quantitative easing (QE). the FFR, and FX swap rates exceeded the Fed’s upper target rate. The Fed initiated the Standing Repo Facility (SRF) after scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
 
 
 \emph{Other changes}
@@ -433,8 +426,7 @@ April 2021, the Federal Reserve began unwinding measures that enabled its larges
 
  The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR expired March 31, 2021 
 
-How monetary policy and the ON RRP facility interact with the private repo market is illustrated by MMFs use of the facility. 
-The MMFs use of the ON RRP facility increased by $2 trillion between January 2021 and June 2022, MMFs'heir private repo lending fell by almost $500 billion. T
+How monetary policy and the ON RRP facility interact with the private repo market is illustrated by MMFs use of the facility. The MMFs use of the ON RRP facility increased by $2 trillion between January 2021 and June 2022, MMFs'heir private repo lending fell by almost $500 billion. T
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
 
   Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.The Fed’s O/N RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
@@ -508,11 +500,9 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 -->
 
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
-Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}), include FOMC rate and administered rate changes, different policy experiments , events such as the March 2020 dash for cash, and macroeconomic announcements. 
+Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023})  
 
-The  Romer and Romer (2023) narrative approach to macroeconomic identification from quality sources,then incorporate the evidence into a statistical framework.  Their criteria formonetary shocks are times when monetary policymakers changed money growth and interest rates for reasons unrelated to current or prospective real economic  activity. These changeson policy are “shocks” in the sense that monetary policy is not being driven by output  or other factors affecting output.
-
-However, this approach would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023}) 
+The  Romer and Romer (2023) narrative approach to macroeconomic identification incorporate the evidence into a statistical framework.  Their criteria that monetary shocks be unrelated to current or prospective real economic  activity changes would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash.
 
 <!--
 In identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospective developments in real activity. 
@@ -525,25 +515,28 @@ Actions” (very similar to what are now called the FOMC “Minutes”)
 Romer and Romer regress the variable of impact like GDP or inflation on a current and past index of shocks - positive if contractionary, negative i expansionary, or zero if no impact.
 -->
 
-Another source of shocks is found the literature began by (see Campbell et al., 2012) that identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Public statements of FOMC intentions—forward guidance—can substitute for lower rates at the zero bound the issue they address. The authors distinguish between Odyssean forward guidance, which publicly commits the FOMC to a future action, and Delphic forward guidance, which merely forecasts macroeconomic performance and likely monetary policy actions. 
+The literature beginning Campbell et al. (2012) identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. The authors distinguish between Odyssean forward guidance, which publicly commits the FOMC to a future action, and Delphic forward guidance, which merely forecasts macroeconomic performance and likely monetary policy actions. <!-- Public statements of FOMC intentions—forward guidance—can substitute for lower rates at the zero bound the issue they address. -->
 
 Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate unexpected news conveyed in the announcement. News could be the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy. They represent different structural shocks that may affect the economy differently.
 
-Jarocinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (see Campbell et al., 2012).
+Jarocinski (2022)  estimates structural shocks underlying the reactions of financial market to FOMC announcements. Not specified ex ante, ex post the estimated shocks can be  labeled as the current fed funds rate policy, as 1)an “Odyssean” forward guidance, a commitment to a future course of policy rates such as a large scale asset purchase or 2) a “Delphic” forward guidance, a statement about the future course of policy rates, a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
 <!--
-Jarocinski (2022) estimates high-frequency reactions of financial variables, such as interest rates and stock prices, to FOMC announcements. Usually very small, but sometimes very large.  Exploting these fat tails or excess kurtosis} implies that these data may contain information about the nature of the underlying structural shocks. Given the importance of the Fed policies, it is vital to exploit this available information as well as possible. 
+Jarocinski (2022) estimates high-frequency reactions of financial variables, such as interest rates and stock prices, to FOMC announcements. Usually very small, but sometimes very large.  Exploting these fat tails or excess kurtosis} implies that these data may contain information about the nature of the underlying structural shocks. Given the importance of the Fed policies, it is vital to exploit this available information as well as possible.
+-->
 
-His baseline model expresses surprises, high-frequency reactions to FOMC announcements), in near-term fed funds futures, 2 and 10-year Treasury yields and the S$\&$P500 stock index as linear combinations of four Student-t distributed shocks}. (These four shocks are very precisely estimated and) These four shocks ex post have natural economic interpretations:
+His baseline model expresses surprises, high-frequency reactions to FOMC announcements, in near-term fed funds futures, 2 and 10-year Treasury yields and the S$\&$P500 stock index as linear combinations of four Student-t distributed shocks}.  These four shocks ex post have natural economic interpretations:
 1.  the standard monetary policy shock raises the near-term fed funds futures, with a diminishing effect on longer maturities, and depresses stock prices.
 2. The (Odyssean) forward guidance shock increases the 2-year Treasury yield the most and depresses the stock prices. 
 3. The asset purchase shock increases the 10-year Treasury yield the most and plays a large role in some of the most important asset purchase announcements. 
 4. Delphic forward guidance shock (Campbell et al. 2012)  has a similar impact on the yield curve as the Odyssean forward guidance shock, but triggers an increase, rather than a decrease, in the stock prices.
 
--->
 
 
-Monika Piazzesi (2005) takes this approach  in a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR, a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks
+Monika Piazzesi (2005) takes this approach  in a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR in a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. 
+<!--
+ This information can improve bond pricing and ability to identify monetary policy shocks.
+--> 
 
 <!--
 so it is crucial to disentangle their effects.
@@ -827,7 +820,7 @@ QE4 2020-2021? $1,5 trillion through reverse repurchase transactions, short term
 The distributions of daily reference rates and billions of dollars in transactions, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \@ref{table_fomc}), altering medians, and variability as mesured by clustering around their medians, outliers, and time varying volatility
 -->
 # Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve
-Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the FFR. They respond quickly to changes in the EFFR or the administered rates IORB and O/N RRP (Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)). Their 
+Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the FFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)). Their 
 medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
 <!--
 Another inquiry is how much the Federal Reserve is willing to offset volatility in the FFR as it manages the FFR with the target rates specified by the FOMC.
