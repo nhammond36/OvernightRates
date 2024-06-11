@@ -7,40 +7,35 @@ geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
 output: 
   bookdown::pdf_document2:
     toc: true  # Specify whether a table of contents should be included
-    regex: 
-      - "Rate characteristics \\d{1,2}"
-      - "EFFR Key percentiles during sample period\\d{1,2}"
     keep_tex: true
-    fig_caption: true
+    fig_caption: yes
     number_sections: yes
     #latex_engine: lualatex
     latex_engine: pdflatex
 header-includes:
   - \usepackage{booktabs}
   - \usepackage{float}
+  - \usepackage{placeins}
 echo: false  
 ---
 
 <!--
-
----
-title: "ONrates12022023"
-author: "Hammond"
-date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+regex: 
+      - "Rate characteristics \\d{1,2}"
+      - "EFFR Key percentiles during sample period\\d{1,2}"
+      
 geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
 output: 
-  pdf_document:
+  bookdown::pdf_document2:
+    toc: true
     keep_tex: true
     fig_caption: yes
     number_sections: yes
-    #fig_crop: yes
-    latex_engine: lualatex  # Change the LaTeX engine to lualatex
+    latex_engine: pdflatex
 header-includes:
   - \usepackage{booktabs}
   - \usepackage{float}
-echo: false  
----
-
+echo: false
 -->
 
 
@@ -104,27 +99,6 @@ fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data fi
 #kable(fomc)
 ```
 
-Table of contents
-
-
-Introduction
-
-Monetary policy during the sample period 2016-2023
- FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
-
-Time series properties of overnight policy, interbank rates, transactions, and reserves held at the Federal Reserve
-  The history or reference rates from 3/4/2016-12/14/2023
-    Quick response of money market rates to FOMC changes
-    clustering around median IQR
-    Outliers Range
-    volatility
-
-Reference rate behavior during different policy episodes
-Methodology
-
-References
-
-Appendices
 
 <!--
 Structure of article: IMRAD:
@@ -357,7 +331,7 @@ under discussion
  October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts is the Fed’s principal tool for interest rate control. In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the overnight reverse repurchase  facility (ON RRP), the Fed’s supplementary tool for interest rate control. 
 
 In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created  a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate.
--->
+
 <!--
 ANOTHER ISSUE
 Changes in spreads of administered rates also change trading patterns, investing in these funding markets or keeping reserves with the Fed. When SOFR, the Fed’s broadest measure of repo rates, exceeds O/N RRP, cash lenders returns to private repo, leaving the Fed’s O/N RRP facility. When the spread between SOFR and IORB has widened, funding market participants allocate cash to repo trades. When Treasury bill rates exceed the O/N RRP, investors also abandon the Fed's Reverse Repurchase facility.
@@ -397,7 +371,7 @@ When the Fed is the counterparty to an exchange of securities for reserves, the 
 
 To offset liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions  to keep the federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
 
-\emph{the reverse repurchase facility}
+\emph{The reverse repurchase facility}
    Fed opened its RRP (reverse repo) facility in 2013 to absorb the excess liquidity after the GRC that drove the Fed Funds rate below the Fed's target range. The Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the ON RRP rate. During periods of high reserves, the reverse repo facility takes up reserves when banks no longer want to take on additional reserves and reducing deposit rates and other funding. 
 
 <!--
@@ -413,7 +387,7 @@ An important shift linked to the ON RRP is that the Fed now directly interacts w
 While it can be attractive to MMFs, the ON RRP interest rate has been set lower than the IOR that banks earn, making the participation in the program uneconomical for banks. An important consequence of this relative pricing is that the stock of bank reserves is now heavily influenced by flows in and out of MMFs.
 -->
 
-\emph{the Standing Repo Facility (SRF)}
+\emph{The Standing Repo Facility (SRF)}
 The  the 2019 spike in repo rates followed the Fed reduction its balance sheet build up after quantitative easing (QE). the FFR, and FX swap rates exceeded the Fed’s upper target rate. The Fed initiated the Standing Repo Facility (SRF) after scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
 
 
@@ -828,7 +802,7 @@ QE4 2020-2021? $1,5 trillion through reverse repurchase transactions, short term
 The distributions of daily reference rates and billions of dollars in transactions, change dramatically under different FOMC policy regimes [figure times series of rates] (Figure \ref{fig:).  (Table \@ref{table_fomc}), altering medians, and variability as mesured by clustering around their medians, outliers, and time varying volatility
 -->
 # Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve
-Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the EFFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \@ref(fig:Sample reference rates 3/4/2016-12/14/2023)). Their medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
+Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the EFFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \@ref(fig: 3/4/2016-12/14/2023)). Their medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
 <!--
 Another inquiry is how much the Federal Reserve is willing to offset volatility in the FFR as it manages the FFR with the target rates specified by the FOMC.
 -->
@@ -873,12 +847,6 @@ The rate data from the Federal Reserve Data Download Program, average volume wei
 \emph{Funding rates track the FFR}
 Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). Similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR),  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR), 134 bp. The percentiles of rates reflect the same clustering around the EFFR  (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).
 
-<!--
-
-Table \@ref(tab:Rate characteristics zero lower bound 3/17/2020-3/16/2022) provides a summary of the data.
-Table \@ref(tab:Rate characteristics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
-to \@ref(fig:Sample rates 3/4/2016-12/14/2023),
--->
 
 \emph{Variability: All rates except SOFR cluster tightly around their median (IQR)}
 Small IQRs indicate the FFR and money market rates are tightly clustered around their median values (Figure \@ref(fig:EFFR IQR and range of the sample 3/4/2016-12/14/2023)). Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an IQR of  1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  shows greater dispersion, 4.2 bp. (136.70-132.50).
@@ -992,6 +960,7 @@ Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sst
 \newpage
 
 ```{r , fig.caption="EFFR IQR and range of the sample 3/4/2016-12/14/2023",echo=FALSE,warning=FALSE, message=FALSE, fig.num=TRUE,results='asis'}
+#\@ref(fig:EFFR IQR and range of the sample 3/4/2016-12/14/2023)
 boxplot_sample <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
   y0 = c(Estats[5], Tstats[3], Bstats[3], Sstats[3]),
@@ -1353,109 +1322,6 @@ SOFR Sstatscovid 151.19 7.37 19.46 1085.60
 
 -->
 
-# Behavior the Federal Funds rate and money market rates during different policy episodes
-The vertical shifts in rates from 2016 to 2023 suggest changes in distribution of rates during policy episodes. Forbes (2024) summarizes these monetary policy episodes. I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024).
-
-* Normalcy   3/4/2016 to 7/31/2019  
-* Mid cycle adjustment 8/1/2019 to 10/31/2019  
-* Covid 11/1/2019 to 3/16/2020  
-* Zero lower bound 3/17/2020 to 3/16/2022  
-* Taming inflation 03/17/2022 - 12/14/2023 
-
-The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019))
-Rate hikes 2015-2018 Returning to normalcy		
-20-Dec-18	25	2.25% to 2.50%
-Sept. 27, 2018	25	2.0% to 2.25%
-Jun. 14, 2018	25	1.75% to 2.0%
-22-Mar-18	25	1.50% to 1.75%
-Dec. 14, 2017	25	1.25% to 1.50%
-15-Jun-17	25	1.00% to 1.25%
-16-Mar-17	25	0.75% to 1.00%
-Dec. 15, 2016	25	0.5% to 0.75%
-
-
-The EFFR and the money market rates during the adjustment period (Figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019))
-2019 rates cuts mid cycle adjustment		
-31-Oct-19	-25	1.50% to 1.75%
-Sept. 19, 2019	-25	1.75% to 2.0%
-Aug. 1, 2019	-25	2.0% to 2.25%
-
-
-The EFFR and the money market rates during the covid period (Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020))
-
-2020 Fed Rate Cuts: Coping with Covid-19		
-16-Mar-20	-100	0% to 0.25%
-3-Mar-20	-50	1.0% to 1.25%
-
-
-The EFFR and the money market rates during the zero lower bound (Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022))
-
-The EFFR and the money market rates during the taming of inflation (Figure \@ref(fig:Rates during 
-Taming inflation 03/17/2022-12/14/2023)) from March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
-
-Fed Rate Hikes 2022-2023: Taming Inflation		
-26-Jul-23	25	5.25% to 5.50%
-3-May-23	25	5.00% to 5.25%
-22-Mar-23	25	4.75% to 5.00%
-1-Feb-23	25	4.50% to 4.75%
-14-Dec-22	50	4.25% to 4.50%
-2-Nov-22	75	3.75% to 4.00%
-21-Sep-22	75	3.00% to 3.25%
-27-Jul-22	75	2.25% to 2.50%
-16-Jun-22	75	1.50% to 1.75%
-5-May-22	50	0.75% to 1.00%
-17-Mar-22	25	0.25% to 0.50%
-
-
-## Percentiles
-Percentiles of the EFFR during the normalcy period  (Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)). The EFFR, median and IQR values are withing the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe). The IQR and outliers are illustrated Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
-
-
-Percentiles of the EFFR during the adjustment period (Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)). The outlier from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)) and (Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)).
-
-Percentiles of the EFFR during the pandemic (Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)). The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)) and (Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)).
-
-Percentiles of the EFFR during the zero lower bound (Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)) and (Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)).
-
-(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
-(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
-
-Percentiles of the EFFR during the Fed's fight to control inflation (Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)) The EFFR and the IQR are within the FOMC target rates (Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)) and (Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023))
-
-
-
-
-<!--
-(see Figure \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
-(see Percentiles of the EFFR during the normalcy period 3/4/2016-7/31/2019)
-3/4/2016-7/31/2019)
- (see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
-
-see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
-(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
-
-(see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
- (see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
-
- (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
- see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
- 
-  (see Figure \@ref(fig:Rates during Taming inflation 03/17/2022-12/14/2023)
- (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
- 
-(Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
-(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
-(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
-
--->
-
-<!--
-(Figure \@ref(fig:Time series of rates by policy regime)).
-\@ref(tab:Rate characteristics normalcy 3/4/2016-7/31/2019) provides a summary of the data.
-Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
--->
 
 ```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='markup',results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1500,9 +1366,7 @@ colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
 #print(xtable(charnorm), type = "latex", include.rownames = FALSE, caption.placement = "top", comment = FALSE)
 ```
-<!--
-Table \@ref(tab:Rate statistics normalcy 3/04/2016-7/31/2019) provides a summary of the data.
--->
+
 
 ```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1545,32 +1409,36 @@ xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top
 #print(xtable(normstats),type = "latex", include.rownames = FALSE, caption.placement = "top", comment = FALSE)
 ```
 
-<!--
-(see Figure \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
-3/4/2016-7/31/2019)
- (see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
--->
- 
-```{r, fig.caption= "Rates during normalcy 3/17/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
+
+
+\FloatBarrier
+```{r fig.caption="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, fig.num=TRUE, results='asis', warning=FALSE, message=FALSE, fig.pos='H'}
+# \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
 library(ggplot2)
 library(reshape2)
-k=1
+
+k <- 1
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn<-begn[k]
-edn<-endn[k]
-norm<-rrbp[bgn:edn,]
-maxr<-max(norm[,2:ncol(norm)]) 
-minr<-min(norm[,2:ncol(norm)])
-meltrates_norm <- melt(norm,id="sdate")
-ratests_norm<<- ggplot(meltrates_norm,aes(x=sdate,y=value,colour=variable,group=variable)) + 
-  geom_point(shape=16,size=1) +
-  labs(caption = "Normalcy 3/04/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
-  scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
-  theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-print(ratests_norm)
+bgn <- begn[k]
+edn <- endn[k]
+
+norm <- rrbp[bgn:edn, ]
+maxr <- max(norm[, 2:ncol(norm)]) 
+minr <- min(norm[, 2:ncol(norm)])
+
+meltrates_norm <- melt(norm, id="sdate")
+ratests_norm <- ggplot(meltrates_norm, aes(x=sdate, y=value, colour=variable, group=variable)) + 
+  geom_point(shape=16, size=1) +
+  labs(caption="Normalcy 3/04/2016-7/31/2019", x="", y="Basis Points (bp)", color="Rate") +
+  scale_y_continuous(breaks=seq(minr, maxr, by=25), limits=c(minr, maxr)) + 
+  theme_minimal() + 
+  guides(shape=guide_legend(title="Rate"))
+
+ratests_norm
 ```
 
+\FloatBarrier
 
 ```{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
 ratecol=2
@@ -1585,11 +1453,10 @@ normE<-my_envepisodes$norm
 maxr<-max(normE[,ncol(normE)])
 minr<-min(normE[,ncol(normE)])
 ```
-<!--
- (see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
---> 
- 
-```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+
+\FloatBarrier 
+```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#(see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
 library(ggplot2)
 normE<-my_envepisodes$norm
 sdate <- normE[, 1]
@@ -1604,15 +1471,9 @@ rates_norm <<- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variabl
   scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
   theme_minimal()
   #my_envepisodes$rates_norm<-rates_norm
-print(rates_norm)
+rates_norm
 ```
-
-
-
-<!--
-see \@ref(tab:Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
-see \@ref(tab:Rate statistics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
--->
+\FloatBarrier
 
 ```{r, tab.caption="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1659,9 +1520,7 @@ colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
 #print(xtable(charadj), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
-<!--
-see \@ref(tab:Rate statistics mid cycle adjustment 8/1/2019-10/31/2019) provides a summary of the data.
--->
+
 
 ```{r, tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1710,12 +1569,9 @@ row.names(adjstats) <- NULL
 xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
 #print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment #8/1/2019-10/31/2019", caption.placement="top")
 ```
-<!--
-see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
-(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
--->
 
-```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE}
+```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
 k=2  
 library(ggplot2)
 library(reshape2)
@@ -1752,11 +1608,10 @@ qadjE<-my_envepisodes$adjust
 maxr<-max(qadjE[,rates]) 
 minr<-min(qadjE[,rates])
 ```
-<!--
-(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
--->
 
-```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE}
+
+```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
 library(ggplot2)                        
 library(reshape2)
 qadjE<-my_envepisodes$adjust # Using the same data as the first plot
@@ -1782,10 +1637,6 @@ print(rates_adjust)
 #my_envepisodes$rates_adjust<-rates_adjust
 ```
 
-
-<!--
-Table \@ref(tab:Rate characteristics covid 11/1/2019-3/16/2020) provides a summary of the data.
--->
 
 ```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
 library(xtable)
@@ -1837,9 +1688,6 @@ xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top"
 #print(xtable(charcovid), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
-<!--
-Table \@ref(tab:Rate statistics covid 11/1/2019-3/16/2020) provides a summary of the data.
--->
 
 ```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1856,13 +1704,10 @@ row.names(covidstats) <- NULL
 xtable(covidstats, include.rownames = FALSE,comment = FALSE)
 #print(xtable(covidstats),type = "latex",include.rownames = FALSE, caption.placement = "top")
 ```
-
-<!--
- (see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
- (see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
---> 
  
-```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
+```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#(see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
+
 library(ggplot2)
 library(reshape2)
 k=3  
@@ -1902,11 +1747,10 @@ qcovidE<-my_envepisodes$covid
 maxr<-max(covid[,2:ncol(covid)]) 
 minr<-min(covid[,2:ncol(covid)])  
 ```
-<!--
-(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
--->
 
-```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
+
+```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
 library(ggplot2)
 rates=2
 qcovidE<-my_envepisodes$covid # Using the same data as the first plot
@@ -1927,8 +1771,6 @@ rates_covid <- ggplot(meltrates_covid, aes(x = sdate, y = value, colour = variab
 print(rates_covid)
 #my_envepisodes$rates_covid<-rates_covid
 ```
-
-
 
 ```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1977,9 +1819,7 @@ colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
 #print(xtable(charzlb),type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
-<!--
-see \@ref(tab:Rate statistics zero lower bound 3/17/2020-3/16/2022)
--->
+
 
 ```{r, tab.caption="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
@@ -2020,12 +1860,10 @@ row.names(zlbstats) <- NULL
 xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
 #print(xtable(zlbstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
-<!--
- (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
- see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
---> 
+
  
-```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
+```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+# (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
 library(ggplot2)
 library(reshape2)
 k=4 
@@ -2061,11 +1899,10 @@ zlbE<-my_envepisodes$zlb
 maxr<-max(zlbE[,rates]) #25
 minr<-min(zlbE[,rates]) # 4
 ```
-<!--
-see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
--->
 
-```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE}
+
+```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
+#see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
 library(ggplot2)
 qzlbE<-my_envepisodes$zlb
 sdate <- qzlbE[, 1]
@@ -2130,9 +1967,7 @@ xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.p
 #print(xtable(charinflation), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
-<!--
-Table \@ref(tab:Rate statistics Taming inflation 03/17/2022-12/14/2023) provides a summary of the data.
--->
+
 
 ```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -2177,12 +2012,10 @@ xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming
 #print(xtable(inflationstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
-<!--
- (see Figure \@ref(fig:Rates during Taming inflation 03/17/2022-12/14/2023)
- (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
--->
+
  
-```{r, fig.caption= "Rates during Taming inflation 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE}
+```{r, fig.caption= "Rates during Taming inflation 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+#  (see Figure \@ref(fig:Rates during Taming inflation 3/17/2022-12/14/2023)
 library(ggplot2)
 library(reshape2)
 k=5
@@ -2218,11 +2051,10 @@ qinflationE<-my_envepisodes$inflationE
 maxr<-max(qinflationE[,rates]) 
 min(qinflationE[,rates])
 ```
-<!--
-(see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
--->
 
-```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE}
+
+```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
+# (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
 library(ggplot2)
 library(reshape2)
 qinflationE<-my_envepisodes$inflation
@@ -2242,10 +2074,10 @@ print(rates_inflation)
 #my_envepisodes$rates_inflation<-rates_inflation
 ```
 
-<!
-boxplots?
+<!--
+boxplots
 -->
-```{r, EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019}
+```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
 qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
 qnormT=quantilesT[bgn:edn,] 
 qnormB=quantilesB[bgn:edn,] 
@@ -2259,11 +2091,8 @@ Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
 Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 ```
 
-<!--
-(see Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
--->
-
-```{r , fig.caption= "EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.caption= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
 library(ggplot2)
 boxplot_normalcy <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2303,7 +2132,7 @@ sdate position
  $ Percentile99_EFFR: num  220 218 218 218 218 218 218 218 218 218 ...
  -->
  
-```{r, EFFR Key percentiles during mid cycle adustment period 8/1/2019-10/31/2019, echo=FALSE}
+```{r, IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019, echo=FALSE}
 qadjE<-my_envepisodes$quantilesE[bgn:edn,]
 qadjT<-my_envepisodes$quantilesT[bgn:edn,]
 qadjB<-my_envepisodes$quantilesB[bgn:edn,]
@@ -2321,7 +2150,9 @@ Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],S
 ```
 
 
-```{r , fig.caption= "EFFR Key percentiles during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+
+```{r , fig.caption= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
  library(ggplot2)
  boxplot_adjust<- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2347,7 +2178,7 @@ Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],S
 my_environmentbox$adjust <- badjust
 ```
 
-```{r , EFFR Key percentiles during covid period 8/1/2019-10/31/2019, echo=FALSE}
+```{r , IQR and range of rates during covid period 8/1/2019-10/31/2019, echo=FALSE}
 qcovidE<-my_envepisodes$quantilesE[bgn:edn,]
 qcovidT<-my_envepisodes$quantilesT[bgn:edn,]
 qcovidB<-my_envepisodes$quantilesB[bgn:edn,]
@@ -2364,7 +2195,9 @@ Bstatscovid2<-c(Bstatscovid[1],Bstatscovid[2], TargetUe=NA, TargetDe=NA,Bstatsco
 Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatscovid[3],Sstatscovid[4],Sstatscovid[5],Sstatscovid[6])
 ```
 
-```{r , fig.caption= "EFFR Key percentiles during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
+
+```{r , fig.caption= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
  library(ggplot2)
  boxplot_covid <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2391,7 +2224,7 @@ Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatsco
 ```
 
 
-```{r, EFFR Key percentiles during zero lower bound period 3/16/2022,echo=FALSE}
+```{r, IQR and range of rates during zero lower bound period 3/16/2022,echo=FALSE}
 k=4
 begn<-c(1,859,923,1014,1519,1)
 endn<-c(858,922,1013,1518,1957,1957)
@@ -2415,8 +2248,8 @@ Bstatszlb <- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
 Sstatszlb <- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
 ```
 
-
-```{r , fig.caption= "EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.caption= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
 library(ggplot2)
 boxplot_zlb <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2441,7 +2274,7 @@ boxplot_zlb <- data.frame(
   print(bzlb)
   my_environmentbox$zlb <-  bzlb 
 ```
-```{r, EFFR Key percentiles during inflation period 03/17/2022-12/14/2023, echo=FALSE}
+```{r, IQR and range of rates during inflation period 03/17/2022-12/14/2023, echo=FALSE}
 k=5 
 begn<-c(1,859,923,1014,1519,1)
 endn<-c(858,922,1013,1518,1957,1957)
@@ -2466,7 +2299,8 @@ Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
 ```
 
 
-```{r , fig.caption= "EFFR Key percentiles during inflation period 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.caption= "IQR and range of rates during inflation period 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
 library(ggplot2)
 boxplot_inflation <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2509,29 +2343,7 @@ library(patchwork)
 ```
 -->
 
-<!--
-See (\@ref(fig:Time series of rates by policy regime) provides a summary of the data.
 
-
-```{r, fig.cap="Time series of rates by policy regime", echo=FALSE, results='asis', fig.show='hold'}
-library(patchwork)
-pratests<-(ratests_norm | ratests_adjust) / (ratests_covid |ratests_zlb) / ratests_inflation
-#pratests <- (ratests_norm / ratests_covid) | (ratests_adjust / ratests_zlb) / ratests_inflation
-print(pratests)
-my_envepisodes$pratests<-pratests
-```
--->
-<!--
-See (\@ref(fig:Percentiles of rates during policy regimes) provides a summary of the data.
-
-
-```{r, fig.cap="Percentiles of rates during policy regimes", echo=FALSE, results='asis', fig.show='hold'}
-#prates <- rates_norm / rates_adjust / rates_covid / rates_zlb / rates_inflation
-prates <- (rates_norm | rates_adjust |rates_covid ) / (rates_zlb | rates_inflation)
-#prates <- (rates_norm / rates_covid) | (rates_adjust / rates_zlb) / rates_inflation
-print(prates)
-```
--->
 
 ```{r, episode parameters, echo=FALSE,results="asis"}
 begn<- c(1, 859, 923,  1014, 1519, 1)
@@ -2542,9 +2354,7 @@ end_dates <-sdate[endn[k]]
 start_dates_strings <- as.character(start_dates)
 end_dates_strings <- as.character(end_dates)
 ```
-<!--
-see \@ref(tab:Median of rates during policy regimes) provides a summary of the data.
--->
+
 
 ```{r Combine episode dataframes, include=FALSE}
 episodesstats <- my_envepisodes$episodesstats
@@ -2554,6 +2364,126 @@ episodeschar <- my_envepisodes$episodeschar
 <!--
 See (\@ref(tab:Comparative statistics of all policy episodes) provides a summary of the data.
 -->
+
+<!--
+Chat advice on figure and tab placement
+If the chunks producing the figures and tables are already placed before the text and reference statements in your RMarkdown document, and you're still encountering the issue where the figures and tables appear before the text, there might be a few additional factors to consider:
+
+Compilation Order: Ensure that you're compiling your RMarkdown document correctly. In some cases, the order in which the chunks are processed during compilation might not align with their position in the document. Double-check the compilation process to ensure that the text and references are processed after the chunks producing the figures and tables.
+
+Float Placement Options: If you're using LaTeX to generate a PDF, the fig.pos and tab.pos options control the placement of figures and tables. Make sure these options are correctly set to 'H' to force placement "Here" in the document.
+
+Chunk Output Options: Review the output options for the chunks producing the figures and tables. Ensure that they are set appropriately to generate the desired output format (e.g., results='asis' for tables, fig.cap for figure captions).
+
+LaTeX Packages: Check if any LaTeX packages or custom templates used in your document might be affecting the float placement behavior. Sometimes, conflicting packages or template settings can override the placement options specified in the RMarkdown document.
+
+Chunk Labels and References: Verify that the labels used in the reference statements (\@ref{}) match the labels defined in the corresponding chunks producing the figures and tables. Mismatched labels can cause the references to fail.
+
+Debugging Output: Consider adding temporary debugging messages or markers in your RMarkdown document to track the order of chunk execution during compilation. This can help identify any unexpected behavior in the compilation process.
+
+If you've reviewed these aspects and the problem persists, it might be helpful to share a minimal reproducible example of your RMarkdown document along with details about your compilation environment. With this information, I can offer more targeted assistance in resolving the issue.
+
+The order of compilation refers to the sequence in which the components of your RMarkdown document are processed and transformed into the final output format (e.g., PDF). In most cases, the RMarkdown document is processed by a conversion tool (e.g., knitr for RMarkdown) that executes the code chunks, incorporates the results into the document, and converts it into the desired output format.
+
+Here are some resources where you can learn more about the compilation process and best practices for organizing your RMarkdown documents:
+
+RMarkdown Definitive Guide: The RMarkdown Definitive Guide, provided by RStudio, offers comprehensive documentation on using RMarkdown, including details about the compilation process and best practices for organizing your documents. You can access it here.
+
+knitr Documentation: The knitr package documentation provides detailed information about how R code chunks are processed during compilation. You can find the documentation here.
+
+RMarkdown Cookbook: The RMarkdown Cookbook offers practical tips and examples for working with RMarkdown, including guidance on structuring your documents and controlling the output format. You can find it here.
+
+When examining your RMarkdown document, look for any patterns or dependencies between the chunks, such as references to variables or objects defined in earlier chunks. Ensure that the chunks are organized in a logical sequence that reflects the flow of your document and the dependencies between different components.
+
+Additionally, pay attention to any compilation settings or options specified in your RMarkdown document or in the tool you're using to compile it (e.g., RStudio). These settings can affect the order in which the chunks are executed and the final output is generated.
+
+By carefully reviewing these aspects and following best practices for organizing your RMarkdown document, you can ensure smooth and predictable compilation results. If you encounter any specific issues or challenges, don't hesitate to ask for further assistance!
+
+Certainly! Here are some resources that provide documentation and guidance for creating tables and figures in RMarkdown documents:
+
+RMarkdown Definitive Guide: The RMarkdown Definitive Guide covers a wide range of topics related to RMarkdown, including creating and customizing tables and figures. It provides detailed explanations, examples, and best practices for incorporating tables and figures into your documents. You can access it here.
+
+R Graphics Cookbook: The R Graphics Cookbook by Winston Chang is a comprehensive resource for creating various types of plots and graphics in R. It includes recipes for creating basic and advanced plots using base R graphics, ggplot2, and other plotting libraries. While it's not specific to RMarkdown, many of the techniques and examples can be applied to RMarkdown documents. You can find the book here.
+
+ggplot2 Documentation: If you're using ggplot2 for creating figures in RMarkdown, the ggplot2 documentation provides detailed explanations of the package's features and functions. It includes examples and tutorials for creating different types of plots, customizing plot aesthetics, and incorporating them into RMarkdown documents. You can find the documentation here.
+
+knitr Documentation: The knitr package documentation includes information on generating and customizing tables in RMarkdown documents. It covers features such as the kable() function for creating simple tables from data frames, as well as more advanced options for customizing table formatting and appearance. You can find the documentation here.
+
+blogdown: If you're interested in creating and customizing HTML documents with RMarkdown, the blogdown package provides tools for generating interactive and responsive figures using JavaScript libraries like D3.js. While it's primarily focused on creating blogs and websites with RMarkdown, many of the techniques for creating dynamic figures can be applied to other types of RMarkdown documents. You can find the package here.
+
+These resources should provide you with a good starting point for learning how to create and customize tables and figures in RMarkdown documents. If you have any specific questions or need further assistance, feel free to ask!
+
+-->
+
+# Behavior the Federal Funds rate and money market rates during different policy episodes
+The vertical shifts in rates from 2016 to 2023 suggest changes in distribution of rates during policy episodes. Forbes (2024) summarizes these monetary policy episodes. I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024).
+
+* Normalcy   3/4/2016 to 7/31/2019  
+* Mid cycle adjustment 8/1/2019 to 10/31/2019  
+* Covid 11/1/2019 to 3/16/2020  
+* Zero lower bound 3/17/2020 to 3/16/2022  
+* Taming inflation 03/17/2022 - 12/14/2023 
+
+## The history of rates by policy episode
+
+The EFFR and the money market rates during the normalcy period (Figure \@ref{fig:Rates during normalcy period 3/4/2016-7/31/2019})
+Rate hikes 2015-2018 Returning to normalcy		
+20-Dec-18	25	2.25% to 2.50%
+Sept. 27, 2018	25	2.0% to 2.25%
+Jun. 14, 2018	25	1.75% to 2.0%
+22-Mar-18	25	1.50% to 1.75%
+Dec. 14, 2017	25	1.25% to 1.50%
+15-Jun-17	25	1.00% to 1.25%
+16-Mar-17	25	0.75% to 1.00%
+Dec. 15, 2016	25	0.5% to 0.75%
+
+
+The EFFR and the money market rates during the adjustment period (Figure \@ref{fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019})
+2019 rates cuts mid cycle adjustment		
+31-Oct-19	-25	1.50% to 1.75%
+Sept. 19, 2019	-25	1.75% to 2.0%
+Aug. 1, 2019	-25	2.0% to 2.25%
+
+
+The EFFR and the money market rates during the covid period (Figure \@ref{fig:Rates during covid 11/1/2019-3/16/2020})
+
+2020 Fed Rate Cuts: Coping with Covid-19		
+16-Mar-20	-100	0% to 0.25%
+3-Mar-20	-50	1.0% to 1.25%
+
+
+The EFFR and the money market rates during the zero lower bound (Figure \@ref{fig:Rates during zero lower bound 3/17/2020-3/16/2022})
+
+The EFFR and the money market rates during the taming of inflation (Figure \@ref{fig:Rates during 
+Taming inflation 03/17/2022-12/14/2023}) from March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+
+Fed Rate Hikes 2022-2023: Taming Inflation		
+26-Jul-23	25	5.25% to 5.50%
+3-May-23	25	5.00% to 5.25%
+22-Mar-23	25	4.75% to 5.00%
+1-Feb-23	25	4.50% to 4.75%
+14-Dec-22	50	4.25% to 4.50%
+2-Nov-22	75	3.75% to 4.00%
+21-Sep-22	75	3.00% to 3.25%
+27-Jul-22	75	2.25% to 2.50%
+16-Jun-22	75	1.50% to 1.75%
+5-May-22	50	0.75% to 1.00%
+17-Mar-22	25	0.25% to 0.50%
+
+
+## Percentiles
+Percentiles of the EFFR during the normalcy period  (Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)). The EFFR, median and IQR values are withing the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe). The IQR and outliers are illustrated Figure \@ref{fig:IQR and range of rates during normalcy period 3/4/2016-7/31/2019}.
+
+
+Percentiles of the EFFR during the adjustment period (Figure \@ref{fig:EFFR during adjustment period 8/1/2019-10/31/2019}). The outlier from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref{fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019}) and (Figure \@ref{fig:IQR and range of rates during mid cycle adjustment period 8/1/2019-10/31/2019}).
+
+Percentiles of the EFFR during the pandemic (Figure \@ref{fig:EFFR during covid period 11/1/2019-3/16/2020}). The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref{fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020}) and (Figure \@ref{fig:IQR and range of rates during covid period 11/1/2019-3/16/2020}).
+
+Percentiles of the EFFR during the zero lower bound (Figure \@ref{fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022}) and (Figure \@ref{fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022}).
+
+
+Percentiles of the EFFR during the Fed's fight to control inflation (Figure \@ref{fig:EFFR during inflation period 3/17/2022-12/14/2023}) The EFFR and the IQR are within the FOMC target rates (Figure \@ref{fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023}) and (Figure \@ref{fig:IQR and range of rates during inflation period 3/17/2022-12/14/2023})
+
     
 ```{r, tab.cap="Comparative statistics of all policy episodes", echo=FALSE, results='asis'}
 #Med_table
@@ -2609,7 +2539,7 @@ colnames(range_table) <- categories
 print(range_table)
 
 stacked_table <- rbind(med_table, iqr_table, range_table)
-print(stacked_table)
+#print(stacked_table)
 ```
 
 The average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR.
@@ -2641,11 +2571,12 @@ The IQR and range provide more information about the series, how close they stay
 
 
 \emph{Variability: clustering of funding rates  around their median (IQR)}
-Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole  (Table \@ref(tab: IQR of rates during the policy regimes)(middle panel Table). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3bp during the inflation episode. Boxplots show the IQR, the location of the median and tails for the outliers ((Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
-(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
-(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023))
+Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole  (Table \@ref(tab: IQR of rates during the policy regimes)(middle panel Table). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3bp during the inflation episode. Boxplots show the IQR, the location of the median and tails for the outliers.
+(Figure \@ref{fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019})
+(Figure \@ref{fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019})
+(Figure \@ref{fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020})
+(Figure \@ref{fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022})
+(Figure \@ref{fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023})
 
 <!--
 Fifty percent of EFFR rates range from 1.22 during normalcy to 4.66 bp during the adjustment periods.
@@ -2662,12 +2593,6 @@ SOFR exhibits the greater variability; for the sample as a whole, IQR for SOFR i
 (\url{https://www.concoda.com/p/the-silent-monetary-revolution?r=dsye&utm_campaign=post&utm_medium=web})
 -->
 
-(Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
-(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
-(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
-(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
-
 <!--
 div style="text-align: center;"> for box plots
 Not true in the repo spike during the pandemic, LIBOR skyrocketed above the Fed Funds rate, echoing stress in the unsecured debt markets while SOFR, failed to reveal the disturbance (check against the NYFed data)
@@ -2678,32 +2603,6 @@ Not true in the repo spike during the pandemic, LIBOR skyrocketed above the Fed 
 9/20/2019	1.9	1.85	1.85	1.85
 9/23/2019	1.9	1.85	1.82	1.82
 9/24/2019	1.9	1.85	1.94	1.94
--->
-<!--
-REVIEW AND DELETE
-much lower during during covid,  between 1.3-1.4 bp and the zero lower bound. 0.12 and 0.15 bp. during the the zero lower bound 0.22 bp during normalcy;  (\@ref(tab: IQR of rates during policy regimes). The largest IQR is during the inflation regime, 3.3-3.4 bp, but still small. 
-
-INFLATION The interquartile range for the money market rates TGCR and BGCR are 3.26-3.46 bp, smaller than the 1.62 bp of the policy rate, EFFR. 
-
-COVID OR ZLB?
-Table \@ref(tab:Rate characteristics zero lower bound 3/17/2020-3/16/2022) provides a summary of the data.
-The interquartile range for the money market rates TGCR and BGCR are 0.22-0,23 bp, smaller than the 1.22 bp of the policy rate, EFFR. The SOFR has the largest IQR, some 3.3 bp. The OBFR,designed to track the policy rate. is similar to the EFFR.
-[ADD BOXPLOTS] (\@ref(tab:boxplots of rates during policy regimes).
--->
-
-<!--
-IQR   Sample   Normalcy Adjust Covid Zlb  Inflation
-EFFR  1.56     1.22    4.66   2.35  1.54  1.62
-TGcr  0.92     0.22    1.3    0.31  0.12  3.26
-BGCR  0.96     0.23    1.36   0.42  0.15  3.36
-SOFR  4.02     3.30   10.53   7.37  3.05  5.68
--->
-
-<!--
-Compare with sample discription, then delete
-\emph{Variability: clustering of funding rates  around their median (IQR)}
-The interquartile range, the 75th percentile minus the 25th percentile, captures where  50 percent of the data lie. The IQR summarize a typical value and the variability in the sample.The EFFR is on average within the FOMC target range, 145.52 to 170.52.  Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an ICR of  1.56 basis points (\@ref(tab:Sample statistics 2016-2023), the TGCR and BGCR an even tighter range under one bp (133), SOHR  4.2 (136.70-132.50)
-The IQR, a measure of variability for skewed distributions, Because it’s based on the middle half of the distribution, it’s less influenced by extreme values. Larger values indicate that the central portion of your data are further spread out. Conversely, smaller values show that the middle values cluster more tightly. 
 -->
 
 
@@ -2721,26 +2620,9 @@ SOFR  14.51      8.53    41.65  19.46  14.44  21.35
 \emph{Volatility}
 Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is plus of minus 0.5 percent from 2016 to 2020. Extreme values during the periods of the pandemic and the zero lower bound, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent.  then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\@ref(fig:volatility Percent change Daily rates 2016-2023)).
 
-<!--
-During the pandemic (covid 11/1/2019-3/16/2020) until the Fed began its fight to contain inflation in 2023. 
-From 2016 to 2020, the percent change in daily median overnight rights, is in the range of plus of minus 0.5 percent (see \@ref(fig:volatility Percent change Daily rates 2016-2023)).Volatility falls steadily during the fight against inflation
--->
 
 \emph{Volume}
 Daily volume in money market rates TBGR  \$297 billion,and BGCR \$311 billion, almost quadruple the transactions in the EFFR: \$79 billion. SOFR transactions, \$754 billion per day, dwarf trading in all other overnight reference rates.
-
-<!--
-Daily transaction volume in SOFR is around \$754 billion. The money market volumes in TGCR and BGCR around \$300 billion.  Daily trade volume in EFFR is a low \$79 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
--->
-
-<!--
-DO FOR EPISODES 
-COVID: Daily transaction volume in SOFR (billions of dollars ) is around 1086 billion. The money market volumes in TGCR and BGCR around 402-423  billion.  Daily trade volume in EFFR is a low 71.7 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
-
-INFLATION Daily transaction volume in SOFR (billions of dollars ) is around 1200 billion. The money market volumes in TGCR and BGCR around 456to 470  billion.  Daily trade volume in EFFR is a low 100 billion.  The percentiles of rates reflect the same clustering around the EFFR and SOFR as do their medians.
-
- [ADD VOLUME FIGURE]
--->
 
 
 
