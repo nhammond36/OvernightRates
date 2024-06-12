@@ -9,6 +9,7 @@ output:
     toc: true  # Specify whether a table of contents should be included
     keep_tex: true
     fig_caption: yes
+    extra_dependencies: ["flafter"]
     number_sections: yes
     #latex_engine: lualatex
     latex_engine: pdflatex
@@ -54,7 +55,9 @@ library(patchwork)
 library(caTools)
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
+```{r}
+knitr::opts_chunk$set(fig.pos = "!H")
+```
 
 ```{r, load environment mp, echo=FALSE, cache=FALSE}
 my_envmp <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmentmp.RDS")
@@ -561,7 +564,7 @@ What is forward guidance? - Brookings Institution
 
 Brookings Institution
 Macroeconomic Effects of FOMC Forward Guidance | Brookings
-\url{https://www.brookings.edu/articles/what-is-forward-guidance/#:~:text=Stronger%2C%20explicit%20commitments%20about%20the,to%20changes%20in%20the%20economy.|
+\url{https://www.brookings.edu/articles/what-is-forward-guidance/#:~:text=Stronger%2C%20explicit%20commitments%20about%20the,to%20changes%20in%20the%20economy.
 
 
 * Bank for International Settlements
@@ -1368,7 +1371,7 @@ xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top"
 ```
 
 
-```{r, tab.caption="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
 library(xtable)
@@ -1412,11 +1415,11 @@ xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top
 
 
 \FloatBarrier
-```{r fig.caption="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, fig.num=TRUE, results='asis', warning=FALSE, message=FALSE, fig.pos='H'}
-# \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
+```{r ratestsnorm, fig.cap="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, fig.num=TRUE, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(reshape2)
-
+# \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
+#, results='asis' fig.pos='H' out.extra = ''
 k <- 1
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
@@ -1455,7 +1458,7 @@ minr<-min(normE[,ncol(normE)])
 ```
 
 \FloatBarrier 
-```{r, fig.caption= "EFFR during normalcy period 3/4/2016-7/31/2019", rates_norm,fig.num=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratesnorm, fig.cap= "EFFR during normalcy period 3/4/2016-7/31/2019", fig.num=TRUE, echo=FALSE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #(see Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)
 library(ggplot2)
 normE<-my_envepisodes$norm
@@ -1475,7 +1478,7 @@ rates_norm
 ```
 \FloatBarrier
 
-```{r, tab.caption="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=2  
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1522,7 +1525,7 @@ xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top"
 ```
 
 
-```{r, tab.caption="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=2  
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1570,7 +1573,7 @@ xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/201
 #print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment #8/1/2019-10/31/2019", caption.placement="top")
 ```
 
-```{r, fig.caption="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratestsadjust,fig.cap="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
 k=2  
 library(ggplot2)
@@ -1588,11 +1591,11 @@ ratests_adjust <- ggplot(meltrates_adjust,aes(x=sdate,y=value,colour=variable,gr
   labs(caption = "Adjustment 8/1/2019-10/31/2019", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-print(ratests_adjust)
+ratests_adjust
 #Removed 3 rows containing missing values (`geom_point()`).
 ```
 
-```{r, EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
+```{r,  EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
 rates=2
 vol=3
 targetup = 4
@@ -1610,7 +1613,7 @@ minr<-min(qadjE[,rates])
 ```
 
 
-```{r, fig.caption= "EFFR during adjustment period 8/1/2019-10/31/2019", rates_adjust,eval=TRUE, echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratesadjust, fig.cap= "EFFR during adjustment period 8/1/2019-10/31/2019", eval=TRUE, echo=FALSE,fig.num=TRUE, results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
 library(ggplot2)                        
 library(reshape2)
@@ -1633,12 +1636,12 @@ rates_adjust <<- ggplot(meltrates_adjust, aes(x = sdate, y=value, colour=variabl
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") +  #Specify date format and breaks
   theme_minimal()
-print(rates_adjust)
+rates_adjust
 #my_envepisodes$rates_adjust<-rates_adjust
 ```
 
 
-```{r, tab.caption="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
+```{r, tab.cap="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
 library(xtable)
 k=3  
 begn<-c(1,859,923,1014,1519,1)
@@ -1689,7 +1692,7 @@ xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top"
 ```
 
 
-```{r, tab.caption="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
@@ -1704,8 +1707,8 @@ row.names(covidstats) <- NULL
 xtable(covidstats, include.rownames = FALSE,comment = FALSE)
 #print(xtable(covidstats),type = "latex",include.rownames = FALSE, caption.placement = "top")
 ```
- 
-```{r, fig.caption= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+
+```{r ratestscovid, fig.cap= "Rates during covid 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #(see Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)
 
 library(ggplot2)
@@ -1727,7 +1730,7 @@ ratests_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,grou
   labs(caption = "Covid 11/1/2019-3/16/2020", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-print(ratests_covid)
+ratests_covid
 ```
 <!--
 \emph{Funding rates cluster around the FFR}
@@ -1749,7 +1752,7 @@ minr<-min(covid[,2:ncol(covid)])
 ```
 
 
-```{r, fig.caption= "EFFR during covid period 11/1/2019-3/16/2020",rates_covid,echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratescovid,fig.cap= "EFFR during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
 library(ggplot2)
 rates=2
@@ -1768,11 +1771,11 @@ rates_covid <- ggplot(meltrates_covid, aes(x = sdate, y = value, colour = variab
   scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0, maxr)) + 
   scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "1 month") +  
   theme_minimal()
-print(rates_covid)
+rates_covid
 #my_envepisodes$rates_covid<-rates_covid
 ```
 
-```{r, tab.caption="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=4  
 begn<-c(1,859,923,1014,1519,1)
@@ -1821,7 +1824,7 @@ xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", caption.placeme
 ```
 
 
-```{r, tab.caption="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
 library(xtable)
 
@@ -1862,7 +1865,7 @@ xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bo
 ```
 
  
-```{r, fig.caption= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratestszlb, fig.cap= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 # (see Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)
 library(ggplot2)
 library(reshape2)
@@ -1881,12 +1884,12 @@ ratests_zlb<- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=var
   labs(caption = "Zero lower bound 3/17/2020-3/16/2022", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-print(ratests_zlb)
+ratests_zlb
 #zlb<-my_envepisodes$zlb
 ```
 
 
-```{r, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
+```{r rateszlb, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
 rates=2
 vol=3
 targetup = 3
@@ -1901,7 +1904,7 @@ minr<-min(zlbE[,rates]) # 4
 ```
 
 
-```{r, fig.caption= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",rates_zlb,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
+```{r rateszlb, fig.cap= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
 #see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
 library(ggplot2)
 qzlbE<-my_envepisodes$zlb
@@ -1918,12 +1921,12 @@ rates_zlb <- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=vari
   scale_y_continuous(breaks = seq(0,maxr, by = 5), limits = c(0,maxr)) + 
   scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "3 months") + 
   theme_minimal()
-print(rates_zlb)
+rates_zlb
 #my_envepisodes$rates_zlb<-rates_zlb
 ```
 
 
-```{r, tab.caption="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=5 
 begn<-c(1,859,923,1014,1519,1)
@@ -1969,7 +1972,7 @@ xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.p
 
 
 
-```{r, tab.caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+```{r, tab.cap="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k <- 5 
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -2014,7 +2017,7 @@ xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming
 
 
  
-```{r, fig.caption= "Rates during Taming inflation 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratestsinflation, fig.cap= "Rates during Taming inflation 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis',warning=FALSE, message=FALSE, fig.pos='H'}
 #  (see Figure \@ref(fig:Rates during Taming inflation 3/17/2022-12/14/2023)
 library(ggplot2)
 library(reshape2)
@@ -2034,11 +2037,11 @@ ratests_inflation<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
   scale_y_continuous(breaks = seq(minr, maxr, by = 50
   ), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-print(ratests_inflation)
+ratests_inflation
 ```
 
 
-```{r, EFFR during inflation period 03/17/2022-12/14/2023, echo=FALSE}
+```{r ratesinflation, EFFR during inflation period 03/17/2022-12/14/2023, echo=FALSE}
 rates=2
 vol=3
 targetup = 4
@@ -2053,7 +2056,7 @@ min(qinflationE[,rates])
 ```
 
 
-```{r, fig.caption="EFFR during inflation period 3/17/2022-12/14/2023",rates_inflation,echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
+```{r ratesinflation, fig.cap="EFFR during inflation period 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H'}
 # (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
 library(ggplot2)
 library(reshape2)
@@ -2070,7 +2073,7 @@ rates_inflation <<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
   labs(caption="Inflation 03/17/2022-12/14/2023",x="", y = "rates basis points (bp) volume (billion dollars)", color="Rate") +  
   scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0,maxr)) + 
   theme_minimal()
-print(rates_inflation)
+rates_inflation
 #my_envepisodes$rates_inflation<-rates_inflation
 ```
 
@@ -2091,7 +2094,7 @@ Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
 Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 ```
 
-```{r , fig.caption= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.cap= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
 #(Figure \@ref(fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019)
 library(ggplot2)
 boxplot_normalcy <- data.frame(
@@ -2114,7 +2117,7 @@ bnormalcy <<- ggplot(boxplot_normalcy , aes(x=Group,
   theme(panel.background = element_rect(fill = "white"),
         plot.background = element_rect(fill = "white"),
         axis.title.x = element_blank())  # Remove x-axis label)
-print(bnormalcy)
+bnormalcy
   my_environmentbox$norm <-bnormalcy
 ```
 <!--
@@ -2148,10 +2151,27 @@ Tstatsadj2<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],T
 Bstatsadj2<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
 Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
 ```
+<!--
+{r , fig.cap= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+(Figure \@ref(fig:IQR and range of rates during normalcy period 3/4/2016-7/31/2019))
+
+{r , fig.cap= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+
+(Figure \@ref(fig:IQR and range of rates during mid cycle adjustment period 8/1/2019-10/31/2019))
+`{r , fig.capt= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+
+{r , fig.capt= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
+(Figure \@ref(fig:IQR and range of rates during covid period 11/1/2019-3/16/2020))
+
+{r , fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
+(Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022))
+
+{r , fig.cap= "IQR and range of rates during inflation period 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
+(Figure \@ref(fig:IQR and range of rates during inflation period 3/17/2022-12/14/2023))
+-->
 
 
-
-```{r , fig.caption= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.cap= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
 #(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
  library(ggplot2)
  boxplot_adjust<- data.frame(
@@ -2196,8 +2216,8 @@ Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatsco
 ```
 
 
-```{r , fig.caption= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
-#(Figure \@ref(fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020)
+```{r , fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:IQR and range of rates during covid period 11/1/2019-3/16/2020)
  library(ggplot2)
  boxplot_covid <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2248,8 +2268,8 @@ Bstatszlb <- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
 Sstatszlb <- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
 ```
 
-```{r , fig.caption= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
-#(Figure \@ref(fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022)
+```{r , fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
+#(Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022)
 library(ggplot2)
 boxplot_zlb <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2299,7 +2319,7 @@ Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
 ```
 
 
-```{r , fig.caption= "IQR and range of rates during inflation period 03/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
+```{r , fig.cap= "IQR and range of rates during inflation period 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
 #(Figure \@ref(fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023)
 library(ggplot2)
 boxplot_inflation <- data.frame(
@@ -2366,53 +2386,8 @@ See (\@ref(tab:Comparative statistics of all policy episodes) provides a summary
 -->
 
 <!--
-Chat advice on figure and tab placement
-If the chunks producing the figures and tables are already placed before the text and reference statements in your RMarkdown document, and you're still encountering the issue where the figures and tables appear before the text, there might be a few additional factors to consider:
-
-Compilation Order: Ensure that you're compiling your RMarkdown document correctly. In some cases, the order in which the chunks are processed during compilation might not align with their position in the document. Double-check the compilation process to ensure that the text and references are processed after the chunks producing the figures and tables.
-
-Float Placement Options: If you're using LaTeX to generate a PDF, the fig.pos and tab.pos options control the placement of figures and tables. Make sure these options are correctly set to 'H' to force placement "Here" in the document.
-
-Chunk Output Options: Review the output options for the chunks producing the figures and tables. Ensure that they are set appropriately to generate the desired output format (e.g., results='asis' for tables, fig.cap for figure captions).
-
-LaTeX Packages: Check if any LaTeX packages or custom templates used in your document might be affecting the float placement behavior. Sometimes, conflicting packages or template settings can override the placement options specified in the RMarkdown document.
-
-Chunk Labels and References: Verify that the labels used in the reference statements (\@ref{}) match the labels defined in the corresponding chunks producing the figures and tables. Mismatched labels can cause the references to fail.
-
-Debugging Output: Consider adding temporary debugging messages or markers in your RMarkdown document to track the order of chunk execution during compilation. This can help identify any unexpected behavior in the compilation process.
-
-If you've reviewed these aspects and the problem persists, it might be helpful to share a minimal reproducible example of your RMarkdown document along with details about your compilation environment. With this information, I can offer more targeted assistance in resolving the issue.
-
-The order of compilation refers to the sequence in which the components of your RMarkdown document are processed and transformed into the final output format (e.g., PDF). In most cases, the RMarkdown document is processed by a conversion tool (e.g., knitr for RMarkdown) that executes the code chunks, incorporates the results into the document, and converts it into the desired output format.
-
-Here are some resources where you can learn more about the compilation process and best practices for organizing your RMarkdown documents:
-
-RMarkdown Definitive Guide: The RMarkdown Definitive Guide, provided by RStudio, offers comprehensive documentation on using RMarkdown, including details about the compilation process and best practices for organizing your documents. You can access it here.
-
-knitr Documentation: The knitr package documentation provides detailed information about how R code chunks are processed during compilation. You can find the documentation here.
-
-RMarkdown Cookbook: The RMarkdown Cookbook offers practical tips and examples for working with RMarkdown, including guidance on structuring your documents and controlling the output format. You can find it here.
-
-When examining your RMarkdown document, look for any patterns or dependencies between the chunks, such as references to variables or objects defined in earlier chunks. Ensure that the chunks are organized in a logical sequence that reflects the flow of your document and the dependencies between different components.
-
-Additionally, pay attention to any compilation settings or options specified in your RMarkdown document or in the tool you're using to compile it (e.g., RStudio). These settings can affect the order in which the chunks are executed and the final output is generated.
-
-By carefully reviewing these aspects and following best practices for organizing your RMarkdown document, you can ensure smooth and predictable compilation results. If you encounter any specific issues or challenges, don't hesitate to ask for further assistance!
-
-Certainly! Here are some resources that provide documentation and guidance for creating tables and figures in RMarkdown documents:
-
-RMarkdown Definitive Guide: The RMarkdown Definitive Guide covers a wide range of topics related to RMarkdown, including creating and customizing tables and figures. It provides detailed explanations, examples, and best practices for incorporating tables and figures into your documents. You can access it here.
-
-R Graphics Cookbook: The R Graphics Cookbook by Winston Chang is a comprehensive resource for creating various types of plots and graphics in R. It includes recipes for creating basic and advanced plots using base R graphics, ggplot2, and other plotting libraries. While it's not specific to RMarkdown, many of the techniques and examples can be applied to RMarkdown documents. You can find the book here.
-
-ggplot2 Documentation: If you're using ggplot2 for creating figures in RMarkdown, the ggplot2 documentation provides detailed explanations of the package's features and functions. It includes examples and tutorials for creating different types of plots, customizing plot aesthetics, and incorporating them into RMarkdown documents. You can find the documentation here.
-
-knitr Documentation: The knitr package documentation includes information on generating and customizing tables in RMarkdown documents. It covers features such as the kable() function for creating simple tables from data frames, as well as more advanced options for customizing table formatting and appearance. You can find the documentation here.
-
-blogdown: If you're interested in creating and customizing HTML documents with RMarkdown, the blogdown package provides tools for generating interactive and responsive figures using JavaScript libraries like D3.js. While it's primarily focused on creating blogs and websites with RMarkdown, many of the techniques for creating dynamic figures can be applied to other types of RMarkdown documents. You can find the package here.
-
-These resources should provide you with a good starting point for learning how to create and customize tables and figures in RMarkdown documents. If you have any specific questions or need further assistance, feel free to ask!
-
+https://github.com/rstudio/rmarkdown-cookbook/issues/94
+https://bookdown.org/yihui/rmarkdown-cookbook/figure-placement.html
 -->
 
 # Behavior the Federal Funds rate and money market rates during different policy episodes
@@ -2426,7 +2401,11 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 
 ## The history of rates by policy episode
 
-The EFFR and the money market rates during the normalcy period (Figure \@ref{fig:Rates during normalcy period 3/4/2016-7/31/2019})
+The EFFR and the money market rates during the normalcy period (Figure \@ref{fig:ratestsnorm)
+
+<!--
+(Figure \@ref{fig:Rates during normalcy period 3/4/2016-7/31/2019)).
+-->
 Rate hikes 2015-2018 Returning to normalcy		
 20-Dec-18	25	2.25% to 2.50%
 Sept. 27, 2018	25	2.0% to 2.25%
@@ -2438,24 +2417,38 @@ Dec. 14, 2017	25	1.25% to 1.50%
 Dec. 15, 2016	25	0.5% to 0.75%
 
 
-The EFFR and the money market rates during the adjustment period (Figure \@ref{fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019})
+The EFFR and the money market rates during the adjustment period (Figure \@ref(fig:ratestsadjust)
+
+<!--
+(Figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)).
+-->
+
 2019 rates cuts mid cycle adjustment		
 31-Oct-19	-25	1.50% to 1.75%
 Sept. 19, 2019	-25	1.75% to 2.0%
 Aug. 1, 2019	-25	2.0% to 2.25%
 
 
-The EFFR and the money market rates during the covid period (Figure \@ref{fig:Rates during covid 11/1/2019-3/16/2020})
-
+The EFFR and the money market rates during the covid period (Figure \@ref(fig:ratestscovid) 
+<!--
+(Figure \@ref(fig:Rates during covid 11/1/2019-3/16/2020)).
+-->
 2020 Fed Rate Cuts: Coping with Covid-19		
 16-Mar-20	-100	0% to 0.25%
 3-Mar-20	-50	1.0% to 1.25%
 
 
-The EFFR and the money market rates during the zero lower bound (Figure \@ref{fig:Rates during zero lower bound 3/17/2020-3/16/2022})
+The EFFR and the money market rates during the zero lower bound (Figure \@ref(fig:ratestszlb) 
+<!--
+(Figure \@ref(fig:Rates during zero lower bound 3/17/2020-3/16/2022)).
+-->
 
-The EFFR and the money market rates during the taming of inflation (Figure \@ref{fig:Rates during 
-Taming inflation 03/17/2022-12/14/2023}) from March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+The EFFR and the money market rates during the taming of inflation (Figure \@ref(fig:ratestsinflation) 
+<!--
+(Figure \@ref(fig:Rates during 
+Taming inflation 03/17/2022-12/14/2023)) 
+-->
+from March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
 
 Fed Rate Hikes 2022-2023: Taming Inflation		
 26-Jul-23	25	5.25% to 5.50%
@@ -2472,17 +2465,37 @@ Fed Rate Hikes 2022-2023: Taming Inflation
 
 
 ## Percentiles
-Percentiles of the EFFR during the normalcy period  (Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)). The EFFR, median and IQR values are withing the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe). The IQR and outliers are illustrated Figure \@ref{fig:IQR and range of rates during normalcy period 3/4/2016-7/31/2019}.
+Percentiles of the EFFR during the normalcy period (Figure \@ref(ratesnorm)
+<!--
+(Figure \@ref(fig:EFFR during normalcy period 3/4/2016-7/31/2019)). 
+-->
+The EFFR, median and IQR values are withing the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe). The IQR and outliers are illustrated Figure \@ref(fig:IQR and range of rates during normalcy period 3/4/2016-7/31/2019).
 
 
-Percentiles of the EFFR during the adjustment period (Figure \@ref{fig:EFFR during adjustment period 8/1/2019-10/31/2019}). The outlier from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref{fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019}) and (Figure \@ref{fig:IQR and range of rates during mid cycle adjustment period 8/1/2019-10/31/2019}).
+Percentiles of the EFFR during the adjustment period (Figure \@ref(ratesadjust)
+<!--
+(Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)). 
+-->
+The outlierS from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref{fig:IQR and range of rates during mid cycle adjustment period 8/1/2019-10/31/2019).
 
-Percentiles of the EFFR during the pandemic (Figure \@ref{fig:EFFR during covid period 11/1/2019-3/16/2020}). The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref{fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020}) and (Figure \@ref{fig:IQR and range of rates during covid period 11/1/2019-3/16/2020}).
+Percentiles of the EFFR during the pandemic  (Figure \@ref(ratescovid)
+<!--
+(Figure \@ref{fig:EFFR during covid period 11/1/2019-3/16/2020})
+--> 
+The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref(fig:IQR and range of rates during covid period 11/1/2019-3/16/2020)).
 
-Percentiles of the EFFR during the zero lower bound (Figure \@ref{fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022}) and (Figure \@ref{fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022}).
+Percentiles of the EFFR during the zero lower bound  (Figure \@ref(fig:rateszlb) 
+<!--
+(Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022))
+--> 
+and (Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022)).
 
 
-Percentiles of the EFFR during the Fed's fight to control inflation (Figure \@ref{fig:EFFR during inflation period 3/17/2022-12/14/2023}) The EFFR and the IQR are within the FOMC target rates (Figure \@ref{fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023}) and (Figure \@ref{fig:IQR and range of rates during inflation period 3/17/2022-12/14/2023})
+Percentiles of the EFFR during the Fed's fight to control inflation  (Figure \@ref(fig:ratesinflation) 
+<!--
+(Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)) 
+-->
+The EFFR and the IQR are within the FOMC target rates (Figure \@ref(fig:IQR and range of rates during inflation period 3/17/2022-12/14/2023)).
 
     
 ```{r, tab.cap="Comparative statistics of all policy episodes", echo=FALSE, results='asis'}
@@ -2572,11 +2585,11 @@ The IQR and range provide more information about the series, how close they stay
 
 \emph{Variability: clustering of funding rates  around their median (IQR)}
 Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole  (Table \@ref(tab: IQR of rates during the policy regimes)(middle panel Table). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3bp during the inflation episode. Boxplots show the IQR, the location of the median and tails for the outliers.
-(Figure \@ref{fig:EFFR Key percentiles during normalcy period 3/4/2016-7/31/2019})
-(Figure \@ref{fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019})
-(Figure \@ref{fig:EFFR Key percentiles during covid period 11/1/2019-3/16/2020})
-(Figure \@ref{fig:EFFR Key percentiles during zero lower bond period  3/17/2020-3/16/2022})
-(Figure \@ref{fig:EFFR Key percentiles during inflation period 3/17/2022-12/14/2023})
+(Figure \@ref(fig:IQR and range during normalcy period 3/4/2016-7/31/2019))
+(Figure \@ref(fig:IQR and rang during mid cycle adjustment period 8/1/2019-10/31/2019))
+(Figure \@ref(fig:IQR and rang during covid period 11/1/2019-3/16/2020))
+(Figure \@ref(fig:IQR and rang during zero lower bond period  3/17/2020-3/16/2022))
+(Figure \@ref(fig:IQR and rang during inflation period 3/17/2022-12/14/2023))
 
 <!--
 Fifty percent of EFFR rates range from 1.22 during normalcy to 4.66 bp during the adjustment periods.
