@@ -53,8 +53,16 @@ library(gridExtra)
 library(cowplot)
 library(patchwork)
 library(caTools)
-knitr::opts_chunk$set(echo = FALSE)
+#knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
+#knitr::knit("ONRates_simplev10_05262024v6.Rmd")
 ```
+
+```{r}knitr::opts_chunk$set(cache = FALSE)
+knitr::opts_chunk$set(cache.rebuild = TRUE)
+```
+
 ```{r}
 knitr::opts_chunk$set(fig.pos = "!H")
 ```
@@ -2084,47 +2092,7 @@ rates_inflation
 #my_envepisodes$rates_inflation<-rates_inflation
 ```
 
-<!--
-boxplots
--->
-```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
-qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
-qnormT=quantilesT[bgn:edn,] 
-qnormB=quantilesB[bgn:edn,] 
-qnormS=quantilesS[bgn:edn,] 
 
-Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
-#resave qnorme to env with sdate in position s
-#Ostatsnorm <- colMeans(qnormO[,2:ncol(qnormO)], na.rm = TRUE)
-Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
-```
-```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.label="normbox"}
-library(ggplot2)
-library(reshape2)
-boxplot_normalcy <- data.frame(
-  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
-  y0 = c(Estatsnorm[5], Tstatsnorm[3], Bstatsnorm[3], Sstatsnorm[3]),
-  y25 = c(Estatsnorm[6], Tstatsnorm[4], Bstatsnorm[4], Sstatsnorm[4]),
-  y50 = c(Estatsnorm[1], Tstatsnorm[1] , Bstatsnorm[1] , Sstatsnorm[1]) ,
-  y75 = c(Estatsnorm[7], Tstatsnorm[5], Bstatsnorm[5], Sstatsnorm[5]),
-  y100 = c(Estatsnorm[8], Tstatsnorm[6], Bstatsnorm[6], Sstatsnorm[6]))
-
-bnormalcy<- ggplot(boxplot_normalcy , aes(x=Group,
-                                           ymin = y0,
-                                           ymax = y100,
-                                           lower = y25,
-                                           middle = y50,
-                                           upper = y75,
-                                           fill = Group)) +
-  labs(caption = "Normalcy 3/4/2016-7/31/2019", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
-  geom_boxplot(stat = "identity") +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"),
-        axis.title.x = element_blank())  # Remove x-axis label)
-bnormalcy
-```
 <!--
 sdate position
  str(my_envepisodes$adjust)
@@ -2156,24 +2124,6 @@ Tstatsadj2<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],T
 Bstatsadj2<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
 Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
 ```
-<!--
-{r , fig.cap= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
-(Figure \@ref(fig:IQR and range of rates during normalcy period 3/4/2016-7/31/2019))
-
-{r , fig.cap= "IQR and range of rates during normalcy period 3/4/2016-7/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
-
-(Figure \@ref(fig:IQR and range of rates during mid cycle adjustment period 8/1/2019-10/31/2019))
-`{r , fig.capt= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.num=TRUE,results='asis'}
-
-{r , fig.capt= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.num=TRUE,results='asis'}
-(Figure \@ref(fig:IQR and range of rates during covid period 11/1/2019-3/16/2020))
-
-{r , fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.num=TRUE,results='asis'}
-(Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022))
-
-{r , fig.cap= "IQR and range of rates during inflation period 3/17/2022-12/14/2023",echo=FALSE,fig.num=TRUE,results='asis'}
-(Figure \@ref(fig:IQR and range of rates during inflation period 3/17/2022-12/14/2023))
--->
 
 
 ```{r adjustbox, fig.cap= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.label="adjustbox"}
@@ -2201,6 +2151,57 @@ Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],S
         axis.title.x = element_blank())  # Remove x-axis label)
   badjust
 my_environmentbox$adjust <- badjust
+```
+
+
+```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
+qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+qnormT=quantilesT[bgn:edn,] 
+qnormB=quantilesB[bgn:edn,] 
+qnormS=quantilesS[bgn:edn,] 
+
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+```
+
+                  
+```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.label="normbox"}
+library(ggplot2)
+library(reshape2)
+qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+qnormT=quantilesT[bgn:edn,] 
+qnormB=quantilesB[bgn:edn,] 
+qnormS=quantilesS[bgn:edn,] 
+
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+boxplot_normalcy <- data.frame(
+  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
+  y0 = c(Estatsnorm[5], Tstatsnorm[3], Bstatsnorm[3], Sstatsnorm[3]),
+  y25 = c(Estatsnorm[6], Tstatsnorm[4], Bstatsnorm[4], Sstatsnorm[4]),
+  y50 = c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1]),
+  y75 = c(Estatsnorm[7], Tstatsnorm[5], Bstatsnorm[5], Sstatsnorm[5]),
+  y100 = c(Estatsnorm[8], Tstatsnorm[6], Bstatsnorm[6], Sstatsnorm[6])
+)
+
+bnormalcy <- ggplot(boxplot_normalcy, aes(x = Group,
+                                          ymin = y0,
+                                          ymax = y100,
+                                          lower = y25,
+                                          middle = y50,
+                                          upper = y75,
+                                          fill = Group)) +
+  labs(caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  geom_boxplot(stat = "identity") +
+  theme(panel.background = element_rect(fill = "white"),
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label
+bnormalcy
 ```
 
 ```{r , IQR and range of rates during covid period 8/1/2019-10/31/2019, echo=FALSE}
@@ -2403,26 +2404,87 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 * Mid cycle adjustment 8/1/2019 to 10/31/2019  
 * Covid 11/1/2019 to 3/16/2020  
 * Zero lower bound 3/17/2020 to 3/16/2022  
-* Taming inflation 03/17/2022 - 12/14/2023 
+* Taming inflation 03/17/2022 to 12/14/2023 
 
 ## The history of rates by policy episode
-```{r, tab.cap="FOMC rate changes 2016-2023", echo=FALSE, results='asis'}
+```{r, fomcnorm, echo=FALSE, results='asis'}
 library(xtable)
-fomcepisode <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
+fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
 #Set column names based on the first row
 colnames(fomc) <- names(fomc)
 #print(colnames)
 fdate<-as.Date(fomc$Date,"%d/%m/%Y")
-xtable_fomce <- xtable(fomcepisode, comment = FALSE)
+normtab<-fomc[1:9,]
+xtable_norm <- xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = FALSE)
+print(xtable_norm,caption.placement = "bottom")
+#, label = "tab:fomcnorm")
+cat('\\label{tab:fomcnorm}')
+```
+
+```{r, fomcadjust, echo=FALSE, results='asis'}
+library(xtable)
+adjusttab<-fomc[10:11,]
+xtable_adjust <- xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019", comment = FALSE)
+print(xtable_adjust,caption.placement = "bottom")
+#, label = "tab:fomcadjust")
+cat('\\label{tab:fomcadjust}')
 ```
 
 
+```{r, fomccovid, echo=FALSE, results='asis'}
+library(xtable)
+covidtab<-fomc[12:13,]
+xtable_covid <- xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020", comment = FALSE)
+print(xtable_covid,caption.placement = "bottom")
+#, label = "tab:fomccovid")
+cat('\\label{tab:fomccovid}')
+```
+
+```{r, fomczlb, echo=FALSE, results='asis'}
+library(xtable)
+zlbtab<-fomc[14:22,]
+xtable_zlb <- xtable(zlbtab, caption="Zero lower bound 3/17/2020 to 3/16/2022", comment = FALSE)
+#print(xtable_zlb,caption.placement = "bottom", label = "tab:fomczlb")
+print(xtable_zlb,caption.placement = "bottom")
+cat('\\label{tab:fomczlb}')
+```
+
+```{r, fomcinflation, echo=FALSE, results='asis'}
+library(xtable)
+inflationtab<-fomc[24:37,]
+xtable_inflation <- xtable(inflationtab, caption="Taming inflation 03/17/2022 to 12/14/2023", comment = FALSE)
+#print(xtable_inflation,caption.placement = "bottom", label = "tab:fomcinflation")
+print(xtable_inflation,caption.placement = "bottom")
+# Manually add the LaTeX label
+cat('\\label{tab:fomcinflation}')
+```
+
+<!--
+Chunk label: Use a simple and unique label like fomc-table.
+Caption in xtable: Set the caption directly within the xtable function.
+Reference the table: Use the same label you used in the chunk options with \@ref(tab:chunk-label).
+
+library(xtable)
+fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
+# Set column names based on the first row
+colnames(fomc) <- names(fomc)
+# Convert Date column to Date type
+fdate <- as.Date(fomc$Date, "%d/%m/%Y")
+# Select the first 9 rows for the table
+normtab <- fomc[1:9,]
+# Create the xtable object
+xtable_norm <- xtable(normtab, caption = "FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = FALSE)
+# Print the xtable object
+print(xtable_norm, caption.placement = "top")
+
+
+See the changes in interest rates in Table \@ref(tab:fomc-table).
+
+-->
 
 The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:ratestsnorm)).
-
-(Tanle \@ref(tab:Comparative statistics of all policy episodes)
-
-
+(Table \@ref(tab:fomcnorm)
+<!--
 Rate hikes 2015-2018 Returning to normalcy		
 20-Dec-18	25	2.25% to 2.50%
 Sept. 27, 2018	25	2.0% to 2.25%
@@ -2432,29 +2494,33 @@ Dec. 14, 2017	25	1.25% to 1.50%
 15-Jun-17	25	1.00% to 1.25%
 16-Mar-17	25	0.75% to 1.00%
 Dec. 15, 2016	25	0.5% to 0.75%
-
+-->
 
 The EFFR and the money market rates during the adjustment period (Figure \@ref(fig:ratestsadjust)).
-
+(Table \@ref(tab:fomcadjust)
+<!--
 2019 rates cuts mid cycle adjustment		
 31-Oct-19	-25	1.50% to 1.75%
 Sept. 19, 2019	-25	1.75% to 2.0%
 Aug. 1, 2019	-25	2.0% to 2.25%
+-->
 
 
 The EFFR and the money market rates during the covid period (Figure \@ref(fig:ratestscovid)). 
-
+(Table \@ref(tab:fomccovid)
+<!--
 2020 Fed Rate Cuts: Coping with Covid-19		
 16-Mar-20	-100	0% to 0.25%
 3-Mar-20	-50	1.0% to 1.25%
+-->
 
 
 The EFFR and the money market rates during the zero lower bound (Figure \@ref(fig:ratestszlb)). 
 
 The EFFR and the money market rates during the taming of inflation (Figure \@ref(fig:ratestsinflation)). 
-
-from March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
-
+From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+(Table \@ref(tab:fomcinflation)
+<!--
 Fed Rate Hikes 2022-2023: Taming Inflation		
 26-Jul-23	25	5.25% to 5.50%
 3-May-23	25	5.00% to 5.25%
@@ -2467,14 +2533,15 @@ Fed Rate Hikes 2022-2023: Taming Inflation
 16-Jun-22	75	1.50% to 1.75%
 5-May-22	50	0.75% to 1.00%
 17-Mar-22	25	0.25% to 0.50%
-
+-->
 
 ## Percentiles
 Percentiles of the EFFR during the normalcy period (Figure \@ref(fig:ratesnorm)).
 
 
-The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe). 
+The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
 The IQR and range during the normalcy period are shown in (Figure \@ref(fig:normbox)).
+
 
 
 Percentiles of the EFFR during the adjustment period (Figure \@ref(fig:ratesadjust)).
