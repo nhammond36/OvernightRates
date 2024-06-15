@@ -1,0 +1,1232 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{flafter}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Time series properties of US reference rates 2016- 2023},
+  pdfauthor={Nancy Hammond},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Time series properties of US reference rates 2016- 2023}
+\author{Nancy Hammond}
+\date{2024-06-14}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+How monetary policy impacts volatility of rates in the market for repurchase agreements also reveals how the Federal Reserve preference for volatility as it manages the policy rate, the Federal Funds rate (FFR) with the target rates specified by the FOMC. The Fed's open market operations through repurchase transactions. maintain the federal funds (fed funds) rate within the FOMC's target range. One puzzle the the survival of the Federal Reserve Bank's (Fed) FFR management of of the Federal Funds rate survives the volatility of short rates.
+
+Events after the Great Financial Crisis (GFC), the excess liquidity created by quantitative easing, the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
+
+The daily \$4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among these reference rates, policy and money market rates, is important to understanding the monetary system.
+
+The repurchase funding markets are:
+- triparty TGCR --- the major dealer funding market
+- GCF --- the interdealer repo market
+- bilateral BGCR --- the dealer-to-customer repo market
+
+The tri-party general collaterial market (with money market rate TGCR), is repo's primary funding market, In tri-party repo, most players are cash lenders or borrowers. For example, primary dealers required to intermediate US Treasury issuance to their customers finance these purchases from their inventory or by borrowing from the Fed in the triparty market. To manage the federal funds rate within its target range, the Federal Reserve responds to volatility in the federal funds rate by adjusting reserves through repo and reverse repo operations in the triparty market. The Fed is the only major participant to engage in both tri-party repo borrowing and lending. Participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in tri-party repo, then lend at a spread in other repo markets. Primary dealers sell securities to the customers in the more lucrative OTC broad general collateral market, (rate BGCR). The Secured Overnight Financing Rate (SOFR) is the Fed's broadest measure of repo rates
+
+The Federal Funds rate is the Fed's policy rate, the rate banks exchange funds in the interbank market. The administered rates for setting policy, interest on reserves (IORB) and the overnight reverse repo rate are important tools for managing the FFR. The FFR, the administered rates, and money market rates have similar qualities of short rates:
+- All rates track and cluster around the FFR (measured by the effective Federal Funds rate (EFFR))
+- Money market rates quickly respond to changes in the FFR and administrative rates, the IORB and the ON/RRP
+- The central tendency of all rates is their tight (low variance) clustering around their medians
+- Their volatility changes over time, conditional heteroskedasticity
+- Rates highly skewed,
+- Distributions fat tailed with the presence of extreme outliers
+- Pronounced autocorrelation patterns
+- Arbitrage opportunities exist to invest in repo when SOFR exceed IORB, the interest banks can receive on deposits with the Fed
+
+There are several ways the level of reserves in the banking system can change:
+1) because funds are transferred between reserves and non-reserve accounts at the Federal
+2) changes in the US Treasury account at the Fed
+3) The Federal Reserve responds to volatility in the federal funds market by adjusting the reserve
+supply to keep the federal funds rate within its target range through these repo and reverse repo operations each day
+
+This paper focuses on action (3). By trading securities with banks and other counterparites, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. A repurchase transaction or repo is a loan secured by collateral ubject to an agreement to resell the securities at a later date .The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements and lending, reverse repurchase agreements. In a repo transaction, the Desk purchases securities from a counterparty. The transaction temporarily increases the supply of reserve balances in the banking system and lower the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
+
+This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. Comparing different policy regimes, we hope to elucidate the Fed's preferences for volatility in managing the FFR within ranges set by the FOMC. How that volatility may very under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+
+Section 1 reviews monetary policy over the seven year period, 2016-2023 and narrates FOMC rate changes, monetary regimes, and events in order to define monetary shocks.
+Section 2 reviews the time series properties of daily policy and money market rates, and transactions and reserves held at the Federal Reserve from 3/4/2016-12/14/2023. Section 3 describes rate behavior during different policy episodes. Section 4 discusses methodology. Section 5 Results. Section 5 Conclusions. Sections 4-6 are in progress.
+
+Hamilton (1996) estimates the conditional mean and the conditional variance of the daily Federal Funds rate (FFR) in an adaption of Nelson's (1991) EGARCH model. He attributes the greater effect an open-market purchase to smooth out small fluctuations in the FFR, rather than interday arbitrage. Adding reserves through an overnight repurchase agreement lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. He identifies important day effect, the last day of the quarter or the last day of the year, in producing the extreme volatility, large outliers of the FFR.
+
+Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
+
+Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC's policy decisions and describes Fed policy better than Taylor rules.The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks.
+
+Decisions about target moves result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move.
+
+(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model, a time-varying mean reversion factor, a stochastic volatility factor, and a jump process. The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns. Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior.
+
+The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
+
+Bertolini, Bertola, Prati (), Garaet al () and Benzoni observe these effect of Fed interventions on the volatility in interbank rates
+* declines in high rate regimes\\
+* rises end of quarter, end of year\\
+* falls before holidays, rises day after\\
+* many rate changes are half percent or more (annualized)\\
+* outliers\\
+* Volatility persistent like Hamilton, end of quarter, end of year, before and after holidays, large rate changes.
+
+Bertolini, Bertola, Prati (2004) model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market. This search was motivated by the puzzle that the high frequency patterns of FFR volatility survives Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl derive a function of reserve demand that describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. The function measures banks' demand for liquidity as a function of aggregate reserves and the FFR under the Fed's policy of ample supply of reserves (2020). The FFR is price at which banks are willing to borrow and lend reserve balances.The Banks' reserve demand sensitivity to shocks to reserves is greater when reserves are scarce.
+
+Policy changes shift the curve up and down by moving its lower bound. Increases (decreases) in the (FFR-IORB) IORB rate shift the demand curve down (up by changing the banks' opportunity cost of lending in the federal funds market. Low frequency horizontal shifts in the demand function reflect sensitivity of rates to shocks to reserves
+
+The Romer and Romer (2023) narrative approach to macroeconomic identification identify significant contractionary and expansionary changes in monetary policy not taken in response to current or prospectivedevelopments in real activity. However, this approach would exclude shochs such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (@ref\{table:FOMC rate changes 2016-2023\})
+
+Jarocinski (2002)
+Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed's expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed's view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
+
+Estimating the Fed's unconventional policy shocks Javorscinski () estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an ``Odyssean'' forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a ``Delphic'' forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
+
+Alvarez metrics for kurtosis
+
+\hypertarget{overnight-reference-rates-and-transactions}{%
+\section{Overnight reference rates and transactions}\label{overnight-reference-rates-and-transactions}}
+
+Daily weighted average median rates reference rates, policy and money market rates provided by the NY Federal Reserve download program comprise the effective federal funds rate (EFFR) that tracks transactions in the federal funds market, the secured overnight funding rate (SOFR) that captures transactions in overnight wholesale funding markets, and the money market rates - the Tri-Party General Collateral Rate (TGCR) and the broad general collateral rate (BGCR).
+
+Repurchase agreements to borrow or lend securities for cash or reserves take place in the tri-party, GCF repo, and bilateral markets. The TGCR are rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. Transactions in the tri party market are centrally cleared. The over the counter BGCR rates are the more lucrative rates in which the U.S. central bank primary dealers trade with their customers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities replaced LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC).
+
+\hypertarget{monetary-policy-during-the-sample-period-2016-2023}{%
+\subsection{Monetary policy during the sample period 2016-2023}\label{monetary-policy-during-the-sample-period-2016-2023}}
+
+Before the Great Financial Crisis (GFC) of 2008, Federal Reserve policy was conducted by open market operations (OMO), trading a limited central reserves and securities in the interbank Federal Funds market. To address the great financial crisis (GFC), the Jed's large scale asset purchases (LSAPs) from 2008 to 2014 - QE,QE1, QE2, and QE3, funded by US Treasury sale of Treasury bills substituted reserve balances for a large part of its SOMA Treasury holdings. But LSAPs resulted in excess liquidity, swamped with reserves, banks had no need to borrow in the Fed Funds market. From 2010 to late 2019, reserves went through a full expansion-contraction cycle. Again in early 2020, reserves grew from \$\$\$8 trillion from 2010 and 2019 to \$\$\$19 trillion (2014 and 2021).
+
+To regain control over the FFR after this major increase in liquidity, the Fed experimented with with different policies.
+
+October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts is the Fed's principal tool for interest rate control. In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the overnight reverse repurchase facility (ON RRP), the Fed's supplementary tool for interest rate control.
+
+In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate.
+
+\emph{The Fed's involvement in repurchase markets}
+
+since the 1920s, The Fed used repo transactions to manage the reserves held by commercial banks with the Fed. Repo operations became the Fed's primary means of adjusting bank reserves.
+
+\emph{Repurchase and reverse purchase transactions}
+
+To offset liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions to keep the federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
+
+\emph{The reverse repurchase facility}
+Fed opened its RRP (reverse repo) facility in 2013 to absorb the excess liquidity after the GRC that drove the Fed Funds rate below the Fed's target range. The Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the ON RRP rate. During periods of high reserves, the reverse repo facility takes up reserves when banks no longer want to take on additional reserves and reducing deposit rates and other funding.
+
+\emph{The Standing Repo Facility (SRF)}
+The the 2019 spike in repo rates followed the Fed reduction its balance sheet build up after quantitative easing (QE). the FFR, and FX swap rates exceeded the Fed's upper target rate. The Fed initiated the Standing Repo Facility (SRF) after scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
+
+\emph{Other changes}
+The central banks continued to change their overall frameworks for controlling short-term interest rates.
+The FOMC reference rate changes from Libor to SOFR,was one such policy change.
+
+\emph{Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity}
+April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio). The onset of the Covid-19 pandemic in early 2020 led to turmoil in various financial markets. Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets. Government agencies took action to stabilize financial markets and the economy.
+
+In June 2022, the Federal Reserve started reducing the size of its balance sheet, which had expanded to
+just under \$9 trillion in response to the COVID-19 pandemic. However, whereas banks' reserves at the
+Federal Reserve have decreased, the investment of money market funds (MMFs) at the Federal Reserve's
+overnight reverse repo (ON RRP) facility has continued to increase, reaching \$2.4 trillion in September
+2022.
+
+Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to ON RRP.The Fed's ON RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both ON RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants allocate cash to repo trades, supplying liquidity to the most crucial funding market.
+
+Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in December 2023 (urrently \textbackslash439.81 billion , 5/31/2024).
+
+Once the surplus of cash in the Fed's RRP facility dries up, the stability of the triparty repo market will once again be tested. The Fed's QT (quantitative tightening) and the U.S. Treasury's giant debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 ``repocalypse''. Sensing a recurrence, a large number of banks have begun signing up to the Fed's standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.
+
+\hypertarget{fomc-rates-changes-monetary-regimes-and-events-over-the-seven-year-period-2016-2023}{%
+\subsection{FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023}\label{fomc-rates-changes-monetary-regimes-and-events-over-the-seven-year-period-2016-2023}}
+
+Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table @ref\{table\_fomc\}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (@ref\{table:FOMC rate changes 2016-2023\})
+
+The Romer and Romer (2023) narrative approach to macroeconomic identification incorporate the evidence into a statistical framework. Their criteria that monetary shocks be unrelated to current or prospective real economic activity changes would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash.
+
+The literature beginning Campbell et al.~(2012) identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. The authors distinguish between Odyssean forward guidance, which publicly commits the FOMC to a future action, and Delphic forward guidance, which merely forecasts macroeconomic performance and likely monetary policy actions.
+
+Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed's expected response to it. Afterwards, asset prices incorporate unexpected news conveyed in the announcement. News could be the current fed funds rate or its future path, asset purchases, the Fed's view on the state of the economy. They represent different structural shocks that may affect the economy differently.
+
+Jarocinski (2022) estimates structural shocks underlying the reactions of financial market to FOMC announcements. Not specified ex ante, ex post the estimated shocks can be labeled as the current fed funds rate policy, as 1)an ``Odyssean'' forward guidance, a commitment to a future course of policy rates such as a large scale asset purchase or 2) a ``Delphic'' forward guidance, a statement about the future course of policy rates, a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
+
+His baseline model expresses surprises, high-frequency reactions to FOMC announcements, in near-term fed funds futures, 2 and 10-year Treasury yields and the S\(\&\)P500 stock index as linear combinations of four Student-t distributed shocks\}. These four shocks ex post have natural economic interpretations:
+1. the standard monetary policy shock raises the near-term fed funds futures, with a diminishing effect on longer maturities, and depresses stock prices.
+2. The (Odyssean) forward guidance shock increases the 2-year Treasury yield the most and depresses the stock prices.
+3. The asset purchase shock increases the 10-year Treasury yield the most and plays a large role in some of the most important asset purchase announcements.
+4. Delphic forward guidance shock (Campbell et al.~2012) has a similar impact on the yield curve as the Odyssean forward guidance shock, but triggers an increase, rather than a decrease, in the stock prices.
+
+Monika Piazzesi (2005) takes this approach in a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR in a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks.
+
+The shocks (Table @ref\{table:FOMC rate changes 2016-2023\}) encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
+
+\begin{verbatim}
+## Warning in notes_with_valid_dates$Date <- notes_with_valid_dates: Coercing LHS
+## to a list
+\end{verbatim}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:19 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrl}
+  \hline
+ & Date & Event \\ 
+  \hline
+March 3, 2020 & 18324.00 & Fed set rate of purchases \\ 
+  March 11, 2020 & 18332.00 & Fed updated guidance \\ 
+  March 15, 2020 & 18336.00 & Fed began tapering \\ 
+  March 16, 2020 & 18337.00 & Fed doubled tapering speed \\ 
+  April 1, 2020 & 18353.00 & Fed emergency rate cut \\ 
+  June 1, 2020 & 18414.00 & WHO declares Covid-19 pandemic \\ 
+  August 28, 2020 & 18502.00 & Fed slashes rates to zero \\ 
+  December11, 2020 & 18607.00 & Stock market crash \\ 
+  July 28, 2021 & 18836.00 & Highest US unemployment since 1948 \\ 
+  November 1, 2021 & 18932.00 & Fed announces new strategy \\ 
+  December 1, 2021 & 18962.00 & Fed holds rates steady \\ 
+  January 26, 2022 & 19018.00 & Powell states labor market conditions \\ 
+  February 24, 2022 & 19047.00 & Russia invades Ukraine \\ 
+  March 16, 2022 & 19067.00 & Fed makes first rate increase since 2018 \\ 
+  May 5, 2022 & 19117.00 & Fed increases interest rates \\ 
+  June 1, 2022 & 19144.00 & Inflation peaks \\ 
+  June 16, 2022 & 19159.00 & Fed raises rates \\ 
+  July 28, 2022 & 19201.00 & Fed hikes rates \\ 
+  September 22, 2022 & 19257.00 & Fed delivers another rate increase \\ 
+  November 3, 2022 & 19299.00 & Fed increases rates \\ 
+  December 15, 2022 & 19341.00 & Fed raises rates \\ 
+  February 2, 2023 & 19390.00 & Fed adds another increase \\ 
+  March 23, 2023 & 19439.00 & Fed increases interest rates \\ 
+  May 4, 2023 & 19481.00 & Fed hikes another increase \\ 
+  July 27, 2023 & 19565.00 & Fed delivers final increase of 2023 \\ 
+   \hline
+\end{tabular}
+\caption{Important Events Timeline} 
+\end{table}
+
+\hypertarget{time-series-properties-of-overnight-policy-money-market-rates-transactions-and-reserves-held-at-the-federal-reserve}{%
+\section{Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve}\label{time-series-properties-of-overnight-policy-money-market-rates-transactions-and-reserves-held-at-the-federal-reserve}}
+
+Overnight money market rates in funding markets share several features. They closely closely track and cluster around the Fed policy rate, the EFFR. They respond quickly to changes in the EFFR or the administered rates IORB and ON RRP (Figure \ref{fig:sampleratests}. Their medians change over time, their small interquartile range (IQR) indicates that they cluster tightly around their medians. They contain extreme values or outliers, characteristic of fat tailed distributions. Rates are heteroskedastic - volatility as measured by percent change in their medians varies over time.
+
+Repurchase and reverse repurchase funding markets have become a major source of funding for primary dealers, hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed are required to intermediate new US Treasury issues. Primary dealers borrow at cheaper rates from lenders, asset managers in the tri party and the Fed, then lend at a spread in other repo markets. Loans are secured by collateral. They lend at the higher broad General Collateral Rate (BGCR) to leveraged investors such as hedge funds.The Fed conducts OMO in the tri party market, both borrowing and lending. The Secured Overnight Financing Rate (SOFR), Fed's broadest measure of repo rates, expresses the average cost of borrowing overnight.
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/sampleratests-1.pdf}
+\caption{\label{fig:sampleratests}Sample reference rates 3/4/2016-12/14/2023}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# file samplequantiles?  }
+\CommentTok{\# file rates\_sample overwritten with volatility}
+\NormalTok{bgn}\OtherTok{\textless{}{-}}\DecValTok{1}
+\NormalTok{edn}\OtherTok{\textless{}{-}}\FunctionTok{nrow}\NormalTok{(rrbp)}
+\NormalTok{sdate}\OtherTok{\textless{}{-}}\NormalTok{spread\_no\_na}\SpecialCharTok{$}\NormalTok{sdate}
+\NormalTok{sample}\OtherTok{\textless{}{-}}\NormalTok{rrbp[bgn}\SpecialCharTok{:}\NormalTok{edn,]  }\CommentTok{\# All}
+\NormalTok{sdate}\OtherTok{\textless{}{-}}\NormalTok{spread\_no\_na}\SpecialCharTok{$}\NormalTok{sdate}
+\NormalTok{sdatesample}\OtherTok{\textless{}{-}}\NormalTok{sdate[bgn}\SpecialCharTok{:}\NormalTok{edn]}
+\NormalTok{qsampleE}\OtherTok{=}\NormalTok{quantilesE[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+\NormalTok{qsampleT}\OtherTok{=}\NormalTok{quantilesT[bgn}\SpecialCharTok{:}\NormalTok{edn,]}
+\NormalTok{qsampleB}\OtherTok{=}\NormalTok{quantilesB[bgn}\SpecialCharTok{:}\NormalTok{edn,]}
+\NormalTok{qsampleS}\OtherTok{=}\NormalTok{quantilesS[bgn}\SpecialCharTok{:}\NormalTok{edn,]}
+
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sdate }\OtherTok{\textless{}{-}}\NormalTok{ sdate}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleE }\OtherTok{\textless{}{-}}\NormalTok{qsampleE}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleT }\OtherTok{\textless{}{-}}\NormalTok{qsampleT}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleB }\OtherTok{\textless{}{-}}\NormalTok{qsampleB}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleS }\OtherTok{\textless{}{-}}\NormalTok{qsampleS}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sdate }\OtherTok{\textless{}{-}}\NormalTok{ sdate}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleE }\OtherTok{\textless{}{-}}\NormalTok{qsampleE}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleT }\OtherTok{\textless{}{-}}\NormalTok{qsampleT}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleB }\OtherTok{\textless{}{-}}\NormalTok{qsampleB}
+\NormalTok{my\_envepisodes}\SpecialCharTok{$}\NormalTok{sampleS }\OtherTok{\textless{}{-}}\NormalTok{qsampleS}
+
+\NormalTok{Estats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleE[bgn}\SpecialCharTok{:}\NormalTok{edn,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleE)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Tstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleT[bgn}\SpecialCharTok{:}\NormalTok{edn,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleT)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Bstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleB[bgn}\SpecialCharTok{:}\NormalTok{edn,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleB)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Sstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleS[bgn}\SpecialCharTok{:}\NormalTok{edn,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleS)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Add NA for targets }
+\NormalTok{Tstats2}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Tstats[}\DecValTok{1}\NormalTok{],Tstats[}\DecValTok{2}\NormalTok{], }\AttributeTok{TargetUe=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{TargetDe=}\ConstantTok{NA}\NormalTok{,Tstats[}\DecValTok{3}\NormalTok{],Tstats[}\DecValTok{4}\NormalTok{],Tstats[}\DecValTok{5}\NormalTok{],Tstats[}\DecValTok{6}\NormalTok{])}
+\NormalTok{Bstats2}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Bstats[}\DecValTok{1}\NormalTok{],Bstats[}\DecValTok{2}\NormalTok{], }\AttributeTok{TargetUe=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{TargetDe=}\ConstantTok{NA}\NormalTok{,Bstats[}\DecValTok{3}\NormalTok{],Bstats[}\DecValTok{4}\NormalTok{],Bstats[}\DecValTok{5}\NormalTok{],Bstats[}\DecValTok{6}\NormalTok{])}
+\NormalTok{Sstats2}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(Sstats[}\DecValTok{1}\NormalTok{],Sstats[}\DecValTok{2}\NormalTok{], }\AttributeTok{TargetUe=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{TargetDe=}\ConstantTok{NA}\NormalTok{,Sstats[}\DecValTok{3}\NormalTok{],Sstats[}\DecValTok{4}\NormalTok{],Sstats[}\DecValTok{5}\NormalTok{],Sstats[}\DecValTok{6}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/samplebox-1.pdf}
+\caption{\label{fig:samplebox}EFFR IQR and range of the sample 3/4/2016-12/14/2023}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/samplerates-1.pdf}
+\caption{\label{fig:samplerates}EFFR percentiles of the sample 3/4/2016-12/14/2023}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/samplevold-1.pdf}
+\caption{\label{fig:samplevold}Sample volumes of overnight rates 3/4/2016-12/14/2023}
+\end{figure}
+
+\hypertarget{the-history-or-rates-from-342016-12142023}{%
+\subsection{The history or rates from 3/4/2016-12/14/2023}\label{the-history-or-rates-from-342016-12142023}}
+
+The rate data from the Federal Reserve Data Download Program, average volume weighted medians, q better measure of central tendency since daily rates have skewed distributions with outliers. The Interquartile range (IQR), the 75th minus the 25 percentile of the data contains 50 percent of the data. Less influenced by extreme values, the IQR is a measure of variability that describes how tightly rates cluster around their median. The range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outliers (Table (@ref(tab:Rate characteristics 2016-2023)), the extreme values in rates.
+
+\emph{Funding rates track the FFR}
+Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table @ref(tab:Sample statistics 2016-2023)). Similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR), 134 bp. The percentiles of rates reflect the same clustering around the EFFR (Figure \ref{fig:samplerates}).
+
+\emph{Variability: All rates except SOFR cluster tightly around their median (IQR)}
+Small IQRs indicate the FFR and money market rates are tightly clustered around their median values (Figure \ref{fig:samplebox}).
+
+Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an IQR of 1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR shows greater dispersion, 4.2 bp. (136.70-132.50).
+
+\emph{Outliers}
+The EFFR and money market rates are skewed with fatter tails. A large range means high variability, a small range means low variability. The range of the EFFR and the money market rates,two percent of the data, TGCR, BGCR, and SOFR in the sample are some 14 to 16 basis points - 15.99 (EFFR), 13.86 (TGCR), 16.11 (BGCR), and 14.51 (SOFR) basis points.
+
+\emph{Volatility}
+The change in volatility over time, the percent change in median reference rates, indicates heteroskedasticity in rate data. From 2016 to 2020, the percent change in these daily rates, ranges plus of minus 0.5 percent from 2016 to November 2019 (Figure \ref{fig:samplevola}).
+
+From 2020 to 2022 during the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
+
+\emph{Volume}
+The volume of SOFR transactions, \$754 billion per day, dwarf trading in all other EFFR and money market rates. EFFR has a notably lower daily trade volume of \$79 billion, TGCR and BGCR at around \$300 billion each (TGCR 296.95, BGCR 311.23) (Figure \ref{fig:samplevold}).
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:22 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 156.97 & 132.83 & 132.85 & 134.08 \\ 
+  Volume & 78.91 & 296.95 & 311.23 & 754.37 \\ 
+  Upper target & 170.52 &  &  &  \\ 
+  Lower target & 145.52 &  &  &  \\ 
+  Percentile\_01 & 153.07 & 124.89 & 125.07 & 129.02 \\ 
+  Percentile\_25 & 156.15 & 132.36 & 132.37 & 132.51 \\ 
+  Percentile\_75 & 157.71 & 133.27 & 133.32 & 136.70 \\ 
+  Percentile\_99 & 169.06 & 138.75 & 141.19 & 143.53 \\ 
+   \hline
+\end{tabular}
+\caption{Rate characteristics 2016-2023} 
+\label{tab:Rate characteristics 2016-2023}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{k}\OtherTok{=}\DecValTok{6}
+\NormalTok{begn}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{859}\NormalTok{, }\DecValTok{923}\NormalTok{,  }\DecValTok{1014}\NormalTok{, }\DecValTok{1519}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{endn}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{858}\NormalTok{, }\DecValTok{922}\NormalTok{, }\DecValTok{1013}\NormalTok{, }\DecValTok{1518}\NormalTok{, }\DecValTok{1957}\NormalTok{, }\DecValTok{1957}\NormalTok{)}
+\NormalTok{bgn}\OtherTok{\textless{}{-}}\NormalTok{begn[k]}
+\NormalTok{edn}\OtherTok{\textless{}{-}}\NormalTok{endn[k]}
+\NormalTok{qsampleE}\OtherTok{=}\NormalTok{quantilesE[bgn}\SpecialCharTok{:}\NormalTok{edn,] }\CommentTok{\# rate specific metrics  {-}{-}\textgreater{}}
+\NormalTok{qsampleT}\OtherTok{=}\NormalTok{quantilesT[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+\NormalTok{qsampleB}\OtherTok{=}\NormalTok{quantilesB[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+\NormalTok{qsampleS}\OtherTok{=}\NormalTok{quantilesS[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+
+\NormalTok{Estats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleE[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleE)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#resave qsamplee to env with sdate in position s}
+\CommentTok{\#Ostatssample \textless{}{-} colMeans(qsampleO[,2:ncol(qsampleO)], na.rm = TRUE)}
+\NormalTok{Tstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleT[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleT)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Bstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleB[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleB)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Sstats }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qsampleS[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qsampleS)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:22 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 156.97 & 1.56 & 15.99 & 78.91 \\ 
+  2 & TGCR & 132.83 & 0.92 & 13.86 & 296.95 \\ 
+  3 & BGCR & 132.85 & 0.96 & 16.11 & 311.23 \\ 
+  4 & SOFR & 134.08 & 4.20 & 14.51 & 754.37 \\ 
+   \hline
+\end{tabular}
+\caption{Sample 3/04/2016-12/14/2023} 
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/samplevola-1.pdf}
+\caption{\label{fig:samplevola}Volatility percent change daily rates 2016-2023}
+\end{figure}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:23 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 133.79 & 83.83 & 83.84 & 84.78 \\ 
+  Volume & 75.86 & 158.53 & 166.42 & 350.22 \\ 
+  Upper target & 143.09 &  &  &  \\ 
+  Lower target & 118.09 &  &  &  \\ 
+  Percentile\_01 & 129.38 & 79.88 & 79.97 & 81.44 \\ 
+  Percentile\_25 & 133.33 & 83.44 & 83.45 & 83.55 \\ 
+  Percentile\_75 & 134.55 & 83.66 & 83.68 & 86.85 \\ 
+  Percentile\_99 & 147.02 & 85.50 & 88.44 & 89.97 \\ 
+   \hline
+\end{tabular}
+\caption{Normalcy 3/04/2016-7/31/2019} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:23 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 133.79 & 1.22 & 17.65 & 75.86 \\ 
+  2 & TGCR & 83.83 & 0.22 & 5.62 & 158.53 \\ 
+  3 & BGCR & 83.84 & 0.23 & 8.48 & 166.42 \\ 
+  4 & SOFR & 84.78 & 3.30 & 8.53 & 350.22 \\ 
+   \hline
+\end{tabular}
+\caption{Normalcy 3/04/2016-7/31/2019} 
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestsnorm-1.pdf}
+\caption{\label{fig:ratestsnorm}Rates during normalcy period 3/4/2016-7/31/2019}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratesnorm-1.pdf}
+\caption{\label{fig:ratesnorm}EFFR during normalcy period 3/4/2016-7/31/2019}
+\end{figure}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:25 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 200.09 & 206.30 & 206.34 & 208.22 \\ 
+  Volume & 66.84 & 466.22 & 492.47 & 1151.00 \\ 
+  Upper target & 212.89 &  &  &  \\ 
+  Lower target & 187.89 &  &  &  \\ 
+  Percentile\_01 & 192.08 & 191.66 & 191.80 & 196.47 \\ 
+  Percentile\_25 & 197.25 & 205.62 & 205.62 & 206.00 \\ 
+  Percentile\_75 & 201.91 & 206.92 & 206.98 & 216.53 \\ 
+  Percentile\_99 & 209.75 & 214.36 & 225.80 & 237.73 \\ 
+   \hline
+\end{tabular}
+\caption{Adjustment 8/1/2019-10/31/2019} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:25 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 183.59 & 12.84 & 146.05 & 1468.70 \\ 
+  2 & TGCR & 248.51 & 6.71 & 274.56 & 1491.08 \\ 
+  3 & BGCR & 254.84 & 15.29 & 300.67 & 1529.02 \\ 
+  4 & SOFR & 369.33 & 25.88 & 954.53 & 2215.95 \\ 
+   \hline
+\end{tabular}
+\caption{Adjustment 8/1/2019-10/31/2019} 
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestsadjust-1.pdf}
+\caption{\label{fig:ratestsadjust}Rates during mid cycle adjustment 8/1/2019-10/31/2019}
+\end{figure}
+
+{[}1{]} 525
+{[}1{]} 158
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratesadjust-1.pdf}
+\caption{\label{fig:ratesadjust}EFFR during adjustment period 8/1/2019-10/31/2019}
+\end{figure}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:26 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 150.46 & 148.64 & 148.64 & 151.19 \\ 
+  Volume & 71.70 & 401.74 & 423.19 & 1085.60 \\ 
+  Upper target & 168.96 &  &  &  \\ 
+  Lower target & 143.96 &  &  &  \\ 
+  Percentile\_01 & 145.80 & 142.08 & 142.30 & 145.62 \\ 
+  Percentile\_25 & 149.53 & 148.47 & 148.47 & 148.71 \\ 
+  Percentile\_75 & 151.88 & 148.78 & 148.89 & 156.09 \\ 
+  Percentile\_99 & 157.52 & 153.29 & 158.32 & 165.08 \\ 
+   \hline
+\end{tabular}
+\caption{Covid 03/17/2022-12/14/2023} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:26 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 150.46 & 2.35 & 11.71 & 71.70 \\ 
+  2 & TGCR & 148.64 & 0.31 & 11.21 & 401.74 \\ 
+  3 & BGCR & 148.64 & 0.42 & 16.02 & 423.19 \\ 
+  4 & SOFR & 151.19 & 7.37 & 19.46 & 1085.60 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestscovid-1.pdf}
+\caption{\label{fig:ratestscovid}Rates during covid 11/1/2019-3/16/2020}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratescovid-1.pdf}
+\caption{\label{fig:ratescovid}EFFR during covid period 11/1/2019-3/16/2020}
+\end{figure}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:27 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 8.09 & 4.59 & 4.59 & 5.41 \\ 
+  Volume & 68.97 & 353.60 & 376.32 & 943.72 \\ 
+  Upper target & 25.00 &  &  &  \\ 
+  Lower target & 0.00 &  &  &  \\ 
+  Percentile\_01 & 5.07 & 2.08 & 2.05 & 1.57 \\ 
+  Percentile\_25 & 7.13 & 4.52 & 4.53 & 3.92 \\ 
+  Percentile\_75 & 8.67 & 4.65 & 4.67 & 6.97 \\ 
+  Percentile\_99 & 12.40 & 13.29 & 13.91 & 16.01 \\ 
+   \hline
+\end{tabular}
+\caption{Zero lower bound 03/17/2020-03/16/2022} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:27 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 8.09 & 1.54 & 7.33 & 68.97 \\ 
+  2 & TGCR & 4.59 & 0.12 & 11.21 & 353.60 \\ 
+  3 & BGCR & 4.59 & 0.15 & 11.86 & 376.32 \\ 
+  4 & SOFR & 5.41 & 3.05 & 14.44 & 943.72 \\ 
+   \hline
+\end{tabular}
+\caption{Rate statistics Zero lower bound 03/17/2020-03/16/2022} 
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestszlb-1.pdf}
+\caption{\label{fig:ratestszlb}Rates during zero lower bound 3/17/2020-3/16/2022}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/rateszlb-1.pdf}
+\caption{\label{fig:rateszlb}EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022}
+\end{figure}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:29 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & EFFR & TGCR & BGCR & SOFR \\ 
+  \hline
+Rate & 368.60 & 362.14 & 362.20 & 364.07 \\ 
+  Volume & 99.56 & 455.92 & 469.75 & 1199.94 \\ 
+  Upper target & 385.65 &  &  &  \\ 
+  Lower target & 360.65 &  &  &  \\ 
+  Percentile\_01 & 365.45 & 340.85 & 341.46 & 355.36 \\ 
+  Percentile\_25 & 367.56 & 360.99 & 361.01 & 362.03 \\ 
+  Percentile\_75 & 369.18 & 364.26 & 364.38 & 367.71 \\ 
+  Percentile\_99 & 388.81 & 373.12 & 374.80 & 376.72 \\ 
+   \hline
+\end{tabular}
+\caption{Taming inflation 03/17/2022-12/14/2023} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:29 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrr}
+  \hline
+ & Category & Median & IQR & RANGE & VOLUME \\ 
+  \hline
+1 & EFFR & 368.60 & 1.62 & 23.36 & 99.56 \\ 
+  2 & TGCR & 362.14 & 3.26 & 32.27 & 455.92 \\ 
+  3 & BGCR & 362.20 & 3.36 & 33.34 & 469.75 \\ 
+  4 & SOFR & 364.07 & 5.68 & 21.35 & 1199.94 \\ 
+   \hline
+\end{tabular}
+\caption{Rate statistics Taming inflation 03/17/2022-12/14/2023} 
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestsinflation-1.pdf}
+\caption{\label{fig:ratestsinflation}Rates during Taming inflation 3/17/2022-12/14/2023}
+\end{figure}
+
+\begin{verbatim}
+## [1] 33
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratesinflation-1.pdf}
+\caption{\label{fig:ratesinflation}EFFR during inflation period 3/17/2022-12/14/2023}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qnormE}\OtherTok{=}\NormalTok{quantilesE[bgn}\SpecialCharTok{:}\NormalTok{edn,] }\CommentTok{\# rate specific metrics  {-}{-}\textgreater{}}
+\NormalTok{qnormT}\OtherTok{=}\NormalTok{quantilesT[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+\NormalTok{qnormB}\OtherTok{=}\NormalTok{quantilesB[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+\NormalTok{qnormS}\OtherTok{=}\NormalTok{quantilesS[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
+
+\NormalTok{Estatsnorm }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qnormE[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qnormE)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Tstatsnorm }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qnormT[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qnormT)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Bstatsnorm }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qnormB[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qnormB)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{Sstatsnorm }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(qnormS[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(qnormS)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/normbox-1.pdf}
+\caption{\label{fig:normbox}IQR and range during normalcy period 3/4/2016-7/31/2019}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/adjustbox-1.pdf}
+\caption{\label{fig:adjustbox}IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/covidbox-1.pdf}
+\caption{\label{fig:covidbox}IQR and range of rates during covid period 11/1/2019-3/16/2020}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/zlbbox-1.pdf}
+\caption{\label{fig:zlbbox}IQR and range of rates during zero lower bond period 3/17/2020-3/16/2022}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/inflationbox-1.pdf}
+\caption{\label{fig:inflationbox}IQR and range of rates during inflation period 3/17/2022-12/14/2023}
+\end{figure}
+
+\hypertarget{behavior-the-federal-funds-rate-and-money-market-rates-during-different-policy-episodes}{%
+\section{Behavior the Federal Funds rate and money market rates during different policy episodes}\label{behavior-the-federal-funds-rate-and-money-market-rates-during-different-policy-episodes}}
+
+The vertical shifts in rates from 2016 to 2023 suggest changes in distribution of rates during policy episodes. Forbes (2024) summarizes these monetary policy episodes. I have added the period of the zero lower bound. A more rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024).
+
+\begin{itemize}
+\tightlist
+\item
+  Normalcy 3/4/2016 to 7/31/2019\\
+\item
+  Mid cycle adjustment 8/1/2019 to 10/31/2019\\
+\item
+  Covid 11/1/2019 to 3/16/2020\\
+\item
+  Zero lower bound 3/17/2020 to 3/16/2022\\
+\item
+  Taming inflation 03/17/2022 to 12/14/2023
+\end{itemize}
+
+\hypertarget{the-history-of-rates-by-policy-episode}{%
+\subsection{The history of rates by policy episode}\label{the-history-of-rates-by-policy-episode}}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrl}
+  \hline
+ & Date & From & To & Basis.points & Discount.rate & Votes \\ 
+  \hline
+1 & 14-Dec-16 & 0.50 & 0.75 &  25 & 0.01 & 10–0 \\ 
+  2 & 15-Mar-17 & 0.75 & 1.00 &  25 & 0.01 & 9–1 \\ 
+  3 & 14-Jun-17 & 1.00 & 1.25 &  25 & 0.02 & 8–1 \\ 
+  4 & 13-Dec-17 & 1.25 & 1.50 &  25 & 0.02 & 7–2 \\ 
+  5 & 21-Mar-18 & 1.50 & 1.75 &  25 & 0.02 & 8–0 \\ 
+  6 & 13-Jun-18 & 1.75 & 2.00 &  25 & 0.02 & 8–0 \\ 
+  7 & 26-Sep-18 & 2.00 & 2.25 &  25 & 0.03 & 9–0 \\ 
+  8 & 19-Dec-18 & 2.20 & 2.50 &  25 & 0.03 & 10–0 \\ 
+  9 & 31-Jul-19 & 2.00 & 2.25 & -25 & 0.03 & 8–2 \\ 
+   \hline
+\end{tabular}
+\caption{FOMC rate changes Normalcy 3/4/2016 to 7/31/2019} 
+\label{tab:fomcnorm}
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrl}
+  \hline
+ & Date & From & To & Basis.points & Discount.rate & Votes \\ 
+  \hline
+10 & 18-Sep-19 & 1.75 & 2.00 &  25 & 0.03 & 7–3 \\ 
+  11 & 30-Oct-19 & 1.50 & 1.75 & -25 & 0.03 & 8–2 \\ 
+   \hline
+\end{tabular}
+\caption{Mid cycle adjustment 8/1/2019 to 10/31/2019} 
+\label{tab:fomcadjust}
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrl}
+  \hline
+ & Date & From & To & Basis.points & Discount.rate & Votes \\ 
+  \hline
+12 & 3-Mar-20 & 1.00 & 1.25 &  25 & 0.03 & 10–0 \\ 
+  13 & 15-Mar-20 & 0.00 & 0.25 &  25 & 0.00 & 9–1 \\ 
+   \hline
+\end{tabular}
+\caption{Covid 11/1/2019 to 3/16/2020} 
+\label{tab:fomccovid}
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrl}
+  \hline
+ & Date & From & To & Basis.points & Discount.rate & Votes \\ 
+  \hline
+14 & 19-Mar-20 & 0.00 & 0.25 &  25 & 0.00 &  \\ 
+  15 & 23-Mar-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+  16 & 31-Mar-20 & 0.00 & 0.25 &  25 & 0.00 &  \\ 
+  17 & 29-Apr-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+  18 & 10-Jun-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+  19 & 29-Jul-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+  20 & 27-Aug-20 & 0.00 & 0.25 &  25 & 0.00 & unanimous \\ 
+  21 & 16-Sep-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+  22 & 5-Nov-20 & 0.00 & 0.25 &  25 & 0.00 &   \\ 
+   \hline
+\end{tabular}
+\caption{Zero lower bound 3/17/2020 to 3/16/2022} 
+\label{tab:fomczlb}
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrl}
+  \hline
+ & Date & From & To & Basis.points & Discount.rate & Votes \\ 
+  \hline
+24 & 4-May-22 & 0.75 & 1.00 &  25 & 0.01 & 9–0 \\ 
+  25 & 15-Jun-22 & 1.50 & 1.75 &  25 & 0.02 & 8–1 \\ 
+  26 & 27-Jul-22 & 2.25 & 2.50 &  25 & 0.02 & 12–0 \\ 
+  27 & 21-Sep-22 & 3.00 & 3.25 &  25 & 0.03 & 12–0 \\ 
+  28 & 2-Nov-22 & 3.75 & 4.00 &  25 & 0.04 & 12–0 \\ 
+  29 & 14-Dec-22 & 4.25 & 4.50 &  25 & 0.04 & 12–0 \\ 
+  30 & 1-Feb-23 & 4.50 & 4.75 &  25 & 0.05 & 12–0 \\ 
+  31 & 22-Mar-23 & 4.75 & 5.00 &  25 & 0.05 & 11–0 \\ 
+  32 & 3-May-23 & 5.00 & 5.25 &  25 & 0.05 & 11–0 \\ 
+  33 & 14-Jun-23 & 5.00 & 5.25 &   0 & 0.05 & 11–0 \\ 
+  34 & 26-Jul-23 & 5.25 & 5.50 &  25 & 0.06 & 11–0 \\ 
+  35 & 20-Sep-23 & 5.25 & 5.50 &   0 & 0.06 & 12–0 \\ 
+  36 & 1-Nov-23 & 5.25 & 5.50 &   0 & 0.06 & 12–0 \\ 
+  37 & 13-Dec-23 & 5.25 & 5.50 &   0 & 0.06 & 12–0 \\ 
+   \hline
+\end{tabular}
+\caption{Taming inflation 03/17/2022 to 12/14/2023} 
+\label{tab:fomcinflation}
+\end{table}
+
+The EFFR and the money market rates during the normalcy period (Figure \ref{fig:ratestsnorm}).
+(Table \ref{tab:fomcnorm}.
+
+The EFFR and the money market rates during the adjustment period (Figure \ref{fig:ratestsadjust}).
+(Table \ref{tab:fomcadjust}
+
+The EFFR and the money market rates during the covid period (Figure \ref{fig:ratestscovid}).
+(Table \ref{tab:fomccovid}
+
+The EFFR and the money market rates during the zero lower bound (Figure \ref{fig:ratestszlb}).
+
+The EFFR and the money market rates during the taming of inflation (Figure \ref{fig:ratestsinflation}).
+From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+(Table \ref{tab:fomcinflation}
+
+\hypertarget{percentiles}{%
+\subsection{Percentiles}\label{percentiles}}
+
+Percentiles of the EFFR during the normalcy period (Figure \ref{fig:ratesnorm}).
+
+The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
+The IQR and range during the normalcy period are shown in (Figure \ref{fig:normbox}).
+
+Percentiles of the EFFR during the adjustment period (Figure \ref{fig:ratesadjust}).
+The outliers from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \ref{fig:adjustbox}).
+
+Percentiles of the EFFR during the pandemic (Figure \ref{fig:ratescovid}).
+The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate
+(Figure \ref{fig:covidbox}).
+
+Percentiles of the EFFR during the zero lower bound (Figure \ref{fig:rateszlb})
+and (Figure \ref{fig:zlbbox}).
+
+Percentiles of the EFFR during the Fed's fight to control inflation (Figure \ref{fig:ratesinflation}).
+The EFFR and the IQR are within the FOMC target rates (Figure \ref{fig:inflationbox}).
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+ & Sample & Normalcy & Adjust & Covid & Zlb & Inflation \\ 
+  \hline
+EFFR & 156.97 & 133.79 & 183.59 & 150.46 & 8.09 & 368.60 \\ 
+  TGCR & 132.83 & 83.83 & 248.51 & 148.64 & 4.59 & 362.14 \\ 
+  BGCR & 132.85 & 83.84 & 254.84 & 148.64 & 4.59 & 362.20 \\ 
+  SOFR & 134.08 & 84.78 & 369.33 & 151.19 & 5.41 & 364.07 \\ 
+   \hline
+\end{tabular}
+\caption{Median of rates during policy regimes} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+ & Sample & Normalcy & Adjust & Covid & Zlb & Inflation \\ 
+  \hline
+EFFR & 1.56 & 1.22 & 12.84 & 2.35 & 1.54 & 1.62 \\ 
+  TGCR & 0.92 & 0.22 & 6.71 & 0.31 & 0.12 & 3.26 \\ 
+  BGCR & 0.96 & 0.23 & 15.29 & 0.42 & 0.15 & 3.36 \\ 
+  SOFR & 4.20 & 3.30 & 25.88 & 7.37 & 3.05 & 5.68 \\ 
+   \hline
+\end{tabular}
+\caption{Interquartile range (IQR) of rates during policy regimes} 
+\end{table}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package
+\% Fri Jun 14 22:43:35 2024
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+ & Sample & Normalcy & Adjust & Covid & Zlb & Inflation \\ 
+  \hline
+EFFR & 15.99 & 17.65 & 146.05 & 11.71 & 7.33 & 23.36 \\ 
+  TGCR & 13.86 & 5.62 & 274.56 & 11.21 & 11.21 & 32.27 \\ 
+  BGCR & 16.11 & 8.48 & 300.67 & 16.02 & 11.86 & 33.34 \\ 
+  SOFR & 14.51 & 8.53 & 954.53 & 19.46 & 14.44 & 21.35 \\ 
+   \hline
+\end{tabular}
+\caption{Range of rates during policy regimes} 
+\end{table}
+
+The average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR.
+
+\emph{Median daily reference rates}
+the median illustrate\\
+A measure of central tendency, the median of the reference rates EFFR and money market rates (@ref(tab:Rate characteristics 2016-2023)(top panel Table) illustrate how closely money market rates track the policy rate EFFR. The change in median rates during different episodes demonstrate the how their central tendency changes with monetary policy. Average median rates for the sample are 157 bp for the EFFR, and some 133-134 bp for the money market rates and SOFR. The difference in the central tendencies as measured by the median rate, changes dramatically over different policy episodes.
+
+The sample EFFR 157 bp drops to 134 bp during the normalization period, 184 bp in the adjustment period bp, 150.46 bp during covid, 8.09 bp the zero lower bound, and 369 bp during the inflation fighting period. Rates hover near zero from March 2020 to March 2022 during the zero lower bound. Median rates during the inflation episode increased over 233 percent of the the sample average as the Fed raised the FFR in 25 or 50 basis point to tame inflation. Rates rose steadily from March 2022 to 533 bp in December 2023 some 235 percent of the sample median rate
+
+The IQR and range provide more information about the series, how close they stay to their median values and also the extreme values characteristic of short rates (@ref(tab:IQR of rates during policy regimes)).
+
+\emph{Variability: clustering of funding rates  around their median (IQR)}
+Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole (Table @ref(tab: IQR of rates during the policy regimes)(middle panel Table). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3bp during the inflation episode. Boxplots show the IQR, the location of the median and tails for the outliers.
+
+SOFR exhibits the greater variability; for the sample as a whole, IQR for SOFR is a high 4 bp. The dispersion of SOFR is even more diverse among policy regimes. SOFR rates have the largest spread around the median rate, reaching over 10 bp during the adjustment period. SOFR is more tightly clustered around its median during normalcy, 3.30 bp and the zero lower bound 3.05 bp, but 7.37 bp during covid and 5.68 bp during inflation. Concoda reports {[}reference{]} in February 2023, some 25\% of repo trades were based on SOFR) a trillion dollar volume giving the Fed greater influence in global finance {[}check this claim from concoda{]}. However, NYFed data reveal SOFR rates to attain the largest spread in outliers versus tri party or bilateral repo.
+
+\emph{Outliers}
+The range of the data, the 99th and first percentile, is the spread from the lowest to the highest rates. More sensitive to outliers, the range represents 2 percent of the data, showing the magnitude of outliers under different policies (Table @ref(tab: Range of rates during policy regimes). The higher the range, the higher the variability. The spread outliers in the sample for all rates is 14 to 16 bp (bottom panel Table). During normalcy, the spread in money market rates and SOFR is 6 to 8 bp; the EFFR a higher 18 bp. Outliers soar during the period of adjustment, a spread of 18 bp, the EFFR reached 146 bp, the money market rates spread of 23- 34 bp, outliers reaching 275-300 bp. SOFR has the highest variablith, a spread of 42 bp, reaching a whopping 954 bp. The spread of outliers during covid and the zero lower bound are lower than the sample range. Spreads of extreme rate vaues during the zero lower bond are lower than the sample, 7- 14 bp, some 11 to 12 bp for the money market rates TGCR and BGCR 7.33 for the EFFR, and 14.44 for SOFR. The spread 21 to 33 bp in outliers occurs during the Fed's attempt to contain inflation. some 23 basis points for the EFFR, the money market rates TGCR and BGCR 32-33 bp, and SOFR 21 bp. Again SOFR shows greater variability in all episodes (@ref(tab: Range of rates during policy regimes)
+
+\emph{Volatility}
+Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is plus of minus 0.5 percent from 2016 to 2020. Extreme values during the periods of the pandemic and the zero lower bound, From 2020 to 2022, the percent change in rates varies plus or minus 2 percent. then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\ref{fig:samplevola}
+
+ADD volatility by episode
+
+\emph{Volume}
+Daily volume in money market rates TBGR \$297 billion,and BGCR \$311 billion, almost quadruple the transactions in the EFFR: \$79 billion. SOFR transactions, \$754 billion per day, dwarf trading in all other overnight reference rates.
+
+\hypertarget{methodology}{%
+\section{Methodology}\label{methodology}}
+
+I plan to explore methods proposed by Piazzesi, Bezoni et al and Jarocinsk,
+
+I replicated Bertola et EGARCH with little success but will continue to find a first estimate for comparison with other methods.
+
+Initial VARS revealed the near mean revision of reference rates, over tests of lagged rates 1, 2, 5, or 10 days. MOney market rates visually adapted to the FFR. But I made no formal investigation.
+
+Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
+
+Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC's policy decisions and describes Fed policy better than Taylor rules.The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks.
+
+Decisions about target moves result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move.
+
+(Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model, a time-varying mean reversion factor, a stochastic volatility factor, and a jump process. The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns. Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior.
+
+The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
+
+Estimating the Fed's unconventional policy shocks Javorscinski () estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an ``Odyssean'' forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a ``Delphic'' forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
+
+{[}Alvarez{]} metrics for kurtosis
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+Adam Copeland \textbar{} Darrell Duffie \textbar{} Yilin (David) Yang. Reserves Were Not So Ample After All. July 2021. Federal Reserve Bank of New York Staff Reports, no. 974
+JEL classification: G14, D47, D8
+
+James D. Hamilton. The Daily Market for Federal Funds. February 1996. Journal of Political Economy, Vol. 104, No.~1
+Stable URL: \url{https://www.jstor.org/stable/2138958}
+Published by: The University of Chicago Press pp.~26-56
+
+Piazzesi, Monika. Bond Yields and the Federal Reserve. April 2005. Journal of Political Economy, Volume 113, Issue 2, pp.~311-344.
+
+Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl. Monetary policy implementation with an ample supply of reserves. January, 2020. Federal Reserve Bank Chicago.WP 2020-02
+\url{https://doi.org/10.21033/wp-2020-0}
+
+Bertolini.L, Bertola, Prati. Day-To-DaY\_Monetary Policy and the Volatility of the Federal Funds Interest Rate. December 2000. IMF WOrking Paper WP/00/206
+
+Torben Gustav Andersen, Luca Benzoni,Jesper Lund. Stochastic volatility, mean drift, and jumps in the short-term interest rate. January 2004
+
+@\{article,
+author = \{Andersen, Torben and Benzoni, Luca and Lund, Jesper\},
+year = \{2004\},
+month = \{01\},
+pages = \{\},
+title = \{Stochastic volatility, mean drift, and jumps in the short-term interest rate\}
+\}
+
+article\_citation \textless- list(
+author = c(``Hamilton, James D.''),
+year = 1996,
+month = 02,
+title = ``The Daily Market for Federal Funds.'',
+journal = ``Journal of Political Economy'',
+volume = ``104'',
+issue = ``1'',
+type = ``article''
+)
+
+\textless!-
+Campbell, Jeffrey R., Charles L. Evans, Jonas D. M. Fisher, and Alejandro Justiniano (2012) ``Macroeconomic Effects of Federal Reserve Forward Guidance,'' Brookings Papers on Economic Activity, 1--80, \url{https://EconPapers.repec.org/RePEc}:
+bin:bpeajo:v:43:y:2012:i:2012-01:p:1-80.
+--\textgreater{}
+
+article\_citation \textless- list(
+author = c(``Campbell, Jeffrey R., Charles L. Evans, Jonas D. M. Fisher, and Alejandro Justiniano''),
+year = 2012,
+month = 04,
+title = ``Macroeconomic Effects of Federal Reserve Forward Guidance'',
+volume = ``113'',
+issue = ``2'',
+pages = ``1-80'',
+type = ``Brookings Papers on Economic Activity''
+)
+article\_citation \textless- list(
+author = c(``Piazzesi, Monika''),
+year = 2005,
+month = 04,
+title = ``Bond Yields and the Federal Reserve'',
+volume = ``113'',
+issue = ``2'',
+pages = ``311-344'',
+type = ``Article''
+)
+
+article\_citation \textless- list(
+author = c(``Afonso, Gara'', ``Kyungmin, Kim'', ``Martin, Antoine'',``Potter,Simon'',``Schulhofer-Wohl,Sam''),
+year = 2004,
+month = 01,
+title = ``Stochastic volatility, mean drift, and jumps in the short-term interest rate'',
+type = ``article''
+)
+
+article\_citation \textless- list(
+author = c(``Afonso, Gara'', ``Cipriani, Marco'', ``La Spada,Gabriele''),
+year = 2022,
+month = 12,
+title = ``Banks' Balance-Sheet Costs, Monetary Policy, and the ON RRP'',
+type = ``NY Federal Reserve staff report NO. 1041''
+)
+
+article\_citation \textless- list(
+author = c(``Afonso, Gara'', ``Logan,Lorie'', ``Martin, Antoine'', ``Riordan, William'', ``ZobelPatricia''),
+year = 2022,
+month = 1,
+title = ``Reverse Repo Facility Works'',
+type = ``Federal Reserve Bank of New York Liberty Street Economics\textbackslash url\{\url{https://libertystreeteconomics.newyorkfed.org/2022/1/how-the-feds-overnight-reverse-repo-facil\%\%ity-works/}\}''
+)
+
+article\_citation \textless- list(
+author = c(``Bertolini.L'', '' Bertola'', ``Prati''),
+year = 2000,
+month = 12,
+title = ``Day-To-DaY\_Monetary Policy and the Volatility of the Federal Funds Interest Rate'',
+type = '' IMF WOrking Paper''
+)
+
+article\_citation \textless- list(
+author = c(``Andersen, Torben'', ``Benzoni, Luca'', ``Lund, Jesper''),
+year = 2004,
+month = 01,
+title = ``Stochastic volatility, mean drift, and jumps in the short-term interest rate'',
+type = ``article''
+)
+
+article\_citation \textless- list(
+author = c(``Romer, Christina D.'', ``Romer, David H.''),
+year = 2023,
+month = 04,
+title = ``DOES MONETARY POLICY MATTER? THE NARRATIVE APPROACH AFTER 35 YEARS'',
+type = ``NBER Working Paper 31170''
+)
+
+\url{http://www.nber.org/papers/w31170}
+
+article\_citation \textless- list(
+author = c(``Bianchi,Francesco'', ``Ludvigsony, Sydney C.'',``Ma,Sai''),
+year = 2024,
+month = 01,
+title = ``Monetary-Based Asset Pricing: A Mixed-Frequency Structural
+Approach'',
+type = ``NBER Working Paper''
+)
+
+article\_citation \textless- list(
+author = c(``Jarocinski, Marek),
+year = 2022,
+month = 06,
+title =''Estimating the Fed's unconventional policy shocks'',
+type = ``article ECB working paper''
+)
+
+article\_citation \textless- list(
+author = c(``Adams, Michael),
+year = 2024,
+month = 05,
+title =''Federal Funds Rate History 1990 to 2024'',
+type = ``\url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/}''
+)
+
+Concoda
+
+Richmond Fed
+
+Liberty Street
+
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
+
+\end{document}

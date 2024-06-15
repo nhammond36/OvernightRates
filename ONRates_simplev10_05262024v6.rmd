@@ -9,6 +9,8 @@ output:
     toc: true  # Specify whether a table of contents should be included
     keep_tex: true
     fig_caption: yes
+    includes:  
+      in_header: my_latex_file.tex
     extra_dependencies: ["flafter"]
     number_sections: yes
     #latex_engine: lualatex
@@ -68,7 +70,9 @@ knitr::opts_chunk$set(cache.rebuild = TRUE)
 knitr::opts_chunk$set(fig.pos = "!H")
 ```
 <!--
+\url{https://stackoverflow.com/questions/44850011/how-to-stop-bookdown-tables-from-floating-to-bottom-of-the-page-in-pdf}
 \url{https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc}
+\url{https://rbasics.org/packages/pandoc-package-in-r/}
 overstack solution for figure placement
 \usepackage{float}
 \let\origfigure\figure
@@ -78,6 +82,29 @@ overstack solution for figure placement
 } {
     \endorigfigure
 }
+
+
+CHAT how to:
+# Define the LaTeX content as a character vector
+latex_content <- "
+\\usepackage{float}
+\\let\\origfigure\\figure
+\\let\\endorigfigure\\endfigure
+\\renewenvironment{figure}[1][2] {
+    \\expandafter\\origfigure\\expandafter[H]
+} {
+    \\endorigfigure
+}
+"
+
+# Write the LaTeX content to a .tex file
+writeLines(latex_content, con = "my_latex_file.tex")
+
+# Alternatively, you can use cat
+cat(latex_content, file = "my_latex_file.tex")
+
+
+
 Here is example .Rmd which includes it (assuming you called the .tex file 'preamble-latex.tex'):
 
 ---
@@ -913,7 +940,7 @@ sdate<-spread_no_na$sdate
 sample<-rrbp[bgn:edn,]  # All
 sdate<-spread_no_na$sdate
 sdatesample<-sdate[bgn:edn]
-qsampleE=quantilesE[bgn:edn,] # rate specific metrics 
+qsampleE=quantilesE[bgn:edn,] 
 qsampleT=quantilesT[bgn:edn,]
 qsampleB=quantilesB[bgn:edn,]
 qsampleS=quantilesS[bgn:edn,]
@@ -930,7 +957,6 @@ my_envepisodes$sampleB <-qsampleB
 my_envepisodes$sampleS <-qsampleS
 
 Estats <- colMeans(qsampleE[bgn:edn,2:ncol(qsampleE)], na.rm = TRUE)
-#Ostats <- colMeans(qsampleO[bgn:edn,,2:ncol(qsampleO)], na.rm = TRUE)
 Tstats <- colMeans(qsampleT[bgn:edn,2:ncol(qsampleT)], na.rm = TRUE)
 Bstats <- colMeans(qsampleB[bgn:edn,2:ncol(qsampleB)], na.rm = TRUE)
 Sstats <- colMeans(qsampleS[bgn:edn,2:ncol(qsampleS)], na.rm = TRUE)
