@@ -116,7 +116,20 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{placeins}
-\usepackage{flafter}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -140,6 +153,103 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\hypertarget{restart-r-session}{%
+\subsubsection{Restart R Session}\label{restart-r-session}}
+
+Restart your R session to clear any lingering objects that might be causing the issue:
+
+\begin{itemize}
+\tightlist
+\item
+  In RStudio, you can do this by clicking on \texttt{Session} \textgreater{} \texttt{Restart\ R}.
+\end{itemize}
+
+\hypertarget{verify-and-edit-correct-file}{%
+\subsubsection{Verify and Edit Correct File}\label{verify-and-edit-correct-file}}
+
+Ensure that the R Markdown file you are editing is the one being knitted. Make sure you are not editing a copy or a different version of the file.
+
+\hypertarget{full-example-of-an-r-markdown-document}{%
+\subsubsection{Full Example of an R Markdown Document}\label{full-example-of-an-r-markdown-document}}
+
+Here's a cleaned-up example to ensure you are following the correct steps. I'll use the direct \texttt{kable} approach, as it simplifies the workflow and avoids issues with comments from \texttt{xtable}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{{-}{-}{-}}
+\AnnotationTok{title:}\CommentTok{ "Your Document Title"}
+\AnnotationTok{author:}\CommentTok{ "Your Name"}
+\AnnotationTok{date:}\CommentTok{ "2024{-}06{-}14"}
+\AnnotationTok{output:}
+\CommentTok{  pdf\_document:}
+\CommentTok{    includes:}
+\CommentTok{      in\_header: my\_latex\_file.tex}
+\CommentTok{{-}{-}{-}}
+
+
+\CommentTok{\textless{}!{-}{-}}
+\CommentTok{\textbackslash{}url\{https://stackoverflow.com/questions/44850011/how{-}to{-}stop{-}bookdown{-}tables{-}from{-}floating{-}to{-}bottom{-}of{-}the{-}page{-}in{-}pdf\}}
+\CommentTok{data\_frame(col\_a = seq\_len(5), col\_b = rnorm(5), col\_c = runif(5)) \%\textgreater{}\%}
+\CommentTok{  knitr::kable(caption = "This is a test") \%\textgreater{}\%}
+\CommentTok{  kableExtra::kable\_styling(latex\_options = "hold\_position")}
+\CommentTok{  }
+\CommentTok{  }
+\CommentTok{\textbackslash{}url\{https://stackoverflow.com/questions/16626462/figure{-}position{-}in{-}markdown{-}when{-}converting{-}to{-}pdf{-}with{-}knitr{-}and{-}pandoc\}}
+\CommentTok{\textbackslash{}url\{https://rbasics.org/packages/pandoc{-}package{-}in{-}r/\}}
+\CommentTok{overstack solution for figure placement}
+\CommentTok{\textbackslash{}usepackage\{float\}}
+\CommentTok{\textbackslash{}let\textbackslash{}origfigure\textbackslash{}figure}
+\CommentTok{\textbackslash{}let\textbackslash{}endorigfigure\textbackslash{}endfigure}
+\CommentTok{\textbackslash{}renewenvironment\{figure\}[1][2] \{}
+\CommentTok{    \textbackslash{}expandafter\textbackslash{}origfigure\textbackslash{}expandafter[H]}
+\CommentTok{\} \{}
+\CommentTok{    \textbackslash{}endorigfigure}
+\CommentTok{\}}
+
+
+\CommentTok{CHAT how to:}
+\CommentTok{\# Define the LaTeX content as a character vector}
+\CommentTok{latex\_content \textless{}{-} "}
+\CommentTok{\textbackslash{}\textbackslash{}usepackage\{float\}}
+\CommentTok{\textbackslash{}\textbackslash{}let\textbackslash{}\textbackslash{}origfigure\textbackslash{}\textbackslash{}figure}
+\CommentTok{\textbackslash{}\textbackslash{}let\textbackslash{}\textbackslash{}endorigfigure\textbackslash{}\textbackslash{}endfigure}
+\CommentTok{\textbackslash{}\textbackslash{}renewenvironment\{figure\}[1][2] \{}
+\CommentTok{    \textbackslash{}\textbackslash{}expandafter\textbackslash{}\textbackslash{}origfigure\textbackslash{}\textbackslash{}expandafter[H]}
+\CommentTok{\} \{}
+\CommentTok{    \textbackslash{}\textbackslash{}endorigfigure}
+\CommentTok{\}}
+\CommentTok{"}
+
+\CommentTok{\# Write the LaTeX content to a .tex file}
+\CommentTok{writeLines(latex\_content, con = "my\_latex\_file.tex")}
+
+\CommentTok{\# Alternatively, you can use cat}
+\CommentTok{cat(latex\_content, file = "my\_latex\_file.tex")}
+
+
+
+\CommentTok{Here is example .Rmd which includes it (assuming you called the .tex file \textquotesingle{}preamble{-}latex.tex\textquotesingle{}):}
+
+\CommentTok{{-}{-}{-}}
+\CommentTok{title: "example"}
+\CommentTok{author: "you"}
+\CommentTok{date: "14 June 2024"}
+\CommentTok{output:}
+\CommentTok{  rmarkdown::pdf\_document:}
+\CommentTok{    fig\_caption: yes        }
+\CommentTok{    includes:  }
+\CommentTok{      in\_header: preamble{-}latex.tex}
+\CommentTok{{-}{-}{-}}
+
+
+\CommentTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}r}
+\CommentTok{plot(1:10, 1:10)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/unnamed-chunk-3-1.pdf}
+--\textgreater{}
+
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
@@ -294,7 +404,7 @@ The shocks (Table @ref\{table:FOMC rate changes 2016-2023\}) encompass changes i
 \end{verbatim}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:19 2024
+\% Fri Jun 14 23:23:20 2024
 
 \begin{table}[ht]
 \centering
@@ -426,7 +536,7 @@ From 2020 to 2022 during the pandemic until the Fed began its fight to contain i
 The volume of SOFR transactions, \$754 billion per day, dwarf trading in all other EFFR and money market rates. EFFR has a notably lower daily trade volume of \$79 billion, TGCR and BGCR at around \$300 billion each (TGCR 296.95, BGCR 311.23) (Figure \ref{fig:samplevold}).
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:22 2024
+\% Fri Jun 14 23:23:23 2024
 
 \begin{table}[ht]
 \centering
@@ -470,7 +580,7 @@ Rate & 156.97 & 132.83 & 132.85 & 134.08 \\
 \end{Shaded}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:22 2024
+\% Fri Jun 14 23:23:23 2024
 
 \begin{table}[ht]
 \centering
@@ -493,46 +603,6 @@ Rate & 156.97 & 132.83 & 132.85 & 134.08 \\
 \caption{\label{fig:samplevola}Volatility percent change daily rates 2016-2023}
 \end{figure}
 
-\% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:23 2024
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrr}
-  \hline
- & EFFR & TGCR & BGCR & SOFR \\ 
-  \hline
-Rate & 133.79 & 83.83 & 83.84 & 84.78 \\ 
-  Volume & 75.86 & 158.53 & 166.42 & 350.22 \\ 
-  Upper target & 143.09 &  &  &  \\ 
-  Lower target & 118.09 &  &  &  \\ 
-  Percentile\_01 & 129.38 & 79.88 & 79.97 & 81.44 \\ 
-  Percentile\_25 & 133.33 & 83.44 & 83.45 & 83.55 \\ 
-  Percentile\_75 & 134.55 & 83.66 & 83.68 & 86.85 \\ 
-  Percentile\_99 & 147.02 & 85.50 & 88.44 & 89.97 \\ 
-   \hline
-\end{tabular}
-\caption{Normalcy 3/04/2016-7/31/2019} 
-\end{table}
-
-\% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:23 2024
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{rlrrrr}
-  \hline
- & Category & Median & IQR & RANGE & VOLUME \\ 
-  \hline
-1 & EFFR & 133.79 & 1.22 & 17.65 & 75.86 \\ 
-  2 & TGCR & 83.83 & 0.22 & 5.62 & 158.53 \\ 
-  3 & BGCR & 83.84 & 0.23 & 8.48 & 166.42 \\ 
-  4 & SOFR & 84.78 & 3.30 & 8.53 & 350.22 \\ 
-   \hline
-\end{tabular}
-\caption{Normalcy 3/04/2016-7/31/2019} 
-\end{table}
-
 \begin{figure}
 \centering
 \includegraphics{ONRates_simplev10_05262024v6_files/figure-latex/ratestsnorm-1.pdf}
@@ -546,7 +616,7 @@ Rate & 133.79 & 83.83 & 83.84 & 84.78 \\
 \end{figure}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:25 2024
+\% Fri Jun 14 23:23:26 2024
 
 \begin{table}[ht]
 \centering
@@ -568,7 +638,7 @@ Rate & 200.09 & 206.30 & 206.34 & 208.22 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:25 2024
+\% Fri Jun 14 23:23:26 2024
 
 \begin{table}[ht]
 \centering
@@ -601,7 +671,7 @@ Rate & 200.09 & 206.30 & 206.34 & 208.22 \\
 \end{figure}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:26 2024
+\% Fri Jun 14 23:23:27 2024
 
 \begin{table}[ht]
 \centering
@@ -623,7 +693,7 @@ Rate & 150.46 & 148.64 & 148.64 & 151.19 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:26 2024
+\% Fri Jun 14 23:23:27 2024
 
 \begin{table}[ht]
 \centering
@@ -652,7 +722,7 @@ Rate & 150.46 & 148.64 & 148.64 & 151.19 \\
 \end{figure}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:27 2024
+\% Fri Jun 14 23:23:28 2024
 
 \begin{table}[ht]
 \centering
@@ -674,7 +744,7 @@ Rate & 8.09 & 4.59 & 4.59 & 5.41 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:27 2024
+\% Fri Jun 14 23:23:28 2024
 
 \begin{table}[ht]
 \centering
@@ -704,7 +774,7 @@ Rate & 8.09 & 4.59 & 4.59 & 5.41 \\
 \end{figure}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:29 2024
+\% Fri Jun 14 23:23:29 2024
 
 \begin{table}[ht]
 \centering
@@ -726,7 +796,7 @@ Rate & 368.60 & 362.14 & 362.20 & 364.07 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:29 2024
+\% Fri Jun 14 23:23:29 2024
 
 \begin{table}[ht]
 \centering
@@ -761,7 +831,7 @@ Rate & 368.60 & 362.14 & 362.20 & 364.07 \\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{qnormE}\OtherTok{=}\NormalTok{quantilesE[bgn}\SpecialCharTok{:}\NormalTok{edn,] }\CommentTok{\# rate specific metrics  {-}{-}\textgreater{}}
+\NormalTok{qnormE}\OtherTok{=}\NormalTok{quantilesE[bgn}\SpecialCharTok{:}\NormalTok{edn,]}
 \NormalTok{qnormT}\OtherTok{=}\NormalTok{quantilesT[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
 \NormalTok{qnormB}\OtherTok{=}\NormalTok{quantilesB[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
 \NormalTok{qnormS}\OtherTok{=}\NormalTok{quantilesS[bgn}\SpecialCharTok{:}\NormalTok{edn,] }
@@ -826,7 +896,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 \subsection{The history of rates by policy episode}\label{the-history-of-rates-by-policy-episode}}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -850,7 +920,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -867,7 +937,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -884,7 +954,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -908,7 +978,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -973,7 +1043,7 @@ Percentiles of the EFFR during the Fed's fight to control inflation (Figure \ref
 The EFFR and the IQR are within the FOMC target rates (Figure \ref{fig:inflationbox}).
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -991,7 +1061,7 @@ EFFR & 156.97 & 133.79 & 183.59 & 150.46 & 8.09 & 368.60 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering
@@ -1009,7 +1079,7 @@ EFFR & 1.56 & 1.22 & 12.84 & 2.35 & 1.54 & 1.62 \\
 \end{table}
 
 \% latex table generated in R 4.3.2 by xtable 1.8-4 package
-\% Fri Jun 14 22:43:35 2024
+\% Fri Jun 14 23:23:36 2024
 
 \begin{table}[ht]
 \centering

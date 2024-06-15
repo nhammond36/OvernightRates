@@ -11,7 +11,7 @@ output:
     fig_caption: yes
     includes:  
       in_header: my_latex_file.tex
-    extra_dependencies: ["flafter"]
+    extra_dependencies: ["float"]
     number_sections: yes
     #latex_engine: lualatex
     latex_engine: pdflatex
@@ -55,9 +55,11 @@ library(gridExtra)
 library(cowplot)
 library(patchwork)
 library(caTools)
+library(kableExtra)
 #knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
+#knitr::opts_chunk$set(cache = FALSE)
 #knitr::knit("ONRates_simplev10_05262024v6.Rmd")
 ```
 
@@ -66,11 +68,32 @@ knitr::opts_chunk$set(cache = FALSE)
 knitr::opts_chunk$set(cache.rebuild = TRUE)
 ```
 
+
+
 ```{r, echo=FALSE, }
 knitr::opts_chunk$set(fig.pos = "!H")
 ```
 <!--
 \url{https://stackoverflow.com/questions/44850011/how-to-stop-bookdown-tables-from-floating-to-bottom-of-the-page-in-pdf}
+data_frame(col_a = seq_len(5), col_b = rnorm(5), col_c = runif(5)) %>%
+  knitr::kable(caption = "This is a test") %>%
+  kableExtra::kable_styling(latex_options = "hold_position")
+  
+  xtable_output <- xtable(charnorm, caption = "Normalcy 3/04/2016-7/31/2019", caption.placement = "top", comment = FALSE)
+
+# Print xtable with custom sanitize function to remove comments
+print(xtable_output, 
+      file = "my_table.tex",
+      sanitize.text.function = function(x) {x})
+
+# Read the generated table and apply kable styling
+table_content <- readLines("my_table.tex")
+kable_output <- kable(table_content, format = "latex", booktabs = TRUE)
+kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
+
+
+  
+  
 \url{https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc}
 \url{https://rbasics.org/packages/pandoc-package-in-r/}
 overstack solution for figure placement
@@ -1190,7 +1213,7 @@ edn<-nrow(rrbp)
 sample<-rrbp[bgn:edn,]  # All
 sdate<-spread_no_na$sdate
 sdatesample<-sdate[bgn:edn]
-qsampleE=quantilesE[bgn:edn,] # rate specific metrics 
+qsampleE=quantilesE[bgn:edn,] 
 qsampleT=quantilesT[bgn:edn,] 
 qsampleB=quantilesB[bgn:edn,]
 qsampleS=quantilesS[bgn:edn,]
@@ -1438,10 +1461,19 @@ charnorm <- cbind(Estatsnorm_mat, Tstatsnorm_mat, Bstatsnorm_mat, Sstatsnorm_mat
 rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target", 
                      "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
+xtable_output <- xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
+kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
 print.results = FALSE
 ```
+<!--
+xtable_output <- xtable(charnorm, caption = "Normalcy 3/04/2016-7/31/2019", caption.placement = "top", comment = FALSE)
 
+# Convert xtable output to kable and style it
+kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
+
+-->
 
 ```{r, tab.cap="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1476,10 +1508,23 @@ range_values <- c(Estatsnorm[8] - Estatsnorm[5], Tstatsnorm[6] - Tstatsnorm[3], 
 volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
 normstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
 row.names(normstats) <- NULL
-xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
+xtable_output<-xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
+kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
 print.results = FALSE
 ```
+<!--
+# Your data and xtable generation
+charnorm <- data.frame(Variable = c("Var1", "Var2"), Value = c(0.1, 0.2))  # Example data
+xtable_output <- xtable(charnorm, caption = "Normalcy 3/04/2016-7/31/2019", caption.placement = "top", comment = FALSE)
 
+# Convert xtable output to kable and style it
+kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
+
+# Print the styled table
+print(kable_styled)
+-->
 
 
 
@@ -2155,7 +2200,7 @@ sdate position
 
 
 ```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
-qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+qnormE=quantilesE[bgn:edn,]
 qnormT=quantilesT[bgn:edn,] 
 qnormB=quantilesB[bgn:edn,] 
 qnormS=quantilesS[bgn:edn,] 
