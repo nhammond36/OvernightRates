@@ -59,14 +59,42 @@ knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
 #knitr::knit("ONRates_simplev10_05262024v6.Rmd")
 ```
 
-```{r}knitr::opts_chunk$set(cache = FALSE)
+```{r, echo=FALSE, }
+knitr::opts_chunk$set(cache = FALSE)
 knitr::opts_chunk$set(cache.rebuild = TRUE)
 ```
 
-```{r}
+```{r, echo=FALSE, }
 knitr::opts_chunk$set(fig.pos = "!H")
 ```
+<!--
+\url{https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc}
+overstack solution for figure placement
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+Here is example .Rmd which includes it (assuming you called the .tex file 'preamble-latex.tex'):
 
+---
+title: "example"
+author: "you"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  rmarkdown::pdf_document:
+    fig_caption: yes        
+    includes:  
+      in_header: preamble-latex.tex
+---
+
+```{r, fig.cap='Markdownvellous!'}
+plot(1:10, 1:10)
+```
+-->
 ```{r, load environment mp, echo=FALSE, cache=FALSE}
 my_envmp <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_environmentmp.RDS")
 #saveRDS(my_envmp, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_environmentmp.RDS")
@@ -104,7 +132,7 @@ my_envvolatile <<- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_
 #str(my_envvolatile$sample_measure1)
 ```
 
-```{r}
+```{r,echo=FALSE}
 library(knitr)
 fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinalv2.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE, nrows = 40)
 #kable(fomc)
@@ -604,7 +632,7 @@ fomc_surprises_jk.csv - narrow window (30 minutes) surprises around FOMC announc
 These codes were tested using Matlab R2023b.
 -->
 
-The shocks (Table \@ref{table:FOMC rate changes 2016-202}) encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
+The shocks (Table \@ref{table:FOMC rate changes 2016-2023}) encompass changes in both policy and administered rates- FFR, IOR, ONRRP (same as changes in RRF?) and classify these changes under episodes). I have included events like US Treasury sales and macro financial shocks like the repo shock in 2019 and the dash for cash event in March 2020. I have included observations of US Treasury debt issuance and events such as the repo apocalypse in 2019 and the dash for cash of March 2020.
 
 
 
@@ -914,7 +942,7 @@ Sstats2<-c(Sstats[1],Sstats[2], TargetUe=NA, TargetDe=NA,Sstats[3],Sstats[4],Sst
 ```
 
 
-```{r samplebox, fig.cap="EFFR IQR and range of the sample 3/4/2016-12/14/2023", echo=FALSE, warning=FALSE, message=FALSE, fig.label="samplebox"}
+```{r samplebox, fig.cap="EFFR IQR and range of the sample 3/4/2016-12/14/2023", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="samplebox"}
 library(ggplot2)
 boxplot_sample <- data.frame(
   Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -938,7 +966,7 @@ boxplot_sample <- data.frame(
   bsample
 ```
 
-```{r samplerates, fig.cap= "EFFR percentiles of the sample 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE,  results='asis'}
+```{r samplerates, fig.cap= "EFFR percentiles of the sample 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE}
   library(ggplot2)
           sample<-quantilesE
           sdate <- quantilesE[, 1]
@@ -1342,7 +1370,6 @@ TGCR Tstatscovid 148.64 0.31 11.21 401.74
 BGCR Bstatscovid 148.64 0.42 16.02 423.19
 SOFR Sstatscovid 151.19 7.37 19.46 1085.60
 (see Figure @ref(fig:Rates during covid 11/1/2019-3/16/2020
-
 -->
 
 
@@ -1367,7 +1394,6 @@ my_envepisodes$normT <-qnormT
 my_envepisodes$normB <-qnormB
 my_envepisodes$normS <-qnormS
 
-#Estatsnorm <- colMeans(qnormE[,1:ncol(qnormE)-1], na.rm = TRUE)
 Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
 Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
 Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
@@ -1387,7 +1413,7 @@ rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target",
                      "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
 colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
-#print(xtable(charnorm), type = "latex", include.rownames = FALSE, caption.placement = "top", comment = FALSE)
+print.results = FALSE
 ```
 
 
@@ -1425,20 +1451,15 @@ volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
 normstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
 row.names(normstats) <- NULL
 xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
-#tabnorm<--xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
-#xtable(normstats[, -1], caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top")
-# Print the xtable object
-#print(tabnorm, include.rownames = FALSE)
-#print(xtable(normstats),type = "latex", include.rownames = FALSE, caption.placement = "top", comment = FALSE)
+print.results = FALSE
 ```
 
-\FloatBarrier
 
 
-```{r ratestsnorm, fig.cap="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.label="ratestsnorm"}
+
+```{r ratestsnorm, fig.cap="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="ratestsnorm"}
 library(ggplot2)
 library(reshape2)
-# \@ref(fig:Rates during normalcy period 3/4/2016-7/31/2019)
 #, results='asis' fig.pos='H' out.extra = ''
 k <- 1
 begn <- c(1, 859, 923, 1014, 1519, 1)
@@ -1475,7 +1496,7 @@ maxr<-max(normE[,ncol(normE)])
 minr<-min(normE[,ncol(normE)])
 ```
 
-```{r ratesnorm, fig.cap="EFFR during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.label="ratesnorm"}
+```{r ratesnorm, fig.cap="EFFR during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H',fig.label="ratesnorm"}
 library(ggplot2)
 library(reshape2)
 normE<-my_envepisodes$norm
@@ -1503,7 +1524,6 @@ bgn<-begn[k]
 edn<-endn[k]
 adjust<-rrbp[bgn:edn,]
 sdateadj<-sdate[bgn:edn]
-#str(my_envepisodes$adjust)
 
 qadjE=quantilesE[bgn:edn,]
 qadjT=quantilesT[bgn:edn,]
@@ -1537,7 +1557,7 @@ rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
-#print(xtable(charadj), type = "latex", include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
 
@@ -1586,7 +1606,7 @@ adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr
 #row.names(adjstats) <- categories
 row.names(adjstats) <- NULL
 xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
-#print(xtable(adjstats), type = "latex", include.rownames = FALSE,caption="Adjustment #8/1/2019-10/31/2019", caption.placement="top")
+print.results = FALSE
 ```
 
 ```{r ratestsadjust,fig.cap="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratestsadjust"}
@@ -1629,7 +1649,7 @@ minr<-min(qadjE[,rates])
 ```
 
 
-```{r ratesadjust, fig.cap= "EFFR during adjustment period 8/1/2019-10/31/2019", eval=TRUE, echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H',, fig.label="ratesadjust"}
+```{r ratesadjust, fig.cap= "EFFR during adjustment period 8/1/2019-10/31/2019", eval=TRUE, echo=FALSE,fig.num=TRUE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratesadjust"}
 #(see Figure \@ref(fig:EFFR during adjustment period 8/1/2019-10/31/2019)
 library(ggplot2)                        
 library(reshape2)
@@ -1704,7 +1724,7 @@ rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
-#print(xtable(charcovid), type = "latex", include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
 
@@ -1721,10 +1741,10 @@ covidstats <- data.frame(Category = categories, Median = median_values, IQR = iq
 #row.names(covidstats) <- categories
 row.names(covidstats) <- NULL
 xtable(covidstats, include.rownames = FALSE,comment = FALSE)
-#print(xtable(covidstats),type = "latex",include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
-```{r ratestscovid, fig.cap="Rates during covid 11/1/2019-3/16/2020", echo=FALSE, warning=FALSE, message=FALSE, fig.label="ratestscovid"}
+```{r ratestscovid, fig.cap="Rates during covid 11/1/2019-3/16/2020", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratestscovid"}
 library(ggplot2)
 library(reshape2)
 k=3  
@@ -1767,7 +1787,7 @@ minr<-min(covid[,2:ncol(covid)])
 ```
 
 
-```{r ratescovid,fig.cap= "EFFR during covid period 11/1/2019-3/16/2020",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H',, fig.label="ratescovid"}
+```{r ratescovid,fig.cap= "EFFR during covid period 11/1/2019-3/16/2020",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratescovid"}
 #(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
 library(ggplot2)
 rates=2
@@ -1835,7 +1855,7 @@ rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target",
 
 colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
-#print(xtable(charzlb),type = "latex", include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
 
@@ -1876,7 +1896,7 @@ zlbstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr
 #row.names(zlbstats) <- categories
 row.names(zlbstats) <- NULL
 xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
-#print(xtable(zlbstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
  
@@ -1962,7 +1982,6 @@ my_envepisodes$inflationT <-qinflationT
 my_envepisodes$inflationB <-qinflationB
 my_envepisodes$inflationS <-qinflationS
 
-#Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
 Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
 Tstatsinflation <<- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
 Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
@@ -1981,8 +2000,8 @@ rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target",
                      "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
 colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
 xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
+print.results = FALSE
 #include.rownames = FALSE
-#print(xtable(charinflation), type = "latex", include.rownames = FALSE, caption.placement = "top")
 ```
 
 
@@ -2027,7 +2046,7 @@ inflationstats <<- data.frame(Category = categories, Median = median_values, IQR
 inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
 row.names(inflationstats) <- NULL
 xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
-#print(xtable(inflationstats), type = "latex", include.rownames = FALSE, caption.placement = "top")
+print.results = FALSE
 ```
 
 
@@ -2107,51 +2126,6 @@ sdate position
  $ Percentile75_EFFR: num  215 215 214 214 213 213 213 213 213 213 ...
  $ Percentile99_EFFR: num  220 218 218 218 218 218 218 218 218 218 ...
  -->
- 
-```{r, IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019, echo=FALSE}
-qadjE<-my_envepisodes$quantilesE[bgn:edn,]
-qadjT<-my_envepisodes$quantilesT[bgn:edn,]
-qadjB<-my_envepisodes$quantilesB[bgn:edn,]
-qadjS<-my_envepisodes$quantilesS[bgn:edn,]
-
-Estatsadj <- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
-#Ostatsadj <- colMeans(qadjO[,2:ncol(qadjO)], na.rm = TRUE)
-Tstatsadj <- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
-Bstatsadj <- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
-Sstatsadj <- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
-
-Tstatsadj2<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
-Bstatsadj2<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
-Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
-```
-
-
-```{r adjustbox, fig.cap= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.label="adjustbox"}
-#(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
- library(ggplot2)
- boxplot_adjust<- data.frame(
-    Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
-    y0 = c(Estatsadj[5], Tstatsadj[3], Bstatsadj[3], Sstatsadj[3]),
-    y25 = c(Estatsadj[6], Tstatsadj[4], Bstatsadj[4], Sstatsadj[4]),
-    y50 = c(Estatsadj[1], Tstatsadj[1] , Bstatsadj[1] , Sstatsadj[1]) ,
-    y75 = c(Estatsadj[7], Tstatsadj[5], Bstatsadj[5], Sstatsadj[5]),
-    y100 = c(Estatsadj[8], Tstatsadj[6], Bstatsadj[6], Sstatsadj[6]))
-  
-  badjust<<-ggplot(boxplot_adjust , aes(x=Group,
-                                           ymin = y0,
-                                           ymax = y100,
-                                           lower = y25,
-                                           middle = y50,
-                                           upper = y75,
-                                           fill = Group)) +
-    labs(caption = "Mid cycle adjustment 8/1/2019-10/31/2019", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
-    geom_boxplot(stat = "identity") +  
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"),
-        axis.title.x = element_blank())  # Remove x-axis label)
-  badjust
-my_environmentbox$adjust <- badjust
-```
 
 
 ```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
@@ -2167,10 +2141,10 @@ Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 ```
 
                   
-```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.label="normbox"}
+```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
 library(ggplot2)
 library(reshape2)
-qnormE=quantilesE[bgn:edn,] # rate specific metrics  -->
+qnormE=quantilesE[bgn:edn,] 
 qnormT=quantilesT[bgn:edn,] 
 qnormB=quantilesB[bgn:edn,] 
 qnormS=quantilesS[bgn:edn,] 
@@ -2203,6 +2177,51 @@ bnormalcy <- ggplot(boxplot_normalcy, aes(x = Group,
         axis.title.x = element_blank())  # Remove x-axis label
 bnormalcy
 ```
+ 
+```{r, IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019, echo=FALSE}
+qadjE<-my_envepisodes$quantilesE[bgn:edn,]
+qadjT<-my_envepisodes$quantilesT[bgn:edn,]
+qadjB<-my_envepisodes$quantilesB[bgn:edn,]
+qadjS<-my_envepisodes$quantilesS[bgn:edn,]
+
+Estatsadj <- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+#Ostatsadj <- colMeans(qadjO[,2:ncol(qadjO)], na.rm = TRUE)
+Tstatsadj <- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
+
+Tstatsadj2<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
+Bstatsadj2<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
+Sstatsadj2<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
+```
+
+
+```{r adjustbox, fig.cap= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
+#(Figure \@ref(fig:EFFR Key percentiles during mid cycle adjustment period 8/1/2019-10/31/2019)
+ library(ggplot2)
+ boxplot_adjust<- data.frame(
+    Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
+    y0 = c(Estatsadj[5], Tstatsadj[3], Bstatsadj[3], Sstatsadj[3]),
+    y25 = c(Estatsadj[6], Tstatsadj[4], Bstatsadj[4], Sstatsadj[4]),
+    y50 = c(Estatsadj[1], Tstatsadj[1] , Bstatsadj[1] , Sstatsadj[1]) ,
+    y75 = c(Estatsadj[7], Tstatsadj[5], Bstatsadj[5], Sstatsadj[5]),
+    y100 = c(Estatsadj[8], Tstatsadj[6], Bstatsadj[6], Sstatsadj[6]))
+  
+  badjust<<-ggplot(boxplot_adjust , aes(x=Group,
+                                           ymin = y0,
+                                           ymax = y100,
+                                           lower = y25,
+                                           middle = y50,
+                                           upper = y75,
+                                           fill = Group)) +
+    labs(caption = "Mid cycle adjustment 8/1/2019-10/31/2019", x="",  y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+    geom_boxplot(stat = "identity") +  
+  theme(panel.background = element_rect(fill = "white"),
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label)
+  badjust
+my_environmentbox$adjust <- badjust
+```
 
 ```{r , IQR and range of rates during covid period 8/1/2019-10/31/2019, echo=FALSE}
 qcovidE<-my_envepisodes$quantilesE[bgn:edn,]
@@ -2222,7 +2241,8 @@ Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatsco
 ```
 
 
-```{r covidbox, fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.label="covidbox"}
+```{r covidbox, fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
+#(Figure \@ref(fig:EFFR Key percentiles durifig.label="covidbox"}
  library(ggplot2)
  boxplot_covid <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2273,7 +2293,8 @@ Bstatszlb <- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
 Sstatszlb <- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
 ```
 
-```{r zlbbox, fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.label="zlbbox"}
+```{r zlbbox, fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
+#(Figure \@ref(fig:EFFR Key percentiles during.label="zlbbox"}
 #(Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022)
 library(ggplot2)
 boxplot_zlb <- data.frame(
@@ -2305,8 +2326,6 @@ begn<-c(1,859,923,1014,1519,1)
 endn<-c(858,922,1013,1518,1957,1957)
 bgn<-begn[k]
 edn<-endn[k]
-#print(bgn)
-#print(edn)
 inflation<-rrbp[bgn:edn,]
 sdateinflation<-sdate[bgn:edn]
 
@@ -2316,14 +2335,13 @@ qinflationB=quantilesB[bgn:edn,]
 qinflationS=quantilesS[bgn:edn,]
 
 Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
-#FIx position of sdate to col 1
-#Ostatsinflation <<- colMeans(qinflationO[,2:ncol(qinflationO)], na.rm = TRUE)
 Tstatsinflation <<- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
 Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
 Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
 ```
 
-```{r inflationbox, fig.cap="IQR and range of rates during inflation period 3/17/2022-12/14/2023", echo=FALSE, fig.label="inflationbox"}
+```{r inflationbox, fig.cap="IQR and range of rates during inflation period 3/17/2022-12/14/2023", echo=FALSE, fig.pos='H',fig.label="adjustbox"}
+#(Figure \@ref(fig:EFFR Key percentiles durifig.label="inflationbox"}
 library(ggplot2)
 library(reshape2)
 boxplot_inflation <- data.frame(
@@ -2415,48 +2433,38 @@ colnames(fomc) <- names(fomc)
 #print(colnames)
 fdate<-as.Date(fomc$Date,"%d/%m/%Y")
 normtab<-fomc[1:9,]
-xtable_norm <- xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = FALSE)
-print(xtable_norm,caption.placement = "bottom")
-#, label = "tab:fomcnorm")
-cat('\\label{tab:fomcnorm}')
+#xtable_norm <- xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = #FALSE)
+xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019",label = "tab:fomcnorm", caption.placement = "bottom",comment = FALSE)
+print.results = FALSE
 ```
 
 ```{r, fomcadjust, echo=FALSE, results='asis'}
 library(xtable)
 adjusttab<-fomc[10:11,]
-xtable_adjust <- xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019", comment = FALSE)
-print(xtable_adjust,caption.placement = "bottom")
-#, label = "tab:fomcadjust")
-cat('\\label{tab:fomcadjust}')
+xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019",label = "tab:fomcadjust", caption.placement = "bottom",comment = FALSE)
+print.results = FALSE
 ```
 
 
 ```{r, fomccovid, echo=FALSE, results='asis'}
 library(xtable)
 covidtab<-fomc[12:13,]
-xtable_covid <- xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020", comment = FALSE)
-print(xtable_covid,caption.placement = "bottom")
-#, label = "tab:fomccovid")
-cat('\\label{tab:fomccovid}')
+xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020",label = "tab:fomccovid", caption.placement = "bottom", comment = FALSE)
+ print.results = FALSE
 ```
 
 ```{r, fomczlb, echo=FALSE, results='asis'}
 library(xtable)
 zlbtab<-fomc[14:22,]
-xtable_zlb <- xtable(zlbtab, caption="Zero lower bound 3/17/2020 to 3/16/2022", comment = FALSE)
-#print(xtable_zlb,caption.placement = "bottom", label = "tab:fomczlb")
-print(xtable_zlb,caption.placement = "bottom")
-cat('\\label{tab:fomczlb}')
+xtable(zlbtab, caption="Zero lower bound 3/17/2020 to 3/16/2022",label = "tab:fomczlb", caption.placement = "bottom",  comment = FALSE)
+print.results = FALSE
 ```
 
 ```{r, fomcinflation, echo=FALSE, results='asis'}
 library(xtable)
 inflationtab<-fomc[24:37,]
-xtable_inflation <- xtable(inflationtab, caption="Taming inflation 03/17/2022 to 12/14/2023", comment = FALSE)
-#print(xtable_inflation,caption.placement = "bottom", label = "tab:fomcinflation")
-print(xtable_inflation,caption.placement = "bottom")
-# Manually add the LaTeX label
-cat('\\label{tab:fomcinflation}')
+xtable(inflationtab, caption="Taming inflation 03/17/2022 to 12/14/2023", label = "tab:fomcinflation", caption.placement = "bottom", comment = FALSE)
+print.results = FALSE
 ```
 
 <!--
@@ -2483,7 +2491,8 @@ See the changes in interest rates in Table \@ref(tab:fomc-table).
 -->
 
 The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:ratestsnorm)).
-(Table \@ref(tab:fomcnorm)
+(Table \@ref(tab:fomcnorm).
+
 <!--
 Rate hikes 2015-2018 Returning to normalcy		
 20-Dec-18	25	2.25% to 2.50%
@@ -2545,7 +2554,7 @@ The IQR and range during the normalcy period are shown in (Figure \@ref(fig:norm
 
 
 Percentiles of the EFFR during the adjustment period (Figure \@ref(fig:ratesadjust)).
-The outlierS from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref(fig:adjustbox)).
+The outliers from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref(fig:adjustbox)).
 
 Percentiles of the EFFR during the pandemic  (Figure \@ref(fig:ratescovid)).
 The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate 
@@ -2759,7 +2768,7 @@ Hamilton (1996) and others have concluded that the hypothesis that the FFR follo
 -->
 
 
-!<--
+<!--
 2. Affine Term Structure Models in the Handbook of Financial Econometrics, Elsevier
 Monika Piazzesi
 Department of Economics, Stanford University, Stanford, California
