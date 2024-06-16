@@ -56,9 +56,8 @@ library(cowplot)
 library(patchwork)
 library(caTools)
 library(kableExtra)
-#knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = FALSE)
 #knitr::opts_chunk$set(cache = FALSE)
 #knitr::knit("ONRates_simplev10_05262024v6.Rmd")
 ```
@@ -258,7 +257,7 @@ Another inquiry is how much the Federal Reserve is willing to offset volatility 
 
   Events after the Great Financial Crisis (GFC), the excess liquidity created by quantitative easing, the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
 
-   The daily $4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among these reference rates, policy and money market rates, is important to understanding the monetary system.
+   The daily \$4 trillion funding market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. The Federal reserve also adjusts reserves in the tri party repurchase market, both as a lender and borrower. It has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among these reference rates, policy and money market rates, is important to understanding the monetary system.
 
 The repurchase funding markets are:
 -  triparty TGCR — the major dealer funding market
@@ -370,7 +369,7 @@ The  Romer and Romer (2023) narrative approach to macroeconomic identification i
 Jarocinski (2002) 
 Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
 
-Estimating the Fed's unconventional policy shocks Javorscinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
+Estimating the Fed's unconventional policy shocks Javorscinski (2022) estimates structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
 Alvarez metrics for kurtosis
 
@@ -396,7 +395,7 @@ affect rate volatility. How that volatility may very under different monetary po
 
 
 ## Monetary policy during the sample period 2016-2023
-  Before the Great Financial Crisis (GFC)  of 2008, Federal Reserve policy was conducted by open market operations (OMO), trading a limited central reserves and securities in the interbank Federal Funds market. To address the great financial crisis (GFC), the Jed's large scale asset purchases (LSAPs) from 2008 to 2014 - QE,QE1, QE2, and QE3, funded by US Treasury sale of Treasury bills substituted reserve balances for a large part of its SOMA Treasury holdings. But LSAPs resulted in excess liquidity, swamped with reserves, banks had no need to borrow in the Fed Funds market. From 2010 to late 2019, reserves went through a full expansion-contraction cycle. Again in early 2020, reserves grew from $\$$8 trillion from 2010 and 2019 to $\$$19 trillion (2014 and 2021).
+  Before the Great Financial Crisis (GFC)  of 2008, Federal Reserve policy was conducted by open market operations (OMO), trading a limited central reserves and securities in the interbank Federal Funds market. To address the great financial crisis (GFC), the Jed's large scale asset purchases (LSAPs) from 2008 to 2014 - QE,QE1, QE2, and QE3, funded by US Treasury sale of Treasury bills substituted reserve balances for a large part of its SOMA Treasury holdings. But LSAPs resulted in excess liquidity, swamped with reserves, banks had no need to borrow in the Fed Funds market. From 2010 to late 2019, reserves went through a full expansion-contraction cycle. Again in early 2020, reserves grew from $\$$8 trillion from 2010 and 2019 to \$19 trillion (2014 and 2021).
 
   To regain control over the FFR after this major increase in liquidity, the Fed experimented with with different policies. 
 
@@ -419,7 +418,7 @@ under discussion
 
  October 1, 2008, Congress gave the Fed the power to pay interest on reserves (IORB) to help control the Federal Funds rate. The IORB rate, the interest rate that banks earn from the Fed on the funds deposited in their reserve accounts is the Fed’s principal tool for interest rate control. In 2013, to address the post GFC build up of excess liquidity, the Federal Reserve introduced the overnight reverse repurchase  facility (ON RRP), the Fed’s supplementary tool for interest rate control. 
 
-In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created  a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the O/N RRP rate.
+In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created  a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the ON RRP rate.
 
 <!--
 ANOTHER ISSUE
@@ -495,7 +494,7 @@ overnight reverse repo (ON RRP) facility has continued to increase, reaching \$2
 
  Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to ON RRP.The Fed’s ON RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both ON RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
 
-Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in  December  2023 (urrently 	\439.81 billion , 5/31/2024).
+Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in  December  2023 (urrently \$439.81 billion , 5/31/2024).
 
 <!--
  The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR expired March 31, 2021 
@@ -538,7 +537,7 @@ MMFs began to park more investor cash in the U.S. central bank’s facility inst
 Between January 2021 and June 2022, money market funds' (MMFs') investments in the Federal Reserve's Overnight Reverse Repurchase (ON RRP) facility rose by $2 trillion, while their private repo lending fell by almost $500 billion. These sizable shifts give us an opportunity to examine how monetary policy implementation and the ON RRP facility interact with the private repo market. 
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
 
-The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+The Fed’s ON RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
 
 
 When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
@@ -548,7 +547,7 @@ When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of re
 wrt to banks, As the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. Yet even Wall Street’s presence proved insufficient to create stable repo markets. Another level in the Fed’s repo hierarchy was needed.
 
 
-•	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the O/N RRP.
+•	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the ON RRP.
 }
 
 • Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity
@@ -571,7 +570,10 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 -->
 
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
-Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates (\@ref{table:FOMC rate changes 2016-2023})  
+Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates 
+<!--
+(\@ref{table:FOMC rate changes 2016-2023})  
+-->
 
 The  Romer and Romer (2023) narrative approach to macroeconomic identification incorporate the evidence into a statistical framework.  Their criteria that monetary shocks be unrelated to current or prospective real economic  activity changes would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash.
 
@@ -792,11 +794,11 @@ securities until further notice.
  slow these purchases once the economy had made “substantial further progress” toward the 
  Fed’s goals of maximum employment and price stability. 
  - November 2021 taper: In November 2021, judging that test had been met, the Fed began 
- tapering its pace of asset purchases by  $\$$10 billion in Treasuries and $\$$5 billion 
+ tapering its pace of asset purchases by  \$10 billion in Treasuries and \$5 billion 
  in MBS each month. 
  - December 2021 double taper: At the subsequent FOMC meeting in December 2021, the Fed 
  doubled its speed of tapering, reducing its bond purchases by $\$$20 billion in Treasuries 
- and  $\$$10 billion in MBS each month
+ and  \$10 billion in MBS each month
 
 March 3, 2020: Citing “evolving risks to economic activity” from the coronavirus outbreak, the Fed held an emergency meeting, cutting interest rates by 0.5% to 1.0–1.25%
 March 11, 2020: The World Health Organization (WHO) declares Covid-19 a global pandemic
@@ -877,8 +879,6 @@ the economy. It said that it would buy at least $\$$500 billion in Treasury secu
 %management of of the Federal Funds rate.
 %Volatility relative to to prior periods (here daily) 
 
-
-
 -->
 
 <!--
@@ -954,7 +954,7 @@ ratests_sample
 ```
 
 
-```{r, EFFR Key percentiles of the sample 3/4/2016-12/14/2023}
+```{r, EFFR Key percentiles of the sample 3/4/2016-12/14/2023,echo=FALSE}
 # file samplequantiles?  
 # file rates_sample overwritten with volatility
 bgn<-1
@@ -1185,7 +1185,7 @@ xtable(charsample, caption = "Rate characteristics 2016-2023", label = "tab:Rate
 ```
 
 
-```{r, EFFR Key percentiles during sample period 3/4/2016-12/14/2023}
+```{r, EFFR Key percentiles during sample period 3/4/2016-12/14/2023,echo=FALSE}
 k=6
 begn<- c(1, 859, 923,  1014, 1519, 1)
 endn<- c(858, 922, 1013, 1518, 1957, 1957)
@@ -1475,44 +1475,6 @@ kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
 
 -->
 
-```{r, tab.cap="Rate statistics normalcy 3/04/2016-7/31/2019", eval=TRUE,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-library(xtable)
-k <- 1 
-bgn <- begn[k]
-edn <- endn[k]
-norm <- rrbp[bgn:edn,]  # All
-sdatenorm <- sdate[bgn:edn]
-
-qnormE <- quantilesE[bgn:edn,] 
-qnormT <- quantilesT[bgn:edn,]
-qnormB <- quantilesB[bgn:edn,] 
-qnormS <- quantilesS[bgn:edn,] 
-
-my_envepisodes$sdatenorm <- sdatenorm
-my_envepisodes$normE <- qnormE
-my_envepisodes$normT <- qnormT
-my_envepisodes$normB <- qnormB
-my_envepisodes$normS <- qnormS
-
-Estatsnorm <<- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
-Tstatsnorm <<- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <<- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <<- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
-
-categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
-median_values <- c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1])
-iqr_values <- c(Estatsnorm[7] - Estatsnorm[6], Tstatsnorm[5] - Tstatsnorm[4], Bstatsnorm[5] - Bstatsnorm[4], Sstatsnorm[5] - Sstatsnorm[4])
-range_values <- c(Estatsnorm[8] - Estatsnorm[5], Tstatsnorm[6] - Tstatsnorm[3], Bstatsnorm[6] - Bstatsnorm[3], Sstatsnorm[6] - Sstatsnorm[3])
-volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
-normstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-row.names(normstats) <- NULL
-xtable_output<-xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", caption.placement="top", comment = FALSE)
-kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
-kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
-print.results = FALSE
-```
 <!--
 # Your data and xtable generation
 charnorm <- data.frame(Variable = c("Var1", "Var2"), Value = c(0.1, 0.2))  # Example data
@@ -1528,29 +1490,6 @@ print(kable_styled)
 
 
 
-```{r ratestsnorm, fig.cap="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="ratestsnorm"}
-library(ggplot2)
-library(reshape2)
-#, results='asis' fig.pos='H' out.extra = ''
-k <- 1
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn <- begn[k]
-edn <- endn[k]
-
-norm <- rrbp[bgn:edn, ]
-maxr <- max(norm[, 2:ncol(norm)]) 
-minr <- min(norm[, 2:ncol(norm)])
-
-meltrates_norm <- melt(norm, id="sdate")
-ratests_norm <- ggplot(meltrates_norm, aes(x=sdate, y=value, colour=variable, group=variable)) + 
-  geom_point(shape=16, size=1) +
-  labs(caption="Normalcy 3/04/2016-7/31/2019", x="", y="Basis Points (bp)", color="Rate") +
-  scale_y_continuous(breaks=seq(minr, maxr, by=25), limits=c(minr, maxr)) + 
-  theme_minimal() + 
-  guides(shape=guide_legend(title="Rate"))
-ratests_norm
-```
 
 
 ```{r,EFFR during normalcy period 3/4/2016-7/31/2019, echo=FALSE}
@@ -1567,118 +1506,9 @@ maxr<-max(normE[,ncol(normE)])
 minr<-min(normE[,ncol(normE)])
 ```
 
-```{r ratesnorm, fig.cap="EFFR during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H',fig.label="ratesnorm"}
-library(ggplot2)
-library(reshape2)
-normE<-my_envepisodes$norm
-sdate <- normE[, 1]
-data_without_sdate <- normE[, -1]
-maxr<-max(normE[,ncol(normE)]) 
-minr<-min(normE[,ncol(normE)])
-
-meltrates_norm <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
-rates_norm <- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variable, group = variable)) + 
-  geom_line() +
-  labs( caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
-  scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
-  theme_minimal()
-rates_norm
-```
 
 
-```{r, tab.cap="Rate characteristics mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-k=2  
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn<-begn[k]
-edn<-endn[k]
-adjust<-rrbp[bgn:edn,]
-sdateadj<-sdate[bgn:edn]
 
-qadjE=quantilesE[bgn:edn,]
-qadjT=quantilesT[bgn:edn,]
-qadjB=quantilesB[bgn:edn,]
-qadjS=quantilesS[bgn:edn,]
-
-my_envepisodes$sdateadj <-sdateadj
-my_envepisodes$adjE <-qadjE
-my_envepisodes$adjT <-qadjT
-my_envepisodes$adjB <-qadjB
-my_envepisodes$adjS <-qadjS
-
-Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
-Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
-Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
-Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
-
-
-Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
-Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
-Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
-
-Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
-Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
-Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
-Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
-
-charadj <- cbind(Estatsadj_mat, Tstatsadj_mat, Bstatsadj_mat, Sstatsadj_mat)
-rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target", 
-                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
-
-colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
-
-
-```{r, tab.cap="Rate statistics mid cycle adjustment 8/1/2019-10/31/2019",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-k=2  
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn<-begn[k]
-edn<-endn[k]
-adjust<-rrbp[bgn:edn,]
-sdateadj<-sdate[bgn:edn]
-
-qadjE=quantilesE[bgn:edn,]
-qadjT=quantilesT[bgn:edn,]
-qadjB=quantilesB[bgn:edn,]
-qadjS=quantilesS[bgn:edn,]
-
-my_envepisodes$sdateadj <-sdateadj
-my_envepisodes$adjE <-qadjE
-my_envepisodes$adjT <-qadjT
-my_envepisodes$adjB <-qadjB
-my_envepisodes$adjS <-qadjS
-
-Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
-Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
-Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
-Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
-
-Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
-Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
-Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
-
-Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
-Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
-Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
-Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
-
-categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
-median_values <- c(mean(Estatsadj), mean(Tstatsadj), mean(Bstatsadj), mean(Sstatsadj))
-iqr_values <- c(IQR(Estatsadj), IQR(Tstatsadj), IQR(Bstatsadj), IQR(Sstatsadj))
-range_values <- c(max(Estatsadj) - min(Estatsadj), max(Tstatsadj) - min(Tstatsadj), max(Bstatsadj) - min(Bstatsadj), max(Sstatsadj) - min(Sstatsadj))
-volume_values <- c(sum(Estatsadj), sum(Tstatsadj), sum(Bstatsadj), sum(Sstatsadj))
-
-adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-#row.names(adjstats) <- categories
-row.names(adjstats) <- NULL
-xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
 
 ```{r ratestsadjust,fig.cap="Rates during mid cycle adjustment 8/1/2019-10/31/2019", echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratestsadjust"}
 #see figure \@ref(fig:Rates during mid cycle adjustment 8/1/2019-10/31/2019)
@@ -1731,8 +1561,8 @@ rates=2
 adjust<-rrbp[bgn:edn,]
 maxr<-max(adjust[,2:ncol(adjust)]) 
 minr<-min(adjust[,2:ncol(adjust)])
-#maxr<-max(qadjE[,2]) 
-#minr<-min(qadjE[,2]) 
+maxr<-max(qadjE[,2]) 
+minr<-min(qadjE[,2]) 
 
 meltrates_adjust <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
 meltrates_adjust$variable <- as.factor(meltrates_adjust$variable)
@@ -1748,72 +1578,6 @@ rates_adjust
 ```
 
 
-```{r, tab.cap="Rate characteristics covid 11/1/2019-3/16/2020", echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
-library(xtable)
-k=3  
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-covid<-rrbp[bgn:edn,]
-sdatecovid<-sdate[bgn:edn]
-
-qcovidE=quantilesE[bgn:edn,]
-qcovidT=quantilesT[bgn:edn,]
-qcovidB=quantilesB[bgn:edn,]
-qcovidS=quantilesS[bgn:edn,]
-
-my_envepisodes$sdatecovid <-sdatecovid
-my_envepisodes$covidE <-qcovidE
-my_envepisodes$covidT <-qcovidT
-my_envepisodes$covidB <-qcovidB
-my_envepisodes$covidS <-qcovidS
-
-covidE<- qcovidE
-covidT<- qcovidT
-covidB<- qcovidB
-covidS<- qcovidS
-
-Estatscovid <<- colMeans(covidE[,2:ncol(qcovidE)], na.rm = TRUE)
-Tstatscovid <<- colMeans(covidT[,2:ncol(qcovidT)], na.rm = TRUE)
-Bstatscovid <<- colMeans(covidB[,2:ncol(qcovidB)], na.rm = TRUE)
-Sstatscovid <<- colMeans(covidS[,2:ncol(qcovidS)], na.rm = TRUE)
-
-Estatscovid2<<-c(Estatscovid[1],Estatscovid[2], TargetUe=NA, TargetDe=NA,Estatscovid[3],Estatscovid[4],Estatscovid[5],Estatscovid[6])
-Tstatscovid2<<-c(Tstatscovid[1],Tstatscovid[2], TargetUe=NA, TargetDe=NA,Tstatscovid[3],Tstatscovid[4],Tstatscovid[5],Tstatscovid[6])
-Bstatscovid2<<-c(Bstatscovid[1],Bstatscovid[2], TargetUe=NA, TargetDe=NA,Bstatscovid[3],Bstatscovid[4],Bstatscovid[5],Bstatscovid[6])
-Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatscovid[3],Sstatscovid[4],Sstatscovid[5],Sstatscovid[6])
-
-Estatscovid_mat <- matrix(Estatscovid, nrow = 8, ncol = 1)
-Tstatscovid_mat <- matrix(Tstatscovid2, nrow = 8, ncol = 1)
-Bstatscovid_mat <- matrix(Bstatscovid2, nrow = 8, ncol = 1)
-Sstatscovid_mat <- matrix(Sstatscovid2, nrow = 8, ncol = 1)
-
-charcovid <- cbind(Estatscovid_mat, Tstatscovid_mat, Bstatscovid_mat, Sstatscovid_mat)
-rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target", 
-                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
-
-colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
-
-
-```{r, tab.cap="Rate statistics covid 11/1/2019-3/16/2020" , echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
-median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
-iqr_values = c(Estatscovid[7] - Estatscovid[6], Tstatscovid[5] - Tstatscovid[4], Bstatscovid[5] - Bstatscovid[4], Sstatscovid[5] - Sstatscovid[4])
-range_values = c(Estatscovid[8] - Estatscovid[5], Tstatscovid[6] - Tstatscovid[3], Bstatscovid[6] - Bstatscovid[3], Sstatscovid[6] - Sstatscovid[3])
-volume_values = c(Estatscovid[2], Tstatscovid[2], Bstatscovid[2], Sstatscovid[2])
-covidstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
-
-covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-#row.names(covidstats) <- categories
-row.names(covidstats) <- NULL
-xtable(covidstats, include.rownames = FALSE,comment = FALSE)
-print.results = FALSE
-```
 
 ```{r ratestscovid, fig.cap="Rates during covid 11/1/2019-3/16/2020", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratestscovid"}
 library(ggplot2)
@@ -1881,94 +1645,6 @@ rates_covid
 #my_envepisodes$rates_covid<-rates_covid
 ```
 
-```{r, tab.cap="Rate characteristics zero lower bound 3/17/2020-3/16/2022", echo=FALSE, eval=TRUE, cache=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-k=4  
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-zlb<-rrbp[bgn:edn,]
-sdatezlb<-sdate[bgn:edn]
-
-qzlbE=quantilesE[bgn:edn,]
-qzlbT=quantilesT[bgn:edn,]
-qzlbB=quantilesB[bgn:edn,]
-qzlbS=quantilesS[bgn:edn,]
-
-
-# Store your data frame in the environment
-my_envepisodes$sdatezlb <-sdatezlb
-my_envepisodes$zlbE <-qzlbE
-my_envepisodes$zlbT <-qzlbT
-my_envepisodes$zlbB <-qzlbB
-my_envepisodes$zlbS <-qzlbS
-
-#Estatszlb <<- colMeans(qzlbE[,1:ncol(qzlbE)-1], na.rm = TRUE)
-Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
-Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
-Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
-Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
-
-Tstatszlb2<<-c(Tstatszlb[1],Tstatszlb[2], TargetUe=NA, TargetDe=NA,Tstatszlb[3],Tstatszlb[4],Tstatszlb[5],Tstatszlb[6])
-Bstatszlb2<<-c(Bstatszlb[1],Bstatszlb[2], TargetUe=NA, TargetDe=NA,Bstatszlb[3],Bstatszlb[4],Bstatszlb[5],Bstatszlb[6])
-Sstatszlb2<<-c(Sstatszlb[1],Sstatszlb[2], TargetUe=NA, TargetDe=NA,Sstatszlb[3],Sstatszlb[4],Sstatszlb[5],Sstatszlb[6])
-
-Estatszlb_mat <- matrix(Estatszlb, nrow = 8, ncol = 1)
-Tstatszlb_mat <- matrix(Tstatszlb2, nrow = 8, ncol = 1)
-Bstatszlb_mat <- matrix(Bstatszlb2, nrow = 8, ncol = 1)
-Sstatszlb_mat <- matrix(Sstatszlb2, nrow = 8, ncol = 1)
-
-charzlb <- cbind(Estatszlb_mat, Tstatszlb_mat, Bstatszlb_mat, Sstatszlb_mat)
-
-rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target", 
-                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
-
-colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
-
-
-```{r, tab.cap="Rate statistics zero lower bound 3/17/2020-3/16/2022",echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
-library(xtable)
-
-k=4  
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-zlb<-rrbp[bgn:edn,]
-sdatezlb<-sdate[bgn:edn]
-
-qzlbE=quantilesE[bgn:edn,]
-qzlbT=quantilesT[bgn:edn,]
-qzlbB=quantilesB[bgn:edn,]
-qzlbS=quantilesS[bgn:edn,]
-
-my_envepisodes$sdatezlb <-sdatezlb
-my_envepisodes$zlbE <-qzlbE
-my_envepisodes$zlbT <-qzlbT
-my_envepisodes$zlbB <-qzlbB
-my_envepisodes$zlbS <-qzlbS
-
-Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
-#Ostatszlb <<- colMeans(qzlbO[,2:ncol(qzlbO)], na.rm = TRUE)
-Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
-Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
-Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
-
-median_values = c(Estatszlb[1], Tstatszlb[1], Bstatszlb[1], Sstatszlb[1])
-iqr_values = c(Estatszlb[7] - Estatszlb[6], Tstatszlb[5] - Tstatszlb[4], Bstatszlb[5] - Bstatszlb[4], Sstatszlb[5] - Sstatszlb[4])
-range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstatszlb[6] - Bstatszlb[3], Sstatszlb[6] - Sstatszlb[3])
-volume_values = c(Estatszlb[2], Tstatszlb[2], Bstatszlb[2], Sstatszlb[2])
-zlbstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
-#row.names(zlbstats) <- categories
-row.names(zlbstats) <- NULL
-xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bound 03/17/2020-03/16/2022", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
 
  
 ```{r ratestszlb, fig.cap= "Rates during zero lower bound 3/17/2020-3/16/2022",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratestszlb"}
@@ -2032,93 +1708,7 @@ rates_zlb
 ```
 
 
-```{r, tab.cap="Rate characteristics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-k=5 
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-inflation<-rrbp[bgn:edn,]
-sdateinflation<-sdate[bgn:edn]
 
-qinflationE=quantilesE[bgn:edn,]
-qinflationT=quantilesT[bgn:edn,]
-qinflationB=quantilesB[bgn:edn,]
-qinflationS=quantilesS[bgn:edn,]
-
-my_envepisodes$sdateinflation <-sdateinflation
-my_envepisodes$inflationE <-qinflationE
-my_envepisodes$inflationT <-qinflationT
-my_envepisodes$inflationB <-qinflationB
-my_envepisodes$inflationS <-qinflationS
-
-Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
-Tstatsinflation <<- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
-Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
-Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
-
-Tstatsinflation2<<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
-Bstatsinflation2<<-c(Bstatsinflation[1],Bstatsinflation[2], TargetUe=NA, TargetDe=NA,Bstatsinflation[3],Bstatsinflation[4],Bstatsinflation[5],Bstatsinflation[6])
-Sstatsinflation2<<-c(Sstatsinflation[1],Sstatsinflation[2], TargetUe=NA, TargetDe=NA,Sstatsinflation[3],Sstatsinflation[4],Sstatsinflation[5],Sstatsinflation[6])
-
-Estatsinflation_mat <- matrix(Estatsinflation, nrow = 8, ncol = 1)
-Tstatsinflation_mat <- matrix(Tstatsinflation2, nrow = 8, ncol = 1)
-Bstatsinflation_mat <- matrix(Bstatsinflation2, nrow = 8, ncol = 1)
-Sstatsinflation_mat <- matrix(Sstatsinflation2, nrow = 8, ncol = 1)
-charinflation <- cbind(Estatsinflation_mat, Tstatsinflation_mat, Bstatsinflation_mat, Sstatsinflation_mat)
-rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target", 
-                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
-colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
-xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
-print.results = FALSE
-#include.rownames = FALSE
-```
-
-
-
-```{r, tab.cap="Rate statistics Taming inflation 03/17/2022-12/14/2023", echo=FALSE,results='asis',warning=FALSE, message=FALSE}
-library(xtable)
-k <- 5 
-begn <- c(1, 859, 923, 1014, 1519, 1)
-endn <- c(858, 922, 1013, 1518, 1957, 1957)
-bgn <- begn[k]
-edn <- endn[k]
-inflation <- rrbp[bgn:edn,]
-sdateinflation <- sdate[bgn:edn]
-categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
-
-qinflationE <- quantilesE[bgn:edn,]
-qinflationT <- quantilesT[bgn:edn,]
-qinflationB <- quantilesB[bgn:edn,]
-qinflationS <- quantilesS[bgn:edn,]
-
-my_envepisodes$sdateinflation <- sdateinflation
-my_envepisodes$inflationE <- qinflationE
-my_envepisodes$inflationT <- qinflationT
-my_envepisodes$inflationB <- qinflationB
-my_envepisodes$inflationS <- qinflationS
-
-Estatsinflation <- colMeans(qinflationE[, 2:ncol(qinflationE)], na.rm = TRUE)
-Tstatsinflation <- colMeans(qinflationT[, 2:ncol(qinflationT)], na.rm = TRUE)
-Bstatsinflation <- colMeans(qinflationB[, 2:ncol(qinflationB)], na.rm = TRUE)
-Sstatsinflation <- colMeans(qinflationS[, 2:ncol(qinflationS)], na.rm = TRUE)
-
-Tstatsinflation2 <- c(Tstatsinflation[1], Tstatsinflation[2], TargetUe=NA, TargetDe=NA, Tstatsinflation[3], Tstatsinflation[4], Tstatsinflation[5], Tstatsinflation[6])
-Bstatsinflation2 <- c(Bstatsinflation[1], Bstatsinflation[2], TargetUe=NA, TargetDe=NA, Bstatsinflation[3], Bstatsinflation[4], Bstatsinflation[5], Bstatsinflation[6])
-Sstatsinflation2 <- c(Sstatsinflation[1], Sstatsinflation[2], TargetUe=NA, TargetDe=NA, Sstatsinflation[3], Sstatsinflation[4], Sstatsinflation[5], Sstatsinflation[6])
-
-median_values <- c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
-iqr_values <- c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
-range_values <- c(Estatsinflation[8] - Estatsinflation[5], Tstatsinflation[6] - Tstatsinflation[3], Bstatsinflation[6] - Bstatsinflation[3], Sstatsinflation[6] - Sstatsinflation[3])
-volume_values <- c(Estatsinflation[2], Tstatsinflation[2], Bstatsinflation[2], Sstatsinflation[2])
-inflationstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-
-inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
-row.names(inflationstats) <- NULL
-xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", caption.placement="top", comment = FALSE)
-print.results = FALSE
-```
 
 
  
@@ -2170,7 +1760,7 @@ sdate <- qinflationE[, 1]
 rates=2
 data_without_sdate <- qinflationE[, -1]
 maxr<-max(qinflationE[,rates]) 
-minr<-min(qinflationE[,rates])
+#minr<-min(qinflationE[,rates])
 
 meltrates_inflation <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
 rates_inflation <<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
@@ -2199,7 +1789,7 @@ sdate position
  -->
 
 
-```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019}
+```{r, IQR and range of rates during normalcy period 3/4/2016-7/31/2019,echo=FALSE}
 qnormE=quantilesE[bgn:edn,]
 qnormT=quantilesT[bgn:edn,] 
 qnormB=quantilesB[bgn:edn,] 
@@ -2211,43 +1801,7 @@ Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
 Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
 ```
 
-                  
-```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
-library(ggplot2)
-library(reshape2)
-qnormE=quantilesE[bgn:edn,] 
-qnormT=quantilesT[bgn:edn,] 
-qnormB=quantilesB[bgn:edn,] 
-qnormS=quantilesS[bgn:edn,] 
 
-Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
-Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
-Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
-Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
-
-boxplot_normalcy <- data.frame(
-  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
-  y0 = c(Estatsnorm[5], Tstatsnorm[3], Bstatsnorm[3], Sstatsnorm[3]),
-  y25 = c(Estatsnorm[6], Tstatsnorm[4], Bstatsnorm[4], Sstatsnorm[4]),
-  y50 = c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1]),
-  y75 = c(Estatsnorm[7], Tstatsnorm[5], Bstatsnorm[5], Sstatsnorm[5]),
-  y100 = c(Estatsnorm[8], Tstatsnorm[6], Bstatsnorm[6], Sstatsnorm[6])
-)
-
-bnormalcy <- ggplot(boxplot_normalcy, aes(x = Group,
-                                          ymin = y0,
-                                          ymax = y100,
-                                          lower = y25,
-                                          middle = y50,
-                                          upper = y75,
-                                          fill = Group)) +
-  labs(caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
-  geom_boxplot(stat = "identity") +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fill = "white"),
-        axis.title.x = element_blank())  # Remove x-axis label
-bnormalcy
-```
  
 ```{r, IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019, echo=FALSE}
 qadjE<-my_envepisodes$quantilesE[bgn:edn,]
@@ -2440,27 +1994,6 @@ boxplot_inflation <- data.frame(
 ```
 
 
-
-<!--
-see Figure \@ref(fig:Boxplots all episodes 3/4/2016-12/14/2023)
-\```{r, fig.caption= "Boxplots all episodes 3/4/2016-12/14/2023",echo=FALSE,results='asis'}
-#pboxplots<-grid.arrange(bnormalcy, badjust, bcovid, bzlb, binflation, ncol=1) bad
-
-print(pboxplots)
-```
-See (\@ref(fig:boxplots of rates during policy regimes) provides a summary of the data.
-
-```{r, fig.cap="boxplots of rates during policy regimes", echo=FALSE, results='asis'}
-library(patchwork)
-# Combine boxplots
-  pboxplots<-(bnormalcy | badjust ) / (bcovid | bzlb) / (binflation | bsample)
-  print(pboxplots)
-  my_environmentbox$pboxplots<-pboxplots
-```
--->
-
-
-
 ```{r, episode parameters, echo=FALSE,results="asis"}
 begn<- c(1, 859, 923,  1014, 1519, 1)
 endn<- c(858, 922, 1013, 1518, 1957, 1957)
@@ -2472,7 +2005,7 @@ end_dates_strings <- as.character(end_dates)
 ```
 
 
-```{r Combine episode dataframes, include=FALSE}
+```{r Combine episode dataframes, include=FALSE,echo=FALSE}
 episodesstats <- my_envepisodes$episodesstats
 episodeschar <- my_envepisodes$episodeschar
 #\url{https://forum.posit.co/t/you-cant-use-macro-parameter-character-in-vertical-mode/143627/2}
@@ -2496,33 +2029,6 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 * Taming inflation 03/17/2022 to 12/14/2023 
 
 ## The history of rates by policy episode
-```{r, fomcnorm, echo=FALSE, results='asis'}
-library(xtable)
-fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
-#Set column names based on the first row
-colnames(fomc) <- names(fomc)
-#print(colnames)
-fdate<-as.Date(fomc$Date,"%d/%m/%Y")
-normtab<-fomc[1:9,]
-#xtable_norm <- xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = #FALSE)
-xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019",label = "tab:fomcnorm", caption.placement = "bottom",comment = FALSE)
-print.results = FALSE
-```
-
-```{r, fomcadjust, echo=FALSE, results='asis'}
-library(xtable)
-adjusttab<-fomc[10:11,]
-xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019",label = "tab:fomcadjust", caption.placement = "bottom",comment = FALSE)
-print.results = FALSE
-```
-
-
-```{r, fomccovid, echo=FALSE, results='asis'}
-library(xtable)
-covidtab<-fomc[12:13,]
-xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020",label = "tab:fomccovid", caption.placement = "bottom", comment = FALSE)
- print.results = FALSE
-```
 
 ```{r, fomczlb, echo=FALSE, results='asis'}
 library(xtable)
@@ -2531,12 +2037,7 @@ xtable(zlbtab, caption="Zero lower bound 3/17/2020 to 3/16/2022",label = "tab:fo
 print.results = FALSE
 ```
 
-```{r, fomcinflation, echo=FALSE, results='asis'}
-library(xtable)
-inflationtab<-fomc[24:37,]
-xtable(inflationtab, caption="Taming inflation 03/17/2022 to 12/14/2023", label = "tab:fomcinflation", caption.placement = "bottom", comment = FALSE)
-print.results = FALSE
-```
+
 
 <!--
 Chunk label: Use a simple and unique label like fomc-table.
@@ -2561,9 +2062,48 @@ See the changes in interest rates in Table \@ref(tab:fomc-table).
 
 -->
 
-The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:ratestsnorm)).
-(Table \@ref(tab:fomcnorm).
 
+```{r ratestsnorm, fig.cap="Rates during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="ratestsnorm"}
+library(ggplot2)
+library(reshape2)
+#, results='asis' fig.pos='H' out.extra = ''
+k <- 1
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn <- begn[k]
+edn <- endn[k]
+
+norm <- rrbp[bgn:edn, ]
+maxr <- max(norm[, 2:ncol(norm)]) 
+minr <- min(norm[, 2:ncol(norm)])
+
+meltrates_norm <- melt(norm, id="sdate")
+ratests_norm <- ggplot(meltrates_norm, aes(x=sdate, y=value, colour=variable, group=variable)) + 
+  geom_point(shape=16, size=1) +
+  labs(caption="Normalcy 3/04/2016-7/31/2019", x="", y="Basis Points (bp)", color="Rate") +
+  scale_y_continuous(breaks=seq(minr, maxr, by=25), limits=c(minr, maxr)) + 
+  theme_minimal() + 
+  guides(shape=guide_legend(title="Rate"))
+ratests_norm
+```
+\FloatBarrier
+
+The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:ratestsnorm)).
+
+```{r, fomcnorm, echo=FALSE, results='asis'}
+library(xtable)
+fomc <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/FOMCrates_sampleFinal.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
+#Set column names based on the first row
+colnames(fomc) <- names(fomc)
+#print(colnames)
+fdate<-as.Date(fomc$Date,"%d/%m/%Y")
+normtab<-fomc[1:9,]
+#xtable_norm <- xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019", comment = #FALSE)
+xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019",label = "tab:fomcnorm", caption.placement = "bottom",comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:fomcnorm))
 <!--
 Rate hikes 2015-2018 Returning to normalcy		
 20-Dec-18	25	2.25% to 2.50%
@@ -2577,7 +2117,15 @@ Dec. 15, 2016	25	0.5% to 0.75%
 -->
 
 The EFFR and the money market rates during the adjustment period (Figure \@ref(fig:ratestsadjust)).
-(Table \@ref(tab:fomcadjust)
+
+```{r, fomcadjust, echo=FALSE, results='asis'}
+library(xtable)
+adjusttab<-fomc[10:11,]
+xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019",label = "tab:fomcadjust", caption.placement = "bottom",comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:fomcadjust))
 <!--
 2019 rates cuts mid cycle adjustment		
 31-Oct-19	-25	1.50% to 1.75%
@@ -2587,7 +2135,15 @@ Aug. 1, 2019	-25	2.0% to 2.25%
 
 
 The EFFR and the money market rates during the covid period (Figure \@ref(fig:ratestscovid)). 
-(Table \@ref(tab:fomccovid)
+
+```{r, fomccovid, echo=FALSE, results='asis'}
+library(xtable)
+covidtab<-fomc[12:13,]
+xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020",label = "tab:fomccovid", caption.placement = "bottom", comment = FALSE)
+ print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:fomccovid))
 <!--
 2020 Fed Rate Cuts: Coping with Covid-19		
 16-Mar-20	-100	0% to 0.25%
@@ -2599,7 +2155,16 @@ The EFFR and the money market rates during the zero lower bound (Figure \@ref(fi
 
 The EFFR and the money market rates during the taming of inflation (Figure \@ref(fig:ratestsinflation)). 
 From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
-(Table \@ref(tab:fomcinflation)
+
+```{r, fomcinflation, echo=FALSE, results='asis'}
+library(xtable)
+inflationtab<-fomc[24:37,]
+xtable(inflationtab, caption="Taming inflation 03/17/2022 to 12/14/2023", label = "tab:fomcinflation", caption.placement = "bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+
+(Table \@ref(tab:fomcinflation))
 <!--
 Fed Rate Hikes 2022-2023: Taming Inflation		
 26-Jul-23	25	5.25% to 5.50%
@@ -2615,27 +2180,544 @@ Fed Rate Hikes 2022-2023: Taming Inflation
 17-Mar-22	25	0.25% to 0.50%
 -->
 
-## Percentiles
-Percentiles of the EFFR during the normalcy period (Figure \@ref(fig:ratesnorm)).
+## The FFR and its target range
+```{r ratesnorm, fig.cap="EFFR during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H',fig.label="ratesnorm"}
+library(ggplot2)
+library(reshape2)
+normE<-my_envepisodes$norm
+sdate <- normE[, 1]
+data_without_sdate <- normE[, -1]
+maxr<-max(normE[,ncol(normE)]) 
+minr<-min(normE[,ncol(normE)])
 
-
+meltrates_norm <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
+rates_norm <- ggplot(meltrates_norm, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_line() +
+  labs( caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Rate") +  
+  scale_y_continuous(breaks = seq(0, maxr, by = 25), limits = c(0,maxr)) + 
+  theme_minimal()
+rates_norm
+```
+\FloatBarrier
+\emph{The normalcy period} (Figure \@ref(fig:ratesnorm)).
 The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
+                 
+                  
+```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
+library(ggplot2)
+library(reshape2)
+qnormE=quantilesE[bgn:edn,] 
+qnormT=quantilesT[bgn:edn,] 
+qnormB=quantilesB[bgn:edn,] 
+qnormS=quantilesS[bgn:edn,] 
+
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+boxplot_normalcy <- data.frame(
+  Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
+  y0 = c(Estatsnorm[5], Tstatsnorm[3], Bstatsnorm[3], Sstatsnorm[3]),
+  y25 = c(Estatsnorm[6], Tstatsnorm[4], Bstatsnorm[4], Sstatsnorm[4]),
+  y50 = c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1]),
+  y75 = c(Estatsnorm[7], Tstatsnorm[5], Bstatsnorm[5], Sstatsnorm[5]),
+  y100 = c(Estatsnorm[8], Tstatsnorm[6], Bstatsnorm[6], Sstatsnorm[6])
+)
+
+bnormalcy <- ggplot(boxplot_normalcy, aes(x = Group,
+                                          ymin = y0,
+                                          ymax = y100,
+                                          lower = y25,
+                                          middle = y50,
+                                          upper = y75,
+                                          fill = Group)) +
+  labs(caption = "Normalcy 3/4/2016-7/31/2019", x = "", y = "Basis Points (bp)", color = "Rate", shape = "Rate") +  
+  geom_boxplot(stat = "identity") +
+  theme(panel.background = element_rect(fill = "white"),
+        plot.background = element_rect(fill = "white"),
+        axis.title.x = element_blank())  # Remove x-axis label
+bnormalcy
+```
+\FloatBarrier
+
 The IQR and range during the normalcy period are shown in (Figure \@ref(fig:normbox)).
 
+```{r, normchar,echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+k=1 
+begn <- c(1, 859, 923, 1014, 1519, 1) 
+endn <- c(858, 922, 1013, 1518, 1957, 1957) 
+bgn<-begn[k] 
+edn<-endn[k] 
+norm<-rrbp[bgn:edn,] 
+sdatenorm<-sdate[bgn:edn]
+
+qnormE=quantilesE[bgn:edn,]
+qnormT=quantilesT[bgn:edn,]
+qnormB=quantilesB[bgn:edn,] 
+qnormS=quantilesS[bgn:edn,] 
+
+my_envepisodes$sdatenorm <-sdatenorm
+my_envepisodes$normE <-qnormE
+my_envepisodes$normT <-qnormT
+my_envepisodes$normB <-qnormB
+my_envepisodes$normS <-qnormS
+
+Estatsnorm <- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+Tstatsnorm2<-c(Tstatsnorm[1],Tstatsnorm[2], TargetUe=NA, TargetDe=NA,Tstatsnorm[3],Tstatsnorm[4],Tstatsnorm[5],Tstatsnorm[6])
+Bstatsnorm2<-c(Bstatsnorm[1],Bstatsnorm[2], TargetUe=NA, TargetDe=NA,Bstatsnorm[3],Bstatsnorm[4],Bstatsnorm[5],Bstatsnorm[6])
+Sstatsnorm2<-c(Sstatsnorm[1],Sstatsnorm[2], TargetUe=NA, TargetDe=NA,Sstatsnorm[3],Sstatsnorm[4],Sstatsnorm[5],Sstatsnorm[6])
+
+Estatsnorm_mat <- matrix(Estatsnorm, nrow = 8, ncol = 1)
+Tstatsnorm_mat <- matrix(Tstatsnorm2, nrow = 8, ncol = 1)
+Bstatsnorm_mat <- matrix(Bstatsnorm2, nrow = 8, ncol = 1)
+Sstatsnorm_mat <- matrix(Sstatsnorm2, nrow = 8, ncol = 1)
+
+charnorm <- cbind(Estatsnorm_mat, Tstatsnorm_mat, Bstatsnorm_mat, Sstatsnorm_mat)
+rownames(charnorm) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+colnames(charnorm) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+#xtable_output <- 
+xtable(charnorm, caption="Normalcy 3/04/2016-7/31/2019", label = "tab:normchar", caption.placement = "bottom", comment = FALSE) 
+#kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+#kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
+print.results = FALSE
+```
+\FloatBarrier
+The rate characteristics the normalcy period are shown in 
+(Table \@ref(tab:normchar)).
 
 
-Percentiles of the EFFR during the adjustment period (Figure \@ref(fig:ratesadjust)).
+```{r,normstatistics, echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+library(xtable)
+k <- 1 
+bgn <- begn[k]
+edn <- endn[k]
+norm <- rrbp[bgn:edn,]  # All
+sdatenorm <- sdate[bgn:edn]
+
+qnormE <- quantilesE[bgn:edn,] 
+qnormT <- quantilesT[bgn:edn,]
+qnormB <- quantilesB[bgn:edn,] 
+qnormS <- quantilesS[bgn:edn,] 
+
+my_envepisodes$sdatenorm <- sdatenorm
+my_envepisodes$normE <- qnormE
+my_envepisodes$normT <- qnormT
+my_envepisodes$normB <- qnormB
+my_envepisodes$normS <- qnormS
+
+Estatsnorm <<- colMeans(qnormE[,2:ncol(qnormE)], na.rm = TRUE)
+Tstatsnorm <<- colMeans(qnormT[,2:ncol(qnormT)], na.rm = TRUE)
+Bstatsnorm <<- colMeans(qnormB[,2:ncol(qnormB)], na.rm = TRUE)
+Sstatsnorm <<- colMeans(qnormS[,2:ncol(qnormS)], na.rm = TRUE)
+
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+median_values <- c(Estatsnorm[1], Tstatsnorm[1], Bstatsnorm[1], Sstatsnorm[1])
+iqr_values <- c(Estatsnorm[7] - Estatsnorm[6], Tstatsnorm[5] - Tstatsnorm[4], Bstatsnorm[5] - Bstatsnorm[4], Sstatsnorm[5] - Sstatsnorm[4])
+range_values <- c(Estatsnorm[8] - Estatsnorm[5], Tstatsnorm[6] - Tstatsnorm[3], Bstatsnorm[6] - Bstatsnorm[3], Sstatsnorm[6] - Sstatsnorm[3])
+volume_values <- c(Estatsnorm[2], Tstatsnorm[2], Bstatsnorm[2], Sstatsnorm[2])
+normstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+row.names(normstats) <- NULL
+#xtable_output<-
+xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", label = "tab:normstatistics", caption.placement = "bottom",comment = FALSE)
+#kable_output <- kable(xtable_output, format = "latex", booktabs = TRUE)
+#kable_styled <- kable_styling(kable_output, latex_options = "hold_position")
+print.results = FALSE
+```
+\FloatBarrier
+The rate statistics the normalcy period are shown in 
+(Table \@ref(tab:normstatistics)).
+
+\emph{The adjustment period} (Figure \@ref(fig:ratesadjust)).
 The outliers from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref(fig:adjustbox)).
 
-Percentiles of the EFFR during the pandemic  (Figure \@ref(fig:ratescovid)).
+\FloatBarrier
+
+The rate characteristics the adjustment period are shown in 
+```{r, adjustchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+k=2  
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+adjust<-rrbp[bgn:edn,]
+sdateadj<-sdate[bgn:edn]
+
+qadjE=quantilesE[bgn:edn,]
+qadjT=quantilesT[bgn:edn,]
+qadjB=quantilesB[bgn:edn,]
+qadjS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateadj <-sdateadj
+my_envepisodes$adjE <-qadjE
+my_envepisodes$adjT <-qadjT
+my_envepisodes$adjB <-qadjB
+my_envepisodes$adjS <-qadjS
+
+Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
+
+
+Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
+Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
+Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
+
+Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
+Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
+Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
+Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
+
+charadj <- cbind(Estatsadj_mat, Tstatsadj_mat, Bstatsadj_mat, Sstatsadj_mat)
+rownames(charadj) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charadj) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019",label="tab:adjustchar", caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:adjustchar)).
+
+
+
+```{r, adjuststatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+k=2  
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn<-begn[k]
+edn<-endn[k]
+adjust<-rrbp[bgn:edn,]
+sdateadj<-sdate[bgn:edn]
+
+qadjE=quantilesE[bgn:edn,]
+qadjT=quantilesT[bgn:edn,]
+qadjB=quantilesB[bgn:edn,]
+qadjS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateadj <-sdateadj
+my_envepisodes$adjE <-qadjE
+my_envepisodes$adjT <-qadjT
+my_envepisodes$adjB <-qadjB
+my_envepisodes$adjS <-qadjS
+
+Estatsadj <<- colMeans(qadjE[,2:ncol(qadjE)], na.rm = TRUE)
+Tstatsadj <<- colMeans(qadjT[,2:ncol(qadjT)], na.rm = TRUE)
+Bstatsadj <<- colMeans(qadjB[,2:ncol(qadjB)], na.rm = TRUE)
+Sstatsadj <<- colMeans(qadjS[,2:ncol(qadjS)], na.rm = TRUE)
+
+Tstatsadj2<<-c(Tstatsadj[1],Tstatsadj[2], TargetUe=NA, TargetDe=NA,Tstatsadj[3],Tstatsadj[4],Tstatsadj[5],Tstatsadj[6])
+Bstatsadj2<<-c(Bstatsadj[1],Bstatsadj[2], TargetUe=NA, TargetDe=NA,Bstatsadj[3],Bstatsadj[4],Bstatsadj[5],Bstatsadj[6])
+Sstatsadj2<<-c(Sstatsadj[1],Sstatsadj[2], TargetUe=NA, TargetDe=NA,Sstatsadj[3],Sstatsadj[4],Sstatsadj[5],Sstatsadj[6])
+
+Estatsadj_mat <- matrix(Estatsadj, nrow = 8, ncol = 1)
+Tstatsadj_mat <- matrix(Tstatsadj2, nrow = 8, ncol = 1)
+Bstatsadj_mat <- matrix(Bstatsadj2, nrow = 8, ncol = 1)
+Sstatsadj_mat <- matrix(Sstatsadj2, nrow = 8, ncol = 1)
+
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+median_values <- c(mean(Estatsadj), mean(Tstatsadj), mean(Bstatsadj), mean(Sstatsadj))
+iqr_values <- c(IQR(Estatsadj), IQR(Tstatsadj), IQR(Bstatsadj), IQR(Sstatsadj))
+range_values <- c(max(Estatsadj) - min(Estatsadj), max(Tstatsadj) - min(Tstatsadj), max(Bstatsadj) - min(Bstatsadj), max(Sstatsadj) - min(Sstatsadj))
+volume_values <- c(sum(Estatsadj), sum(Tstatsadj), sum(Bstatsadj), sum(Sstatsadj))
+
+adjstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+#row.names(adjstats) <- categories
+row.names(adjstats) <- NULL
+xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/2019",label="tab:adjuststatistics", caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+The rate statistics the adjustment period are shown in 
+(Table \@ref(tab:adjuststatistics)).
+
+
+\emph{The pandemic}  (Figure \@ref(fig:ratescovid)).
 The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate 
 (Figure \@ref(fig:covidbox)).
 
-Percentiles of the EFFR during the zero lower bound (Figure \@ref(fig:rateszlb)) 
+\FloatBarrier
+The rate characteristics during covid  are shown in 
+
+```{r,covidchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
+library(xtable)
+k=3  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+covid<-rrbp[bgn:edn,]
+sdatecovid<-sdate[bgn:edn]
+
+qcovidE=quantilesE[bgn:edn,]
+qcovidT=quantilesT[bgn:edn,]
+qcovidB=quantilesB[bgn:edn,]
+qcovidS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdatecovid <-sdatecovid
+my_envepisodes$covidE <-qcovidE
+my_envepisodes$covidT <-qcovidT
+my_envepisodes$covidB <-qcovidB
+my_envepisodes$covidS <-qcovidS
+
+covidE<- qcovidE
+covidT<- qcovidT
+covidB<- qcovidB
+covidS<- qcovidS
+
+Estatscovid <<- colMeans(covidE[,2:ncol(qcovidE)], na.rm = TRUE)
+Tstatscovid <<- colMeans(covidT[,2:ncol(qcovidT)], na.rm = TRUE)
+Bstatscovid <<- colMeans(covidB[,2:ncol(qcovidB)], na.rm = TRUE)
+Sstatscovid <<- colMeans(covidS[,2:ncol(qcovidS)], na.rm = TRUE)
+
+Estatscovid2<<-c(Estatscovid[1],Estatscovid[2], TargetUe=NA, TargetDe=NA,Estatscovid[3],Estatscovid[4],Estatscovid[5],Estatscovid[6])
+Tstatscovid2<<-c(Tstatscovid[1],Tstatscovid[2], TargetUe=NA, TargetDe=NA,Tstatscovid[3],Tstatscovid[4],Tstatscovid[5],Tstatscovid[6])
+Bstatscovid2<<-c(Bstatscovid[1],Bstatscovid[2], TargetUe=NA, TargetDe=NA,Bstatscovid[3],Bstatscovid[4],Bstatscovid[5],Bstatscovid[6])
+Sstatscovid2<-c(Sstatscovid[1],Sstatscovid[2], TargetUe=NA, TargetDe=NA,Sstatscovid[3],Sstatscovid[4],Sstatscovid[5],Sstatscovid[6])
+
+Estatscovid_mat <- matrix(Estatscovid, nrow = 8, ncol = 1)
+Tstatscovid_mat <- matrix(Tstatscovid2, nrow = 8, ncol = 1)
+Bstatscovid_mat <- matrix(Bstatscovid2, nrow = 8, ncol = 1)
+Sstatscovid_mat <- matrix(Sstatscovid2, nrow = 8, ncol = 1)
+
+charcovid <- cbind(Estatscovid_mat, Tstatscovid_mat, Bstatscovid_mat, Sstatscovid_mat)
+rownames(charcovid) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charcovid) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", label="tab:covidchar",caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:covidchar)).
+
+The rate statistics during covid are shown in 
+
+```{r, covidstatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+median_values = c(Estatscovid[1], Tstatscovid[1], Bstatscovid[1], Sstatscovid[1])
+iqr_values = c(Estatscovid[7] - Estatscovid[6], Tstatscovid[5] - Tstatscovid[4], Bstatscovid[5] - Bstatscovid[4], Sstatscovid[5] - Sstatscovid[4])
+range_values = c(Estatscovid[8] - Estatscovid[5], Tstatscovid[6] - Tstatscovid[3], Bstatscovid[6] - Bstatscovid[3], Sstatscovid[6] - Sstatscovid[3])
+volume_values = c(Estatscovid[2], Tstatscovid[2], Bstatscovid[2], Sstatscovid[2])
+covidstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
+
+covidstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+#row.names(covidstats) <- categories
+row.names(covidstats) <- NULL
+xtable(covidstats, include.rownames = FALSE, caption="Covid 03/17/2022-12/14/2023", label="tab:covidstatistics",caption.placement="bottom",comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+(Table \@ref(tab:covidstatistics)).
+
+
+\emph{The zero lower bound} (Figure \@ref(fig:rateszlb)) 
 and (Figure \@ref(fig:zlbbox)).
 
-Percentiles of the EFFR during the Fed's fight to control inflation  (Figure \@ref(fig:ratesinflation)).
+```{r,zlbchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
+library(xtable)
+k=4  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+zlb<-rrbp[bgn:edn,]
+sdatezlb<-sdate[bgn:edn]
+
+qzlbE=quantilesE[bgn:edn,]
+qzlbT=quantilesT[bgn:edn,]
+qzlbB=quantilesB[bgn:edn,]
+qzlbS=quantilesS[bgn:edn,]
+
+
+# Store your data frame in the environment
+my_envepisodes$sdatezlb <-sdatezlb
+my_envepisodes$zlbE <-qzlbE
+my_envepisodes$zlbT <-qzlbT
+my_envepisodes$zlbB <-qzlbB
+my_envepisodes$zlbS <-qzlbS
+
+#Estatszlb <<- colMeans(qzlbE[,1:ncol(qzlbE)-1], na.rm = TRUE)
+Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
+Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
+Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
+Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
+
+Tstatszlb2<<-c(Tstatszlb[1],Tstatszlb[2], TargetUe=NA, TargetDe=NA,Tstatszlb[3],Tstatszlb[4],Tstatszlb[5],Tstatszlb[6])
+Bstatszlb2<<-c(Bstatszlb[1],Bstatszlb[2], TargetUe=NA, TargetDe=NA,Bstatszlb[3],Bstatszlb[4],Bstatszlb[5],Bstatszlb[6])
+Sstatszlb2<<-c(Sstatszlb[1],Sstatszlb[2], TargetUe=NA, TargetDe=NA,Sstatszlb[3],Sstatszlb[4],Sstatszlb[5],Sstatszlb[6])
+
+Estatszlb_mat <- matrix(Estatszlb, nrow = 8, ncol = 1)
+Tstatszlb_mat <- matrix(Tstatszlb2, nrow = 8, ncol = 1)
+Bstatszlb_mat <- matrix(Bstatszlb2, nrow = 8, ncol = 1)
+Sstatszlb_mat <- matrix(Sstatszlb2, nrow = 8, ncol = 1)
+
+charzlb <- cbind(Estatszlb_mat, Tstatszlb_mat, Bstatszlb_mat, Sstatszlb_mat)
+
+rownames(charzlb) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+
+colnames(charzlb) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", label="tab:zlbchar",caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+
+The rate characteristics the zero lower bound are shown in 
+(Table \@ref(tab:zlbchar)).
+
+```{r,zlbstatistics, echo=FALSE,results='asis',echo=FALSE,warning=FALSE, message=FALSE}
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+library(xtable)
+k=4  
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+zlb<-rrbp[bgn:edn,]
+sdatezlb<-sdate[bgn:edn]
+
+qzlbE=quantilesE[bgn:edn,]
+qzlbT=quantilesT[bgn:edn,]
+qzlbB=quantilesB[bgn:edn,]
+qzlbS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdatezlb <-sdatezlb
+my_envepisodes$zlbE <-qzlbE
+my_envepisodes$zlbT <-qzlbT
+my_envepisodes$zlbB <-qzlbB
+my_envepisodes$zlbS <-qzlbS
+
+Estatszlb <<- colMeans(qzlbE[,2:ncol(qzlbE)], na.rm = TRUE)
+#Ostatszlb <<- colMeans(qzlbO[,2:ncol(qzlbO)], na.rm = TRUE)
+Tstatszlb <<- colMeans(qzlbT[,2:ncol(qzlbT)], na.rm = TRUE)
+Bstatszlb <<- colMeans(qzlbB[,2:ncol(qzlbB)], na.rm = TRUE)
+Sstatszlb <<- colMeans(qzlbS[,2:ncol(qzlbS)], na.rm = TRUE)
+
+median_values = c(Estatszlb[1], Tstatszlb[1], Bstatszlb[1], Sstatszlb[1])
+iqr_values = c(Estatszlb[7] - Estatszlb[6], Tstatszlb[5] - Tstatszlb[4], Bstatszlb[5] - Bstatszlb[4], Sstatszlb[5] - Sstatszlb[4])
+range_values = c(Estatszlb[8] - Estatszlb[5], Tstatszlb[6] - Tstatszlb[3], Bstatszlb[6] - Bstatszlb[3], Sstatszlb[6] - Sstatszlb[3])
+volume_values = c(Estatszlb[2], Tstatszlb[2], Bstatszlb[2], Sstatszlb[2])
+zlbstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE=range_values, VOLUME = volume_values)
+#row.names(zlbstats) <- categories
+row.names(zlbstats) <- NULL
+xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bound 03/17/2020-03/16/2022",label="tab:zlbstatistics", caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+
+The rate statistics the zero lower bound are shown in 
+(Table \@ref(tab:zlbstatistics)).
+
+
+\emph{The Fed's fight to control inflation}  (Figure \@ref(fig:ratesinflation)).
 The EFFR and the IQR are within the FOMC target rates (Figure \@ref(fig:inflationbox)).
+
+```{r, inflationchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+k=5 
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+bgn<-begn[k]
+edn<-endn[k]
+inflation<-rrbp[bgn:edn,]
+sdateinflation<-sdate[bgn:edn]
+
+qinflationE=quantilesE[bgn:edn,]
+qinflationT=quantilesT[bgn:edn,]
+qinflationB=quantilesB[bgn:edn,]
+qinflationS=quantilesS[bgn:edn,]
+
+my_envepisodes$sdateinflation <-sdateinflation
+my_envepisodes$inflationE <-qinflationE
+my_envepisodes$inflationT <-qinflationT
+my_envepisodes$inflationB <-qinflationB
+my_envepisodes$inflationS <-qinflationS
+
+Estatsinflation <<- colMeans(qinflationE[,2:ncol(qinflationE)], na.rm = TRUE)
+Tstatsinflation <<- colMeans(qinflationT[,2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <<- colMeans(qinflationB[,2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <<- colMeans(qinflationS[,2:ncol(qinflationS)], na.rm = TRUE)
+
+Tstatsinflation2<<-c(Tstatsinflation[1],Tstatsinflation[2], TargetUe=NA, TargetDe=NA,Tstatsinflation[3],Tstatsinflation[4],Tstatsinflation[5],Tstatsinflation[6])
+Bstatsinflation2<<-c(Bstatsinflation[1],Bstatsinflation[2], TargetUe=NA, TargetDe=NA,Bstatsinflation[3],Bstatsinflation[4],Bstatsinflation[5],Bstatsinflation[6])
+Sstatsinflation2<<-c(Sstatsinflation[1],Sstatsinflation[2], TargetUe=NA, TargetDe=NA,Sstatsinflation[3],Sstatsinflation[4],Sstatsinflation[5],Sstatsinflation[6])
+
+Estatsinflation_mat <- matrix(Estatsinflation, nrow = 8, ncol = 1)
+Tstatsinflation_mat <- matrix(Tstatsinflation2, nrow = 8, ncol = 1)
+Bstatsinflation_mat <- matrix(Bstatsinflation2, nrow = 8, ncol = 1)
+Sstatsinflation_mat <- matrix(Sstatsinflation2, nrow = 8, ncol = 1)
+charinflation <- cbind(Estatsinflation_mat, Tstatsinflation_mat, Bstatsinflation_mat, Sstatsinflation_mat)
+rownames(charinflation) <- c("Rate", "Volume", "Upper target", "Lower target", 
+                     "Percentile_01", "Percentile_25", "Percentile_75", "Percentile_99")
+colnames(charinflation) <- c("EFFR", "TGCR", "BGCR",  "SOFR")
+xtable(charinflation,caption="Taming inflation 03/17/2022-12/14/2023",label="tab:inflationchar", caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+#include.rownames = FALSE
+```
+\FloatBarrier
+The rate characteristics during the taming of inflation are shown in 
+(Table \@ref(tab:inflationchar)).
+
+
+```{r, inflationstatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
+library(xtable)
+k <- 5 
+begn <- c(1, 859, 923, 1014, 1519, 1)
+endn <- c(858, 922, 1013, 1518, 1957, 1957)
+bgn <- begn[k]
+edn <- endn[k]
+inflation <- rrbp[bgn:edn,]
+sdateinflation <- sdate[bgn:edn]
+categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
+
+qinflationE <- quantilesE[bgn:edn,]
+qinflationT <- quantilesT[bgn:edn,]
+qinflationB <- quantilesB[bgn:edn,]
+qinflationS <- quantilesS[bgn:edn,]
+
+my_envepisodes$sdateinflation <- sdateinflation
+my_envepisodes$inflationE <- qinflationE
+my_envepisodes$inflationT <- qinflationT
+my_envepisodes$inflationB <- qinflationB
+my_envepisodes$inflationS <- qinflationS
+
+Estatsinflation <- colMeans(qinflationE[, 2:ncol(qinflationE)], na.rm = TRUE)
+Tstatsinflation <- colMeans(qinflationT[, 2:ncol(qinflationT)], na.rm = TRUE)
+Bstatsinflation <- colMeans(qinflationB[, 2:ncol(qinflationB)], na.rm = TRUE)
+Sstatsinflation <- colMeans(qinflationS[, 2:ncol(qinflationS)], na.rm = TRUE)
+
+Tstatsinflation2 <- c(Tstatsinflation[1], Tstatsinflation[2], TargetUe=NA, TargetDe=NA, Tstatsinflation[3], Tstatsinflation[4], Tstatsinflation[5], Tstatsinflation[6])
+Bstatsinflation2 <- c(Bstatsinflation[1], Bstatsinflation[2], TargetUe=NA, TargetDe=NA, Bstatsinflation[3], Bstatsinflation[4], Bstatsinflation[5], Bstatsinflation[6])
+Sstatsinflation2 <- c(Sstatsinflation[1], Sstatsinflation[2], TargetUe=NA, TargetDe=NA, Sstatsinflation[3], Sstatsinflation[4], Sstatsinflation[5], Sstatsinflation[6])
+
+median_values <- c(Estatsinflation[1], Tstatsinflation[1], Bstatsinflation[1], Sstatsinflation[1])
+iqr_values <- c(Estatsinflation[7] - Estatsinflation[6], Tstatsinflation[5] - Tstatsinflation[4], Bstatsinflation[5] - Bstatsinflation[4], Sstatsinflation[5] - Sstatsinflation[4])
+range_values <- c(Estatsinflation[8] - Estatsinflation[5], Tstatsinflation[6] - Tstatsinflation[3], Bstatsinflation[6] - Bstatsinflation[3], Sstatsinflation[6] - Sstatsinflation[3])
+volume_values <- c(Estatsinflation[2], Tstatsinflation[2], Bstatsinflation[2], Sstatsinflation[2])
+inflationstats <<- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+
+inflationstats <- data.frame(Category = categories, Median = median_values, IQR = iqr_values, RANGE = range_values, VOLUME = volume_values)
+row.names(inflationstats) <- NULL
+xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming inflation 03/17/2022-12/14/2023", label="tab:inflationstatistics", caption.placement="bottom", comment = FALSE)
+print.results = FALSE
+```
+\FloatBarrier
+The rate statistics the taming of inflation are shown in 
+(Table \@ref(tab:inflationstatistics)).
+
     
 ```{r, tab.cap="Comparative statistics of all policy episodes", echo=FALSE, results='asis'}
 #Med_table
@@ -2771,6 +2853,26 @@ TGcr  13.86      5.62    22.7   11.21  11.21  32.27
 BGCR  16.11      8.48    34.0   16.02  11.85  33.34
 SOFR  14.51      8.53    41.65  19.46  14.44  21.35
 -->
+
+
+<!--
+see Figure \@ref(fig:Boxplots all episodes 3/4/2016-12/14/2023)
+\```{r, fig.caption= "Boxplots all episodes 3/4/2016-12/14/2023",echo=FALSE,results='asis'}
+#pboxplots<-grid.arrange(bnormalcy, badjust, bcovid, bzlb, binflation, ncol=1) bad
+
+print(pboxplots)
+```
+See (\@ref(fig:boxplots of rates during policy regimes) provides a summary of the data.
+
+```{r, fig.cap="boxplots of rates during policy regimes", echo=FALSE, results='asis'}
+library(patchwork)
+# Combine boxplots
+  pboxplots<-(bnormalcy | badjust ) / (bcovid | bzlb) / (binflation | bsample)
+  print(pboxplots)
+  my_environmentbox$pboxplots<-pboxplots
+```
+-->
+
 
 \emph{Volatility}
 Heteroskedasticity of overnight rates, here measured as log percent changes in rates, is plus of minus 0.5 percent from 2016 to 2020. Extreme values during the periods of the pandemic and the zero lower bound, From  2020 to 2022, the percent change in rates varies plus or minus 2 percent.  then tapers off as the Fed began its fight to contain inflation in 2023, within plus or minus 2 percent (\@ref(fig:samplevola)
