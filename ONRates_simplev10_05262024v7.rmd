@@ -1718,7 +1718,6 @@ ratests_norm <- ggplot(meltrates_norm, aes(x=sdate, y=value, colour=variable, gr
 ratests_norm
 ```
 \FloatBarrier
-
 The EFFR and the money market rates during the normalcy period (Figure \@ref(fig:ratestsnorm)).
 
 ```{r, fomcnorm, echo=FALSE, results='asis'}
@@ -1798,6 +1797,7 @@ library(reshape2)
 k=3  
 library(ggplot2)
 begn <- c(1, 859, 923, 1014, 1519, 1)
+
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
 bgn<-begn[k]
 edn<-endn[k]
@@ -1812,8 +1812,22 @@ ratests_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,grou
   labs(caption = "Covid 11/1/2019-3/16/2020", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-ratests_covid
+#ratests_covid
+ggsave(filename = "C:/Users/Owner/Documents/Research/OvernightRates/ONRates_simplev10_05262024v7_files/figure-latex/ratestscovid-1.pdf", plot = ratests_covid, device = "pdf")
 ```
+
+
+```{r include_figure, results='asis', echo=FALSE}
+cat('
+\\begin{figure}[H]
+  \\centering
+  \\includegraphics[width=0.8\\textwidth]{C:/Users/Owner/Documents/Research/OvernightRates/ONRates_simplev10_05262024v7_files/figure-latex/ratestscovid-1.pdf}
+  \\caption{Rates during covid period 11/1/2019-3/16/2020}
+  \\label{fig:ratestscovid}
+\\end{figure}
+')
+```
+
 \FloatBarrier
 (Figure \@ref(fig:ratestscovid)). 
 
@@ -1852,11 +1866,24 @@ ratests_zlb<- ggplot(meltrates_zlb,aes(x=sdate,y=value,colour=variable,group=var
   labs(caption = "Zero lower bound 3/17/2020-3/16/2022", x = "", y = "Basis Points (bp)", color = "Rate") +
   scale_y_continuous(breaks = seq(minr, maxr, by = 25), limits = c(minr, maxr)) + 
   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
-ratests_zlb
+#ratests_zlb
 #zlb<-my_envepisodes$zlb
+ggsave(filename = "C:/Users/Owner/Documents/Research/OvernightRates/ONRates_simplev10_05262024v7_files/figure-latex/ratestscovid-1.pdf", plot = ratests_covid, device = "pdf")
 ```
-\FloatBarrier
 
+```{r include_figurezlb, results='asis', echo=FALSE}
+cat('
+\\begin{figure}[H]
+  \\centering
+  \\includegraphics[width=0.8\\textwidth]{C:/Users/Owner/Documents/Research/OvernightRates/ONRates_simplev10_05262024v7_files/figure-latex/ratestszlb-1.pdf}
+  \\caption{Rates during Zero lower bound 3/17/2020-3/16/2022}
+  \\label{fig:ratestszlb}
+\\end{figure}
+')
+```
+
+
+\FloatBarrier
 (Figure \@ref(fig:ratestszlb)). 
 
 The EFFR and the money market rates during the taming of inflation 
@@ -1884,10 +1911,8 @@ ratests_inflation<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
 ratests_inflation
 ```
 \FloatBarrier
-
-
-
 (Figure \@ref(fig:ratestsinflation)). 
+
 From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
 
 ```{r, fomcinflation, echo=FALSE, results='asis'}
@@ -1935,7 +1960,6 @@ rates_norm
 \FloatBarrier
 \emph{The normalcy period} (Figure \@ref(fig:ratesnorm)).
 The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
-                 
                   
 ```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
 library(ggplot2)
@@ -2274,8 +2298,8 @@ maxr<-max(covid[,2:ncol(covid)])
 minr<-min(covid[,2:ncol(covid)])  
 ```
 
-
-```{r ratescovid,fig.cap= "EFFR during covid period 11/1/2019-3/16/2020",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratescovid"}
+```{r ratescovid, fig.cap= "EFFR during covid period 11/1/2019-3/16/2020",echo=FALSE, fig.pos='H', fig.label="ratescovid"}
+#warning=FALSE, message=FALSE, 
 #(see Figure \@ref(fig:EFFR during covid period 11/1/2019-3/16/2020)
 library(ggplot2)
 rates=2
@@ -2300,10 +2324,8 @@ rates_covid
 \FloatBarrier
 (Figure \@ref(fig:ratescovid)).
 
-
-
-```{r covidbox, fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
-#(Figure \@ref(fig:EFFR Key percentiles durifig.label="covidbox"}
+```{r covidbox, fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020", echo=FALSE, fig.pos='H', fig.label="covidbox"}
+#(Figure \@ref(fig:EFFR Key percentiles during.label="covidbox"}
  library(ggplot2)
  boxplot_covid <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2326,13 +2348,12 @@ rates_covid
         plot.background = element_rect(fill = "white"),
         axis.title.x = element_blank())  # Remove x-axis label)
   bcovid
-  my_environmentbox$covid <-  bcovid #boxplot_covid
+  my_environmentbox$covid <-  bcovid 
 ```
-
 \FloatBarrier
 (Figure \@ref(fig:covidbox)).
 
-\FloatBarrier
+
 The rate characteristics during covid  are shown in 
 
 ```{r,covidchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
@@ -2410,8 +2431,6 @@ print.results = FALSE
 
 \emph{The zero lower bound} 
 
-
-
 ```{r, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
 rates=2
 vol=3
@@ -2428,7 +2447,6 @@ minr<-min(zlbE[,rates]) # 4
 
 
 ```{r rateszlb, fig.cap= "EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="rateszlb"}
-#see Figure \@ref(fig:EFFR during zero lower bound (Zlb) period 3/17/2020-3/16/2022)
 library(ggplot2)
 qzlbE<-my_envepisodes$zlb
 sdate <- qzlbE[, 1]
@@ -2450,11 +2468,8 @@ rates_zlb
 \FloatBarrier
 (Figure \@ref(fig:rateszlb)) 
 
- 
 
-```{r zlbbox, fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
-#(Figure \@ref(fig:EFFR Key percentiles during.label="zlbbox"}
-#(Figure \@ref(fig:IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022)
+```{r zlbbox, fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.pos='H',fig.label="zlbbox"}
 library(ggplot2)
 boxplot_zlb <- data.frame(
     Group = structure(1:4, .Label = c("EFFR", "TGCR", "BGCR", "SOFR"), class = "factor"),
@@ -2530,7 +2545,6 @@ xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", label="tab:zlbc
 print.results = FALSE
 ```
 \FloatBarrier
-
 The rate characteristics the zero lower bound are shown in 
 (Table \@ref(tab:zlbchar)).
 
@@ -2573,7 +2587,6 @@ xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bo
 print.results = FALSE
 ```
 \FloatBarrier
-
 The rate statistics the zero lower bound are shown in 
 (Table \@ref(tab:zlbstatistics)).
 
@@ -2591,12 +2604,11 @@ p75=8
 p99=9
 qinflationE<-my_envepisodes$inflationE
 maxr<-max(qinflationE[,rates]) 
-min(qinflationE[,rates])
+minr<-min(qinflationE[,rates])
 ```
 
 
-```{r ratesinflation, fig.cap="EFFR during inflation period 3/17/2022-12/14/2023",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratesinflation"}
-# (see Figure \@ref(fig:EFFR during inflation period 3/17/2022-12/14/2023)
+```{r ratesinflation, fig.cap= "EFFR during inflation period 3/17/2022-12/14/2023",echo=FALSE,warning=FALSE, message=FALSE, fig.pos='H', fig.label="ratesinflation"}
 library(ggplot2)
 library(reshape2)
 qinflationE<-my_envepisodes$inflation
@@ -2604,8 +2616,7 @@ sdate <- qinflationE[, 1]
 rates=2
 data_without_sdate <- qinflationE[, -1]
 maxr<-max(qinflationE[,rates]) 
-#minr<-min(qinflationE[,rates])
-
+minr<-min(qinflationE[,rates])
 meltrates_inflation <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
 rates_inflation <<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variable,group=variable)) + 
   geom_line() +
@@ -2613,15 +2624,14 @@ rates_inflation <<- ggplot(meltrates_inflation,aes(x=sdate,y=value,colour=variab
   scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0,maxr)) + 
   theme_minimal()
 rates_inflation
-#my_envepisodes$rates_inflation<-rates_inflation
 ```
+
 \FloatBarrier
 (Figure \@ref(fig:ratesinflation)).
 
 The EFFR and the IQR are within the FOMC target rates
 
-```{r inflationbox, fig.cap="IQR and range of rates during inflation period 3/17/2022-12/14/2023", echo=FALSE, fig.pos='H',fig.label="adjustbox"}
-#(Figure \@ref(fig:EFFR Key percentiles durifig.label="inflationbox"}
+```{r inflationbox, fig.cap="IQR and range of rates during inflation period 3/17/2022-12/14/2023", echo=FALSE, fig.pos='H',fig.label="inflationbox"}
 library(ggplot2)
 library(reshape2)
 boxplot_inflation <- data.frame(
@@ -2649,6 +2659,7 @@ boxplot_inflation <- data.frame(
 ```
 \FloatBarrier
 (Figure \@ref(fig:inflationbox)).
+
 
 ```{r, inflationchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -2693,6 +2704,7 @@ print.results = FALSE
 #include.rownames = FALSE
 ```
 \FloatBarrier
+
 The rate characteristics during the taming of inflation are shown in 
 (Table \@ref(tab:inflationchar)).
 
