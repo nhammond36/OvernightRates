@@ -41,8 +41,9 @@ str(my_data)
 readRDS(my_envepisodes, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
 readRDS(my_envvolatile, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
 
-# olsgmm, file = "C:/Users/Owner/Documents/Research/OvernightRates/CodeMI/olsgmmv2")  
-source("C:/Users/Owner/Documents/Research/OvernightRates/CodeMI/olsgmmv2.R")
+# olsgmm 
+source("C:/Users/Owner/Documents/Research/OvernightRates/CodeMI/olsgmmv3.R")
+# source("C:/Users/Zenobia/Documents/Research/MonetaryPolicy/MonetaryPolicy/Code/olsgmmv2.R")
 
 # To use gmm
 # olsgmm <- function(parameters) {
@@ -91,7 +92,7 @@ if (redo ==0 ) {
 spread <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_12172023v3.csv', header = TRUE, sep = ",", dec = ".", stringsAsFactors = FALSE)
 colnames(spread) <- names(spread)
 print(colnames)
-sdate<-as.Date(spread$Date,"%m/%d/%Y")
+sdate<-as.Date(spread_no_na$Date,"%m/%d/%Y")
 
 # Find the row number for the beginning and end dates of the sample: where  "3/4/2016" occurs and 12/29/2022 for the first time
 # Check which index corresponds to the specified dates
@@ -278,8 +279,7 @@ print(dailyrates)
 # 
 # print(res0 <- gmm(g0, x, c(mu = 0, sig = 0)))
 
-
-# Credit SUISSE DISPERTION
+# Credit SUISSE DISPERSION
 #https://research-doc.credit-suisse.com/docView?language=ENG&format=PDF&source_id=csplusresearchcp&document_id=805810360&serialid=7b0hziYR8YC9WgdgSZceFVZcmKHnCBinVkLwiTRHqKU%3D&cspId=null
 # For example, if a father is 76 inches tall, the mean height of men is 70 inches, and the r = 0.50 between the
 # heights of fathers and sons, the expected height of the son is 73 inches, determined as follows:13
@@ -387,19 +387,15 @@ print(dailyrates)
                                       
                                       
  # Calculate rolling averages for 2-day, 5-day, and 10-day periods
-# two_day_avg_returns <- rollapply(rrbp_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-                                      # five_day_avg_returns <- rollapply(rrbp_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-                                      # ten_day_avg_returns <- rollapply(rrbp_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")                                 
-                                      
-  rrbp_zoo <- zoo(rrbp)                                    
+  rrbp_zoo <- zoo(rrbp[,2:5])                                    
   rrbp2 <- rollapply(rrbp_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(rrbp2) #[1] 1709
   ncol(rrbp2) #[1] 5
+  head(rrbp2)
   
   rrbp5 <- rollapply(rrbp_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
   nrow(rrbp5) #[1] 1706
   ncol(rrbp5) #[1] 5
-  
   
   rrbp10 <- rollapply(rrbp_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
   nrow(rrbp10) #[1] 1701
@@ -407,44 +403,40 @@ print(dailyrates)
 #ten_day_avg_returns <- rowMeans(matrix(daily_returns, ncol = 5, byrow = TRUE, nrow = 10), ncol = 5)
 
   
-                                      
-source("C:/Users/Zenobia/Documents/Research/MonetaryPolicy/MonetaryPolicy/Code/olsgmmv2.R")
-# k=1  k=1 r(2,3) = a +b_1 r(1,2)                                     
+n<- ncol(rrbp)                                      
+
+# k=1  k=1 r(2,3) = a +b_1 r(1,2)    
+T<-nrow(rrbp)-1
 lhv<- rrbp[2:1710,1:5]
 ones_v <- rep(1, times = T-1)
-nrow(ones_v)
-rhv1<- rrbp[1:1709,1:5]
+rhv1<- rrbp[1:T,2:n]
 
 # k=2  k=1 r(2,3) = a + a +b_1 r(1,3)                                  
 T<-nrow(rrbp2) #[1] 1709
-lhv<- rrbp2[2:1709,1:5]
+lhv<- rrbp2[2:T,]
 ones_v <- rep(1, times = T-1)
-nrow(ones_v)
-rhv1<- rrbp2[1:1708,1:5]
+rhv1<- rrbp2[1:T-1,]
 
 
 # k=5  k=1 r(2,3) = a +b_1 r(1,6) 
 # length(rrbp5) #[1] 1706
 # rrbp5_df <- as.data.frame(rrbp5)
-lhv<- rrbp5[2:1706,1:5]
-T<-nrow(lhv) 
-ones_v <- rep(1, times = T)
-nrow(ones_v)
-rhv1<- rrbp5[1:1705,1:5]
+T<-nrow(rrbp5)
+lhv<- rrbp5[2:T,]
+ones_v <- rep(1, times = T-1)
+rhv1<- rrbp5[1:T-1,]
 
 
 # k=10   k=10 r(11,21) = a +b_1 r(1,11)   
 # length(rrbp10) #[1] 1701
 # rrbp10_df <- as.data.frame(rrbp10)
-#T<-nrow(rrbp10) 
-lhv<- rrbp10[2:1701,1:5]
-T<-nrow(lhv) 
-ones_v <- rep(1, times = T)
-nrow(ones_v)
-rhv1<- rrbp10[1:1700,1:5]
+T<-nrow(rrbp10) 
+lhv<- rrbp10[2:T,]
+ones_v <- rep(1, times = T-1)
+rhv1<- rrbp10[1:T-1,]
 
 
-
+# Run olsgmm
 rhv<- cbind(rhv1, ones_v) # Add a column of ones
 nrow(lhv)
 nrow(rhv)
@@ -531,7 +523,12 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   
   
 # epochs --------------------
-  # normalcy <-rrbp %>% slice(1:856)
+n<-ncol(rrbp)
+k=1  
+bgn<-begn[k]
+edn<-endn[k]
+  # 
+  normalcy <-rrbp[bgn:edn,2:n]
   normalcy_zoo <- zoo(normalcy)                                    
   normalcy2 <- rollapply(normalcy_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(normalcy2) #[1] 1709
@@ -547,11 +544,11 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   ncol(rrbp10) #[1] 5
   
   
-  normalcy_zoo <- zoo(normalcy) 
-  adjust_zoo <- zoo( adjust)  
-  covid_zoo <- zoo(covid)  
-  zlb_zoo <- zoo(zlb)  
-  inflation_zoo <- zoo(inflation)  
+  # normalcy_zoo <- zoo(normalcy) 
+  # adjust_zoo <- zoo(adjust)  
+  # covid_zoo <- zoo(covid)  
+  # zlb_zoo <- zoo(zlb)  
+  # inflation_zoo <- zoo(inflation)  
   
   normalcy2 <- rollapply(normalcy_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(normalcy2) # [1] 855
@@ -610,7 +607,12 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  # adjust <-rrbp %>% slice(857:920)
+  #
+  k=2  
+  bgn<-begn[k]
+  edn<-endn[k]
+  adjust <-rrbp[bgn:edn,,2:n]
+  adjust_zoo <- zoo(adjust) 
   adjust2 <- rollapply(adjust_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(adjust2) #[1] 1709
   ncol(adjust2) #[1] 5
@@ -639,7 +641,12 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   nrow(ones_v)
   rhv1<- adjust10[1:1700,1:5]
   
-  # covid <-rrbp %>% slice(921:1029)
+  #
+  k=3  
+  bgn<-begn[k]
+  edn<-endn[k]
+  covid <-rrbp[bgn:end,,2:n]
+  covid_zoo <- zoo(covid) 
   covid2 <- rollapply(covid_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(covid2) #[1] 108
   ncol(covid2) #[1] 5
@@ -687,8 +694,13 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  # zlb <-rrbp %>% slice(1030:1513)
-  zlb2 <- rollapply(normalcy_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
+  # 
+  k=4 
+  bgn<-begn[k]
+  edn<-endn[k]
+  zlb<-rrbp[bgn:end,,2:n]
+  zlb_zoo <- zoo(zlb) 
+  zlb2 <- rollapply(zlb_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(zlb2) #[1] 855
   ncol(zlb2) #[1] 5
   lhv<- covid2[2:855,1:5]
@@ -735,7 +747,12 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  # inflation <-rrbp %>% slice(1514:1710)
+  #
+  k=5 
+  bgn<-begn[k]
+  edn<-endn[k]
+  inflation<-rrbp[bgn:end,,2:n]
+  inflation_zoo <- zoo(inflation) 
   inflation2 <- rollapply( inflation_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(inflation2) #[1] 196
   ncol(inflation2) #[1] 5
@@ -897,16 +914,6 @@ qq(plot)
 
 
 # ------------------------ Daily epoch rates
-begn<- c(4, 860, 924,  1033, 1517, 4)
-endn<- c(859, 923, 1032, 1516, 1714, 1714)
-#1. normalcy   3/4/2016		7/31/2019      4  859
-#2. mid cycle adjustment 8/1/2019 - 10/31/2019 737660 
-#860 - 923
-#3. covid 11/1/2019	    3/16/2020   924  1032
-#4. zlb         3/17/2020- 3/16/2022     1032-1516
-#4. Taming inflation 03/17/2022 - 12/29/2022 1517-1714
-#NO! inflation   5/5/2022		12/29/2022 1517  1714
-# Redo -3 for each position for nrow=1710
 
 # # Loop through a numeric range
 # for (k in 1:5) {
