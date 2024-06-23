@@ -35,15 +35,14 @@ library(dplyr)
 # Read your data frame in the environment
 readRDS(my_envmp, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")
 
-my_data<- my_envmp$spread_no_na
-str(my_data)
+spread_no_na<- my_envmp$spread_no_na
+str(spread_no_na)
 
 readRDS(my_envepisodes, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
 readRDS(my_envvolatile, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
 
 # olsgmm 
 source("C:/Users/Owner/Documents/Research/OvernightRates/CodeMI/olsgmmv3.R")
-# source("C:/Users/Zenobia/Documents/Research/MonetaryPolicy/MonetaryPolicy/Code/olsgmmv2.R")
 
 # To use gmm
 # olsgmm <- function(parameters) {
@@ -388,6 +387,7 @@ print(dailyrates)
                                       
  # Calculate rolling averages for 2-day, 5-day, and 10-day periods
   rrbp_zoo <- zoo(rrbp[,2:5])                                    
+ 
   rrbp2 <- rollapply(rrbp_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
   nrow(rrbp2) #[1] 1709
   ncol(rrbp2) #[1] 5
@@ -406,10 +406,10 @@ print(dailyrates)
 n<- ncol(rrbp)                                      
 
 # k=1  k=1 r(2,3) = a +b_1 r(1,2)    
-T<-nrow(rrbp)-1
-lhv<- rrbp[2:1710,1:5]
+T<-nrow(rrbp)
+lhv<- rrbp[2:T,]
 ones_v <- rep(1, times = T-1)
-rhv1<- rrbp[1:T,2:n]
+rhv1<- rrbp[1:T-1,]
 
 # k=2  k=1 r(2,3) = a + a +b_1 r(1,3)                                  
 T<-nrow(rrbp2) #[1] 1709
@@ -521,63 +521,57 @@ rrbpk10table <- cbind(bvtablek10, sebvtablek10)
 #print(result$F)
 #param<-[theta,sec,R2,R2adj,vcv,F]
   
+# rrbp_zoo <- zoo(rrbp[,2:5])                                    
+#   rrbp2 <- rollapply(rrbp_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
+#   nrow(rrbp2) #[1] 1709
+#   ncol(rrbp2) #[1] 5
+#   head(rrbp2)
+#   
+#   rrbp5 <- rollapply(rrbp_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
+#   nrow(rrbp5) #[1] 1706
+#   ncol(rrbp5) #[1] 5
+#   
+#   rrbp10 <- rollapply(rrbp_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
+#   nrow(rrbp10) #[1] 1701
+#   ncol(rrbp10) #[1] 5
+#ten_day_avg_returns <- rowMeans(matrix(daily_returns, ncol = 5, byrow = TRUE, nrow = 10), ncol = 5)
+  
   
 # epochs --------------------
-n<-ncol(rrbp)
-k=1  
-bgn<-begn[k]
-edn<-endn[k]
-  # 
-  normalcy <-rrbp[bgn:edn,2:n]
-  normalcy_zoo <- zoo(normalcy)                                    
-  normalcy2 <- rollapply(normalcy_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(normalcy2) #[1] 1709
-  ncol(rrbp2) #[1] 5
-  
-  rrbp5 <- rollapply(rrbp_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(rrbp5) #[1] 1706
-  ncol(rrbp5) #[1] 5
-  
-  
-  rrbp10 <- rollapply(rrbp_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(rrbp10) #[1] 1701
-  ncol(rrbp10) #[1] 5
-  
-  
-  # normalcy_zoo <- zoo(normalcy) 
+# normalcy_zoo <- zoo(normalcy) 
   # adjust_zoo <- zoo(adjust)  
   # covid_zoo <- zoo(covid)  
   # zlb_zoo <- zoo(zlb)  
   # inflation_zoo <- zoo(inflation)  
   
+n<-ncol(rrbp)
+#NORMALCY
+k=1  
+bgn<-begn[k]
+edn<-endn[k]
+  # 
+  normalcy <-rrbp[bgn:edn,2:n]
+  normalcy_zoo <- zoo(normalcy)  
+  
   normalcy2 <- rollapply(normalcy_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(normalcy2) # [1] 855
-  ncol(normalcy2) #[1] 5
-  lhv<- normalcy2[2:855,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- normalcy[1:854,1:5]
+  T<-nrow(normalcy2)
+  lhv<- normalcy2[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- normalcy2[1:T-1,]
   
-  normalcy5 <- rollapply(normalcy_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(normalcy5) #[1] 852
-  ncol(normalcy5) #[1] 5
-  lhv<- normalcy10[2:852,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- normalcy[1:851,1:5]
+  normalcy5 <- rollapply(rrbp_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
+  T<-nrow(normalcy5)
+  lhv<- normalcy5[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- normalcy5[1:T-1,]
   
-  normalcy10 <- rollapply(normalcy_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(normalcy10) #[1]  847
-  ncol(normalcyp10) #[1] 5
-  lhv<- normalcy10[2:847,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- normalcy[1:846,1:5]
+  normalcy10 <- rollapply(rrbp_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
+  T<-nrow(normalcy10)
+  lhv<- normalcy10[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- normalcy10[1:T-1,]
   
-  
+ # run GMM for normalcy2,  normalcy4,  normalcy10 
   rhv<- cbind(rhv1, ones_v) # Add a column of ones
   nrow(lhv)
   nrow(rhv)
@@ -607,72 +601,55 @@ edn<-endn[k]
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  #
+  #ADJUST
   k=2  
   bgn<-begn[k]
   edn<-endn[k]
   adjust <-rrbp[bgn:edn,,2:n]
   adjust_zoo <- zoo(adjust) 
+  
   adjust2 <- rollapply(adjust_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(adjust2) #[1] 1709
-  ncol(adjust2) #[1] 5
-  lhv<- adjust2[2:1701,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- adjust2[1:1700,1:5]
+  T<-nrow(adjust2)
+  lhv<- adjust2[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- adjust2[1:T-1,]
   
   adjust5 <-  rollapply(adjust_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(adjust5) #[1] 1706
-  ncol(adjust5) #[1] 5
-  lhv<- adjust5[2:1701,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- adjust5[1:1700,1:5]
-  
+  T<-nrow(adjust5)
+  lhv<- adjust5[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- adjust5[1:T-1,]
   
   adjust10 <-  rollapply(adjust_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(adjust10) #[1] 1701
-  ncol(adjust10) #[1] 5
-  lhv<- adjust10[2:1701,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- adjust10[1:1700,1:5]
+  T<-nrow(adjust10)
+  lhv<- adjust10[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- adjust10[1:T-1,]
   
-  #
+  #COVID
   k=3  
   bgn<-begn[k]
   edn<-endn[k]
-  covid <-rrbp[bgn:end,,2:n]
+  covid <-rrbp[bgn:end,2:n]
+  
   covid_zoo <- zoo(covid) 
   covid2 <- rollapply(covid_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(covid2) #[1] 108
-  ncol(covid2) #[1] 5
-  lhv<- covid2[2:108,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- covid2[1:107,1:5]
+  T<-nrow(covid2)
+  lhv<- covid2[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- covid2[1:T-1,]
   
   covid5 <- rollapply(covid_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(covid5) #[1] 105
-  ncol(covid5) #[1] 5
-  lhv<- covid5[2:105,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- covid5[1:104,1:5]
+  T<-nrow(covid5)
+  lhv<- covid5[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- covid5[1:T-1,]
   
   covid10 <- rollapply(covid_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(covid10) #[1] 100
-  ncol(covid10) #[1] 5
-  lhv<- covid10[2:100,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- covid10[1:99,1:5]
+  T<-nrow(covid10)
+  lhv<- covid10[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- covid10[1:T-1,]
   
   rhv<- cbind(rhv1, ones_v) # Add a column of ones
   nrow(lhv)
@@ -694,38 +671,30 @@ edn<-endn[k]
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  # 
+  #zlb 
   k=4 
   bgn<-begn[k]
   edn<-endn[k]
   zlb<-rrbp[bgn:end,,2:n]
   zlb_zoo <- zoo(zlb) 
+  
   zlb2 <- rollapply(zlb_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(zlb2) #[1] 855
-  ncol(zlb2) #[1] 5
-  lhv<- covid2[2:855,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- zlb2[1:854,1:5]
+  T<-nrow(zlb2)
+  lhv<- zlb2[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- zlb2[1:T-1,]
   
   zlb5 <- rollapply(zlb_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(zlb5) #[1] 480
-  ncol(zlb5) #[1] 5
-  lhv<- zlb5[2:480,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- zlb5[1:479,1:5]
+  T<-nrow(zlb5)
+  lhv<- zlb5[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- zlb5[1:T-1,]
   
   zlb10 <- rollapply(zlb_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(zlb10) #[1] 475
-  ncol(zlb10) #[1] 5
-  lhv<- zlb10[2:475,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- zlb10[1:474,1:5]
+  T<-nrow(zlb10)
+  lhv<- zlb10[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- zlb10[1:T-1,]
   
   rhv<- cbind(rhv1, ones_v) # Add a column of ones
   nrow(lhv)
@@ -747,13 +716,19 @@ edn<-endn[k]
   Ftesttablek1<-xtable(result[[6]])
   rrbpk1table <- cbind(bvtablek1, sebvtablek1)
   
-  #
+  #INFLATION
   k=5 
   bgn<-begn[k]
   edn<-endn[k]
   inflation<-rrbp[bgn:end,,2:n]
-  inflation_zoo <- zoo(inflation) 
+  inflation_zoo <- zoo(inflation)
+  
   inflation2 <- rollapply( inflation_zoo, width = 2, FUN = mean, na.rm = TRUE, align = "right")
+  T<-nrow(inflation2)
+  lhv<- inflation2[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- inflation2[1:T-1,]
+  
   nrow(inflation2) #[1] 196
   ncol(inflation2) #[1] 5
   lhv<- inflation2[2:196,1:5]
@@ -763,22 +738,16 @@ edn<-endn[k]
   rhv1<- inflation2[1:195,1:5]
   
   inflation5 <- rollapply( inflation_zoo, width = 5, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(inflation5) #[1] 193
-  ncol(inflation5) #[1] 5
-  lhv<- inflation5[2:193,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- inflation5[1:192,1:5]
+  T<-nrow(inflation5)
+  lhv<- inflation5[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- inflation5[1:T-1,]
   
   inflation10 <- rollapply( inflation_zoo, width = 10, FUN = mean, na.rm = TRUE, align = "right")
-  nrow(inflation10) #[1] 188
-  ncol(inflation10) #[1] 5
-  lhv<- inflation10[2:188,1:5]
-  T<-nrow(lhv) 
-  ones_v <- rep(1, times = T)
-  nrow(ones_v)
-  rhv1<- inflation10[1:187,1:5]
+  T<-nrow(inflation10)
+  lhv<- inflation10[2:T,]
+  ones_v <- rep(1, times = T-1)
+  rhv1<- inflation10[1:T-1,]
   
   rhv<- cbind(rhv1, ones_v) # Add a column of ones
   nrow(lhv)

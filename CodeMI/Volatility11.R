@@ -51,12 +51,6 @@ invisible(lapply(list.packages, require, character.only = TRUE))
 # - a repo on GitHub first. Create the repo, 
 # - then when you start a new project in RStudio, use the version control option, enter your repo URL, and you're good to go.
 
-
-ue<-spread_no_na$TargetUE
-de<-spread_no_na$TargetDE
-spread_no_na$targetUE[is.infinite(spread_no_na$targetUE)] <- 0
-spread_no_na$targetDE[is.infinite(spread_no_na$targetDE)] <- 0
-
 # --------------- READ DATA ------------------
 redo<-0 # load rate data from RDS files
 redo<-1 # redo data 
@@ -116,38 +110,12 @@ str(spread_no_na)
 #print(spread_no_na)
 }
 
-
-# ONLY USE THIS IF THERE WAS A BP ERROR --------------------------------
-# Check spread before mutating to see if variables are in basis points
-#spread_no_na <- spread_no_na %>%
-columns_to_reverse <- c("Percentile01_EFFR", "Percentile25_EFFR","Percentile75_EFFR","Percentile99_EFFR","Percentile01_OBFR", "Percentile25_OBFR","Percentile75_OBFR","Percentile99_OBFR","Percentile01_TGCR", "Percentile25_TGCR","Percentile75_TGCR","Percentile99_TGCR","Percentile01_BGCR", "Percentile25_BGCR","Percentile75_BGCR","Percentile99_BGCR","Percentile01_SOFR", "Percentile25_SOFR","Percentile75_SOFR","Percentile99_SOFR")
-# ONLY USE THIS IF THERE WAS A BP ERROR --------------------------------
-columns_to_reverse <- c("VolumeEFFR","VolumeOBFR","VolumeTGCR", "VolumeBGCR","VolumeSOFR")
-# Reverse the multiplication for specific columns
-spread_no_na[columns_to_reverse] <- spread_no_na[columns_to_reverse] / 100  
-
-# FIX  
-columns_to_exclude2 <- c("Date","sdate", "VolumeEFFR","VolumeOBFR","VolumeTGCR", "VolumeBGCR","VolumeSOFR")  # Add other column names to exclude
-spread_no_na <- spread_no_na %>%
-  mutate_if(is.numeric, function(x) x * 100)
-str(spread_no_na)
-
-# Load rates data environmentmp---------------------------------
-# my_envrates <- new.env()
-# # Store your data frame in the environment
-# my_envrates$spread_no_na <-spread_no_na
-
-# Create a new environment---------------------------------
-my_envvolatile <- new.env()
-# Store your data frame in the environment
-# my_envvolatility$<-
-                
 readRDS(my_envepisodes, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envepisodes.RDS")
 readRDS(my_envvolatile, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
 
 # olsgmm 
 source("C:/Users/Owner/Documents/Research/OvernightRates/CodeMI/olsgmmv3.R")
-# FIND THIS FILE
+
 jshocks <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data files/fomc_surprises_jkv2.csv', header=TRUE, sep=",", dec=".",stringsAsFactors=FALSE)
 #FF1	FF2	FF3	FF4	MP1	ED1	ED2	ED3	ED4	TFUT02	TFUT05	TFUT10	TFUT30	SP500	SP500FUT
 #  str(jshocks)
@@ -160,16 +128,25 @@ jshocks <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data
 
 # Daily data frames overnight rates and volumes -rrbp and vold------------------------
 # rrbp daily volume weighted median overnight reference rates
-rrbp <-  spread_no_na[, c("sdate","EFFR","OBFR","TGCR","BGCR","SOFR")]
+rrbp <-  spread_no_na[, c("sdate","EFFR","TGCR","BGCR","SOFR")]
 head(rrbp)
 str(rrbp)
 
-
-# Load necessary library
-library(dplyr)
-
+# Jarocisnski or GSS data set VARs---------------------------------------------------
 # Ensure the 'start' column in jshocks is a Date object
 jshocks$start <- as.Date(jshocks$start, format = "%m/%d/%Y")
+#\url{https://www.federalreserve.gov/econres/feds/do-actions-speak-louder-than-words-the-response-of-asset-prices-to-monetary-policy-actions-and-statements.htm}
+# FF1	FF2	FF3	FF4	MP1	ED1	ED2	ED3	ED4	TFUT02	TFUT05	TFUT10	TFUT30	SP500	SP500FUT
+# Fed Futures, Eurodollars
+# GSS database identifiers. MP1, or the first fed funds future adjusted for
+# the number of the remaining days of the month (see GSS for details) is the expected fed
+# funds rate after the meeting. ONRUN2 and ONRUN10 are the 2- and 10-year Treasury
+# ECB Working Paper Series No 2585 / August 2021 6
+
+# dataset of Gurkaynak et al. (2005) (GSS from now on) updated by Gurkaynak et al. (2022). 
+# This dataset contains the changes of financial variables in a 30-minute window around FOMC 
+# announcements (from 10 minutes before to 20 minutes after the announcement). 
+# The sample studied here contains 241 FOMC announcements from 5 July 1991 to 19 June 2019.
 
 # Merge the dataframes on the date columns
 merged_data <- rrbp %>%
@@ -309,45 +286,6 @@ quantilesT <- spread_no_na[, c("sdate","TGCR","VolumeTGCR","Percentile01_TGCR","
 quantilesB <- spread_no_na[, c("sdate","BGCR","VolumeBGCR","Percentile01_BGCR","Percentile25_BGCR","Percentile75_BGCR","Percentile99_BGCR")]
 quantilesS <- spread_no_na[, c("sdate","SOFR","VolumeSOFR","Percentile01_SOFR","Percentile25_SOFR", "Percentile75_SOFR", "Percentile99_SOFR")]
 
-
-# plot daily sample rates
-#
-# plot daily sample volumes
-#
-# plot
-# CHAT -------------------------------------
-# plot(x, y, main = "My Plot", xlab = "X-axis", ylab = "Y-axis")
-# 
-# # Access start dates
-# start_dates <- sdate[begn[k]]
-# 
-# # Convert dates to strings
-# start_dates_strings <- as.character(start_dates)
-# 
-# # Add a label with the first start date to the plot
-# text(x = x_coordinate, y = y_coordinate, labels = paste("Start Date:", start_dates_strings[1]), pos = 1)
-# 
-# # Add a label with the second start date to the plot
-# # text(x = x_coordinate, y = y_coordinate, labels = paste("Start Date:", start_dates_strings[2]), pos = 1)
-# 
-# # Repeat the above steps for the other start dates
-# 
-# # Access end dates
-# end_dates <- sdate[endn[k]]
-# 
-# # Convert dates to strings
-# end_dates_strings <- as.character(end_dates)
-# 
-# # Add a label with the first end date to the plot
-# text(x = x_coordinate, y = y_coordinate, labels = paste("End Date:", end_dates_strings[1]), pos = 3)
-# 
-# # Add a label with the second end date to the plot
-# text(x = x_coordinate, y = y_coordinate, labels = paste("End Date:", end_dates_strings[2]), pos = 3)
-# 
-# # Repeat the above steps for the other end dates
-# 
-# # Display the plot
-# CHAT -----------------------------------
 
 
 # ----------------------- Different realized volatility measures
@@ -1100,12 +1038,10 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/garaindex2024.p
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/garaindex2024.png")
 
 
-
-
 # Save the environment to an RDS file
-saveRDS(my_envvolatile, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
+#saveRDS(my_envvolatile, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envvolatile.RDS")
 
-
+# CALENDAR EFECTS ------------------------------------------------------------------
 # Set day criteria h Hamilton (1996)
 # Set your desired number of observations (N)
 N <- nrow(spread_no_na)
@@ -1508,7 +1444,21 @@ summary(simple_fit) # View model summary
 
 # EFFR with external regressors
 quantilesE_no_na<-quantilesE
+# str(quantilesE)
+# 'data.frame':	1957 obs. of  9 variables:
+#   $ sdate            : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" ...
+# $ EFFR             : num  36 36 36 36 36 36 36 37 37 37 ...
+# $ VolumeEFFR       : num  75 72 72 75 72 68 67 67 63 63 ...
+# $ TargetUe         : num  50 50 50 50 50 50 50 50 50 50 ...
+# $ TargetDe         : num  25 25 25 25 25 25 25 25 25 25 ...
+# $ Percentile01_EFFR: num  34 34 32 34 35 35 35 35 35 36 ...
+# $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+# $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+# $ Percentile99_EFFR: num  52 50 50 52 75 50 50 50 50 50 ...
+
 quantilesE_no_na[is.na(quantilesE_no_na)] <- 0
+
+# Shouldnt EFFR be in edata?
 edata<-quantilesE_no_na[,3:9]
 str(edata)
 # 'data.frame':	1957 obs. of  7 variables:
@@ -1521,8 +1471,6 @@ str(edata)
 # $ Percentile99_EFFR: num  50 45 50 52 50 50 52 75 50 50 ...
 edata$IQR<- edata$Percentile75_EFFR- edata$Percentile25_EFFR
 edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
-
-
 
 
 # Simplify the Model:
@@ -1587,7 +1535,7 @@ spec_effr = ugarchspec(variance.model=list(model="eGARCH",
 edatabbp <- select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR")
 edatabbp$policy<-"TargetUe_EFFR[2:T]"-"TargetUe_EFFR[1:T-1]"
 # Model EFFR with external data
-exte.z = zoo(x=edatabBp, order.by=rrbp$sdate)
+exte.z = zoo(x=edatabbp, order.by=rrbp$sdate)
 ext_effrbbp<-Return.calculate(exte.z, method = "log")[-1]
 egarch_effrBBP=ugarchfit(data = return.effr,external.data=matrix(ext_effrbbp),spec=spec_effr)
 residuals_effrBBP <- residuals(egarch_effrBBP)
