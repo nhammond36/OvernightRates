@@ -60,6 +60,10 @@ jshocks <- read.csv('C:/Users/Owner/Documents/Research/OvernightRates/Final data
 #FF1	FF2	FF3	FF4	MP1	ED1	ED2	ED3	ED4	TFUT02	TFUT05	TFUT10	TFUT30	SP500	SP500FUT
 #  str(jshocks)
 #'data.frame':	359 obs. of  17 variables:
+jshocks$start <- as.Date(jshocks$start, format = "%m/%d/%Y")
+
+# Check the result
+str(merged_data)
 # GET DATA ---------------------------------------------------
 # GET FOMC DATA
 filepath<-"C:/Users/Owner/Documents/Research/overnightRates/Final data file
@@ -143,6 +147,12 @@ str(rrbp)
 secured <-  spread_no_na[, c("sdate","TGCR","BGCR","SOFR")]
 str(secured)
 
+merged_data <- rrbp %>%
+  left_join(jshocks, by = c("sdate" = "start"))
+# Assuming the first 6 columns are from rrbp, and the rest are from jshocks
+merged_data[is.na(merged_data)] <- 0
+#str(merged_data)
+#'data.frame':	1957 obs. of  21 variables:
 
 # vold daily volumes 
 vold <- spread_no_na[, c("sdate","VolumeEFFR", "VolumeOBFR", "VolumeTGCR", "VolumeBGCR", "VolumeSOFR" )]
@@ -437,6 +447,13 @@ rhv1<- rrbp10[1:T-1,]
 
 
 # Run olsgmm
+# Drop the 'sdate' column using subset function
+lhv <- subset(lhv, select = -sdate)
+rhv1 <- subset(rhv1, select = -sdate)
+# or with dplyr # Drop the 'sdate' column using dplyr
+lhv <- lhv %>% select(-sdate)
+
+
 rhv<- cbind(rhv1, ones_v) # Add a column of ones
 nrow(lhv)
 nrow(rhv)
@@ -450,12 +467,55 @@ print(result[[2]]) # sebv
 print(result[[4]]) # R2adj
 print(result[[5]]) # v covariance
 print(result[[6]]) # Ftest
-bvtablek1<-xtable(result[[1]])
-sebvtablek1<-xtable(result[[2]])
+
+beta<-result[1]
+se<-result[2]
+ft<-result[6]
+betasample<-xtable(result[[1]],caption = "Beta sample rates 3/4/2016 to 12/14/2023", label="tab:samplebeta", caption.placement="bottom", comment = FALSE)
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+
+sesample<-xtable(result[[2]],caption = "Std error sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+
+#Ftest Pvalue df
+fsample<-xtable(result[[6]],caption = "F test sample rates 3/4/2016 to 12/14/2023", label="tab:samplef", caption.placement="bottom", comment = FALSE)
+rownames(result[[6]]) <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames(result[[6]]) <- c("F", "df", "P value")
+fsample <- xtable(result[[6]], caption = "F test sample rates 3/4/2016 to 12/14/2023", 
+                  label = "tab:samplef", caption.placement = "bottom", comment = FALSE)
+
+covsample<-xtable(result[[5]],caption = "Covariance sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+
+
+
 R2adjtablek1<-xtable(result[[4]])
 vtablek1<-xtable(result[[5]])
 Ftesttablek1<-xtable(result[[6]])
 rrbpk1table <- cbind(bvtablek1, sebvtablek1)
+
+betas_sample<-xtable(result[[1]])
+se_sample<-xtable(result[[2]])
+rownames(se_sample) <- rownames(betas_sample)
+colnames(se_sample) <- colnames(betas_sample)
+samplevar <- rbind(betas_sample, se_sample)
+
+
+rownames(samplevar) <- c(
+  paste0(rownames(betas_sample), "_beta"),
+  paste0(rownames(se_sample), "_se")
+  
+  
+R2adjtablek2<-xtable(result[[4]])
+vtablek2<-xtable(result[[5]])
+Ftesttablek2<-xtable(result[[6]])
+rrbpk2table <- cbind(bvtablek2, sebvtablek2)
+
+
+#-----------------------------------------------------------
 
 bvtablek2<-xtable(result[[1]])
 sebvtablek2<-xtable(result[[2]])
