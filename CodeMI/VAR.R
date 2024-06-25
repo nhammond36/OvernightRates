@@ -24,7 +24,7 @@ library(viridis)
 #library(Rfast)
 library(tidyr)
 library(dplyr)
-
+library(jtools)
 # Render the R Markdown document
 #rmarkdown::render("C:/Users/Owner/Documents/Research/MonetaryPolicy/MPResults/LaTeX/ONrates11292023b.Rmd",envir= my_envmp)
 #rmarkdown::render("C:/Users/Owner/Documents/Research/OvernightRates/ONrates03072024v3.Rmd",envir= my_envmp)
@@ -468,23 +468,28 @@ print(result[[4]]) # R2adj
 print(result[[5]]) # v covariance
 print(result[[6]]) # Ftest
 
-beta<-result[1]
-se<-result[2]
-ft<-result[6]
+beta<-as.data.frame(result[[1]])
+se<-as.data.frame(result[[2]])
+ft<-as.data.frame(result[[6]])
+r2adj<-as.data.frame(result[[4]])
+cov<-as.data.frame(result[[5]])
+covsample<-cov[1:5,16:20]
+
 betasample<-xtable(result[[1]],caption = "Beta sample rates 3/4/2016 to 12/14/2023", label="tab:samplebeta", caption.placement="bottom", comment = FALSE)
+betasample2<-xtable(beta,caption = "Beta sample rates 3/4/2016 to 12/14/2023", label="tab:samplebeta", caption.placement="bottom", comment = FALSE)
 rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 
 sesample<-xtable(result[[2]],caption = "Std error sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
+sesample2<-xtable(se,caption = "Std error sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
 rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 
 #Ftest Pvalue df
 fsample<-xtable(result[[6]],caption = "F test sample rates 3/4/2016 to 12/14/2023", label="tab:samplef", caption.placement="bottom", comment = FALSE)
+fsample2<-xtable(ft,caption = "F test sample rates 3/4/2016 to 12/14/2023", label="tab:samplef", caption.placement="bottom", comment = FALSE)
 rownames(result[[6]]) <- c("EFFR", "TGCR", "BGCR", "SOFR")
 colnames(result[[6]]) <- c("F", "df", "P value")
-fsample <- xtable(result[[6]], caption = "F test sample rates 3/4/2016 to 12/14/2023", 
-                  label = "tab:samplef", caption.placement = "bottom", comment = FALSE)
 
 covsample<-xtable(result[[5]],caption = "Covariance sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
 rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")

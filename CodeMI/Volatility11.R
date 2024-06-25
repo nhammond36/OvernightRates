@@ -143,6 +143,7 @@ jshocks$start <- as.Date(jshocks$start, format = "%m/%d/%Y")
 # funds rate after the meeting. ONRUN2 and ONRUN10 are the 2- and 10-year Treasury
 # ECB Working Paper Series No 2585 / August 2021 6
 
+
 # dataset of Gurkaynak et al. (2005) (GSS from now on) updated by Gurkaynak et al. (2022). 
 # This dataset contains the changes of financial variables in a 30-minute window around FOMC 
 # announcements (from 10 minutes before to 20 minutes after the announcement). 
@@ -1556,8 +1557,8 @@ spec_effr = ugarchspec(variance.model=list(model="eGARCH",
 egarch_effrsimple=ugarchfit(data = return.effr,spec=spec_effr)
 residuals_effrsimple <- residuals(egarch_effrsimple)
 plot(residuals_effrsimple)
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_simple.pdf")
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_simple.png")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_effr_simple.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_effr_simple.png")
 
 # *---------------------------------*
 #   *          GARCH Model Fit        *
@@ -1666,23 +1667,42 @@ rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
 return.effr<-Return.calculate(rrbp.z, method = "log")[-1]
 
 edata <- quantilesE
-#select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR","IQR","range")
+edata$iqr<-quantilesE$Percentile75_EFFR-quantilesE$Percentile25_EFFR
+edata$range<-quantilesE$Percentile99_EFFR-quantilesE$Percentile01_EFFR
+edata_1<-select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR","IQR","range")
 str(edata)
 spec_effr = ugarchspec(variance.model=list(model="eGARCH",
                                            garchOrder=c(1,1)),
                        mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
-# Model EFFR with external data
+# #MODEL 1 Model EFFR with external data
 exte.z = zoo(x=edata, order.by=rrbp$sdate)
 ext_effr<-Return.calculate(exte.z, method = "log")[-1]
 
 #fit EGARCH model
 egarch_effrsimple=ugarchfit(data = return.effr,external.=matrix(ext_effr),spec=spec_effr)
-residuals_effr <- residuals(egarch_effr)
+residuals_effr <- residuals(egarch_effrsimple)
 plot(residuals_effr)
 ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_per.pdf")
 ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_per.png")
 
+edata2 <- subset(edata, select = c(VolumeEFFR,TargetUe,TargetDe, iqr, range))
+edata2 <- subset(edata, select = c(VolumeEFFR, iqr, range))
+#edata2 <- edata[, c("VolumeEFFR", "TargetUe", "TargetDe", "iqr", "range")]
 
+
+#MODEL 2----------------------------------
+edata2.z <- zoo(edata2, order.by = edata$sdate)
+
+# Combine edata2 and return.effr using their common index
+ratesplus <- merge(edata2.z, return.effr, all = FALSE)
+
+# Convert the combined zoo object back to a data frame, if needed
+ratesplus_df <- data.frame(date = index(ratesplus), coredata(ratesplus))
+                           
+                           
+egarch_effrv2<-ugarchfit(data = ratesplus_df,external.=matrix(ext_effr),spec=spec_effr)
+residuals_effr <- residuals(egarch_effrsimple)
+plot(residuals_effr)
 # model <- arima(your_time_series, order = c(0, 0, 0))
 # The armaOrder parameter specifies the autoregressive (AR) and moving average (MA) 
 # components of an ARMA (AutoRegressive Moving Average) model.
@@ -1706,7 +1726,7 @@ ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch
 # plot(residuals)
 # Box.test(residuals, lag = 20, type = "Ljung-Box")
 
-
+# MODEL Bertola, Prati
 
 # OTHER RATES ----------------------------------------------------
 # TGCR
