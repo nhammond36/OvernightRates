@@ -2957,48 +2957,190 @@ Is there a relationship to policy iniertia?
 -->
 
 # Methodology
-I plan to explore methods proposed by Piazzesi, Bezoni et al and Jarocinsk,
+I plan to explore methods proposed by Piazzesi, Bezoni et al and Jarocinski,
 
-I replicated Bertola et EGARCH with little success but will continue to find a first estimate for comparison with other methods.
 
-Initial VARS revealed the near mean revision of reference rates, over tests of lagged rates 1, 2, 5, or 10 days. MOney market rates visually adapted to the FFR.  But I made no formal investigation.
+\emph{VAR of daily rates EFFR, TGCR, BGCR, SOFR} The EFFR at a daily frequency is mean reverting, but has small influence on other rates with coefficients around 0.14. The money market rates load around 2 on the EFFR, the TGCR positively 2.1, the BGCR a negative 2.02.  They load on each other and SOFR, again TGCR positively, BGCR negatively. SOFR loads a small -.08 on the EFFR, but positively on the money market rates.
 
-(Table (\@ref(tab:samplevar))
+(Table (\@ref(tab:samplebeta))
+```{r,samplebeta,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+beta_data <- matrix(c(
+  1.00182555, 0.1409165, 0.1409992, 0.1399591,
+  2.10310984, 1.7925774, 1.6257807, 1.1879627,
+  -2.02027651, -1.7704494, -1.6090021, -1.9716220,
+  -0.08315791, 0.8399083, 0.8452791, 1.6475444,
+  0.14850094, -4.5388432, -4.5471756, -4.3906652
+), nrow = 5, byrow = TRUE)
+
+rownames(beta_data) <- c("EFFR", "TGCR", "BGCR", "SOFR", "ones_v")
+colnames(beta_data) <- c("EFFR", "TGCR", "BGCR", "SOFR")
+beta <- as.data.frame(beta_data)
+#print(beta)
+
+betasample<-xtable(beta,caption = "Beta sample rates 3/4/2016 to 12/14/2023", label="tab:samplebeta", caption.placement="bottom", comment = FALSE)
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+betasample
+#print(betasample)
+```
+
+(Table (\@ref(tab:samplese))
+```{r,samplese,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+se_data <- matrix(c(
+  0.00230737, 0.07063578, 0.0706312, 0.07104168,
+  1.68997540, 2.07038809, 2.0636295, 2.08888530,
+  1.62121041, 1.99282741, 1.9865812, 2.01114320,
+  0.12690438, 0.65372007, 0.6540618, 0.65414530,
+  0.19958811, 2.48072718, 2.4806234, 2.49107194
+), nrow = 5, byrow = TRUE)
+
+# Assigning row and column names
+rownames(se_data) <- c("EFFR", "TGCR", "BGCR", "SOFR", "ones_v")
+colnames(se_data) <- c("EFFR", "TGCR", "BGCR", "SOFR")
+se <- as.data.frame(se_data)
+#print(se)
+
+sesample<-xtable(se,caption = "Std errors sample rates 3/4/2016 to 12/14/2023", label="tab:samplese", caption.placement="bottom", comment = FALSE)
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+sesample
+#print(sesample)
+```
+
+(Table (\@ref(tab:samplef))
+```{r,samplef,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+ft_data <- matrix(c(
+805672.2,  5,  0,
+186463.2,  5,  0,
+186503.8,  5,  0,
+187120.9,  5,  0
+), nrow = 4, byrow = TRUE)
+
+rownames(ft_data) <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames(ft_data) <- c("F", "df", "P value")
+ft <- as.data.frame(ft_data)
+#print(ft)
+
+fsample<-xtable(ft,caption = "F test sample rates 3/4/2016 to 12/14/2023", label="tab:samplef", caption.placement="bottom", comment = FALSE)
+rownames(ft_data) <- c("EFFR", "TGCR", "BGCR", "SOFR")
+colnames(ft_data) <- c("F", "df", "P value")
+#ft <- as.data.frame(ft_data)
+fsample
+#print(fsample)
+```
+
+\emph{EGARCH simple model of daily rates}
+
+---------------------------------*
+*          GARCH Model Fit        *
+*---------------------------------*
+
+Conditional Variance Dynamics 	
+-----------------------------------
+GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(1,0,0)
+Distribution	: ged 
+
+Optimal Parameters
+------------------------------------
+        Estimate  Std. Error    t value Pr(>|t|)
+mu      0.000000    0.000000  -0.004848  0.99613
+ar1     0.002852    0.000272  10.465322  0.00000
+omega  -0.381938    0.019067 -20.031004  0.00000
+alpha1 -0.541177    0.103694  -5.218990  0.00000
+beta1   0.902623    0.002823 319.747033  0.00000
+gamma1  0.812176    0.064852  12.523500  0.00000
+shape   0.113474    0.000906 125.248149  0.00000
+
+Robust Standard Errors:
+        Estimate  Std. Error   t value Pr(>|t|)
+mu      0.000000    0.000039 -0.000012 0.999990
+ar1     0.002852    0.006583  0.433168 0.664893
+omega  -0.381938    0.127277 -3.000838 0.002692
+alpha1 -0.541177    0.434317 -1.246039 0.212750
+beta1   0.902623    0.019047 47.389363 0.000000
+gamma1  0.812176    0.326126  2.490372 0.012761
+shape   0.113474    0.009091 12.481586 0.000000
+
+LogLikelihood : 19029.49 
+
+Information Criteria
+------------------------------------
+                    
+Akaike       -19.450
+Bayes        -19.430
+Shibata      -19.450
+Hannan-Quinn -19.443
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+                        statistic  p-value
+Lag[1]                      3.843 0.049967
+Lag[2*(p+q)+(p+q)-1][2]     3.843 0.006071
+Lag[4*(p+q)+(p+q)-1][5]     3.884 0.244552
+d.o.f=1
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                    0.01287  0.9097
+Lag[2*(p+q)+(p+q)-1][5]   0.04599  0.9996
+Lag[4*(p+q)+(p+q)-1][9]   0.07628  1.0000
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+            Statistic Shape Scale P-Value
+ARCH Lag[3]   0.01580 0.500 2.000  0.9000
+ARCH Lag[5]   0.03956 1.440 1.667  0.9965
+ARCH Lag[7]   0.05896 2.315 1.543  0.9998
+
+Nyblom stability test
+------------------------------------
+Joint Statistic:  631.8911
+Individual Statistics:               
+mu       0.9147
+ar1     62.3972
+omega  284.4693
+alpha1   6.4841
+beta1  238.4778
+gamma1   2.7206
+shape  445.1740
+
+Asymptotic Critical Values (10% 5% 1%)
+Joint Statistic:     	 1.69 1.9 2.35
+Individual Statistic:	 0.35 0.47 0.75
+
+Sign Bias Test
+------------------------------------
+                   t-value   prob sig
+Sign Bias          0.18050 0.8568    
+Negative Sign Bias 0.09187 0.9268    
+Positive Sign Bias 0.34321 0.7315    
+Joint Effect       0.17200 0.9820    
+
+
+Adjusted Pearson Goodness-of-Fit Test:
+------------------------------------
+  group statistic p-value(g-1)
+1    20     22641            0
+2    30     34885            0
+3    40     47131            0
+4    50     59367            0
+
+
+Elapsed time : 1.776356 
+
+I will replicate Bertola et al EGARCH. 
 <!--
-```{r,samplevar,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-```{r example_chunk}
-# Display the betas matrix
-print(betas_matrix)
-```
-```
+with little success but will continue to find a first estimate for comparison with other methods.
+-->
 
-### Full Example Code
-
-Here’s how the complete code looks:
-
-#### R Script (`example.R`)
-
-```r{}
-# Example data for betas
-result <- list(
-  betas = matrix(c(
-    1.00182555, 0.1409165, 0.1409992, 0.1399591,
-    2.10310984, 1.7925774, 1.6257807, 1.1879627,
-    -2.02027651, -1.7704494, -1.6090021, -1.9716220,
-    -0.08315791, 0.8399083, 0.8452791, 1.6475444,
-    0.14850094, -4.5388432, -4.5471756, -4.3906652
-  ), nrow = 5, byrow = TRUE, dimnames = list(c("EFFR", "TGCR", "BGCR", "SOFR", "ones_v"), c("EFFR", "TGCR", "BGCR", "SOFR")))
-)
-
-# Assign the betas matrix to a variable
-betas_matrix <- result[[1]]
-```
-
-#### RMarkdown Document (`example.Rmd`)
-
+<!--
+?
 var_sample<<- xtable(bvtablek1, caption = "VAR sample rates 3/4/2016 to 12/14/2023", label="tab:samplevar", caption.placement="bottom", comment = FALSE)
 colnames(var_sample) <- categories
-```
 -->
 
 Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC  interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
@@ -3183,6 +3325,46 @@ volatility of interest rates - rises in advance of reserve
 settlement days - declines in high rate regimes - biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
 
 Although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+
+- capture mean reversion behavior
+- main patterns of volatility in the data
+
+Empirical model of Fed Funds rate
+$r_t=\mu_t + \sigma_t\nu_t$
+$\nu_t$ unit variance mean zero i.i.d error term
+
+\emph{Conditional mean} $r_t, \mu_t=E[r_t]$
+
+Include target changes level shift changes of target rates affect on interest rates:
+$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
+
+k dummy variable: before and after holidays, end of quarter, 
+$\delta$ specific to maintenance day, irrelevant
+
+\emph{Conditional variance)
+$\sigma^_t= E[(r_t-\mu_t)^2]$
+
+calendar effect $h-t$ and $z_t$ target rate as proportion of penalty rate (discount rate?)
+Other variables irrelevant to time period
+
+zt candidate: daily 2019-current 
+
+2016 through 6/19/2019 monthly INTDSRUSM193N
+6/20/2019/12/14/2023  daily DPCresit
+Primary credit is available to generally sound depository institutions at a rate set relative to the Federal Open Market Committee's (FOMC) target range for the federal funds rate. Depository institutions are not required to seek alternative sources of funds before requesting advances of primary credit. Primary credit may be used for any purpose, including financing the sale of federal funds. By making funds readily available at the primary credit rate the primary credit program complements open market operations in the implementation of monetary policy.
+Reserve Banks ordinarily do not require depository institutions to provide reasons for requesting very short-term primary credit. Rather, borrowers are asked to provide only the minimum information necessary to process a loan, usually the amount and term of the loan.
+
+This rate replaces that for adjustment credit, which was discontinued after January 8, 2003. For further information, see Board of Governor's announcement. The rate reported is that for the Federal Reserve Bank of New York.
+
+Suggested Citation:
+Board of Governors of the Federal Reserve System (US), Discount Window Primary Credit Rate [DPCREDIT], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/DPCREDIT, June 21, 2024.
+
+The EGARCH(1,1) allows for significant difference from  unconditional variance $ \omega h_t + \psi z_t$
+ARCH tests did not reveal residual conditional heteroscedacity 
+
+Variance of FF rate: $log(\sigma^2_t)-\omega h_t - \psi z_t=\lambda[og(\sigma^2_{t-1})-\omega h_{t-1} - \psi z_{t-1}]+ \alpha abs(\nu_{t-1}) = \theta \nu_{t-1} $
+
+Hypothesis time profile ofinterest rates should reflect Fed 's inclination to accommodate liquidity shocks
 -->
 
 
