@@ -1545,6 +1545,96 @@ ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch
 ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.png")
 
 
+#   resources
+# \url{https://stackoverflow.com/questions/35035857/multivariate-garch1-1-in-r}
+# \url{https://www.unstarched.net/2013/01/03/the-garch-dcc-model-and-2-stage-dccmvt-estimation/}
+# \url{https://www.unstarched.net/r-examples/rugarch/a-short-introduction-to-the-rugarch-package/}
+# 
+# Symbols math in rmarkdown \url{https://rpruim.github.io/s341/S19/from-class/MathinRmd.html}
+
+#\url{https://stackoverflow.com/questions/58354207/interpreting-coefficients-of-rugarch-package-in-r}
+# eta11 is the rotation parameter, i.e. when you do decomposition of the residuals inside the equation for the conditional variance, you can allow a shift (eta2) or/and rotation (eta1) in the news impact curve.
+# alpha1 is the ARCH(q) parameter. In your case, q is 1.
+# beta1 is the GARCH(p) parameter. In your case, p is 1.
+# Additional information:
+  
+#  You are looking at the following family of GARCH equations, collectively called fGARCH in rugarch package:
+#   \begin{align*}
+# \sigma{^\lambda}_t &= \left(\omega + \sum_{j=1}^{m}\zeta_j\nu_jt \right) +  \left(\sum_{j=1}^{q}\psi_j \alpha_j \sigma{^\lambda}_{t-j} (abs(z_{t-j}-\eda_2j)- \eda_1j(z_{t-j}-\eda_2j))^\delta \right) +  \left(\sum_{j=1}^{p}\beta_j \sigma{^\lambda}_{t-j} \right) 
+#    \\
+# a+b &= 10 
+# \end{align*}
+#   
+# \url{https://www.quantargo.com/help/r/latest/packages/rugarch/1.4-4/ugarchspec-methods}
+# Mean Model
+# mu constant
+# ar1  AR term
+# 
+# Distribution Model
+# skew: skew
+# shape: shape
+# ghlambda: lambda (for GHYP distribution)
+# 
+# power term1(shock): delta
+# 
+# Distribution Model
+# skew: skew
+# shape: shape
+# ghlambda: lambda (for GHYP distribution)
+# 
+# Variance Model (GJR, EGARCH)
+# assymetry term: gamma1
+# constant: omega
+# 
+# # full list
+# Mean Model
+# constant: mu
+# AR term: ar1
+# MA term: ma1
+# ARCH-in-mean: archm
+# exogenous regressors: mxreg1
+# arfima: arfima
+# 
+# Variance Model (common specs)
+# constant: omega
+# ARCH term: alpha1
+# GARCH term: beta1
+# Variance Model (GJR, EGARCH)
+# assymetry term: gamma1
+# 
+# exogenous regressors: vxreg1
+# 
+# Variance Model (GJR, EGARCH)
+# assymetry term: gamma1
+# 
+# Variance Model (APARCH)
+# assymetry term: gamma1
+# 
+# power term: delta
+# 
+# Variance Model (FGARCH)
+# assymetry term1 (rotation): eta11
+# assymetry term2 (shift): eta21
+# 
+# power term1(shock): delta
+# power term2(variance): lambda
+# 
+# Variance Model (csGARCH)
+# permanent component autoregressive term (rho): eta11
+# 
+# permanent component shock term (phi): eta21
+# permanent component intercept: omega
+# transitory component ARCH term: alpha1
+# transitory component GARCH term: beta1
+# 
+# The terms defined above are better explained in the vignette which provides each model's specification and exact representation. For instance, in the eGARCH model, both alpha and gamma jointly determine the assymetry, and relate to the magnitude and sign of the standardized innovations.
+
+# $t=frac{H_a-H_0}{s/n^.5)}$
+# df=n-1
+# A one tailed test is signifcant when the t is in the bottom or top alpha percent of the probability distribution
+# Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
+# If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
+#  
 
 # Simple model EFFR ---------------------------------------------
 rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
