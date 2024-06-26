@@ -2960,7 +2960,7 @@ Is there a relationship to policy iniertia?
 I plan to explore methods proposed by Piazzesi, Bezoni et al and Jarocinski,
 
 
-\emph{VAR of daily rates EFFR, TGCR, BGCR, SOFR} The EFFR at a daily frequency is mean reverting, but has small influence on other rates with coefficients around 0.14. The money market rates load around 2 on the EFFR, the TGCR positively 2.1, the BGCR a negative 2.02.  They load on each other and SOFR, again TGCR positively, BGCR negatively. SOFR loads a small -.08 on the EFFR, but positively on the money market rates.
+\emph{VAR of daily rates EFFR, TGCR, BGCR, SOFR} The Fed's policy rate, the EFFR at a daily frequency is mean reverting, but is changes little  in response to changes in money market rates TGCR, the tri party repurchase rate. and BGCR the bilateral market rate where dealers sell securities to their customers, some 0.14  basis points (bp). In response to changes in the EFFR, the money market rates change by around 2 bp, the TGCR positively 2.1 bp, the BGCR a negative 2.02 bp.  They respond to changes in own rates and SOFR -- TGCR positively, BGCR negatively. SOFR  responds very little to changes in the EFFR,  a small -.08bp, with increases under one bp with changes in the money market rates TGCR and BGCR.
 
 (Table (\@ref(tab:samplebeta))
 ```{r,samplebeta,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -2978,7 +2978,7 @@ beta <- as.data.frame(beta_data)
 #print(beta)
 
 betasample<-xtable(beta,caption = "Beta sample rates 3/4/2016 to 12/14/2023", label="tab:samplebeta", caption.placement="bottom", comment = FALSE)
-rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+rownames <- c("EFFR", "TGCR", "BGCR", "SOFR","Constant")
 colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 betasample
 #print(betasample)
@@ -3030,6 +3030,124 @@ fsample
 ```
 
 \emph{EGARCH simple model of daily rates}
+Optimal Parameters
+Nelson. By setting conditional variance equal to a constant $\omega$ plus a weighted average (with positive weights) of past squared residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
+
+Researchers beginning with Black (1976) have 
+found evidence that stock returns are negatively correlated with changes in
+ returns volatility-i.e., volatility tends to rise in response to "bad news" (excess
+ returns lower than expected) and to fall in response to "good news" (excess
+ returns higher than expected).4 GARCH models, however, assume that only the
+ magnitude and not the positivity or negativity of unanticipated excess returns
+ determines feature $\sigma^2_t$. If the distribution of $z_t$ is symmetric, the change in
+ variance tomorrow is conditionally uncorrelated with excess returns today.5In
+ (1.4)-(1.5), $\sigma^2_t$ is a function of lagged $\sigma^2_t$ and lagged $Z^2$, and so is invariant to
+ changes in the algebraic sign of the $z_t$'s-i.e., only the size, not the sign, of
+ lagged residuals determines conditional variance. This suggests that a model in
+ which $\sigma^2_t$ responds asymmetrically to positive and negative residuals might be
+ preferable for asset pricing applications.
+ 
+ 
+Another limitation of GARCH models results from the nonnegativity constraints on $\omega^*} and the k in (1.7), which are imposed to ensure that  $\sigma^2_t$. remains nonnegative for all t with probability one. These constraints imply that increasing $Z^2_t$ in any period increases $\sigma^2_{t+m}$  for all $m\geq 1$, ruling out random oscillatory behavior in the  $\sigma^2_t$ process. Furthermore, these nonnegativity constraints can create difficulties in estimating GARCH models. For example, Engle, Lilien, and Robins (1987), had to impose a linearly declining structure on the a coefficients in (1.4) to prevent some of them from becoming negative.
+
+ A third drawback of GARCH modelling concerns the interpretation of the "persistence" of shocks to conditional variance. In many studies of the time series behavior of asset volatility (e.g., Poterba and Summers (1986), French, Schwert, and Stambaugh (1987), and Engle and Bollerslev (1986a)), the central
+question has been how long shocks to conditional variance persist. If volatility shocks persist indefinitely, they may move the whole term structure of risk premia, and are therefore likely to have a significant impact on investment in long-lived capital goods (Poterba and Summers (1986)).
+
+Note.The representation (1.7) assumes that ${\sigma^2}$ is strictly stationary, so that the recursion can be carried into the infinite past.
+
+This is fGARCH not EGARCH
+ \begin{align*}
+\sigma{^\lambda}_t $= \left(\omega + \sum_{j=1}^{m}\zeta_j\nu_jt \right) +  \left(\sum_{j=1}^{q} \alpha_j \sigma{^\lambda}_{t-j} ((abs(z_{t-j}-\eta_2j)- \eta_1j(z_{t-j}-\eta_2j))^\delta \right) +  \left(\sum_{j=1}^{p}\beta_j \sigma{^\lambda}_{t-j} \right) \\
+a+b & = 10 
+\end{align*}
+
+#\url{https://stackoverflow.com/questions/58354207/interpreting-coefficients-of-rugarch-package-in-r}
+
+$\eta_1$ is the rotation parameter, i.e. when you do decomposition of the residuals inside the equation for the conditional variance, you can allow a shift ($\eta2$) or/and rotation ($\eta_1$) in the news impact curve.
+$\alpha_1$ or alpha1 is the ARCH(q) parameter. 
+$\beta_1$ or beta1 is the GARCH(p) parameter. 
+
+All significant except constant $\mu$.  Negative alpha1 and positive beta1 imply oscillatory behavior.
+
+Mean Model
+mu constant
+ar1  AR term
+
+Distribution Model
+skew: skew
+shape: shape
+ghlambda: $\lambda$  (for GHYP distribution)
+
+power term1(shock): $\delta$
+
+Distribution Model
+skew: skew
+shape: shape
+ghlambda: lambda (for GHYP distribution)
+
+Variance Model (GJR, EGARCH)
+assymetry term: $\gamma_1$
+constant: omega
+
+<!--
+$ t=frac{H_a-H_0}{s/n^.5)}$
+df=n-1
+A one tailed test is signifcant when the t is in the bottom or top alpha percent of the probability distribution
+Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
+If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
+-->
+
+(Table (\@ref(tab:garchparams))
+```{r,garchparams,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+params_data <- matrix(c(
+ 0.000000,    0.000000,  -0.004848,  0.99613,
+ 0.002852,    0.000272,  10.465322,  0.00000,
+-0.381938,    0.019067, -20.031004,  0.00000,
+-0.541177,    0.103694,  -5.218990,  0.00000,
+ 0.902623,    0.002823, 319.747033,  0.00000,
+ 0.812176,    0.064852,  12.523500,  0.00000,
+ 0.113474,    0.000906, 125.248149,  0.00000
+), nrow = 7, byrow = TRUE)
+
+rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+params <- as.data.frame(params_data)
+#print(beta)
+
+paramssample<-xtable(params, caption = "EGARCH parameters sample rates 3/4/2016 to 12/14/2023", label="tab:garchparams", caption.placement="bottom", comment = FALSE)
+rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+#rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+#colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+paramssample
+#print(paramssample)
+```
+
+(Table (\@ref(tab:garchse))
+```{r,garchse,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+garchse_data <- matrix(c(
+  0.000000,    0.000039, -0.000012, 0.999990,
+  0.002852,    0.006583,  0.433168, 0.664893,
+ -0.381938,    0.127277, -3.000838, 0.002692,
+ -0.541177,    0.434317, -1.246039, 0.212750,
+  0.902623,    0.019047, 47.389363, 0.000000,
+  0.812176,    0.326126,  2.490372, 0.012761,
+  0.113474,    0.009091, 12.481586, 0.000000
+), nrow = 7, byrow = TRUE)
+
+rownames(garchse_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+colnames(garchse_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+garchse <- as.data.frame(garchse_data)
+#print(garchse)
+
+garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
+rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+#rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+#colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+garchsesample
+#print(paramssample)
+```
 
 ---------------------------------*
 *          GARCH Model Fit        *
@@ -3040,27 +3158,6 @@ Conditional Variance Dynamics
 GARCH Model	: eGARCH(1,1)
 Mean Model	: ARFIMA(1,0,0)
 Distribution	: ged 
-
-Optimal Parameters
-------------------------------------
-        Estimate  Std. Error    t value Pr(>|t|)
-mu      0.000000    0.000000  -0.004848  0.99613
-ar1     0.002852    0.000272  10.465322  0.00000
-omega  -0.381938    0.019067 -20.031004  0.00000
-alpha1 -0.541177    0.103694  -5.218990  0.00000
-beta1   0.902623    0.002823 319.747033  0.00000
-gamma1  0.812176    0.064852  12.523500  0.00000
-shape   0.113474    0.000906 125.248149  0.00000
-
-Robust Standard Errors:
-        Estimate  Std. Error   t value Pr(>|t|)
-mu      0.000000    0.000039 -0.000012 0.999990
-ar1     0.002852    0.006583  0.433168 0.664893
-omega  -0.381938    0.127277 -3.000838 0.002692
-alpha1 -0.541177    0.434317 -1.246039 0.212750
-beta1   0.902623    0.019047 47.389363 0.000000
-gamma1  0.812176    0.326126  2.490372 0.012761
-shape   0.113474    0.009091 12.481586 0.000000
 
 LogLikelihood : 19029.49 
 
@@ -3132,9 +3229,9 @@ Adjusted Pearson Goodness-of-Fit Test:
 
 Elapsed time : 1.776356 
 
-I will replicate Bertola et al EGARCH. 
+I will replicate Bertola et al EGARCH for comparison with other methods. 
 <!--
-with little success but will continue to find a first estimate for comparison with other methods.
+with little success but will continue to find .
 -->
 
 <!--
