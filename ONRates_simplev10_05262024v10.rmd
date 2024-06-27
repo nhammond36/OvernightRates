@@ -3031,13 +3031,30 @@ fsample
 
 \emph{EGARCH simple model of daily rates}
 Optimal Parameters
-Nelson. By setting conditional variance equal to a constant $\omega$ plus a weighted average (with positive weights) of past squared residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
+Nelson (1991): By setting conditional variance equal to a constant $\omega$ plus a weighted average (with positive weights) of past squared residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
 
+In EGARCH models, $\sigma^2_t$ responds asymmetrically to positive and negative residuals thus can accommodate volatility in returns that rises in response to "bad news" (excess returns lower than expected) and falls in response to "good news" 
+
+Making $ln(\sigma^2_t)$ a linear function of time and lagged z's, ensures that $\sigma^2_t$ remains
+nonnegative,
+
+$z_t$ i.i.d. with $E(z_t) =0, Var(z_t) = 1$
+\begin{align*}
+\sigma^2_t&= \sigma^2(\xi_{t-1},\xi_{t-2}, \cdot,x_t,b,)\\
+\sigma^2_t&= \sigma^2(\sigma_{t-1}z_{t-1},\sigma_{t-2}z_{t-2}, \cdot,x_t,b)
+\end{align*}
+
+\begin{align*}
+\xi_t&=\sigma_t z_t\\
+g(z_t)&=\theta z_t + \gamma(abs(z_t) -E[z_t])
+log(\sigma^2_t)& = \alpha_t + \left(\sum_{j=1}^{\infty}\beta_j g(z_{t-j} \right) 
+\end{align*}
+<!--
 Researchers beginning with Black (1976) have 
 found evidence that stock returns are negatively correlated with changes in
  returns volatility-i.e., volatility tends to rise in response to "bad news" (excess
  returns lower than expected) and to fall in response to "good news" (excess
- returns higher than expected).4 GARCH models, however, assume that only the
+ returns higher than expected). GARCH models, however, assume that only the
  magnitude and not the positivity or negativity of unanticipated excess returns
  determines feature $\sigma^2_t$. If the distribution of $z_t$ is symmetric, the change in
  variance tomorrow is conditionally uncorrelated with excess returns today.5In
@@ -3055,6 +3072,7 @@ question has been how long shocks to conditional variance persist. If volatility
 
 Note.The representation (1.7) assumes that ${\sigma^2}$ is strictly stationary, so that the recursion can be carried into the infinite past.
 
+
 This is fGARCH not EGARCH
 \begin{align*}
 \sigma{^\lambda}_t &= \left(\omega + \sum_{j=1}^{m}\zeta_j\nu_jt \right) +  \left(\sum_{j=1}^{q} \alpha_j \sigma{^\lambda}_{t-j} ((abs(z_{t-j}-\eta_2j)- \eta_1j(z_{t-j}-\eta_2j))^\delta \right) +  \left(\sum_{j=1}^{p}\beta_j \sigma{^\lambda}_{t-j} \right) \\
@@ -3064,13 +3082,12 @@ a+b & = 10
 #\url{https://stackoverflow.com/questions/58354207/interpreting-coefficients-of-rugarch-package-in-r}
 
 $\eta_1$ is the rotation parameter, i.e. when you do decomposition of the residuals inside the equation for the conditional variance, you can allow a shift ($\eta2$) or/and rotation ($\eta_1$) in the news impact curve.
-$\alpha_1$ or alpha1 is the ARCH(q) parameter. 
-$\beta_1$ or beta1 is the GARCH(p) parameter. 
+-->
 
-All significant except constant $\mu$.  Negative alpha1 and positive beta1 imply oscillatory behavior.
+The parameters are all significant. Negative alpha1 and positive beta1 imply oscillatory behavior.
 
-Mean Model
-mu constant
+Mean Model:
+$\mu$ or mu constant
 ar1  AR term
 
 Distribution Model
@@ -3080,14 +3097,11 @@ ghlambda: $\lambda$  (for GHYP distribution)
 
 power term1(shock): $\delta$
 
-Distribution Model
-skew: skew
-shape: shape
-ghlambda: lambda (for GHYP distribution)
-
 Variance Model (GJR, EGARCH)
-assymetry term: $\gamma_1$
 constant: omega
+$\alpha_1$ or alpha1 is the ARCH(q) parameter. 
+$\beta_1$ or beta1 is the GARCH(p) parameter. 
+assymetry term: $\gamma_1$
 
 <!--
 $ t=frac{H_a-H_0}{s/n^.5)}$
@@ -3096,6 +3110,17 @@ A one tailed test is signifcant when the t is in the bottom or top alpha percent
 Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
 If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
 -->
+
+GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(1,0,0)
+Distribution	: ged 
+LogLikelihood : 19029.49 
+
+Information Criteria:
+Akaike       -19.450
+Bayes        -19.430
+Shibata      -19.450
+Hannan-Quinn -19.443
 
 (Table (\@ref(tab:garchparams))
 ```{r,garchparams,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -3149,9 +3174,10 @@ garchsesample
 #print(paramssample)
 ```
 
----------------------------------*
-*          GARCH Model Fit        *
-*---------------------------------*
+<!--
+---------------------------------
+         GARCH Model Fit        
+---------------------------------
 
 Conditional Variance Dynamics 	
 -----------------------------------
@@ -3225,14 +3251,35 @@ Adjusted Pearson Goodness-of-Fit Test:
 2    30     34885            0
 3    40     47131            0
 4    50     59367            0
-
-
-Elapsed time : 1.776356 
+-->
 
 I will replicate Bertola et al EGARCH for comparison with other methods. 
-<!--
-with little success but will continue to find .
--->
+Bertolini, Bertola, Prati () Time series methodology: 
+volatility of interest rates - rises in advance of reserve
+settlement days - declines in high rate regimes - biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
+
+Although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+
+- capture mean reversion behavior
+- main patterns of volatility in the data
+
+Empirical model of Fed Funds rate
+$r_t=\mu_t + \sigma_t\nu_t$
+$\nu_t$ unit variance mean zero i.i.d error term
+
+\emph{Conditional mean} $r_t, \mu_t=E[r_t]$
+
+Include target changes level shift changes of target rates affect on interest rates:
+$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
+
+k dummy variable: before and after holidays, end of quarter, 
+$\delta$ specific to maintenance day, irrelevant
+
+\emph{Conditional variance)
+$\sigma^2_t= E[(r_t-\mu_t)^2]$
+
+calendar effect $h_t$ and $z_t$ target rate as proportion of penalty rate (discount rate?)
+Other variables irrelevant to time period
 
 <!--
 ?
@@ -3240,6 +3287,7 @@ var_sample<<- xtable(bvtablek1, caption = "VAR sample rates 3/4/2016 to 12/14/20
 colnames(var_sample) <- categories
 -->
 
+To explore next:
 Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC  interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
 
 Both Federal Reserve and financial markets watch and depend on bond yields. Yield-based information may underlie the FOMC’s policy decisions and describes Fed policy better than Taylor rules.The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. 
@@ -3268,11 +3316,9 @@ The mean drift may be indicative of slowly evolving inflationary expectations (G
 
 Estimating the Fed's unconventional policy shocks Javorscinski ()  estimates the structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
-[Alvarez] metrics for kurtosis 
 
 <!--
-NOTES --------------------------------------------------------------------------------
-<!--
+[Alvarez] metrics for kurtosis 
 Hamilton (1996) and others have concluded that the hypothesis that the FFR follows a martingale is inconsistent with observed daily changes in the federal funds rate. (Bertolini,Bertola, Prati ,) site frictions such as  transactions costs, interbank credit limits, overdraft penalties, obstacles to intra-period arbitrage preclude the FFR from following a martingale process.
 -->
 
@@ -3410,46 +3456,6 @@ factors because the expected future path of the short rate depends on the curren
 x in (2.2), when the short rate covaries with these other factors under the risk-neutral
 measure.
 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!--
