@@ -290,7 +290,7 @@ Insert (Figure \@ref{fig: sample rates} here or later?
 3) The Federal Reserve responds to volatility in the federal funds market by adjusting the reserve
 supply to keep the federal funds rate within its target range through these repo and reverse repo operations each day
 
-   This paper focuses on action (3). By trading securities with banks and other counterparites, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. A repurchase transaction or repo is a loan secured by collateral ubject to an agreement to resell the securities at a later date .The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements. In a  repo transaction, the Desk purchases securities from a counterparty. The transaction temporarily increases the supply of reserve balances in the banking system and lower the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
+   This paper focuses on action (3). By trading securities with banks and other counterparites, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. A repurchase transaction or repo is a loan secured by collateral ubject to an agreement to resell the securities at a later date. The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements. In a  repo transaction, the Desk purchases securities from a counterparty. The transaction temporarily increases the supply of reserve balances in the banking system and lower the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
  
 
 This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. Comparing different policy regimes, we hope to elucidate the Fed's preferences for volatility in  managing the FFR within ranges set by the FOMC. How that volatility may vary under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
@@ -378,7 +378,7 @@ Alvarez metrics for kurtosis
 
 
 # Overnight reference rates and transactions
-   Daily weighted average median rates reference rates, policy and money market rates provided by the NY Federal Reserve download program  comprise the effective federal funds rate (EFFR) that tracks transactions in the federal funds market, the secured overnight funding rate (SOFR) that captures transactions in  overnight wholesale funding markets, and the money market rates - the Tri-Party General Collateral Rate (TGCR) and the  broad general collateral rate (BGCR).
+   Daily weighted average median rates reference rates, policy and money market rates provided by the NY Federal Reserve download program  comprise the effective (transaction weighted) federal funds rate (EFFR) that tracks transactions in the federal funds market, the secured overnight funding rate (SOFR) that captures transactions in  overnight wholesale funding markets, and the money market rates - the Tri-Party General Collateral Rate (TGCR) and the  broad general collateral rate (BGCR).
    
   Repurchase agreements to borrow or lend securities for cash or reserves take place in the tri-party, GCF repo, and bilateral markets. The TGCR are rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. Transactions in the tri party market are centrally cleared. The over the counter BGCR rates are the more lucrative rates in which  the U.S. central bank primary  dealers trade with their customers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities replaced LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC).
 
@@ -3038,6 +3038,76 @@ In EGARCH models, $\sigma^2_t$ responds asymmetrically to positive and negative 
 Making $ln(\sigma^2_t)$ a linear function of time and lagged z's, ensures that $\sigma^2_t$ remains
 nonnegative,
 
+
+<!= 
+Notes
+EGARCH
+Hamilton on FF
+The federal funds market is a good place to start for an understand-
+ ing of either finance or monetary policy. From the point of view of
+ finance, overnight federal funds represent the shortest-term security
+ that is actively traded and thus form the base of any term structure
+ relation
+ 
+An open-market purchase injects new  reserves into the banking system and immediately affects the terms
+at which these reserves are loaned overnight.
+there does not appear to be a consensus as to the nature of predictable changes in the federal funds rate or the economic forces that produce them
+spectacular outliers and autoregressive conditional heteroskedasticity (ARCH) effects that
+characterize these data, and apart from Campbell (1987), none offered a detailed description of how the findings could be reconciled with profit maximization by banks
+By contrast, this paper proposes a complete
+ empirical description of the time-series process that generates the
+ daily federal funds rate, simultaneously modeling the conditional
+ mean, variance, and overall shape of the probability distribution of
+ daily changes in the federal funds rate. These results are then used
+ to understand what happens to the federal funds rate when the Fed
+ makes an open-market purchase
+ 
+  These results suggest that there is little, if any, interday speculation
+ that would smooth out small fluctuations in the federal funds rate. A
+ small temporary infusion of reserves through an overnight re-
+ purchase agreement by the Fed's trading desk lowers that day's fed-
+ eral funds rate by inducing movement along a schedule that repre-
+ sents lending banks' liquidity benefit from holding excess reserves.
+ The ability of the repurchase agreement to affect the interest does
+ not depend on whether the open-market operation is anticipated in
+ advance. I conclude that transaction costs, rather than a minor institu-
+ tional detail of this particular market, lie at the heart of the liquidity
+ effect that enables the Federal Reserve to change the interest rate on
+ a daily basis
+ 
+ Time series properties
+ Most days the federal funds rate
+ changes very little: more than half the time, the federal funds rate is
+ within 10 basis points of its value on the previous day. Notwithstand-
+ ing, huge changes in the federal funds rate have been observed, the
+ extreme observation being an 800-basis-point rise on December 30,
+ 
+ Figure 2 also suggests that one needs to allow for the possibility of
+ end-of-quarter and end-of-year effects as well. Public scrutiny of
+ many enterprises is based on their balance sheets, which typically
+ represent a snapshot of an institution's assets on the last day of the
+ quarter or the last day of the year. Some institutions appear willing
+ to hold certain assets on December 30 that they are unwilling to hold
+ on December 31. 
+ 
+ At the end of the year, there is a surge in asset
+ turnover and in corporations drawing on bank lines of credit, which
+ can generate a huge demand for short-term loans of good funds
+ around that date; see Allen and Saunders (1992) for further discus-
+ sion. Again at a minimum we want to allow for increased variability
+ of the federal funds rate at the end of the quarter and possibly tempo-
+ rary departures from the martingale hypothesis on these days as well.
+ 1986
+ 
+Nelson's (1991) model of daily stock returns:
+\begin{align*}
+ log(\sigma^2_t)-\xi_t - \kappa h_t& =\sum_{j=1}^{T} \delta_j log(\sigma^2_{t-j})- \xi_{t-j} - \kappa h_{t-j} +  \alpha(abs(v_{t-1} -E[abs(v_{t-1})]+ \chi v_{t-1}))\
+\end{align*} (6)
+ 
+$\xi_t$ is the average value of $log(\sigma^2_t)$ for the first Thursday of a reserve maintenance period.
+The parameters $\delta$ and $\alpha$ capture ARCH-type persistence in the deviation of the log of the conditional variance from its unconditional expected value of $\xi_t + \kappa h_t$. The parameter $\chi$ allows increases and decreases in the federal funds rate to have asymmetric implications for future volatility.
+-->
+
 $z_t$ i.i.d. with $E(z_t) =0, Var(z_t) = 1$
 \begin{align*}
 \sigma^2_t&= \sigma^2(\xi_{t-1},\xi_{t-2}, \cdot,x_t,b,)\\
@@ -3277,6 +3347,7 @@ $\delta$ specific to maintenance day, irrelevant
 
 \emph{Conditional variance)
 $\sigma^2_t= E[(r_t-\mu_t)^2]$
+$log(\sigma^2_t) +\omega h_t +\xi z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\xi z_{t-1} ) abs(\nu_{t-1})+ \theta \nu_{t-1}
 
 calendar effect $h_t$ and $z_t$ target rate as proportion of penalty rate (discount rate?)
 Other variables irrelevant to time period
