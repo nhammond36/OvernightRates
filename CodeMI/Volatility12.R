@@ -1280,7 +1280,7 @@ sigma
     ## create random numbers where mu=1, sd=2
     set.seed(123)
   x <- rnorm(50, 1, 2 )
-  ## log likelihood function.
+  ## log likelihood function.                                            
   ## Note: 'param' is a 2-vector c(mu, sd)
   llf <- function(param) {
     mu <- param[1]
@@ -1291,7 +1291,47 @@ sigma
   ## Estimate it with mu=0, sd=1 as start values
   ml <- maxLik(llf, start = c(mu=0, sigma=1) )
   print(summary(ml))
-  ## Estimates close to c(1,2) :-)
+  ## Estimates close to c(1,2) :-) 
+#----------------------------------------
+# Hamiltonpp 34-35
+  conditional mean $\mu_t=\fi_i_{t-1}+\cdot + i_{t-p} +\beta h_t$
+  Conditional variance
+  The log likelihood for the complete sample of size T = 1,696 is then
+  begin{align*}
+  #ll&=\sum_{t=2}^{T}f(i_1i_t|i_{t-1},i_{t-2},\cdot,i_1)
+  #ll&=\sum_{t=2}^{T}(-.5 log(\sigma^2_t)+log g(\nu_t)
+  #g(\nu_t)&=density of \nu, Hamilton (7)
+  ll&=\sum_{t=2}^{T} (log(\sigma^2_t)-\Xi_t,-\kappa h_t)
+  end{align*}
+ maximized numerically with respect to the population parameters 
+ $(\fi_1,\fi_1,\cdot,\fi_p,\eda_1,\cdot,\neda_10,\beta,\xi_1,\cdot,\xi_10, \kappa,\delta_1,\cdot,\delta_t,\alpha,
+          \chi, p, \tau^2_1, \tau^2_2) subject to the constraints $\tau_2 = 1, $\tau_2>0$ and $(0 <= p && p <= 1)$
+  
+   if (0 <= p && p <= 1) {
+     print("p is within the range [0, 1]")
+   } else {
+     print("p is outside the range [0, 1]")
+   }
+  
+  # 3 MaxLik
+  ### estimate mean and variance of normal random vector
+  ## create random numbers where mu=1, sd=2
+  set.seed(123)
+  x <- rnorm(50, 1, 2 )
+  ## log likelihood function.                                            
+  ## Note: 'param' is a 2-vector c(mu, sd)
+  llf <- function(param) {
+    mu <- param[1]
+    sd <- param[2]
+    llValue <- dnorm(x, mean=mu, sd=sd, log=TRUE)
+    sum(llValue)
+  }
+  ## Estimate it with mu=0, sd=1 as start values
+  ml <- maxLik(llf, start = c(mu=0, sigma=1) )
+  print(summary(ml))
+  ## Estimates close to c(1,2) :-) 
+  
+  
 # EGARCH ----------------------------------------------------------------
 # 1) ------------------- univariate garch Older work
 simpleegarch_spec <- ugarchspec(variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
