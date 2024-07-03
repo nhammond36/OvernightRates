@@ -81,7 +81,7 @@ if (redo ==0 ) {
   
 #--------------------------------------------------
 # or redo rates data
-spread<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_1142024v3.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
+spread<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_12172023v5.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
 # Convert to numeric and replace non-numeric values with NA
 # spread$IORR <- as.numeric(as.character(spread_no_na$IORR))
 # spread$IORR[is.na(spread_no_na$IORR) | spread_no_na$IORR == "#N/A"] <- NA
@@ -90,6 +90,12 @@ spread$RRPONTSYAWARD [is.na(spread$RRPONTSYAWARD) | spread$RRPONTSYAWARD  == "#N
 print(colnames(spread))
 str(spread)
 sdate<-as.Date(spread$Date,format="%m/%d/%Y")
+
+# I added DPCREDIT, h, and st_effr
+#spread_no_na$sd_effr<-spread$sd_effr[1:1957]
+#my_envmp$spread_no_na <-spread_no_na
+#saveRDS(my_envmp, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")
+#str( my_envmp$spread_no_na)
 
 # Find the row number for the beginning and end dates of the sample: where  "3/4/2016" occurs and 12/29/2022 for the first time
 # Check which index corresponds to the specified dates
@@ -1235,7 +1241,7 @@ result_0$convergence
 
 
 # Method 2 mle
-First, define a function using function(). Second, use mle() function. We need to manually calculate the square of sigma to get the estimated variance.
+#First, define a function using function(). Second, use mle() function. We need to manually calculate the square of sigma to get the estimated variance.
 
 # input data for x and y
 Teaching_Method <- c(0,0,1,0,1,1,1,1,0,0,0,1)
@@ -1464,17 +1470,81 @@ Return.BMW<-Return.calculate(BMW.z, method = "log")[-1]
 #$log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1
 
 
+#---------------------------------
+T<-nrow(rrbt)
+z<- 1- rrbt[,1]/spread_no_na$DPCREDIT
+sdfr<-spread_no_na$sd_effr
+mu <- 0
+sigma <- 1
+nu <- rnorm(T, mean = mu, sd = sigma)
+
 rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
+databertola$h<- spread_no_na$h
+databertola$dpcredit<- spread_no_na$DPCREDIT
+databertola$effr<-return.effr
+lneffr<-log(rrbp$EFFR)
+databertola<-c(lneffr,spread_no_na$h,spread_no_na$DPCREDIT)
+
+
+# specify the mean equation
+# $r_t = \mu_t + \sigma_t \nu_t$
+# $\mu_t=r_{t-1}+\delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\ast(r{_t-1})$
+# mufr<-rbt[2:T,1]+ rbt[1:T-1,1]- rbt[2:T,1]
+# r<- mufr + sdfr*nu
+# initialize coefficients
+a0=0
+a1=0
+a2=0
+b1=0
+# initialize the conditional variance function hgar
+hgar=0
+# specify the variance equation
+$log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1
+  
+# Create AR(1)----------------------------
+  # Initialize the AR(1) process
+  log_sd_effr_squared <- log(sd_effr[1:(T-1)]^2)
+  
+  # Specify the AR(1) equation
+  ar1_process <- numeric(T-1)  # Create an empty vector to store the AR(1) process values
+  
+  # Compute the AR(1) process
+  for (t in 1:(T-1)) {
+    ar1_process[t] <- log_sd_effr_squared[t] + h[t,] + z[t]
+  }
+  
+  # Print the AR(1) process values
+  print(ar1_process)
+#-----------------------------------------  
+  
+# specify the log likelihood equation with MaxLik
+
+$garchin <-? or AR1 process
+  log(sd_effr[1:T-1]^2)+h [1:T-1,]+ z[1:T-1]<-log(sd_effr[2:T]^2)+h [2:T,]+ z[2:T]+abs(nu[2:T]) + nu[2:T]
+## log likelihood function.                                            
+## Note: 'param' is a 2-vector c(mu, sd)
+llf <- function(param) {
+  a0 <- param[1]
+  a1 <- param[2]
+  a2 <- param[3]
+  b1 <- param[4]
+  llValue <- dnorm(ar1_process, mean=mufr, sd=sd_effr, log=TRUE)
+  #llValue <- dnorm(garchin, mean=mufr, sd=sd_effr, log=TRUE)
+  sum(llValue)
+}
+## Estimate it with mu=0, sd=1 as start values
+mlffr <- maxLik(llf, start = c(mu=0, sigma=1) )
+print(summary(ml))
+## Estimates close to c(1,2) :-) 
+
+
+
 #Calculate log returns and remove first NA value
 return.effr<-Return.calculate(rrbp.z, method = "log")[-1]
 spec_effr = ugarchspec(variance.model=list(model="eGARCH",
                                            garchOrder=c(1,1)),
                        mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
-databertola$h<- spread_no_na$h
-databertola$dpcredt<- spread_no_na$DPCREDIT
-databertola$effr<-return.effr
-lneffr<-log(rrbp$EFFR)
-databertola<-c(lneffr,spread_no_na$h,spread_no_na$DPCREDIT)
+
 
 egarch_bertola=ugarchfit(data = return.effr,external.data=matrix(ext_effrbbp),spec=spec_effr)
 residuals_effrBBP <- residuals(egarch_effrBBP)
