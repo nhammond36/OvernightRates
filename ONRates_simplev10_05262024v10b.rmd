@@ -3030,6 +3030,50 @@ fsample
 ```
 
 \emph{EGARCH simple model of daily rates}
+<!--
+\url{https://www.newyorkfed.org/markets/reference-rates/additional-information-about-reference-rates#additional_reference_rate_data}
+
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/elevated-option-implied-pinterest-rate-volatility-and-downside-risks-to-economic-activity-20231222.html}
+December 22, 2023
+Cisil Sarisoy1 202-736-5606
+cisil.sarisoy@frb.gov
+Elevated Option-Implied Interest Rate Volatility and Downside Risks to Economic Activity
+\url{Option-Implied volatilities of interest rates}
+
+
+Spence Hilton FEDNY
+\url{https://www.newyorkfed.org/medialibrary/media/research/current_issues/ci11-7.pdf}
+Federal funds rate behavior is most commonly measured
+in one of two ways: the deviation of the effective funds rate
+from the target rate (or its absolute value) is widely used to
+gauge average performance of the rate over an entire day
+relative to the operating target; the intraday standard deviation
+of rates around the daily effective rate is the most comprehensive measure of rate volatility within a day.
+Both measures tend to become elevated on so-called
+high-payment-flow days—normally the first, middle, and
+final business day of each month. On these days, the flow of
+financial transactions that affect the distribution of reserves
+held at the Fed by banks is much heavier and more uncertain
+than usual. Accordingly, we examine funds rate behavior on
+high-payment-flow days and on all other days separately. To
+obtain summary statistics for this analysis, we calculate
+median values for these measures over semiannual periods.7
+References
+\url{https://cepr.org/about/people/giuseppe-bertola}
+\url{https://ideas.repec.org/e/c/ppr50.html}
+
+Seth Carpenter  Selva Demiralp p 9
+Morgan Stanley Chief Global Economist Seth Carpenter
+\url{https://finance.yahoo.com/video/why-fed-stuck-between-rock-210843575.html?fr=yhssrp_catchall&guccounter=1&guce_referrer=aHR0cHM6Ly9zZWFyY2gueWFob28uY29tL3locy9zZWFyY2g_aHNwYXJ0PXN6JmhzaW1wPXlocy0wMDImcD1TZXRoK0NhcnBlbnRlcitGZWRlcmFsK1Jlc2VydmUrQm9hcmQmdHlwZT10eXBlODAyNjAtMjg5MzAxMzImcGFyYW0xPTE2NjEzODQ0ODU&guce_referrer_sig=AQAAAM-gU-qwmbgLVD12DnhHBI6MIE0LdXOpbl-x2ORMgPd0ZgxsUNgFLV3gALNHmaZVC1x2GpJsWhkBVeFWlRNv0hI68sOg8qUM-nwql6bDmTQbw4WotjnP2jghJjeDiA61qsq1R8fc-3oLXJeL1k7U5HdyKtJCr_-kqzMs0_8da3dn}
+\url{https://www.federalreserve.gov/pubs/feds/2011/201122/201122pap.pdf}
+realized 
+Volatility in the federal funds market can be measured in different ways. In
+these results, we show the results from using the average intraday volatility over the
+preceding 30 days as a proxy for expected volatility in the near future. However, the results
+are robust to using other measures of funds rate volatility, such as realized daily standard
+deviation of the federal funds rate or the mean absolute deviation of the funds rate from the
+target over the prior 30 days (not shown).
+-->
 Optimal Parameters
 Nelson (1991): By setting conditional variance equal to a constant $\omega$ plus a weighted average (with positive weights) of past squared residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
 
@@ -3377,7 +3421,37 @@ data.frame':	1957 obs. of  12 variables:
 
 $z_t$ expresses the target rate as proportion of discount window primary credit rate (DPCredit)
 
+<!--
+My first run of BBP's model:
+ arima_params
+                   ar1              intercept   oneday_beforeholiday threeday_beforeholiday 
+           0.844456417            2.009397111            0.093360903           -0.098246819 
+   oneday_afterholiday                endyear                 Monday                 Friday 
+           0.037423414            0.195018825           -0.030454707           -0.007140097 
+                     z                  absnu                     nu 
+          -0.695365619           -0.002182032           -0.024434204 
+> spec <- ugarchspec(
++     variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
++     mean.model = list(armaOrder = c(0, 0), include.mean = FALSE),
++     distribution.model = "norm"
++ )
+> 
+> # Fit the EGARCH model on the residuals from the ARIMA model
+> fit <- ugarchfit(spec = spec, data = arima_residuals)
+> 
+> # Print the EGARCH model parameters
+> print("EGARCH Model Parameters:")
+[1] "EGARCH Model Parameters:"
+> print(coef(fit))
+     omega     alpha1      beta1     gamma1 
+-0.7213028  0.1173033  0.4522766  0.4943309 
+> 
+> # Show the summary of the EGARCH model fit
+> summary(fit)
+   Length     Class      Mode 
+        1 uGARCHfit        S4 
 
+-->
 <!--
 ?
 var_sample<<- xtable(bvtablek1, caption = "VAR sample rates 3/4/2016 to 12/14/2023", label="tab:samplevar", caption.placement="bottom", comment = FALSE)
