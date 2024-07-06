@@ -1422,7 +1422,8 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   log_sd_effr_squared <- log(sd_effr^2)
   mu <- 0
   sigma <- 1
-  nu <- rnorm(T, mean = mu, sd = sigma)
+  #nu <- rnorm(T, mean = mu, sd = sigma)
+  nu<-rt(T, df = 5)
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
@@ -1468,28 +1469,49 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   arima_params <- arima_model$coef
   arima_residuals <- residuals(arima_model)
   
-  # ------------------------------------------------
-  
-  #
-  #--
-  # see \url{https://stats.stackexchange.com/questions/84330/errors-in-optim-when-fitting-arima-model-in-r}
-  # Error in stats::optim(init[mask], armaCSS, method = optim.method, hessian = FALSE,  : 
-  #                         non-finite value supplied by optim
-  # 
-  # after adding method="CSS")
-  # Error in stats::optim(init[mask], armaCSS, method = optim.method, hessian = TRUE,  : 
-  #                         non-finite value supplied by optim
-  # Print the ARIMA model parameters
   print("ARIMA Model Parameters:")
   print(arima_params)
   
-  # Specify the EGARCH model
+  arima_params <- arima_model$coef
+  vcov_matrix <- vcov(arima_model)
+  std_errors <- sqrt(diag(vcov_matrix))
+  results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
+  
+  # Print the results
+  print(results)     
+  
+  
+  # Convert the parameter_estimates to a data frame
+  arima_params_df <- as.data.frame(results)
+  
+  # Create a table using xtable
+  arima_params_table <- xtable(arima_params_df)
+  
+  # Print the table
+  print( arima_params_table)                                 
+  
+  t.test(arima_params, y = NULL,
+         alternative = c("two.sided", "less", "greater"),
+         mu = 0, paired = FALSE, var.equal = FALSE,
+         conf.level = 0.95)
+  
+  # One Sample t-test
+  # data:  arima_params
+  # t = 1.0425, df = 10, p-value = 0.3217
+  # alternative hypothesis: true mean is not equal to 0
+  # 95 percent confidence interval:
+  #   -0.2472958  0.6821528
+  # sample estimates:
+  #   mean of x 
+  # 0.2174285 
+  
+  # Specify the EGARCH model --------------------------------------
   spec <- ugarchspec(
     variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
     mean.model = list(armaOrder = c(0, 0), include.mean = FALSE),
-    distribution.model = "norm"
+    distribution.model = "std" 
   )
-  
+  #"norm"
   # Fit the EGARCH model on the residuals from the ARIMA model
   fit <- ugarchfit(spec = spec, data = arima_residuals)
   
@@ -1497,126 +1519,33 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   print("EGARCH Model Parameters:")
   print(coef(fit))
   
-  # Show the summary of the EGARCH model fit
-  summary(fit)
+  coefficients <- coef(fit)
   
-#-----------------------------------------------------  
-
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.pdf")
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.png")
-
-
-
-# -----------------------------
-
-# OLD ---------------------------------------------------------
-#--------------------------
-
-
-# What model was this
-#fit EGARCH model
-edatabbp <- select(edata, "VolumeEFFR" ,"TargetUe_EFFR","TargetDe_EFFR")
-edatabbp$policy<-"TargetUe_EFFR[2:T]"-"TargetUe_EFFR[1:T-1]"
-# Model EFFR with external data
-exte.z = zoo(x=edatabbp, order.by=rrbp$sdate)
-ext_effrbbp<-Return.calculate(exte.z, method = "log")[-1]
-egarch_effrBBP=ugarchfit(data = return.effr,external.data=matrix(ext_effrbbp),spec=spec_effr)
-residuals_effrBBP <- residuals(egarch_effrBBP)
-plot(residuals_effrBBP)
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.pdf")
-ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/egarch_effr_BBP.png")
-
-
-#   resources
-# \url{https://stackoverflow.com/questions/35035857/multivariate-garch1-1-in-r}
-# \url{https://www.unstarched.net/2013/01/03/the-garch-dcc-model-and-2-stage-dccmvt-estimation/}
-# \url{https://www.unstarched.net/r-examples/rugarch/a-short-introduction-to-the-rugarch-package/}
-# 
-# Symbols math in rmarkdown \url{https://rpruim.github.io/s341/S19/from-class/MathinRmd.html}
-
-#\url{https://stackoverflow.com/questions/58354207/interpreting-coefficients-of-rugarch-package-in-r}
-# eta11 is the rotation parameter, i.e. when you do decomposition of the residuals inside the equation for the conditional variance, you can allow a shift (eta2) or/and rotation (eta1) in the news impact curve.
-# alpha1 is the ARCH(q) parameter. In your case, q is 1.
-# beta1 is the GARCH(p) parameter. In your case, p is 1.
-# Additional information:
+  # Extract the variance-covariance matrix
+  vcov_matrix <- vcov(fit)
   
-#  You are looking at the following family of GARCH equations, collectively called fGARCH in rugarch package:
-#   \begin{align*}
-# \sigma{^\lambda}_t &= \left(\omega + \sum_{j=1}^{m}\zeta_j\nu_jt \right) +  \left(\sum_{j=1}^{q}\psi_j \alpha_j \sigma{^\lambda}_{t-j} (abs(z_{t-j}-\eda_2j)- \eda_1j(z_{t-j}-\eda_2j))^\delta \right) +  \left(\sum_{j=1}^{p}\beta_j \sigma{^\lambda}_{t-j} \right) 
-#    \\
-# a+b &= 10 
-# \end{align*}
-#   
-# \url{https://www.quantargo.com/help/r/latest/packages/rugarch/1.4-4/ugarchspec-methods}
-# Mean Model
-# mu constant
-# ar1  AR term
-# 
-# Distribution Model
-# skew: skew
-# shape: shape
-# ghlambda: lambda (for GHYP distribution)
-# 
-# power term1(shock): delta
-# 
-# Distribution Model
-# skew: skew
-# shape: shape
-# ghlambda: lambda (for GHYP distribution)
-# 
-# Variance Model (GJR, EGARCH)
-# assymetry term: gamma1
-# constant: omega
-# 
-# # full list
-# Mean Model
-# constant: mu
-# AR term: ar1
-# MA term: ma1
-# ARCH-in-mean: archm
-# exogenous regressors: mxreg1
-# arfima: arfima
-# 
-# Variance Model (common specs)
-# constant: omega
-# ARCH term: alpha1
-# GARCH term: beta1
-# Variance Model (GJR, EGARCH)
-# assymetry term: gamma1
-# 
-# exogenous regressors: vxreg1
-# 
-# Variance Model (GJR, EGARCH)
-# assymetry term: gamma1
-# 
-# Variance Model (APARCH)
-# assymetry term: gamma1
-# 
-# power term: delta
-# 
-# Variance Model (FGARCH)
-# assymetry term1 (rotation): eta11
-# assymetry term2 (shift): eta21
-# 
-# power term1(shock): delta
-# power term2(variance): lambda
-# 
-# Variance Model (csGARCH)
-# permanent component autoregressive term (rho): eta11
-# 
-# permanent component shock term (phi): eta21
-# permanent component intercept: omega
-# transitory component ARCH term: alpha1
-# transitory component GARCH term: beta1
-# 
-# The terms defined above are better explained in the vignette which provides each model's specification and exact representation. For instance, in the eGARCH model, both alpha and gamma jointly determine the assymetry, and relate to the magnitude and sign of the standardized innovations.
-
-# $t=frac{H_a-H_0}{s/n^.5)}$
-# df=n-1
-# A one tailed test is signifcant when the t is in the bottom or top alpha percent of the probability distribution
-# Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
-# If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
-#  
+  # Calculate standard errors from the diagonal of the vcov matrix
+  std_errors <- sqrt(diag(vcov_matrix))
+  
+  # Combine coefficients and standard errors into a data frame
+  results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
+  
+  # Print the results
+  print(results)
+  
+  # Convert the parameter_estimates to a data frame
+  coefgarch_df <- as.data.frame(results)
+  
+  # Create a table using xtable
+  coefgarch_table <- xtable(coefgarch_df)
+  
+  # Print the table
+  print(coefgarch_table)
+  
+  residuals_bbp <- residuals(fit)
+  plot(residuals_bbp)
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.pdf")
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.png")
 
 # Simple model EFFR ---------------------------------------------
 rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
@@ -1627,10 +1556,7 @@ spec_effr = ugarchspec(variance.model=list(model="eGARCH",
                                            garchOrder=c(1,1)),
                        mean.model=list(armaOrder=c(1,0)),distribution.model="ged")
 egarch_effrsimple=ugarchfit(data = return.effr,spec=spec_effr)
-residuals_effrsimple <- residuals(egarch_effrsimple)
-plot(residuals_effrsimple)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_effr_simple.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_effr_simple.png")
+
 
 # *---------------------------------*
 #   *          GARCH Model Fit        *
@@ -2362,46 +2288,6 @@ In this code:
   
 #   sigma2_t represents the variable for 
 # r_t and mu_t should be replaced with your actual variables representing 
-# �
-# # �
-# # r 
-# # t
-# # ​
-# # and 
-# # �
-# # �
-# # μ 
-# # t
-# # ​
-# # , respectively.
-# # This code calculates the variance 
-# # �
-# # �
-# # 2
-# # σ 
-# # t
-# # 2
-# # ​
-# # using the formula 
-# # �
-# [
-#   (
-#     �
-#     �
-#     −
-#     �
-#     �
-#   )
-#   2
-# ]
-# E[(r 
-#    t
-#    ​
-#    −μ 
-#    t
-#    ​
-# ) 
-# 2
 # ], where mean calculates the expected value by averaging the squared differences between r_t and mu_t.
                                                                                               
 #Introduce exponential Garch effects, EGARCH (Nelson 1991)
