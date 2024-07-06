@@ -1337,7 +1337,7 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
 # mufr<-rbt[2:T,1]+ rbt[1:T-1,1]- rbt[2:T,1]
 # r<- mufr + sdfr*nu
 # specify the variance equation
-$log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1}
+#$log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1}
   
 # Create AR(1)----------------------------
   # Initialize the AR(1) process
@@ -1356,11 +1356,46 @@ $log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_
 #-----------------------------------------  
   
 # --------- CHAT with external variables in the ARIMA
+  # Explanation:
+  # AR(1) Model:
+  #   
+  #   Fit using the arima function in R.
+  # The arima function uses maximum likelihood estimation (MLE) by default to determine the model parameters.
+  # The residuals from this model capture the deviations that the AR(1) model does not explain.
+  # GARCH(1,1) Model:
+  #   
+  #   Fit using the garchFit function from the fGarch package.
+  # This model is applied to the residuals from the AR(1) model.
+  # The GARCH model helps model the changing variance (volatility) of the residuals over time.
+  # This two-step process (first fitting the AR(1) model, then modeling the residuals with a GARCH model) is a common approach to handle time series data with both autoregressive and volatility clustering properties.  
+  
+``
+#   Yes, the rugarch package in R is a great choice for fitting various types of GARCH models, including EGARCH (Exponential GARCH). The rugarch package is highly flexible and offers a wide range of GARCH model specifications.
+#   
+#   Here's how you can use the rugarch package to fit an AR(1) model followed by an EGARCH model:
+# 
+# Step 1: Fit an AR(1) model using MLE
+# We'll first fit an AR(1) model to the log of the squared values of sd_effr and obtain the residuals.
+#   
+#   Step 2: Fit an EGARCH model using the residuals from the AR(1) model
+#   #   AR(1) Model:
+  
+  
+  #   
+  #   The arima function fits an AR(1) model to the log_sd_effr_squared series.
+  # We obtain the parameters and residuals from this model.
+  # EGARCH Model:
+  #   
+  #   The ugarchspec function specifies an EGARCH(1,1) model. We set armaOrder to (0, 0) and include.mean to FALSE because we are modeling the residuals, which have a zero mean by construction.
+  # The ugarchfit function fits the specified EGARCH model to the residuals from the AR(1) model.
+  # 
+  
+  
   # Load necessary libraries
   library(forecast)
   library(rugarch)
   library(stats)
-  $library(arima2)  dont need?
+  #library(arima2)  dont need?
   
   # one time correct spread_no_na ---------------------
   dummy_h <- spread_no_na$h
@@ -1381,7 +1416,8 @@ $log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_
   # Assuming h and z are known and have T-1 observations
   T <- nrow(spread_no_na)
   dummy_h<-spread_no_na$dummy_h
-  z<- 1- rrbp[,2]/(spread_no_na$DPCREDIT*100)
+  target<-.5*(spread_no_na$TargetDe+spread_no_na$TargetUe)
+  z<- 1- target/(spread_no_na$DPCREDIT*100)
   sd_effr<-spread_no_na$sd_effr*100
   log_sd_effr_squared <- log(sd_effr^2)
   mu <- 0
@@ -1393,15 +1429,48 @@ $log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_
   external_regressors <- cbind(dummy_h[,2:11], z,absnu, nu)
   #external_regressors <- cbind(dummy_h[,2:11], z)
   
-  # Ensure sdate is a Date object and use it as an index
-  #spread_no_na$sdate <- as.Date(spread_no_na$sdate, format = "%Y-%m-%d")
+  # Identify columns with all NA values
+  all_na_cols <- apply(external_regressors, 2, function(col) all(is.na(col)))
+  
+  # Remove columns with all NA values
+  external_regressors_cleaned <- external_regressors[, !all_na_cols]
+  
+  
+  # revised July 5---------------------------------
+  # Identify columns with zero variance
+  zero_variance_cols <- apply(external_regressors, 2, function(col) sd(col, na.rm = TRUE) == 0)
+  
+  # Remove columns with zero variance
+  external_regressors_cleaned <- external_regressors[, !zero_variance_cols]
+  
+  # Convert to data frame
+  external_regressors_cleaned <- as.data.frame(external_regressors_cleaned)
+  #This ensures that external_regressors_cleaned is a data frame and checks for non-finite values work correctly. 
+  #It should resolve the error and allow the code to run smoothly.
+  
+  # Ensure there are no non-finite values in the cleaned data
+  stopifnot(!any(is.na(log_sd_effr_squared)))
+  stopifnot(!any(is.infinite(log_sd_effr_squared)))
+  stopifnot(!any(is.na(external_regressors_cleaned)))
+  stopifnot(!any(is.infinite(as.matrix(external_regressors_cleaned))))
+  
+  # Recalculate correlation matrix
+  cor_matrix_cleaned <- cor(external_regressors_cleaned, use = "complete.obs")
+  print(cor_matrix_cleaned)
   
   # Create a zoo object for log_sd_effr_squared with sdate as the index
   log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
-  # Fit an ARIMA model with external regressors using MLE
-  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors,method="CSS")
+  
+  # Fit an ARIMA model with cleaned external regressors using CSS
+  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors_cleaned, method = "CSS")
+  
+  # Extract parameters and residuals
   arima_params <- arima_model$coef
   arima_residuals <- residuals(arima_model)
+  
+  # ------------------------------------------------
+  
+  #
   #--
   # see \url{https://stats.stackexchange.com/questions/84330/errors-in-optim-when-fitting-arima-model-in-r}
   # Error in stats::optim(init[mask], armaCSS, method = optim.method, hessian = FALSE,  : 
