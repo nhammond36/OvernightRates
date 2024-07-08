@@ -52,11 +52,14 @@ invisible(lapply(list.packages, require, character.only = TRUE))
 # - a repo on GitHub first. Create the repo, 
 # - then when you start a new project in RStudio, use the version control option, enter your repo URL, and you're good to go.
 
+# Survey of Market Participants SMP \url{https://www.newyorkfed.org/markets/survey_market_participants.html}
+# Survey of Primary Dealers \url{https://www.newyorkfed.org/markets/primarydealer_survey_questions}
+# Survey of Professional Forecasters \ulr{https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/survey-of-professional-forecasters}
 # --------------- READ DATA ------------------
 redo<-0 # load rate data from RDS files
 redo<-1 # redo data 
 # Nested if-else statements
-if (redo ==0 ) {
+if (redo ==0 ) {          
   # Load rate data
   my_envmp <- readRDS("C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")#Access the data frame stored in the environment
   spread_no_na <- my_envmp$spread_no_na
@@ -1188,28 +1191,131 @@ h$around_yr <- as.numeric(h$around_yr)
 h$Monday <- as.numeric(h$Monday)
 h$Friday <- as.numeric(h$Friday)
 
-# View the dataframe
-head(h)
-# head(h)
-# sdate holiday oneday_beforeholiday threeday_beforeholiday oneday_afterholiday threeday_afterholiday
-# 1 2016-03-04       0                    0                      0                   0                     0
-# 2 2016-03-07       0                    0                      0                   0                     0
-# 3 2016-03-08       0                    0                      0                   0                     0
-# 4 2016-03-09       0                    0                      0                   0                     0
-# 5 2016-03-10       0                    0                      0                   0                     0
-# 6 2016-03-11       0                    0                      0                   0                     0
-# endquarter endyear around_qtr around_yr Monday Friday
-# 1          0       0          0         0      0      1
-# 2          0       0          0         0      1      0
-# 3          0       0          0         0      0      0
-# 4          0       0          0         0      0      0
-# 5          0       0          0         0      0      0
-# 6          0       0          0         0      0      1
 
+# 'data.frame':	1957 obs. of  12 variables:
+#   $ sdate                 : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" "2016-03-09" ...
+# $ holiday               : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ oneday_beforeholiday  : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ threeday_beforeholiday: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ oneday_afterholiday   : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ threeday_afterholiday : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endquarter            : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endyear               : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ around_qtr            : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ around_yr             : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
+# $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
+
+# CUSTEM end of quarters 1-3
+eq2017q3<-which(sdate == as.Date("2017-09-29")) 
+h[eq2017q3,7]=1
+
+eq2018q1<-which(sdate == as.Date("2018-03-30")) 
+h[eq2018q1,7]=1
+
+eq2018q2<-which(sdate == as.Date("2018-06-29")) 
+h[eq2018q2,7]=1
+
+eq2018q3<-which(sdate == as.Date("2019-09-29")) 
+h[eq2019q3,7]=1
+
+eq2019q1<-which(sdate == as.Date("2019-03-19")) 
+h[eq2019q1,7]=1
+
+eq2019q2<-which(sdate == as.Date("2019-06-28")) 
+h[eq2019q2,7]=1
+
+eq2020q3<-which(sdate == as.Date("2020-09-28")) 
+h[eq2020q3,7]=1
+
+
+
+eq11<- which(sdate == as.Date("2016-03-31")) 
+h[eq11,1:8]
+
+eq2023q3<-which(sdate == as.Date("2023-09-29")) 
+h[eq2023q3,7]=1
+
+# customized end of year, end of quarter 4
+ey2016<- which(sdate == as.Date("2016-03-30")) 
+h[ey2016,1:8]
+
+ey2016<- which(sdate == as.Date("2016-03-30")) 
+h[ey2016,1:8]
+h[ey2016,7:8]=1
+
+ey2017<- which(sdate == as.Date("2017-12-29")) 
+h[ey2017,1:8]
+h[ey2017,7:8]
+
+ey2018<- which(sdate == as.Date("2018-12-31")) 
+h[ey2018,1:8]
+
+ey2019<- which(sdate == as.Date("2019-12-31")) 
+h[ey2019,1:8]
+
+ey2020<- which(sdate == as.Date("2020-12-31")) 
+h[ey2020,1:8]
+
+ey2021<- which(sdate == as.Date("2021-12-31")) 
+h[ey2021,1:8]
+
+ey2022<- which(sdate == as.Date("2022-12-30")) 
+h[ey2022,1:8]
+h[ey2022,7:8]=1
+ey2023<- which(sdate == as.Date("2023-12-14")) 
+h[ey2023,7:8]
+
+
+# Chat version 2
+# Load necessary package
+library(lubridate)
+
+# Example dataset with dates
+
+# Define the start and end dates for the seven years
+start_date <- as.Date("2016-03-04")
+end_date <- as.Date("2023-12-14")
+
+h <- data.frame(sdate = seq.Date(from = start_date, to = end_date, by = "month"))
+
+# Function to check if a date is the end of a quarter
+is_end_of_quarter <- function(date) {
+  month(date) %in% c(3, 6, 9, 12) && day(date) == days_in_month(date)
+}
+
+# Determine the first end-of-quarter date from the start_date
+if (is_end_of_quarter(start_date)) {
+  first_quarter_end <- start_date
+} else {
+  # Get the next quarter's ceiling date
+  next_quarter_date <- ceiling_date(start_date, "quarter")
+  # Rollback to the last day of the previous month
+  first_quarter_end <- rollback(next_quarter_date)
+}
+
+# Generate end-of-quarter dates for the date range
+end_quarter_dates <- seq(from = first_quarter_end, to = end_date, by = "quarter")
+
+# Check if the dates in h$sdate are end-of-quarter dates
+h$endquarter <- h$sdate %in% end_quarter_dates
+
+# str(h)
+# 'data.frame':	1957 obs. of  12 variables:
+#   $ sdate                 : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" "2016-03-09" ...
+# $ holiday               : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ oneday_beforeholiday  : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ threeday_beforeholiday: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ oneday_afterholiday   : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ threeday_afterholiday : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endquarter            : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endyear               : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ around_qtr            : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ around_yr             : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
+# $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
 
 # CHATend
-
-
   
 # EGARCH ----------------------------------------------------------------
 # 1) ------------------- univariate garch Older work
@@ -1398,12 +1504,21 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   #library(arima2)  dont need?
   
   # one time correct spread_no_na ---------------------
+  spread_no_na$h<-h
   dummy_h <- spread_no_na$h
-  dummy_h <- dummy_h[, -which(names(dummy_h) == "sdate")]  # Remove the sdate column if present
+  #dummy_h <- dummy_h[, -which(names(dummy_h) == "sdate")]  # Remove the sdate column if present
   dummy_h_matrix <- as.matrix(dummy_h)
   str(dummy_h)
   spread_no_na$dummy_h<-dummy_h
   spread_no_na$h <- NULL
+  
+  
+  # dummy_h <- spread_no_na$h
+  #  dummy_h2<-dummy_h
+  #  dummy_h2$threeday_afterholiday <-NULL
+  #  dummy_h2$around_qtr <- NULL
+  #  dummy_h2$around_yr <- NULL
+  # str( dummy_h2)
   # ------------------------------------------
   
   # Define the number of observations
@@ -1415,7 +1530,7 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   # Generate dummy variables (h) and penalty function (z)
   # Assuming h and z are known and have T-1 observations
   T <- nrow(spread_no_na)
-  dummy_h<-spread_no_na$dummy_h
+  dummy_h<-spread_no_na$h
   target<-.5*(spread_no_na$TargetDe+spread_no_na$TargetUe)
   z<- 1- target/(spread_no_na$DPCREDIT*100)
   sd_effr<-spread_no_na$sd_effr*100
@@ -1427,43 +1542,73 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
-  external_regressors <- cbind(dummy_h[,2:11], z,absnu, nu)
-  #external_regressors <- cbind(dummy_h[,2:11], z)
-  
-  # Identify columns with all NA values
-  all_na_cols <- apply(external_regressors, 2, function(col) all(is.na(col)))
-  
-  # Remove columns with all NA values
-  external_regressors_cleaned <- external_regressors[, !all_na_cols]
-  
-  
+  external_regressors <- cbind(dummy_h2[,2:ncol(dummy_h2)], z,absnu, nu)
+  # #external_regressors <- cbind(dummy_h[,2:11], z)
+  # 
+  # # Identify columns with all NA values
+  # all_na_cols <- apply(external_regressors, 2, function(col) all(is.na(col)))
+  # 
+  # # Remove columns with all NA values
+  # external_regressors_cleaned <- external_regressors[, !all_na_cols]
+  # 
+  # 
   # revised July 5---------------------------------
-  # Identify columns with zero variance
-  zero_variance_cols <- apply(external_regressors, 2, function(col) sd(col, na.rm = TRUE) == 0)
-  
-  # Remove columns with zero variance
-  external_regressors_cleaned <- external_regressors[, !zero_variance_cols]
-  
-  # Convert to data frame
-  external_regressors_cleaned <- as.data.frame(external_regressors_cleaned)
-  #This ensures that external_regressors_cleaned is a data frame and checks for non-finite values work correctly. 
-  #It should resolve the error and allow the code to run smoothly.
-  
+  # # Identify columns with zero variance
+  # zero_variance_cols <- apply(external_regressors, 2, function(col) sd(col, na.rm = TRUE) == 0)
+  # 
+  # # Remove columns with zero variance
+  # external_regressors_cleaned <- external_regressors[, !zero_variance_cols]
+  # 
+  # # Convert to data frame
+  # external_regressors_cleaned <- as.data.frame(external_regressors_cleaned)
+  # #This ensures that external_regressors_cleaned is a data frame and checks for non-finite values work correctly. 
+  # #It should resolve the error and allow the code to run smoothly.
+  # 
   # Ensure there are no non-finite values in the cleaned data
   stopifnot(!any(is.na(log_sd_effr_squared)))
   stopifnot(!any(is.infinite(log_sd_effr_squared)))
-  stopifnot(!any(is.na(external_regressors_cleaned)))
+  #stopifnot(!any(is.na(external_regressors_cleaned)))
+  stopifnot(!any(is.na(external_regressors)))
   stopifnot(!any(is.infinite(as.matrix(external_regressors_cleaned))))
   
   # Recalculate correlation matrix
-  cor_matrix_cleaned <- cor(external_regressors_cleaned, use = "complete.obs")
-  print(cor_matrix_cleaned)
+  cor_matrix<- cor(external_regressors, use = "complete.obs")
+  print(cor_matrix)
+  
+  # #cor_matrix_cleaned <- cor(external_regressors_cleaned, use = "complete.obs")
+  # #print(cor_matrix_cleaned)
+  # 
+  # external_regressors2<-external_regressors 
+  # external_regressors2[is.na( external_regressors2)] <- 0
+  # print(external_regressors2)
+  # 
+  # cor_matrix3<- cor(external_regressors2, use = "complete.obs")
+  # print(cor_matrix3)
+  # 
+  # cor_matrix2<-cor_matrix
+  # cor_matrix2[is.na(cor_matrix2)] <- 0
+  # print(cor_matrix2)
+  
+  # str(external_regressors)
+  # 'data.frame':	1957 obs. of  11 variables:
+  #   $ holiday               : num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ oneday_beforeholiday  : num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ threeday_beforeholiday: num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ oneday_afterholiday   : num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ endquarter            : num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ endyear               : num  0 0 0 0 0 0 0 0 0 0 ...
+  # $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
+  # $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
+  # $ z                     : num  0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 ...
+  # $ absnu                 : num  1.14 0.341 1.271 1.846 0.272 ...
+  # $ nu                    : num  1.14 -0.341 -1.271 1.846 0.272 ...
   
   # Create a zoo object for log_sd_effr_squared with sdate as the index
   log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
   
   # Fit an ARIMA model with cleaned external regressors using CSS
-  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors_cleaned, method = "CSS")
+  #arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors_cleaned, method = "CSS")
+  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
   
   # Extract parameters and residuals
   arima_params <- arima_model$coef
