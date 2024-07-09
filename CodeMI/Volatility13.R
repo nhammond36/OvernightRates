@@ -1061,7 +1061,8 @@ h$sdate<-sdate
 # CHAT
 h <- data.frame(matrix(0, nrow = N, ncol = 11))
 h$sdate <- sdate
-
+#sdate<-as.Date(spread$Date,format="%m/%d/%Y")
+# but really %Y-%m-%d
 # Define new column names
 new_days <- c("holiday", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday", 
               "threeday_afterholiday", "endquarter", "endyear", "around_qtr", 
@@ -1206,7 +1207,7 @@ h$Friday <- as.numeric(h$Friday)
 # $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
 # $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
 
-# CUSTEM end of quarters 1-3
+# CUSTOM end of quarters 1-3
 eq2017q3<-which(sdate == as.Date("2017-09-29")) 
 h[eq2017q3,7]=1
 
@@ -1512,12 +1513,81 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   spread_no_na$dummy_h<-dummy_h
   spread_no_na$h <- NULL
   
+  # create fomc data in h
+  # Sample data frame for fomc
+  fomc <- data.frame(
+    Date = c("14-Dec-16", "15-Mar-17", "14-Jun-17", "13-Dec-17", "21-Mar-18", "13-Jun-18", "26-Sep-18", "19-Dec-18", 
+             "31-Jul-19", "18-Sep-19", "30-Oct-19", "3-Mar-20", "15-Mar-20", "19-Mar-20", "23-Mar-20", "31-Mar-20", 
+             "29-Apr-20", "10-Jun-20", "29-Jul-20", "27-Aug-20", "16-Sep-20", "5-Nov-20", "16-Mar-22", "4-May-22", 
+             "15-Jun-22", "27-Jul-22", "21-Sep-22", "2-Nov-22", "14-Dec-22", "1-Feb-23", "22-Mar-23", "3-May-23", 
+             "14-Jun-23", "26-Jul-23", "20-Sep-23", "1-Nov-23", "13-Dec-23"),
+    From = c(0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.20, 2.00, 1.75, 1.50, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 
+             0.00, 0.00, 0.00, 0.00, 0.25, 0.75, 1.50, 2.25, 3.00, 3.75, 4.25, 4.50, 4.75, 5.00, 5.00, 5.25, 5.25, 5.25, 5.25),
+    To = c(0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.25, 2.00, 1.75, 1.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 
+           0.25, 0.25, 0.25, 0.25, 0.50, 1.00, 1.75, 2.50, 3.25, 4.00, 4.50, 4.75, 5.00, 5.25, 5.25, 5.50, 5.50, 5.50, 5.50),
+    Basis.points = c(25, 25, 25, 25, 25, 25, 25, 25, -25, 25, -25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 
+                     25, 25, 25, 25, 25, 25, 25, 25, 0, 25, 0, 0, 0),
+    Discount.rate = c(0.0125, 0.0150, 0.0175, 0.0200, 0.0225, 0.0250, 0.0275, 0.0300, 0.0275, 0.0275, 0.0275, 0.0275, 
+                      0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0050, 0.0100, 
+                      0.0175, 0.0250, 0.0325, 0.0400, 0.0450, 0.0475, 0.0500, 0.0525, 0.0525, 0.0550, 0.0550, 0.0550, 0.0550),
+    Votes = c("10–0", "9–1", "8–1", "7–2", "8–0", "8–0", "9–0", "10–0", "8–2", "7–3", "8–2", "10–0", "9–1", "", "", "", 
+              "", "", "", "unanimous", "", "", "8–1", "9–0", "8–1", "12–0", "12–0", "12–0", "12–0", "12–0", "11–0", 
+              "11–0", "11–0", "12–0", "12–0", "12–0")
+  )
+ 
+  # ------------------------------------- NEW
+  # Ensure dates are in the same format
+  fomc$Date <- as.Date(fomc$Date)
+  dummy_h2$sdate <- as.Date(dummy_h2$sdate)
   
+  # Initialize the new column with default values (e.g., 0)
+  dummy_h2$fomc <- rep(0, nrow(dummy_h2))
+  
+  # Find the matching indices
+  match_indices <- match(dummy_h2$sdate, fomc$Date)
+  
+  # Insert the Basis.points values at the matched indices
+  dummy_h2$fomc[!is.na(match_indices)] <- fomc$Basis.points[match_indices[!is.na(match_indices)]]
+  
+  # Check the resulting dataframe
+  print(dummy_h2)
+  
+  
+  # Create the dummy variable
+  # Method 1
+  # The ifelse function in R is a vectorized conditional function that takes three arguments:
+  # 1. A logical condition.
+  # 2.The value to return if the condition is TRUE.
+  # 3. The value to return if the condition is FALSE.
+  # In the code ifelse(dummy_h2$fomc == 0, 0, 1), the condition dummy_h2$fomc == 0 
+  # is checked for each element in dummy_h2$fomc. If the condition is TRUE (i.e., dummy_h2$fomc is 0), 
+  # it returns 0. Otherwise (i.e., dummy_h2$fomc is not 0), it returns 1.
+  
+  dummy_h2$fomcindex <- ifelse(dummy_h2$fomc == 0, 0, 1)
+  
+  # Check the resulting dataframe
+  print(dummy_h2)
+  
+  # Method 2
+  # Initialize the new column with default values (e.g., 0)
+  dummy_h2$fomcindex <- rep(0, nrow(dummy_h2))
+  
+  # Set the value to 1 where fomc is not equal to 0
+  dummy_h2$fomcindex[dummy_h2$fomc != 0] <- 1
+  
+  # Check the resulting dataframe
+  print(dummy_h2)
+  
+  
+  #---------------------------------------------------------
+  
+ # redo if start over
   # dummy_h <- spread_no_na$h
   #  dummy_h2<-dummy_h
   #  dummy_h2$threeday_afterholiday <-NULL
   #  dummy_h2$around_qtr <- NULL
   #  dummy_h2$around_yr <- NULL
+  #  dummy_h2$holiday <- NULL
   # str( dummy_h2)
   # ------------------------------------------
   
