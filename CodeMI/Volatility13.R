@@ -1096,11 +1096,11 @@ library(timeDate)
 # Sample data: sdate variable excluding weekends
 # sdate <- seq(as.Date("2023-01-01"), by = "day", length.out = 3000)
 # sdate <- sdate[!weekdays(sdate) %in% c("Saturday", "Sunday")]
-# sdate <- sdate[1:1957]
+# sdate <- sdate[1:T]
 
 # Define the start and end dates using sdate
 start_date <- sdate[1]
-end_date <- sdate[1957]
+end_date <- sdate[T]
 # Generate holidays for the given date range
 us_holidays <- function(start_date, end_date) {
   years <- seq(as.integer(format(start_date, "%Y")), as.integer(format(end_date, "%Y")))
@@ -1207,11 +1207,79 @@ h$Friday <- as.numeric(h$Friday)
 # $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
 # $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
 
+
+# non trading dates ----------------------------------------------------
+# Load necessary packages
+if (!require("timeDate")) install.packages("timeDate")
+#if (!require("dplyr")) install.packages("dplyr")
+
+library(timeDate)
+#library(dplyr)
+
+# Example list of public holidays (you can customize this list)
+#public_holidays <- as.Date(c("2024-01-01", "2024-12-25", "2024-07-04"))
+
+# Function to calculate non-trading days
+non_trading_days <- function(start_date, end_date, holidays) {
+  # Generate sequence of dates between start_date and end_date
+  date_seq <- seq.Date(start_date, end_date, by = "day")
+  
+  # Identify weekends
+  weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
+  
+  # Identify public holidays
+  holidays <- date_seq %in% holidays
+  
+  # Combine weekends and holidays
+  non_trading <- weekends | holidays
+  
+  # Count non-trading days
+  non_trading_count <- sum(non_trading)
+  
+  return(non_trading_count)
+}
+
+# Function to calculate non-trading days between pairs of dates---------------------------
+non_trading_days_pairs <- function(dates, holidays) {
+  n <- length(sdate)
+  non_trading_counts <- numeric(n - 1)
+  
+  for (i in 2:n) {
+    start_date <- sdate[i - 1]
+    end_date <- sdate[i]
+    
+    # Generate sequence of dates between start_date and end_date
+    date_seq <- seq.Date(start_date, end_date, by = "day")
+    
+    # Identify weekends
+    weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
+    
+    # Identify public holidays
+    holidays <- date_seq %in% holidays
+    
+    # Combine weekends and holidays
+    non_trading <- weekends | holidays
+    
+    # Count non-trading days
+    non_trading_counts[i - 1] <- sum(non_trading)
+  }
+  
+  return(non_trading_counts)
+}
+# Example usage
+#start_date <- as.Date("2024-07-01")
+#end_date <- as.Date("2024-07-15")
+public_holidays<-h$holidays
+num_non_trading_days <- non_trading_days(start_date, end_date, public_holidays)
+print(num_non_trading_days)
+date_seq <- seq.Date(start_date, end_date, by = "day")
+
 # CUSTOM end of quarters 1-3
 eq2017q3<-which(sdate == as.Date("2017-09-29")) 
 h[eq2017q3,7]=1
 
 eq2018q1<-which(sdate == as.Date("2018-03-30")) 
+
 h[eq2018q1,7]=1
 
 eq2018q2<-which(sdate == as.Date("2018-06-29")) 
@@ -1319,90 +1387,6 @@ h$endquarter <- h$sdate %in% end_quarter_dates
 # CHATend
   
 # EGARCH ----------------------------------------------------------------
-# 1) ------------------- univariate garch Older work
-simpleegarch_spec <- ugarchspec(variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
-                       mean.model = list(armaOrder = c(0, 0)),
-                       distribution.model = "norm")
-
-# Define the EGARCH model specification
- egarch_spec <- ugarchspec(
-   variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
-   mean.model = list(armaOrder = c(0, 0)),
-   distribution.model = "std"
- )
-
-## Fit the EGARCH model to your financial data
-egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
-
-simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
-summary(simple_fit) # View model summary
-
-## Fit the EGARCH model to your financial data
-# > egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
-# Warning message:
-#   In .egarchfit(spec = spec, data = data, out.sample = out.sample,  : 
-#                   ugarchfit-->warning: solver failer to converge.
-#                 > 
-#                   > simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
-#                 Error in h(simpleError(msg, call)) : 
-#                   error in evaluating the argument 'spec' in selecting a method for function 'ugarchfit': object 'simpleegarch_spec' not found
-
-# forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
-# egarch30d<-mean(forecast@forecast$sigmaFor)*sqrt(252)
-# forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
-# Error in h(simpleError(msg, call)) : 
-#   error in evaluating the argument 'fitORspec' in selecting a method for function 'ugarchforecast': object 'simple_fit' not found
-
-# see stockoverflow
-# y ~ x + I(x^2) ???
-
-
-# EFFR with external regressors
-quantilesE_no_na<-quantilesE
-# str(quantilesE)
-# 'data.frame':	1957 obs. of  9 variables:
-#   $ sdate            : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" ...
-# $ EFFR             : num  36 36 36 36 36 36 36 37 37 37 ...
-# $ VolumeEFFR       : num  75 72 72 75 72 68 67 67 63 63 ...
-# $ TargetUe         : num  50 50 50 50 50 50 50 50 50 50 ...
-# $ TargetDe         : num  25 25 25 25 25 25 25 25 25 25 ...
-# $ Percentile01_EFFR: num  34 34 32 34 35 35 35 35 35 36 ...
-# $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
-# $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
-# $ Percentile99_EFFR: num  52 50 50 52 75 50 50 50 50 50 ...
-
-quantilesE_no_na[is.na(quantilesE_no_na)] <- 0
-
-# Shouldnt EFFR be in edata?
-edata<-quantilesE_no_na[,3:9]
-str(edata)
-# 'data.frame':	1957 obs. of  7 variables:
-#   $ VolumeEFFR       : int  76 75 75 75 72 72 75 72 68 67 ...
-# $ TargetUe_EFFR    : num  50 50 50 50 50 50 50 50 50 50 ...
-# $ TargetDe_EFFR    : num  25 25 25 25 25 25 25 25 25 25 ...
-# $ Percentile01_EFFR: num  34 33 34 34 34 32 34 35 35 35 ...
-# $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
-# $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
-# $ Percentile99_EFFR: num  50 45 50 52 50 50 52 75 50 50 ...
-edata$IQR<- edata$Percentile75_EFFR- edata$Percentile25_EFFR
-edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
-
-
-# Simplify the Model:
-#   Try simplifying the model by reducing the complexity of the GARCH parameters or removing external regressors temporarily. This can help identify whether the convergence issue is related to the model complexity.
-# 
-# Check for Stationarity:
-#   Ensure that your financial time series is stationary. Non-stationary series can sometimes lead to convergence problems.
-# 
-# Consider Other Models:
-#   If GARCH continues to be problematic, consider exploring other time series models like ARIMA or more advanced models such as conditional autoregressive value at risk (CAViaR).
-# 
-# Consult Documentation and Literature:
-#   Review the documentation for the rugarch package and literature on GARCH modeling. There may be specific recommendations for handling convergence issues.
-# 
-# Remember to iterate and experiment with different approaches, and don't hesitate to consult resources like forums or academic papers for additional insights into handling convergence problems in GARCH modeling.
-
-
 # -----------------------------------------------
 #https://blog.devgenius.io/volatility-modeling-with-r-asymmetric-garch-models-85ee02f8b6e8
 # -----------------------------------------------------------------
@@ -1529,28 +1513,30 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
                      25, 25, 25, 25, 25, 25, 25, 25, 0, 25, 0, 0, 0),
     Discount.rate = c(0.0125, 0.0150, 0.0175, 0.0200, 0.0225, 0.0250, 0.0275, 0.0300, 0.0275, 0.0275, 0.0275, 0.0275, 
                       0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025, 0.0050, 0.0100, 
-                      0.0175, 0.0250, 0.0325, 0.0400, 0.0450, 0.0475, 0.0500, 0.0525, 0.0525, 0.0550, 0.0550, 0.0550, 0.0550),
-    Votes = c("10–0", "9–1", "8–1", "7–2", "8–0", "8–0", "9–0", "10–0", "8–2", "7–3", "8–2", "10–0", "9–1", "", "", "", 
-              "", "", "", "unanimous", "", "", "8–1", "9–0", "8–1", "12–0", "12–0", "12–0", "12–0", "12–0", "11–0", 
-              "11–0", "11–0", "12–0", "12–0", "12–0")
+                      0.0175, 0.0250, 0.0325, 0.0400, 0.0450, 0.0475, 0.0500, 0.0525, 0.0525, 0.0550, 0.0550, 0.0550, 0.0550)
   )
+    
+  #      Votes = c("10–0", "9–1", "8–1", "7–2", "8–0", "8–0", "9–0", "10–0", "8–2", "7–3", "8–2", "10–0", "9–1", "", "", "", 
+  #             "", "", "", "unanimous", "", "", "8–1", "9–0", "8–1", "12–0", "12–0", "12–0", "12–0", "12–0", "11–0", 
+  #             "11–0", "11–0", "12–0", "12–0", "12–0")
+  # )
  
   # ------------------------------------- NEW
   # Ensure dates are in the same format
-  fomc$Date <- as.Date(fomc$Date)
-  dummy_h2$sdate <- as.Date(dummy_h2$sdate)
+  fomc$Date <- as.Date(fomc$Date, format = "%d-%b-%y")
+  dummy_h$sdate <- as.Date(dummy_h$sdate)
   
   # Initialize the new column with default values (e.g., 0)
-  dummy_h2$fomc <- rep(0, nrow(dummy_h2))
+  dummy_h$fomc <- rep(0, nrow(dummy_h))
   
   # Find the matching indices
-  match_indices <- match(dummy_h2$sdate, fomc$Date)
+  match_indices <- match(dummy_h$sdate, fomc$Date)
   
   # Insert the Basis.points values at the matched indices
-  dummy_h2$fomc[!is.na(match_indices)] <- fomc$Basis.points[match_indices[!is.na(match_indices)]]
+  dummy_h$fomc[!is.na(match_indices)] <- fomc$Basis.points[match_indices[!is.na(match_indices)]]
   
   # Check the resulting dataframe
-  print(dummy_h2)
+  print(dummy_h)
   
   
   # Create the dummy variable
@@ -1563,44 +1549,36 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   # is checked for each element in dummy_h2$fomc. If the condition is TRUE (i.e., dummy_h2$fomc is 0), 
   # it returns 0. Otherwise (i.e., dummy_h2$fomc is not 0), it returns 1.
   
-  dummy_h2$fomcindex <- ifelse(dummy_h2$fomc == 0, 0, 1)
+  dummy_h$fomcindex <- ifelse(dummy_h$fomc == 0, 0, 1)
   
   # Check the resulting dataframe
   print(dummy_h2)
   
   # Method 2
   # Initialize the new column with default values (e.g., 0)
-  dummy_h2$fomcindex <- rep(0, nrow(dummy_h2))
+  #dummy_h$fomcindex <- rep(0, nrow(dummy_h))
   
   # Set the value to 1 where fomc is not equal to 0
-  dummy_h2$fomcindex[dummy_h2$fomc != 0] <- 1
+  #dummy_h$fomcindex[dummy_h$fomc != 0] <- 1
   
   # Check the resulting dataframe
-  print(dummy_h2)
+  #print(dummy_h)
   
-  
+  # redo if start over
+  dummy_h$around_qtr <- NULL
+  dummy_h$around_yr <- NULL
+  dummy_h$holiday <- NULL
+  str( dummy_h)
   #---------------------------------------------------------
   
- # redo if start over
-  # dummy_h <- spread_no_na$h
-  #  dummy_h2<-dummy_h
-  #  dummy_h2$threeday_afterholiday <-NULL
-  #  dummy_h2$around_qtr <- NULL
-  #  dummy_h2$around_yr <- NULL
-  #  dummy_h2$holiday <- NULL
-  # str( dummy_h2)
-  # ------------------------------------------
-  
-  # Define the number of observations
-  T <- 100  # You can change this to any number of observations you need
   
   # Generate T observations for sd_effr from a normal distribution
   set.seed(123)  # Setting seed for reproducibility
   
   # Generate dummy variables (h) and penalty function (z)
   # Assuming h and z are known and have T-1 observations
-  T <- nrow(spread_no_na)
-  dummy_h<-spread_no_na$h
+  T <- nrow(spread_no_na) #number of observations
+  #dummy_h<-spread_no_na$h
   target<-.5*(spread_no_na$TargetDe+spread_no_na$TargetUe)
   z<- 1- target/(spread_no_na$DPCREDIT*100)
   sd_effr<-spread_no_na$sd_effr*100
@@ -1611,8 +1589,46 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   nu<-rt(T, df = 5)
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
+
   
-  external_regressors <- cbind(dummy_h2[,2:ncol(dummy_h2)], z,absnu, nu)
+  # Log function for non-trading days---------------------------------
+  nontradingdays<-non_trading_counts
+  log_nontradingdays <- function(gamma, nontradingdays) {
+    return(log(1 - gamma * nontradingdays))
+  }
+  
+  # Negative log-likelihood function
+  if (!require("stats4")) install.packages("stats4")
+  library(stats4)
+ 
+
+  neg_log_likelihood <- function(gamma) {
+    if (any(1 - gamma * non_trading_counts <= 0)) {
+      return(Inf)
+    }
+    X <- log(1 - gamma * non_trading_counts)
+    model <- lm(log_sd_effr_squared[2:T] ~ X)
+    residuals <- residuals(model)
+    log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
+    return(log_likelihood)
+  }
+  
+  # Initial guess for gamma
+  gamma_start <- 0.01
+  
+  # Use optimize to find the best gamma within a reasonable range
+  result <- optimize(neg_log_likelihood, interval = c(0, 1))
+  
+  gamma_estimated <- result$minimum
+  print(gamma_estimated) # 0.6180798 0.2361138
+  
+  # Update the nt calculation with the estimated gamma
+  non_trading_counts <- c(0, non_trading_counts)
+  nt <- log(1 - gamma_estimated * non_trading_counts)
+  print(nt)
+  
+
+  external_regressors <- cbind(dummy_h[,2:ncol(dummy_h)], z,nt,absnu, nu)
   # #external_regressors <- cbind(dummy_h[,2:11], z)
   # 
   # # Identify columns with all NA values
@@ -1762,6 +1778,92 @@ edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.pdf")
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.png")
 
+  
+# OLD ----------------------------------------------------------
+  # 1) ------------------- univariate garch Older work
+  simpleegarch_spec <- ugarchspec(variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+                                  mean.model = list(armaOrder = c(0, 0)),
+                                  distribution.model = "norm")
+  
+  # Define the EGARCH model specification
+  egarch_spec <- ugarchspec(
+    variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+    mean.model = list(armaOrder = c(0, 0)),
+    distribution.model = "std"
+  )
+  
+  ## Fit the EGARCH model to your financial data
+  egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
+  
+  simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
+  summary(simple_fit) # View model summary
+  
+  ## Fit the EGARCH model to your financial data
+  # > egarch_fit <- ugarchfit(spec = egarch_spec, data = rrbp[,2])
+  # Warning message:
+  #   In .egarchfit(spec = spec, data = data, out.sample = out.sample,  : 
+  #                   ugarchfit-->warning: solver failer to converge.
+  #                 > 
+  #                   > simple_fit<-ugarchfit(spec=simpleegarch_spec,data=rrbp,solver="hybrid")
+  #                 Error in h(simpleError(msg, call)) : 
+  #                   error in evaluating the argument 'spec' in selecting a method for function 'ugarchfit': object 'simpleegarch_spec' not found
+  
+  # forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
+  # egarch30d<-mean(forecast@forecast$sigmaFor)*sqrt(252)
+  # forecast<-ugarchforecast(simple_fit,data=rrbp,n.ahead=22)
+  # Error in h(simpleError(msg, call)) : 
+  #   error in evaluating the argument 'fitORspec' in selecting a method for function 'ugarchforecast': object 'simple_fit' not found
+  
+  # see stockoverflow
+  # y ~ x + I(x^2) ???
+  
+  
+  # EFFR with external regressors
+  quantilesE_no_na<-quantilesE
+  # str(quantilesE)
+  # 'data.frame':	1957 obs. of  9 variables:
+  #   $ sdate            : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" ...
+  # $ EFFR             : num  36 36 36 36 36 36 36 37 37 37 ...
+  # $ VolumeEFFR       : num  75 72 72 75 72 68 67 67 63 63 ...
+  # $ TargetUe         : num  50 50 50 50 50 50 50 50 50 50 ...
+  # $ TargetDe         : num  25 25 25 25 25 25 25 25 25 25 ...
+  # $ Percentile01_EFFR: num  34 34 32 34 35 35 35 35 35 36 ...
+  # $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+  # $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+  # $ Percentile99_EFFR: num  52 50 50 52 75 50 50 50 50 50 ...
+  
+  quantilesE_no_na[is.na(quantilesE_no_na)] <- 0
+  
+  # Shouldnt EFFR be in edata?
+  edata<-quantilesE_no_na[,3:9]
+  str(edata)
+  # 'data.frame':	1957 obs. of  7 variables:
+  #   $ VolumeEFFR       : int  76 75 75 75 72 72 75 72 68 67 ...
+  # $ TargetUe_EFFR    : num  50 50 50 50 50 50 50 50 50 50 ...
+  # $ TargetDe_EFFR    : num  25 25 25 25 25 25 25 25 25 25 ...
+  # $ Percentile01_EFFR: num  34 33 34 34 34 32 34 35 35 35 ...
+  # $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+  # $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+  # $ Percentile99_EFFR: num  50 45 50 52 50 50 52 75 50 50 ...
+  edata$IQR<- edata$Percentile75_EFFR- edata$Percentile25_EFFR
+  edata$range<- edata$Percentile99_EFFR- edata$Percentile01_EFFR
+  
+  
+  # Simplify the Model:
+  #   Try simplifying the model by reducing the complexity of the GARCH parameters or removing external regressors temporarily. This can help identify whether the convergence issue is related to the model complexity.
+  # 
+  # Check for Stationarity:
+  #   Ensure that your financial time series is stationary. Non-stationary series can sometimes lead to convergence problems.
+  # 
+  # Consider Other Models:
+  #   If GARCH continues to be problematic, consider exploring other time series models like ARIMA or more advanced models such as conditional autoregressive value at risk (CAViaR).
+  # 
+  # Consult Documentation and Literature:
+  #   Review the documentation for the rugarch package and literature on GARCH modeling. There may be specific recommendations for handling convergence issues.
+  # 
+  # Remember to iterate and experiment with different approaches, and don't hesitate to consult resources like forums or academic papers for additional insights into handling convergence problems in GARCH modeling.
+  
+  
 # Simple model EFFR ---------------------------------------------
 rrbp.z = zoo(x=rrbp$EFFR, order.by=rrbp$sdate)
 #Calculate log returns and remove first NA value
@@ -2483,16 +2585,16 @@ str(multifit)
 # $r_t = \mu_t + \sigma_t \nu_t$
 
 \begin{align*}  
-$ \mu_t=r_{t-1}+\delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
-$ \mu_t=r_{t-1}+\Phi(r_{t-1}=r_{t-2})+ \Phi(r_{t-2}=r_{t-3}) +delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+$ \mu_t=r_{t-1}+\gamma_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+$ \mu_t=r_{t-1}+\Phi(r_{t-1}=r_{t-2})+ \Phi(r_{t-2}=r_{t-3}) +gamma_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
 \end{align*}                                                                                               
 
 #1
-mu_t <- r_t_minus_1 + delta_s_t
+mu_t <- r_t_minus_1 + gamma_s_t
 mu_t <- Kappa_prime * k_t + iota * (asterisk_r_t - as_r_t_minus_1)
 
 #2
-mu_t <- r_t_minus_1 + Phi(r_t_minus_1 == r_t_minus_2) + Phi(r_t_minus_2 == r_t_minus_3) + delta_s_t
+mu_t <- r_t_minus_1 + Phi(r_t_minus_1 == r_t_minus_2) + Phi(r_t_minus_2 == r_t_minus_3) + gamma_s_t
 mu_t <- Kappa_prime * k_t + iota * (asterisk_r_t - as_r_t_minus_1)
 
 
