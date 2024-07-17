@@ -3424,40 +3424,58 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   
   # Generate dummy variables (h) and penalty function (z)
   # Assuming h and z are known and have T-1 observations
-  T <- nrow(spread_no_na)
+  T <- nrow(spread_no_na) #number of observations
   dummy_h<-spread_no_na$dummy_h
   target<-.5*(spread_no_na$TargetDe+spread_no_na$TargetUe)
   z<- 1- target/(spread_no_na$DPCREDIT*100)
   sd_effr<-spread_no_na$sd_effr*100
   log_sd_effr_squared <- log(sd_effr^2)
-  mu <- 0
-  sigma <- 1
+  #mu <- 0
+  #sigma <- 1
   #nu <- rnorm(T, mean = mu, sd = sigma)
   nu<-rt(T, df = 5)
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
-  external_regressors <- cbind(dummy_h[,2:11], z,absnu, nu)
-  #external_regressors <- cbind(dummy_h[,2:11], z)
+ # Log function for non-trading days---------------------------------
+  nontradingdays<-non_trading_counts
+  log_nontradingdays <- function(gamma, nontradingdays) {
+    return(log(1 - gamma * nontradingdays))
+  }
   
-  # Identify columns with all NA values
-  all_na_cols <- apply(external_regressors, 2, function(col) all(is.na(col)))
+  # Negative log-likelihood function
+  if (!require("stats4")) install.packages("stats4")
+  library(stats4)
+ 
+
+  neg_log_likelihood <- function(gamma) {
+    if (any(1 - gamma * non_trading_counts <= 0)) {
+      return(Inf)
+    }
+    X <- log(1 - gamma * non_trading_counts)
+    model <- lm(log_sd_effr_squared[2:T] ~ X)
+    residuals <- residuals(model)
+    log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
+    return(log_likelihood)
+  }
   
-  # Remove columns with all NA values
-  external_regressors_cleaned <- external_regressors[, !all_na_cols]
+  # Initial guess for gamma
+  gamma_start <- 0.01
   
+  # Use optimize to find the best gamma within a reasonable range
+  result <- optimize(neg_log_likelihood, interval = c(0, 1))
   
-  # revised July 5---------------------------------
-  # Identify columns with zero variance
-  zero_variance_cols <- apply(external_regressors, 2, function(col) sd(col, na.rm = TRUE) == 0)
+  gamma_estimated <- result$minimum
+  print(gamma_estimated) # 0.6180798 0.2361138
   
-  # Remove columns with zero variance
-  external_regressors_cleaned <- external_regressors[, !zero_variance_cols]
+  # Update the nt calculation with the estimated gamma
+  non_trading_counts <- c(0, non_trading_counts)
+  nt <- log(1 - gamma_estimated * non_trading_counts)
+  print(nt)
   
-  # Convert to data frame
-  external_regressors_cleaned <- as.data.frame(external_regressors_cleaned)
-  #This ensures that external_regressors_cleaned is a data frame and checks for non-finite values work correctly. 
-  #It should resolve the error and allow the code to run smoothly.
+
+  external_regressors <- cbind(dummy_h[,2:ncol(dummy_h)], z,nt,absnu, nu)
+  
   
   # Ensure there are no non-finite values in the cleaned data
   stopifnot(!any(is.na(log_sd_effr_squared)))
@@ -3466,14 +3484,14 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   stopifnot(!any(is.infinite(as.matrix(external_regressors_cleaned))))
   
   # Recalculate correlation matrix
-  cor_matrix_cleaned <- cor(external_regressors_cleaned, use = "complete.obs")
-  print(cor_matrix_cleaned)
+  cor_matrix<- cor(external_regressors, use = "complete.obs")
+  #print(cor_matrix)
   
   # Create a zoo object for log_sd_effr_squared with sdate as the index
   log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
   
   # Fit an ARIMA model with cleaned external regressors using CSS
-  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors_cleaned, method = "CSS")
+  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
   
   # Extract parameters and residuals
   arima_params <- arima_model$coef
@@ -3487,10 +3505,8 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   vcov_matrix <- vcov(arima_model)
   std_errors <- sqrt(diag(vcov_matrix))
   results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
-  
   # Print the results
   #print(results)     
-  
   
   # Convert the parameter_estimates to a data frame
   arima_params_df <- as.data.frame(results)
