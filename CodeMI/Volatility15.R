@@ -1729,36 +1729,107 @@ print( bbp1994_params)
   arima_params_df$title <- "DailyEFFR 2016-2023"
   bbp1994_params$title <- "BBP post 1994 no FOMC"
   
-  # Combine the two dataframes
-  combined_arima <- rbind(arima_params_df, bbp1994_params)
+  # Ensure column names match
+  # Both dataframes should have exactly: "Coefficients", "StdErrors", "title"
+  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
   
-  # Reorder columns to move 'title' to the first column
-  combined_arima  <- combined_arima [, c("title", "Coefficients", "Std Errors")]
-  
-  # Print the combined dataframe
-  print(combined_arima )
-  
-  # second try-----------------------------
-  # Assuming arima_params_df and bbp1994_params are already defined
-  
+  # Add the title column if not already added
+  if (!"title" %in% colnames(arima_params_df)) {
+    arima_params_df$title <- "DailyEFFR 2016-2023"
+  }
+  if (!"title" %in% colnames(bbp1994_params)) {
+    bbp1994_params$title <- "BBP post 1994 no FOMC"
+  }
+  # try 5--------------------------------------------------------------
   # Ensure both dataframes have the same column names
-  colnames(bbp1994_params) <- colnames(arima_params_df)
-  
-  # Add a title column to each dataframe
-  arima_params_df$title <- "DailyEFFR 2016-2023"
-  bbp1994_params$title <- "BBP post 1994 no FOMC"
-  
-  # Ensure 'title' column is the last column before combining
-  arima_params_df <- arima_params_df[, c("Coefficients", "Std Errors", "title")]
-  bbp1994_params <- bbp1994_params[, c("Coefficients", "Std Errors", "title")]
-  
-  # Combine the two dataframes
+  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+
+  # Combine the dataframes for any further analysis if needed
   combined_df <- cbind(arima_params_df, bbp1994_params)
   
-  # Print the combined dataframe
+  # Print the titles and dataframes separately for clear output
+  cat("DailyEFFR 2016-2023\n")
+  print(arima_params_df)
+  cat("\nBBP post 1994 no FOMC\n")
+  print(bbp1994_params)
+  
+  # Print a separator line (optional)
+  cat("\n-----------------------\n")
+  
+  # Print the combined dataframe if needed for further analysis
+  cat("\nCombined DataFrame:\n")
   print(combined_df)
   
-  # Delete colum 3 and 6 or else fix title issue
+  # If you still need to print the combined dataframe
+  cat("\nCombined DataFrame:\n")
+  print(combined_df)
+  
+  # try 6 --------------------------------------------------
+  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+
+  
+  # Custom print function to visually align titles above columns
+  print_with_titles <- function(df1, df2, title1, title2) {
+    # Print the titles
+    cat(title1, "\t\t\t", title2, "\n")
+    
+    # Print the column names
+    cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+    
+    # Print the data row by row
+    for (i in 1:nrow(arima_params_df)) {
+      cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+    }
+  }
+  
+  # Use the custom print function
+  print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+  
+  
+  # Combine the dataframes using cbind for further analysis
+  combined_df <- cbind(arima_params_df, bbp1994_params)
+ 
+  
+  # Print the combined dataframe for any further analysis if needed
+  cat("\nCombined DataFrame:\n")
+  print(combined_df)
+  
+  # Create a table using xtable-------------------- for overnight EFFR
+  combined_arimas_table <- xtable(combined_df)
+  
+  # Tyr 7 -------------------------------------------------------------
+  # Ensure both dataframes have the same column names
+  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+  
+  # Custom print function to visually align titles above columns
+  print_with_titles <- function(df1, df2, title1, title2) {
+    # Print the titles
+    cat(title1, "\t\t\t", title2, "\n")
+    
+    # Print the column names
+    cat(paste(colnames(df1), collapse = "\t"), "\t", paste(colnames(df2), collapse = "\t"), "\n")
+    
+    # Print the data row by row
+    for (i in 1:nrow(df1)) {
+      cat(paste(df1[i, ], collapse = "\t"), "\t", paste(df2[i, ], collapse = "\t"), "\n")
+    }
+  }
+  
+  # Use the custom print function
+  print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+  
+  # Combine the dataframes using cbind for further analysis
+  combined_df <- cbind(arima_params_df, bbp1994_params)
+  
+  # Print the combined dataframe for any further analysis if needed
+  cat("\nCombined DataFrame:\n")
+  print(combined_df)
+  #-------------------------------------------
+  # Delete column 3 and 6 or else fix title issue
   str(combined_df)
   'data.frame':	15 obs. of  6 variables:
     $ Coefficients: num  0.8442 2.0144 0.1008 -0.096 0.0352 ...
@@ -1768,39 +1839,64 @@ print( bbp1994_params)
   $ StdErrors   : num  0.038 NA NA NA NA 0.181 0.331 NA NA 0.262 ...
   $ title       : chr  "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" ...
   
-  # try 3:  still get error----------------------------------------------
-  # Assuming arima_params_df and bbp1994_params are already defined
   
-  # Inspect column names
-  print(colnames(arima_params_df))
-  print(colnames(bbp1994_params))
+  # GARCH--------------------------------
+  row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
+  colnames(garch_params) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994garch_params) <- c("Coefficients", "StdErrors")
   
-  # Ensure column names match
-  # Both dataframes should have exactly: "Coefficients", "StdErrors", "title"
-  colnames(arima_params_df) <- c("Coefficients", "StdErrors", "title")
-  colnames(bbp1994_params) <- c("Coefficients", "StdErrors", "title")
+  ncoefficients <- c(
+   
+  coefficients <- c(0.06, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
+std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
+
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+
+
+
+
+# Define the text data without row labels and with modified column headers
+text_data <- "
+                  Estimate Std_Error t_Value Pr_abs_t
+                  -0.000301 0.241476 -0.001246 0.999006
+                  0.027822 0.084668 0.328600 0.742458
+                  0.655685 0.042956 15.264051 0.000000
+                  2.157099 0.763514 2.825224 0.004725
+                  2.100000 0.077000 27.272755 0.000000
+                  "
+
+# Convert the text data to a dataframe with a placeholder for the problematic column name
+garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+
+# Rename the columns to their intended names
+colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
+
+print(garch_params)
+
+# Bertolini GARCH
+ #row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
+  # Find correspondence to AR1 abs_nu  nu
   
-  # Add the title column if not already added
-  if (!"title" %in% colnames(arima_params_df)) {
-    arima_params_df$title <- "DailyEFFR 2016-2023"
-  }
-  if (!"title" %in% colnames(bbp1994_params)) {
-    bbp1994_params$title <- "BBP post 1994 no FOMC"
-  }
   
-  # Print the updated column names to verify
-  print(colnames(arima_params_df))
-  print(colnames(bbp1994_params))
+ text_databbp <- "
+  Estimate Std_Error 
+  	0.06	0.038
+  	0.718	0.069
+    0.276	0.042
+  "
+ bbp1994garch_params <- read.table(text = text_databbp, header = TRUE, check.names = FALSE)
+ # Rename the columns to their intended names
+ colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+ 
+ print(bbp1994garch_params)
   
-  # Combine the dataframes
-  combined_df <- rbind(arima_params_df, bbp1994_params)
   
-  # Print the combined dataframe
-  print(combined_df)
-  # Error in rbind(deparse.level, ...) : 
-  #   numbers of columns of arguments do not match
-  # 
+ 
   
+  # Correct data frames----------------------------
   ncol(arima_params_df) #4
   ncol(bbp1994_params)  #3
   print(colnames(arima_params_df))
@@ -1809,10 +1905,12 @@ print( bbp1994_params)
   [1] "Coefficients" "StdErrors"    "title" 
    #You can set it to NULL.
   
-  
+  # Delete columns with titles
   #Data <- Data[,-2] 
-  arima_params_df <- arima_params_df[,-4]
+  arima_params_df <- arima_params_df[,-3]
   str(arima_params_df)
+  bbp1994_params <- bbp1994_params[,-3]
+  str(bbp1994_params)
   
   # Create a table using xtable-------------------- for overnight EFFR
   arima_params_table <- xtable(arima_params_df)
