@@ -1839,62 +1839,7 @@ print( bbp1994_params)
   $ StdErrors   : num  0.038 NA NA NA NA 0.181 0.331 NA NA 0.262 ...
   $ title       : chr  "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" ...
   
-  
-  # GARCH--------------------------------
-  row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
-  colnames(garch_params) <- c("Coefficients", "StdErrors")
-  colnames(bbp1994garch_params) <- c("Coefficients", "StdErrors")
-  
-  ncoefficients <- c(
-   
-  coefficients <- c(0.06, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
-std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
 
-# Create the dataframe without row labels as a separate column
-bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
-# Create the dataframe without row labels as a separate column
-bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
-
-
-
-
-# Define the text data without row labels and with modified column headers
-text_data <- "
-                  Estimate Std_Error t_Value Pr_abs_t
-                  -0.000301 0.241476 -0.001246 0.999006
-                  0.027822 0.084668 0.328600 0.742458
-                  0.655685 0.042956 15.264051 0.000000
-                  2.157099 0.763514 2.825224 0.004725
-                  2.100000 0.077000 27.272755 0.000000
-                  "
-
-# Convert the text data to a dataframe with a placeholder for the problematic column name
-garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
-
-# Rename the columns to their intended names
-colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
-
-print(garch_params)
-
-# Bertolini GARCH
- #row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
-  # Find correspondence to AR1 abs_nu  nu
-  
-  
- text_databbp <- "
-  Estimate Std_Error 
-  	0.06	0.038
-  	0.718	0.069
-    0.276	0.042
-  "
- bbp1994garch_params <- read.table(text = text_databbp, header = TRUE, check.names = FALSE)
- # Rename the columns to their intended names
- colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
- 
- print(bbp1994garch_params)
-  
-  
- 
   
   # Correct data frames----------------------------
   ncol(arima_params_df) #4
@@ -1974,6 +1919,95 @@ print(garch_params)
   plot(residuals_bbp)
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.pdf")
   ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/egarch_bbp.png")
+  
+  
+  #joint table on garcg and bbp
+  
+  # GARCH--------------------------------
+  # Notes
+  # \url{https://vlab.stern.nyu.edu/docs/volatility/EGARCH}
+  # coefficient $\alpha_j$ captures the sign effect and $\gamma_j$ the size effect
+  # persistence effect $\sum_{j=1}{p} \beta_j$
+  # The unconditional variance and half life follow from the persistence parameter and are calculated
+  # as in Section 2.2.1.
+  # Shape?
+  
+  # V-Lab estimates all the parameters 
+  # simultaneously, by maximizing the log likelihood. The assumption that 
+  # is Gaussian does not imply the returns are Gaussian. Even though their conditional distribution is Gaussian, it can be proved that their unconditional distribution presents excess kurtosis (fat tails). In fact, assuming that the conditional distribution is Gaussian is not as restrictive as it seems: even if the true distribution is different, the so-called Quasi-Maximum Likelihood (QML) estimator is still consistent, under fairly mild regularity conditions.
+  # 
+  # Besides leptokurtic returns, the 
+  # model, as the 
+  # model, captures other stylized facts in financial time series, like volatility clustering. The volatility is more likely to be high at time 
+  # if it was also high at time 
+  # . Another way of seeing this is noting that a shock at time
+  # also impacts the variance at time 
+  # 
+  # Tsay
+
+  # versus weakness of ARCH, GARCH responds  to positive aqnd negative shocks
+  # For a log rturn r, we assume thaaat the mean equationof the porcess can be adequately described by an ARMA model. 
+  # see top page 94
+  
+  
+  row_labels <- c("omega","alpha1", "beta1", "gamma1","shape")
+  colnames(garch_params) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994garch_params) <- c("Coefficients", "StdErrors")
+  
+  ncoefficients <- c(
+   
+  coefficients <- c(0.06, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
+std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
+
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+
+          sign  alpha1 0.028 (0.085)  0.329 0.742
+persistance     beta1  0.656 (0.043) 15.264 0.000
+size            gamma1  2.157 (0.764)  2.825 0.0047
+
+
+halflife=-log(2)/log(garch_params[3,1])
+print(halflife) # 1.642238
+condvar =garch_params[1,1]/(1-garch_params[3,1])
+print(condvar) #-0.0008741995
+
+# Define the text data without row labels and with modified column header
+text_data <- "
+                  Estimate Std_Error t_Value Pr_abs_t
+                  -0.000301 0.241476 -0.001246 0.999006
+                  0.027822 0.084668 0.328600 0.742458
+                  0.655685 0.042956 15.264051 0.000000
+                  2.157099 0.763514 2.825224 0.004725
+                  2.100000 0.077000 27.272755 0.000000
+                  "
+
+# Convert the text data to a dataframe with a placeholder for the problematic column name
+garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+
+# Rename the columns to their intended names
+colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
+
+print(garch_params)
+
+# Bertolini GARCH
+ #row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
+  # Find correspondence to AR1 abs_nu  nu
+  
+  
+  text_databbp <- "
+  Estimate Std_Error 
+  	0.06	0.038
+  	0.718	0.069
+    0.276	0.042
+  "
+  bbp1994garch_params <- read.table(text = text_databbp, header = TRUE, check.names = FALSE)
+  # Rename the columns to their intended names
+  colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+  
+  print(bbp1994garch_params)
 
   
 # OLD ----------------------------------------------------------
