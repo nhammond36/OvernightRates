@@ -3526,8 +3526,6 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 # #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 # garchsesample
 #print(paramssample)
-  
-  
 ```  
 
 (Table (\@ref(tab:garch_bbp))
@@ -3587,6 +3585,120 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 residuals_bbp <- residuals(fit)
 plot(residuals_bbp)
 ```
+(Table (\@ref(tab:arima_both))
+```{r,arima_both,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+  # try 6 --------------------------------------------------
+  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+
+  
+  # Custom print function to visually align titles above columns
+  print_with_titles <- function(df1, df2, title1, title2) {
+    # Print the titles
+    cat(title1, "\t\t\t", title2, "\n")
+    
+    # Print the column names
+    cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+    
+    # Print the data row by row
+    for (i in 1:nrow(arima_params_df)) {
+      cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+    }
+  }
+  
+  # Use the custom print function
+  print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+  
+  
+  # Combine the dataframes using cbind for further analysis
+  combined_df <- cbind(arima_params_df, bbp1994_params)
+ 
+  
+  # Print the combined dataframe for any further analysis if needed
+  cat("\nCombined DataFrame:\n")
+  print(combined_df)
+  
+  # Create a table using xtable-------------------- for overnight EFFR
+     arima_both_table <- xtable(combined_df, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_both", caption.placement="bottom", comment = FALSE)
+```
+
+
+
+\emph{Findings Bertolini et al}
+The FFR rate 
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rise at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls after
+- tends to fall before holidays and rise after
+- Each non trading day raises the variance of the next trading day by 67 percent
+- positive response to penalty rate 1.240     (0.465)
+- increases on FOMC announcements days 0.783  (0.262)
+- significant EGARCH parameters: persistence in underlying volatility of liquidity shock, very fat tailed distribution of errors df of student t 2.94 significantly different than 3 $\rho=0.747$
+
+This paper:
+endquarter              0.114887391 0.142475753   vs     2.081     0.181
+endyear                 0.066116640 0.173470169          2.913     0.331
+
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+
+
+- rise end of year 0.066 (0.173)
+- rise end of quarter 0.115 (0.142)
+- rise one day before holiday
+- fall three days before holiday
+- rise one day after holiday
+- fall Friday, rise Monday -0.011, 0.005
+- falls with increases in penalty rate -.07 (0.222)
+- increases on FOMC days
+- small non trading day increase 0.062 (0.091)
+
+EGARCH
+-----------------------------------
+GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(0,0,0)
+Distribution	: std 
+
+Optimal Parameters
+------------------------------------
+        Estimate  Std. Error   t value Pr(>|t|)
+omega  -0.000301    0.241476 -0.001246 0.999006
+alpha1  0.027822    0.084668  0.328600 0.742458
+beta1   0.655685    0.042956 15.264051 0.000000
+gamma1  2.157099    0.763514  2.825224 0.004725
+shape   2.100000    0.077000 27.272755 0.000000
+
+AR1	0.06	0.038
+abs_nu	0.718	0.069
+nu	0.276	0.042
+  
+
+<!--
+ print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+-->
+
+fomcindex              -0.282124740 0.149256602        0.783     0.262
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+
 
 <!--
 
