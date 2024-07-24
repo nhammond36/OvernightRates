@@ -385,10 +385,56 @@ Alvarez metrics for kurtosis
 <!--
 <!--The overnight  bank funding rate (OBFR), similar to the EFFR, is a broad measure of U.S. dollar funding costs for U.S. based banks.
 
-DELETE?
+## Arbitrage
+
+IORR-EFFR
+Set by the Fed, the IORB rate is the return rate depository institutions can earn for holding reserves at the Federal Reserve. Meanwhile, the EFFR represents the cost of interbank borrowing and is determined by the market. The difference between these two rates present arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.
+
+Historically, the IORB has been higher than the EFFR in general. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
 The FICC trades are filtered to remove a portion of transactions considered “specials”. 
 [PLACE HERE or in rates discussion]
-FOMC policy changes in the FFR changes the distribution of the reference rates.Former scarcity, reserve requirements OMO, Under the corridor system that implements the [DATE] ample reserves, the Fed's setting of the IORB and O/NRRP which establish the the ceiling and floor of within which the Fed manages the range of the FFR. Fed temporary draining and adding reserves according to preferences for offsetting volatility in the FFR.  
+FOMC policy changes in the FFR changes the distribution of the reference rates.Former scarcity, reserve requirements OMO, Under the corridor system that implements the [DATE] ample reserves, the Fed's setting of the IORB and O/NRRP which establish the the ceiling and floor of within which the Fed manages the range of the FFR. Fed temporary draining and adding reserves according to preferences for offsetting volatility in the FFR. 
+
+
+Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC) after amendments to the International Banking Act disallowed new branches of FBOs from obtaining deposit insurance. This regulatory difference has two important implications for why FBO branches borrow in the fed funds market: First, it limits their access to deposits—the main source of domestic bank funding—making fed funds an important source of their short-term funding. Second, since they do not pay the FDIC assessment fee, most FBO branches face an effective cost of borrowing fed funds that is lower than that of domestic banks. Lower funding costs give FBO branches an advantage over their domestic counterparts in arbitraging fed funds offered at rates below the interest on reserve balances (IORB) rate, as they can effectively earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed. Furthermore, differences in regulatory requirements across jurisdictions make engaging in the arbitrage trade less costly and less capital intensive for FBO branches. Specifically, leverage ratios in foreign jurisdictions are often calculated as a period-end snapshot, as opposed to daily or weekly averages in the U.S., which allows FBO branches more flexibility to borrow between reporting dates and simply unwind their positions on month-end or quarter-end dates to maintain higher reported leverage ratios
+\url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
+SOFR
+The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market, where investors offer banks overnight loans backed by their bond assets. SOFR replaced the London Interbank Offered Rate (LIBOR).
+
+Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.
+
+SOFR volumes top $2 trillion for the first time after quarter-end pressures cause repo activity and rates to spike. meanwhile, the MOVE index (bond volatility) finally rises on a bear steepener
+ \url{https://www.concoda.com/p/money-market-update-b03}
+
+SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
+
+
+Inter-Commodity Spreads Featuring SOFR
+By virtue of its comprehensive link to activity in Treasury general collateral repo markets (\url{https://www.newyorkfed.org/data-and-statistics/data-visualization/tri-party-repo/}), SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks.  An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR.  For this reason, among others, inter-commodity spreads among SR1, SR3, GE, and ZQ futures may emerge as increasingly important tools to manage volatility.
+\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
+
+OBRRP and TBills
+T-bills Outstanding Decreased from January 2021 to July 2022
+Take-up at the Federal Reserve’s Overnight Reverse Repo Facility (ON RRP) increased from a few billion dollars in January 2021 to around $2.6 trillion at the end of December 2022.  In this post, based on a recent Staff Report, we explain how the supply of U.S. Treasury bills (T-bills) affects the decision of money market mutual funds (MMFs) to invest at the facility. We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up.
+
+MMFs’ Demand for U.S. Treasury Securities
+U.S. MMFs are open-end mutual funds regulated by the Securities and Exchange Commission (SEC) that can only invest in safe and highly liquid money-market instruments denominated in U.S. dollars. Among such instruments, U.S. Treasury securities are especially relevant because of their safety and liquidity. Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
+\url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/}
+
+After the Fed’s largest liquidity injection on record, the “excess cash” era is coming to an end. Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening). As the RRP balance reaches zero, the dynamics in the repo market are about to transform. The return to an “excess collateral” era awaits us.
+After the resolution of the latest debt ceiling debacle in June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
+\url{https://www.concoda.com/p/the-reverse-repo-endgame}
+
+
+policy shocks on long-term bonds outside of a yield-curve model.
+More patience is required to estimate a system of yield equations in a way that ensures
+no-arbitrage. The cross-equation restrictions have to be derived from parameters that
+describe the state dynamics and risk premia. Although the model is affine in the state
+vector x,the functions $A(\tau) and B(\tau)$ are nonlinear functions of the underlying parameters
+
+Who’s Borrowing and Lending in the Fed Funds Market Today?
+Gara Afonso, Gonzalo Cisternas, Brian Gowen, Jason Miu, and Joshua Younger
+\url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
 --> 
 
 <!--
@@ -572,6 +618,155 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 •	RRP balance has plunged below $800 billion and is fast approaching the zero bound
 -->
 
+## Arbitrage among short rates
+
+```{r}
+# Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
+library(tidyverse)
+m3tbillbp<-m3tbill*100
+arbrates$m3tbillbp <- m3tbillbp
+arbrates$Three_mon_Tbill <- arbrates$m3tbillbp
+# Replace NA values in arbrates$m3tbillbp with 0
+arbrates$Three_mon_Tbill[is.na(arbrates$Three_mon_Tbill)] <- 0
+# Ensure spread_no_na contains the updated m3tbillbp column
+```
+
+
+(Figure \@ref(fig:arbratesnorm).
+
+```{r arbratesnorm, fig.cap="Key reference rates: Normalcy 3/4/2016-7/31/2019", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+#Normalcy
+k=1
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesnorm <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Normalcy 3/4/2016-7/31/2019",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratesnorm)
+```
+
+(Figure \@ref(fig:arbratesadjust).
+
+```{r arbratesadjust, fig.cap="Key reference rates: Adjustment 8/1/2019-10/31/2019", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+#Adjust
+k=2
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesadjust <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = " Mid cycle adjustment 8/1/2019-10/31/2019",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratesadjust)
+```
+
+(Figure \@ref(fig:arbratescovid).
+
+```{r arbratescovid, fig.cap="Key reference rates: Covid 11/1/2019-3/16/2020", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+#Covid
+k=3
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratescovid <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Covid 11/1/2019-3/16/2020",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratescovid)
+```
+
+(Figure \@ref(fig:arbrateszlb).
+
+```{r arbrateszlb, fig.cap="Key reference rates: Zero lower bound 3/17/2020-3/16/2022", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+#zlb
+k=4
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD,Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_rateszlb <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Zero lower bound 3/17/2020-3/16/2022",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+
+print(arb_rateszlb)
+```
+
+(Figure \@ref(fig:arbratesinflation).
+
+```{r arbratesinflation, fig.cap="Key reference rates: Taming inflation 3/17/2022-12/14/2023", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+#Inflation
+k=5
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesinflation <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Taming inflation  3/17/2022-12/14/2023",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratesinflation)
+```
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
 Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates 
 <!--
@@ -931,6 +1126,7 @@ Nov 2019 thru 2023 4 or 5 reports
 
 <!--
 (Reference CONCODA) 
+(Figure \@ref(fig:sampleratests).
 -->
 
 
@@ -3843,6 +4039,8 @@ computed from a given
 model of the yield curve (see the references in Duffie et al.,2000). Banks need to manage
 the risk of paying short-term interest rates on deposits while receiving long-term interest
 rates on loans.
+
+\url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/}
 
 policy shocks on long-term bonds outside of a yield-curve model.
 More patience is required to estimate a system of yield equations in a way that ensures
