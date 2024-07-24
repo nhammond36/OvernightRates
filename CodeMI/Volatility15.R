@@ -94,6 +94,11 @@ print(colnames(spread))
 str(spread)
 sdate<-as.Date(spread$Date,format="%m/%d/%Y")
 
+# add 3 month Treasury bill to data frame UPDATE DATA RDS
+dataupdate<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_12172023v5.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
+m3tbill<-dataupdate$X3mbill[1:1957]
+spread_no_na$m3tbill<-m3tbill
+
 # I added DPCREDIT, h, and st_effr
 #spread_no_na$sd_effr<-spread$sd_effr[1:1957]
 #my_envmp$spread_no_na <-spread_no_na
@@ -793,6 +798,212 @@ ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/plotsd
 
 
 
+library(tidyverse)
+# Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
+#rrbp <-  spread_no_na[, c("sdate","EFFR","TGCR","BGCR","SOFR")]
+#head(rrbp)
+#str(rrbp)
+library(tidyverse)
+m3tbillbp<-m3tbill*100
+arbrates$m3tbillbp <- m3tbillbp
+arbrates$Three_mon_Tbill <- arbrates$m3tbillbp
+# Replace NA values in arbrates$m3tbillbp with 0
+arbrates$Three_mon_Tbill[is.na(arbrates$Three_mon_Tbill)] <- 0
+# Ensure spread_no_na contains the updated m3tbillbp column
+mxrates<-max(arbrates[,2:6])
+maxtbill<-max(arbrates$Three_mon_Tbill)
+
+# Reshape the dataframe from wide to long format
+arbrates_long <- arbrates %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+arb_rates <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Sample rates 3/4/2016-12/14/2023",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = "")) +
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+  print(arb_rates)
+                                
+
+# Create the plot
+# arb_rates <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+#   geom_point(size = 1, shape = 16) +
+#   labs(x = "", y = "Key rates", color = "", shape = "") +  
+#   scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+#   theme_minimal() + 
+#   guides(shape = guide_legend(title = "")) +
+#   scale_color_manual(values = c("EFFR" = "color1",
+#                                 "SOFR" = "color2",
+#                                 "IORR" = "color3",
+#                                 "RRPONTSYAWARD" = "color4",
+#                                 "m3tbillbp" = "color5"),
+#                      labels = c("EFFR" = "EFFR",
+#                                 "SOFR" = "SOFR",
+#                                 "IORR" = "IORR",
+#                                 "RRPONTSYAWARD" = "RRPONTSYAWARD",
+#                                 "m3tbillbp" = "Three month Tbill"))
+# 
+# # Print the plot
+print(arb_rates)
+
+
+
+
+
+library(tidyverse)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_rates.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_rates.png")
+
+# Repeat arbrates for regimes
+begn<-c(1,859,923,1014,1519,1)
+endn<-c(858,922,1013,1518,1957,1957)
+
+# 1. normalcy              3/4/2016-7/31/2019    
+# 2. mid cycle adjustment  8/1/2019-10/31/2019
+# 3. covid                11/1/2019-3/16/2020   
+# 4. zero lower bound      3/17/2020-3/16/2022
+# 5. Taming inflation      3/17/2022-12/14/2023
+
+#Normalcy
+k=1
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesnorm <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Normalcy 3/4/2016--7/31/2019",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+
+# Print the plot
+print(arb_ratesnorm)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesnorm.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesnorm.png")
+
+
+#Adjust
+k=2
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesadjust <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = " Mid cycle adjustment  8/1/2019-10/31/2019",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratesadjust)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesadjust.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesadjust.png")
+
+
+#Covid
+k=3
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratescovid <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Covid 11/1/2019-3/16/2020",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+print(arb_ratescovid)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratescovid.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratescovid.png")
+
+#zlb
+k=4
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD,Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_rateszlb <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Zero lower bound 3/17/2020-3/16/2022",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+
+print(arb_rateszlb)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_rateszlb.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_rateszlb.png")
+
+#Inflation
+k=5
+bgn=begn[k]
+edn=endn[k]
+arbrates_long <- arbrates[bgn:edn,] %>%
+  pivot_longer(cols = c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill),
+               names_to = "variable", values_to = "value")
+# Calculate max rates for y-axis scaling
+mxrates <- max(arbrates_long$value, na.rm = TRUE)
+
+arb_ratesinflation <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, group = variable)) + 
+  geom_point(size = 1, shape = 16) +
+  labs(caption = "Taming inflation      3/17/2022-12/14/2023",x = "", y = "Key rates", color = "", shape = "") +  
+  scale_y_continuous(breaks = seq(0, mxrates, by = 50), limits = c(0, mxrates)) + 
+  theme_minimal() + 
+  guides(shape = guide_legend(title = ""))+
+  scale_color_manual(values = c("EFFR" = "red",
+                                "SOFR" = "magenta",
+                                "IORR" = "blue",
+                                "RRPONTSYAWARD" = "aquamarine",
+                                "Three_mon_Tbill" = "yellow"))
+
+print(arb_ratesinflation)
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesinflation.pdf")
+ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesinflation.png")
+  
 # DUFFIE KRISHNAMURTHY dispersion index ------------------------------------
 # We let yi,t(m) denote the rate at time t on instrument i, maturing in m days. We first
 # adjust the rate to remove term-structure effects, 
@@ -1954,7 +2165,6 @@ print( bbp1994_params)
   colnames(garch_params) <- c("Coefficients", "StdErrors")
   colnames(bbp1994garch_params) <- c("Coefficients", "StdErrors")
   
-  ncoefficients <- c(
    
   coefficients <- c(0.06, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
 std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
@@ -1992,6 +2202,1927 @@ colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
 
 print(garch_params)
 
+##--------------------------------------------------------------
++     # Print the titles
+  +     cat(title1, "\t\t", title2, "\n")
++     
+  +     # Print the column names
+  +     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
+  +     # Print the data row by row
+  +     for (i in 1:nrow(df1)) {
+    +         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+    +     }
++ }
+> 
+  > # Use the custom print function
+  > print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+  > # Print the column names
+  > cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+> 
+  > # Print the data row by row
+  > for (i in 1:nrow(arima_params_df)) {
+    +     cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+    + }
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> }
+Error: unexpected '}' in "}"
+> # Use the custom print function
+  > print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+  > 
+  > # Custom print function to visually align titles above columns
+  > print_with_titles <- function(df1, df2, title1, title2) {
+    +     # Print the titles
+      +     cat(title1, "\t\t", title2, "\n")
+    +     
+      +     # Print the column names
+      +     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+    +     
+      +     # Print the data row by row
+      +     for (i in 1:nrow(arima_params_df)) {
+        +         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+        +     }
+    + }
+> 
+  > # Use the custom print function
+  > print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+  > colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+  > 
+  > # Custom print function to visually align titles above columns
+  > print_with_titles <- function(df1, df2, title1, title2) {
+    +     # Print the titles
+      +     cat(title1, "\t\t\t", title2, "\n")
+    +     
+      +     # Print the column names
+      +     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+    +     
+      +     # Print the data row by row
+      +     for (i in 1:nrow(arima_params_df)) {
+        +         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+        +     }
+    + }
+> 
+  > # Use the custom print function
+  > print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 			 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+  > 
+  > # Combine the dataframes using cbind for further analysis
+  > combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+  > 
+  > # Print the combined dataframe for any further analysis if needed
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> combined_arimas_table <- xtable(combined_df)
+> combined_arimas_table
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Thu Jul 18 17:34:35 2024
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+\hline
+& Coefficients & StdErrors & Coefficients & StdErrors \\ 
+\hline
+ar1 & 0.84 & 0.01 & 0.06 & 0.04 \\ 
+intercept & 2.01 & 0.11 &  &  \\ 
+oneday\_beforeholiday & 0.10 & 0.13 &  &  \\ 
+threeday\_beforeholiday & -0.10 & 0.05 &  &  \\ 
+oneday\_afterholiday & 0.04 & 0.13 &  &  \\ 
+endquarter & 0.11 & 0.14 & 2.08 & 0.18 \\ 
+endyear & 0.07 & 0.17 & 2.91 & 0.33 \\ 
+Monday & 0.00 & 0.06 &  &  \\ 
+Friday & -0.01 & 0.02 &  &  \\ 
+fomc & 0.01 & 0.01 & 0.78 & 0.26 \\ 
+fomcindex & -0.28 & 0.15 &  &  \\ 
+z & -0.70 & 0.22 & 1.24 & 0.46 \\ 
+nt & 0.06 & 0.09 &  &  \\ 
+absnu & -0.00 & 0.01 & 0.72 & 0.07 \\ 
+nu & -0.01 & 0.01 & 0.28 & 0.04 \\ 
+\hline
+\end{tabular}
+\end{table}
+> # Define your dataframes arima_params_df and bbp1994_params
+  > # Assuming they are already defined
+  > 
+  > # Ensure both dataframes have the same column names
+  > colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+  > # Print the title and the arima_params_df dataframe
+  > cat("DailyEFFR 2016-2023\n")
+DailyEFFR 2016-2023
+> print(arima_params_df)
+Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> 
+  > # Print a separator line (optional)
+  > cat("\n-----------------------\n")
+
+-----------------------
+  > 
+  > # Print the title and the bbp1994_params dataframe
+  > cat("BBP post 1994 no FOMC\n")
+BBP post 1994 no FOMC
+> print(bbp1994_params)
+Coefficients StdErrors
+ar1                           0.060     0.038
+intercept                        NA        NA
+oneday_beforeholiday             NA        NA
+threeday_beforeholiday           NA        NA
+oneday_afterholiday              NA        NA
+endquarter                    2.081     0.181
+endyear                       2.913     0.331
+Monday                           NA        NA
+Friday                           NA        NA
+fomc                          0.783     0.262
+fomcindex                        NA        NA
+z                             1.240     0.465
+nt                               NA        NA
+absnu                         0.718     0.069
+nu                            0.276     0.042
+> 
+  > # Combine the dataframes for any further analysis if needed
+  > combined_df <- rbind(arima_params_df, bbp1994_params)
+> 
+  > # If you still need to print the combined dataframe
+  > cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+  > print(combined_df)
+Coefficients   StdErrors
+ar1                      0.844237998 0.013053850
+intercept                2.014386816 0.107115536
+oneday_beforeholiday     0.100839203 0.132623548
+threeday_beforeholiday  -0.095986648 0.045628642
+oneday_afterholiday      0.035191454 0.129995377
+endquarter               0.114887391 0.142475753
+endyear                  0.066116640 0.173470169
+Monday                   0.004691872 0.061329648
+Friday                  -0.011205695 0.023676676
+fomc                     0.009640622 0.005993818
+fomcindex               -0.282124740 0.149256602
+z                       -0.700007226 0.221871277
+nt                       0.061577943 0.091488156
+absnu                   -0.002429300 0.011621492
+nu                      -0.007706428 0.007626636
+ar11                     0.060000000 0.038000000
+intercept1                        NA          NA
+oneday_beforeholiday1             NA          NA
+threeday_beforeholiday1           NA          NA
+oneday_afterholiday1              NA          NA
+endquarter1              2.081000000 0.181000000
+endyear1                 2.913000000 0.331000000
+Monday1                           NA          NA
+Friday1                           NA          NA
+fomc1                    0.783000000 0.262000000
+fomcindex1                        NA          NA
+z1                       1.240000000 0.465000000
+nt1                               NA          NA
+absnu1                   0.718000000 0.069000000
+nu1                      0.276000000 0.042000000
+> 
+  > results
+Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> fit
+
+*---------------------------------*
+  *          GARCH Model Fit        *
+  *---------------------------------*
+  
+  Conditional Variance Dynamics 	
+-----------------------------------
+  GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(0,0,0)
+Distribution	: std 
+
+Optimal Parameters
+------------------------------------
+  Estimate  Std. Error   t value Pr(>|t|)
+omega  -0.000301    0.241476 -0.001246 0.999006
+alpha1  0.027822    0.084668  0.328600 0.742458
+beta1   0.655685    0.042956 15.264051 0.000000
+gamma1  2.157099    0.763514  2.825224 0.004725
+shape   2.100000    0.077000 27.272755 0.000000
+
+Robust Standard Errors:
+  Estimate  Std. Error   t value Pr(>|t|)
+omega  -0.000301    0.308840 -0.000974 0.999222
+alpha1  0.027822    0.090948  0.305910 0.759673
+beta1   0.655685    0.081888  8.007135 0.000000
+gamma1  2.157099    1.063278  2.028726 0.042486
+shape   2.100000    0.110032 19.085410 0.000000
+
+LogLikelihood : -934.457 
+
+Information Criteria
+------------------------------------
+  
+  Akaike       0.96010
+Bayes        0.97435
+Shibata      0.96009
+Hannan-Quinn 0.96534
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+  statistic   p-value
+Lag[1]                      18.82 1.438e-05
+Lag[2*(p+q)+(p+q)-1][2]     19.35 6.582e-06
+Lag[4*(p+q)+(p+q)-1][5]     22.33 4.424e-06
+d.o.f=0
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+  statistic p-value
+Lag[1]                      4.780 0.02880
+Lag[2*(p+q)+(p+q)-1][5]     8.545 0.02155
+Lag[4*(p+q)+(p+q)-1][9]    10.231 0.04476
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+  Statistic Shape Scale P-Value
+ARCH Lag[3]    0.8985 0.500 2.000  0.3432
+ARCH Lag[5]    2.5240 1.440 1.667  0.3667
+ARCH Lag[7]    3.2554 2.315 1.543  0.4667
+
+Nyblom stability test
+------------------------------------
+  Joint Statistic:  9.5528
+Individual Statistics:             
+  omega  0.8725
+alpha1 0.1574
+beta1  1.4955
+gamma1 0.1894
+shape  0.5291
+
+Asymptotic Critical Values (10% 5% 1%)
+Joint Statistic:     	 1.28 1.47 1.88
+Individual Statistic:	 0.35 0.47 0.75
+
+Sign Bias Test
+------------------------------------
+  t-value      prob sig
+Sign Bias           4.3329 1.547e-05 ***
+  Negative Sign Bias  4.9619 7.587e-07 ***
+  Positive Sign Bias  0.9451 3.447e-01    
+Joint Effect       35.1222 1.148e-07 ***
+  
+  
+  Adjusted Pearson Goodness-of-Fit Test:
+  ------------------------------------
+  group statistic p-value(g-1)
+1    20     240.5    2.585e-40
+2    30     282.5    2.343e-43
+3    40     306.5    3.033e-43
+4    50     344.9    4.334e-46
+
+
+Elapsed time : 1.682015 
+
+> 
+  > text_data <- "
++                   Estimate  Std. Error   t value Pr(>|t|)
++                   omega  -0.000301    0.241476 -0.001246 0.999006
++                   alpha1  0.027822    0.084668  0.328600 0.742458
++                   beta1   0.655685    0.042956 15.264051 0.000000
++                   gamma1  2.157099    0.763514  2.825224 0.004725
++                   shape   2.100000    0.077000 27.272755 0.000000
++                   "
+> 
+  > garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+                line 1 did not have 6 elements
+              > # Define the text data with a placeholder name for the row labels
+                > text_data <- "
++ Parameter  Estimate  Std. Error   t value Pr(>|t|)
++ omega  -0.000301    0.241476 -0.001246 0.999006
++ alpha1  0.027822    0.084668  0.328600 0.742458
++ beta1   0.655685    0.042956 15.264051 0.000000
++ gamma1  2.157099    0.763514  2.825224 0.004725
++ shape   2.100000    0.077000 27.272755 0.000000
++ "
+              > 
+                > # Convert the text data to a dataframe
+                > garch_params <- read.table(text = text_data, header = TRUE)
+              Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+                              line 1 did not have 7 elements
+                            > # Define the text data without row labels
+                              > text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+                            > 
+                              > # Convert the text data to a dataframe
+                              > garch_params <- read.table(text = text_data, header = TRUE)
+                            Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+                                            line 1 did not have 6 elements
+                                          > 
+                                            > 
+                                            > # Define the text data without row labels
+                                            > text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+                                          > 
+                                            > # Convert the text data to a dataframe
+                                            > garch_params <- read.table(text = text_data, header = TRUE)
+                                          Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+                                                          line 1 did not have 6 elements
+                                                        > 
+                                                          > 
+                                                          > # Define the text data without row labels
+                                                          > text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+                                                        > 
+                                                          > # Convert the text data to a dataframe
+                                                          > garch_params <- read.table(text = text_data, header = TRUE)
+                                                        Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+                                                                        line 1 did not have 6 elements
+                                                                      > text_data <- "
++                   Estimate  Std_Error   t_value $P(\Gt abs(t))$
+Error: '\G' is an unrecognized escape in character string (<input>:2:53)
+> # Define the text data
+> text_data <- "
+                                                                      +                   Estimate  Std_Error   t_value $P(> abs(t))$
+                                                                        +                   omega  -0.000301    0.241476 -0.001246 0.999006
+                                                                      +                   alpha1  0.027822    0.084668  0.328600 0.742458
+                                                                      +                   beta1   0.655685    0.042956 15.264051 0.000000
+                                                                      +                   gamma1  2.157099    0.763514  2.825224 0.004725
+                                                                      +                   shape   2.100000    0.077000 27.272755 0.000000
+                                                                      +                   "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+> 
+> # Print the dataframe
+> print(garch_params)
+  Estimate Std_Error  t_value     X.P.. abs.t...
+1    omega -0.000301 0.241476 -0.001246 0.999006
+2   alpha1  0.027822 0.084668  0.328600 0.742458
+3    beta1  0.655685 0.042956 15.264051 0.000000
+4   gamma1  2.157099 0.763514  2.825224 0.004725
+5    shape  2.100000 0.077000 27.272755 0.000000
+> text_data <- "
+                                                                      +                   Estimate  Std_Error   t_Value Pr(> abs(t)) 
+                                                                      +                   -0.000301    0.241476 -0.001246 0.999006
+                                                                      +                   0.027822    0.084668  0.328600 0.742458
+                                                                      +                   0.655685    0.042956 15.264051 0.000000
+                                                                      +                   2.157099    0.763514  2.825224 0.004725
+                                                                      +                   2.100000    0.077000 27.272755 0.000000
+                                                                      +                   "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 5 elements
+> 
+> 
+> 
+> text_data <- "
+                                                                      + Estimate Std_Error t_Value Pr(> abs(t)) 
+                                                                      + -0.000301 0.241476 -0.001246 0.999006
+                                                                      + 0.027822 0.084668 0.328600 0.742458
+                                                                      + 0.655685 0.042956 15.264051 0.000000
+                                                                      + 2.157099 0.763514 2.825224 0.004725
+                                                                      + 2.100000 0.077000 27.272755 0.000000
+                                                                      + "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 5 elements
+> 
+> 
+> text_data <- "
+                                                                      + Estimate Std_Error t_Value Pr_abs_t
+                                                                      + -0.000301 0.241476 -0.001246 0.999006
+                                                                      + 0.027822 0.084668 0.328600 0.742458
+                                                                      + 0.655685 0.042956 15.264051 0.000000
+                                                                      + 2.157099 0.763514 2.825224 0.004725
+                                                                      + 2.100000 0.077000 27.272755 0.000000
+                                                                      + "
+> 
+> # Convert the text data to a dataframe with a placeholder for the problematic column name
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> 
+> # Rename the columns to their intended names
+> colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
+> 
+> print(garch_params)
+   Estimate Std_Error   t_Value Pr(> abs(t))
+1 -0.000301  0.241476 -0.001246     0.999006
+2  0.027822  0.084668  0.328600     0.742458
+3  0.655685  0.042956 15.264051     0.000000
+4  2.157099  0.763514  2.825224     0.004725
+5  2.100000  0.077000 27.272755     0.000000
+> 
+> text_databbp <- "
+                                                                      +   Estimate Std_Error 
+                                                                      +   	0.06	0.038
+                                                                      +   	0.718	0.069
+                                                                      +     0.276	0.042
+                                                                      +   "
+> bbp1994garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error"
++                                    
++                                    print(bbp1994garch_params)
+Error: unexpected symbol in:
+"                                   
+                                                                      print"
+> bbp1994garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+> 
+> print(bbp1994garch_params)
+   Estimate Std_Error        NA       NA
+1 -0.000301  0.241476 -0.001246 0.999006
+2  0.027822  0.084668  0.328600 0.742458
+3  0.655685  0.042956 15.264051 0.000000
+4  2.157099  0.763514  2.825224 0.004725
+5  2.100000  0.077000 27.272755 0.000000
+> text_databbp <- "
+                                                                      +   Estimate Std_Error 
+                                                                      +   	0.06	0.038
+                                                                      +   	0.718	0.069
+                                                                      +     0.276	0.042
+                                                                      +   "
+> bbp1994garch_params <- read.table(text = text_databbp, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+> 
+> print(bbp1994garch_params)
+  Estimate Std_Error
+1    0.060     0.038
+2    0.718     0.069
+3    0.276     0.042
+> 
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+> 
+> # Custom print function to visually align titles above columns
+> print_with_titles <- function(df1, df2, title1, title2) {
++     # Print the titles
++     cat(title1, "\t\t\t", title2, "\n")
++     
++     # Print the column names
++     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
++     # Print the data row by row
++     for (i in 1:nrow(arima_params_df)) {
++         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++     }
++ }
+> 
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 			 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> beta = garch_params[1,2]
+> beta
+[1] 0.241476
+> beta = garch_params[2,1]
+> beta
+[1] 0.027822
+> beta=log(garch_params[3,1]
++ )
+> beta
+[1] -0.4220748
+> beta=log(garch_params[1,3]
++ )
+Warning message:
+In log(garch_params[1, 3]) : NaNs produced
+> beta
+[1] NaN
+> beta=garch_params[3,1]
+> beta
+[1] 0.655685
+> garch_params[1,1]
+[1] -0.000301
+> 
+> halflife=log(2)/log(garch_params[3,1])
+> print(halflife)
+[1] -1.642238
+> condvar =garch_params[1,1]/(1-garch_params[3,1])
+> print(condvar)
+[1] -0.0008741995
+> 
+>           results                                            
+                       Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> fit
+
+
+
+##--------------------------------------------------------------
++     # Print the titles
++     cat(title1, "\t\t", title2, "\n")
++     
++     # Print the column names
++     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
++     # Print the data row by row
++     for (i in 1:nrow(df1)) {
++         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++     }
++ }
+> 
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+> # Print the column names
+> cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+> 
+> # Print the data row by row
+> for (i in 1:nrow(arima_params_df)) {
++     cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++ }
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> }
+Error: unexpected '}' in "}"
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+> 
+> # Custom print function to visually align titles above columns
+> print_with_titles <- function(df1, df2, title1, title2) {
++     # Print the titles
++     cat(title1, "\t\t", title2, "\n")
++     
++     # Print the column names
++     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
++     # Print the data row by row
++     for (i in 1:nrow(arima_params_df)) {
++         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++     }
++ }
+> 
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 		 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> 
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+> 
+> # Custom print function to visually align titles above columns
+> print_with_titles <- function(df1, df2, title1, title2) {
++     # Print the titles
++     cat(title1, "\t\t\t", title2, "\n")
++     
++     # Print the column names
++     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
++     # Print the data row by row
++     for (i in 1:nrow(arima_params_df)) {
++         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++     }
++ }
+> 
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 			 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> combined_arimas_table <- xtable(combined_df)
+> combined_arimas_table
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Thu Jul 18 17:34:35 2024
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Coefficients & StdErrors & Coefficients & StdErrors \\ 
+  \hline
+ar1 & 0.84 & 0.01 & 0.06 & 0.04 \\ 
+  intercept & 2.01 & 0.11 &  &  \\ 
+  oneday\_beforeholiday & 0.10 & 0.13 &  &  \\ 
+  threeday\_beforeholiday & -0.10 & 0.05 &  &  \\ 
+  oneday\_afterholiday & 0.04 & 0.13 &  &  \\ 
+  endquarter & 0.11 & 0.14 & 2.08 & 0.18 \\ 
+  endyear & 0.07 & 0.17 & 2.91 & 0.33 \\ 
+  Monday & 0.00 & 0.06 &  &  \\ 
+  Friday & -0.01 & 0.02 &  &  \\ 
+  fomc & 0.01 & 0.01 & 0.78 & 0.26 \\ 
+  fomcindex & -0.28 & 0.15 &  &  \\ 
+  z & -0.70 & 0.22 & 1.24 & 0.46 \\ 
+  nt & 0.06 & 0.09 &  &  \\ 
+  absnu & -0.00 & 0.01 & 0.72 & 0.07 \\ 
+  nu & -0.01 & 0.01 & 0.28 & 0.04 \\ 
+   \hline
+\end{tabular}
+\end{table}
+> # Define your dataframes arima_params_df and bbp1994_params
+> # Assuming they are already defined
+> 
+> # Ensure both dataframes have the same column names
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+> # Print the title and the arima_params_df dataframe
+> cat("DailyEFFR 2016-2023\n")
+DailyEFFR 2016-2023
+> print(arima_params_df)
+                       Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> 
+> # Print a separator line (optional)
+> cat("\n-----------------------\n")
+
+-----------------------
+> 
+> # Print the title and the bbp1994_params dataframe
+> cat("BBP post 1994 no FOMC\n")
+BBP post 1994 no FOMC
+> print(bbp1994_params)
+                       Coefficients StdErrors
+ar1                           0.060     0.038
+intercept                        NA        NA
+oneday_beforeholiday             NA        NA
+threeday_beforeholiday           NA        NA
+oneday_afterholiday              NA        NA
+endquarter                    2.081     0.181
+endyear                       2.913     0.331
+Monday                           NA        NA
+Friday                           NA        NA
+fomc                          0.783     0.262
+fomcindex                        NA        NA
+z                             1.240     0.465
+nt                               NA        NA
+absnu                         0.718     0.069
+nu                            0.276     0.042
+> 
+> # Combine the dataframes for any further analysis if needed
+> combined_df <- rbind(arima_params_df, bbp1994_params)
+> 
+> # If you still need to print the combined dataframe
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                        Coefficients   StdErrors
+ar1                      0.844237998 0.013053850
+intercept                2.014386816 0.107115536
+oneday_beforeholiday     0.100839203 0.132623548
+threeday_beforeholiday  -0.095986648 0.045628642
+oneday_afterholiday      0.035191454 0.129995377
+endquarter               0.114887391 0.142475753
+endyear                  0.066116640 0.173470169
+Monday                   0.004691872 0.061329648
+Friday                  -0.011205695 0.023676676
+fomc                     0.009640622 0.005993818
+fomcindex               -0.282124740 0.149256602
+z                       -0.700007226 0.221871277
+nt                       0.061577943 0.091488156
+absnu                   -0.002429300 0.011621492
+nu                      -0.007706428 0.007626636
+ar11                     0.060000000 0.038000000
+intercept1                        NA          NA
+oneday_beforeholiday1             NA          NA
+threeday_beforeholiday1           NA          NA
+oneday_afterholiday1              NA          NA
+endquarter1              2.081000000 0.181000000
+endyear1                 2.913000000 0.331000000
+Monday1                           NA          NA
+Friday1                           NA          NA
+fomc1                    0.783000000 0.262000000
+fomcindex1                        NA          NA
+z1                       1.240000000 0.465000000
+nt1                               NA          NA
+absnu1                   0.718000000 0.069000000
+nu1                      0.276000000 0.042000000
+> 
+> results
+                       Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> fit
+
+*---------------------------------*
+*          GARCH Model Fit        *
+*---------------------------------*
+
+Conditional Variance Dynamics 	
+-----------------------------------
+GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(0,0,0)
+Distribution	: std 
+
+Optimal Parameters
+------------------------------------
+        Estimate  Std. Error   t value Pr(>|t|)
+omega  -0.000301    0.241476 -0.001246 0.999006
+alpha1  0.027822    0.084668  0.328600 0.742458
+beta1   0.655685    0.042956 15.264051 0.000000
+gamma1  2.157099    0.763514  2.825224 0.004725
+shape   2.100000    0.077000 27.272755 0.000000
+
+Robust Standard Errors:
+        Estimate  Std. Error   t value Pr(>|t|)
+omega  -0.000301    0.308840 -0.000974 0.999222
+alpha1  0.027822    0.090948  0.305910 0.759673
+beta1   0.655685    0.081888  8.007135 0.000000
+gamma1  2.157099    1.063278  2.028726 0.042486
+shape   2.100000    0.110032 19.085410 0.000000
+
+LogLikelihood : -934.457 
+
+Information Criteria
+------------------------------------
+                    
+Akaike       0.96010
+Bayes        0.97435
+Shibata      0.96009
+Hannan-Quinn 0.96534
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+                        statistic   p-value
+Lag[1]                      18.82 1.438e-05
+Lag[2*(p+q)+(p+q)-1][2]     19.35 6.582e-06
+Lag[4*(p+q)+(p+q)-1][5]     22.33 4.424e-06
+d.o.f=0
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                      4.780 0.02880
+Lag[2*(p+q)+(p+q)-1][5]     8.545 0.02155
+Lag[4*(p+q)+(p+q)-1][9]    10.231 0.04476
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+            Statistic Shape Scale P-Value
+ARCH Lag[3]    0.8985 0.500 2.000  0.3432
+ARCH Lag[5]    2.5240 1.440 1.667  0.3667
+ARCH Lag[7]    3.2554 2.315 1.543  0.4667
+
+Nyblom stability test
+------------------------------------
+Joint Statistic:  9.5528
+Individual Statistics:             
+omega  0.8725
+alpha1 0.1574
+beta1  1.4955
+gamma1 0.1894
+shape  0.5291
+
+Asymptotic Critical Values (10% 5% 1%)
+Joint Statistic:     	 1.28 1.47 1.88
+Individual Statistic:	 0.35 0.47 0.75
+
+Sign Bias Test
+------------------------------------
+                   t-value      prob sig
+Sign Bias           4.3329 1.547e-05 ***
+Negative Sign Bias  4.9619 7.587e-07 ***
+Positive Sign Bias  0.9451 3.447e-01    
+Joint Effect       35.1222 1.148e-07 ***
+
+
+Adjusted Pearson Goodness-of-Fit Test:
+------------------------------------
+  group statistic p-value(g-1)
+1    20     240.5    2.585e-40
+2    30     282.5    2.343e-43
+3    40     306.5    3.033e-43
+4    50     344.9    4.334e-46
+
+
+Elapsed time : 1.682015 
+
+> 
+> text_data <- "
++                   Estimate  Std. Error   t value Pr(>|t|)
++                   omega  -0.000301    0.241476 -0.001246 0.999006
++                   alpha1  0.027822    0.084668  0.328600 0.742458
++                   beta1   0.655685    0.042956 15.264051 0.000000
++                   gamma1  2.157099    0.763514  2.825224 0.004725
++                   shape   2.100000    0.077000 27.272755 0.000000
++                   "
+> 
+> garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 6 elements
+> # Define the text data with a placeholder name for the row labels
+> text_data <- "
++ Parameter  Estimate  Std. Error   t value Pr(>|t|)
++ omega  -0.000301    0.241476 -0.001246 0.999006
++ alpha1  0.027822    0.084668  0.328600 0.742458
++ beta1   0.655685    0.042956 15.264051 0.000000
++ gamma1  2.157099    0.763514  2.825224 0.004725
++ shape   2.100000    0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 7 elements
+> # Define the text data without row labels
+> text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 6 elements
+> 
+> 
+> # Define the text data without row labels
+> text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 6 elements
+> 
+> 
+> # Define the text data without row labels
+> text_data <- "
++ Estimate  Std. Error   t value Pr(>|t|)
++ -0.000301    0.241476 -0.001246 0.999006
++ 0.027822    0.084668  0.328600 0.742458
++ 0.655685    0.042956 15.264051 0.000000
++ 2.157099    0.763514  2.825224 0.004725
++ 2.100000    0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 6 elements
+> text_data <- "
++                   Estimate  Std_Error   t_value $P(\Gt abs(t))$
+Error: '\G' is an unrecognized escape in character string (<input>:2:53)
+> # Define the text data
+> text_data <- "
++                   Estimate  Std_Error   t_value $P(> abs(t))$
++                   omega  -0.000301    0.241476 -0.001246 0.999006
++                   alpha1  0.027822    0.084668  0.328600 0.742458
++                   beta1   0.655685    0.042956 15.264051 0.000000
++                   gamma1  2.157099    0.763514  2.825224 0.004725
++                   shape   2.100000    0.077000 27.272755 0.000000
++                   "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE)
+> 
+> # Print the dataframe
+> print(garch_params)
+  Estimate Std_Error  t_value     X.P.. abs.t...
+1    omega -0.000301 0.241476 -0.001246 0.999006
+2   alpha1  0.027822 0.084668  0.328600 0.742458
+3    beta1  0.655685 0.042956 15.264051 0.000000
+4   gamma1  2.157099 0.763514  2.825224 0.004725
+5    shape  2.100000 0.077000 27.272755 0.000000
+> text_data <- "
++                   Estimate  Std_Error   t_Value Pr(> abs(t)) 
++                   -0.000301    0.241476 -0.001246 0.999006
++                   0.027822    0.084668  0.328600 0.742458
++                   0.655685    0.042956 15.264051 0.000000
++                   2.157099    0.763514  2.825224 0.004725
++                   2.100000    0.077000 27.272755 0.000000
++                   "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 5 elements
+> 
+> 
+> 
+> text_data <- "
++ Estimate Std_Error t_Value Pr(> abs(t)) 
++ -0.000301 0.241476 -0.001246 0.999006
++ 0.027822 0.084668 0.328600 0.742458
++ 0.655685 0.042956 15.264051 0.000000
++ 2.157099 0.763514 2.825224 0.004725
++ 2.100000 0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 1 did not have 5 elements
+> 
+> 
+> text_data <- "
++ Estimate Std_Error t_Value Pr_abs_t
++ -0.000301 0.241476 -0.001246 0.999006
++ 0.027822 0.084668 0.328600 0.742458
++ 0.655685 0.042956 15.264051 0.000000
++ 2.157099 0.763514 2.825224 0.004725
++ 2.100000 0.077000 27.272755 0.000000
++ "
+> 
+> # Convert the text data to a dataframe with a placeholder for the problematic column name
+> garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> 
+> # Rename the columns to their intended names
+> colnames(garch_params) <- c("Estimate", "Std_Error", "t_Value", "Pr(> abs(t))")
+> 
+> print(garch_params)
+   Estimate Std_Error   t_Value Pr(> abs(t))
+1 -0.000301  0.241476 -0.001246     0.999006
+2  0.027822  0.084668  0.328600     0.742458
+3  0.655685  0.042956 15.264051     0.000000
+4  2.157099  0.763514  2.825224     0.004725
+5  2.100000  0.077000 27.272755     0.000000
+> 
+> text_databbp <- "
++   Estimate Std_Error 
++   	0.06	0.038
++   	0.718	0.069
++     0.276	0.042
++   "
+> bbp1994garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error"
++                                    
++                                    print(bbp1994garch_params)
+Error: unexpected symbol in:
+"                                   
+                                   print"
+> bbp1994garch_params <- read.table(text = text_data, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+> 
+> print(bbp1994garch_params)
+   Estimate Std_Error        NA       NA
+1 -0.000301  0.241476 -0.001246 0.999006
+2  0.027822  0.084668  0.328600 0.742458
+3  0.655685  0.042956 15.264051 0.000000
+4  2.157099  0.763514  2.825224 0.004725
+5  2.100000  0.077000 27.272755 0.000000
+> text_databbp <- "
++   Estimate Std_Error 
++   	0.06	0.038
++   	0.718	0.069
++     0.276	0.042
++   "
+> bbp1994garch_params <- read.table(text = text_databbp, header = TRUE, check.names = FALSE)
+> # Rename the columns to their intended names
+> colnames(bbp1994garch_params) <- c("Estimate", "Std_Error")
+> 
+> print(bbp1994garch_params)
+  Estimate Std_Error
+1    0.060     0.038
+2    0.718     0.069
+3    0.276     0.042
+> 
+> colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+> colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+> 
+> 
+> # Custom print function to visually align titles above columns
+> print_with_titles <- function(df1, df2, title1, title2) {
++     # Print the titles
++     cat(title1, "\t\t\t", title2, "\n")
++     
++     # Print the column names
++     cat(paste(colnames(arima_params_df), collapse = "\t"), "\t", paste(colnames(bbp1994_params), collapse = "\t"), "\n")
++     
++     # Print the data row by row
++     for (i in 1:nrow(arima_params_df)) {
++         cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
++     }
++ }
+> 
+> # Use the custom print function
+> print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+DailyEFFR 2016-2023 			 BBP post 1994 no FOMC 
+Coefficients	StdErrors 	 Coefficients	StdErrors 
+0.844237998164641	0.0130538504416614 	 0.06	0.038 
+2.01438681553527	0.107115535571069 	 NA	NA 
+0.100839202622712	0.132623547739493 	 NA	NA 
+-0.0959866481019678	0.0456286415809881 	 NA	NA 
+0.0351914536744334	0.129995376807891 	 NA	NA 
+0.114887391248271	0.142475752704719 	 2.081	0.181 
+0.0661166396781707	0.173470168680794 	 2.913	0.331 
+0.00469187199601059	0.06132964761596 	 NA	NA 
+-0.0112056948520733	0.0236766763762414 	 NA	NA 
+0.00964062227751304	0.00599381769600368 	 0.783	0.262 
+-0.282124739984309	0.149256601613901 	 NA	NA 
+-0.70000722590789	0.221871277399153 	 1.24	0.465 
+0.0615779428904553	0.0914881562145888 	 NA	NA 
+-0.00242930024829802	0.0116214923036203 	 0.718	0.069 
+-0.00770642769776277	0.00762663582846746 	 0.276	0.042 
+> 
+> 
+> # Combine the dataframes using cbind for further analysis
+> combined_df <- cbind(arima_params_df, bbp1994_params)
+> 
+> 
+> # Print the combined dataframe for any further analysis if needed
+> cat("\nCombined DataFrame:\n")
+
+Combined DataFrame:
+> print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+> beta = garch_params[1,2]
+> beta
+[1] 0.241476
+> beta = garch_params[2,1]
+> beta
+[1] 0.027822
+> beta=log(garch_params[3,1]
++ )
+> beta
+[1] -0.4220748
+> beta=log(garch_params[1,3]
++ )
+Warning message:
+In log(garch_params[1, 3]) : NaNs produced
+> beta
+[1] NaN
+> beta=garch_params[3,1]
+> beta
+[1] 0.655685
+> garch_params[1,1]
+[1] -0.000301
+> 
+> halflife=log(2)/log(garch_params[3,1])
+> print(halflife)
+[1] -1.642238
+> condvar =garch_params[1,1]/(1-garch_params[3,1])
+> print(condvar)
+[1] -0.0008741995
+> 
+>           results                                            
+                       Coefficients   StdErrors
+ar1                     0.844237998 0.013053850
+intercept               2.014386816 0.107115536
+oneday_beforeholiday    0.100839203 0.132623548
+threeday_beforeholiday -0.095986648 0.045628642
+oneday_afterholiday     0.035191454 0.129995377
+endquarter              0.114887391 0.142475753
+endyear                 0.066116640 0.173470169
+Monday                  0.004691872 0.061329648
+Friday                 -0.011205695 0.023676676
+fomc                    0.009640622 0.005993818
+fomcindex              -0.282124740 0.149256602
+z                      -0.700007226 0.221871277
+nt                      0.061577943 0.091488156
+absnu                  -0.002429300 0.011621492
+nu                     -0.007706428 0.007626636
+> fit
+
+# *---------------------------------*
+# *          GARCH Model Fit        *
+# *---------------------------------*
+# 
+# Conditional Variance Dynamics 	
+# -----------------------------------
+# GARCH Model	: eGARCH(1,1)
+# Mean Model	: ARFIMA(0,0,0)
+# Distribution	: std 
+# 
+# Optimal Parameters
+# ------------------------------------
+#         Estimate  Std. Error   t value Pr(>|t|)
+# omega  -0.000301    0.241476 -0.001246 0.999006
+# alpha1  0.027822    0.084668  0.328600 0.742458
+# beta1   0.655685    0.042956 15.264051 0.000000
+# gamma1  2.157099    0.763514  2.825224 0.004725
+# shape   2.100000    0.077000 27.272755 0.000000
+# 
+# Robust Standard Errors:
+#         Estimate  Std. Error   t value Pr(>|t|)
+# omega  -0.000301    0.308840 -0.000974 0.999222
+# alpha1  0.027822    0.090948  0.305910 0.759673
+# beta1   0.655685    0.081888  8.007135 0.000000
+# gamma1  2.157099    1.063278  2.028726 0.042486
+# shape   2.100000    0.110032 19.085410 0.000000
+# 
+# LogLikelihood : -934.457 
+# 
+# Information Criteria
+# ------------------------------------
+#                     
+# Akaike       0.96010
+# Bayes        0.97435
+# Shibata      0.96009
+# Hannan-Quinn 0.96534
+# 
+# Weighted Ljung-Box Test on Standardized Residuals
+# ------------------------------------
+#                         statistic   p-value
+# Lag[1]                      18.82 1.438e-05
+# Lag[2*(p+q)+(p+q)-1][2]     19.35 6.582e-06
+# Lag[4*(p+q)+(p+q)-1][5]     22.33 4.424e-06
+# d.o.f=0
+# H0 : No serial correlation
+# 
+# Weighted Ljung-Box Test on Standardized Squared Residuals
+# ------------------------------------
+#                         statistic p-value
+# Lag[1]                      4.780 0.02880
+# Lag[2*(p+q)+(p+q)-1][5]     8.545 0.02155
+# Lag[4*(p+q)+(p+q)-1][9]    10.231 0.04476
+# d.o.f=2
+# 
+# Weighted ARCH LM Tests
+# ------------------------------------
+#             Statistic Shape Scale P-Value
+# ARCH Lag[3]    0.8985 0.500 2.000  0.3432
+# ARCH Lag[5]    2.5240 1.440 1.667  0.3667
+# ARCH Lag[7]    3.2554 2.315 1.543  0.4667
+# 
+# Nyblom stability test
+# ------------------------------------
+# Joint Statistic:  9.5528
+# Individual Statistics:             
+# omega  0.8725
+# alpha1 0.1574
+# beta1  1.4955
+# gamma1 0.1894
+# shape  0.5291
+# 
+# Asymptotic Critical Values (10% 5% 1%)
+# Joint Statistic:     	 1.28 1.47 1.88
+# Individual Statistic:	 0.35 0.47 0.75
+# 
+# Sign Bias Test
+# ------------------------------------
+#                    t-value      prob sig
+# Sign Bias           4.3329 1.547e-05 ***
+# Negative Sign Bias  4.9619 7.587e-07 ***
+# Positive Sign Bias  0.9451 3.447e-01    
+# Joint Effect       35.1222 1.148e-07 ***
+# 
+# 
+# Adjusted Pearson Goodness-of-Fit Test:
+# ------------------------------------
+#   group statistic p-value(g-1)
+# 1    20     240.5    2.585e-40
+# 2    30     282.5    2.343e-43
+# 3    40     306.5    3.033e-43
+# 4    50     344.9    4.334e-46
+# 
+# 
+# Elapsed time : 1.682015 
+
+
+##--------------------------------------------------------------
 # Bertolini GARCH
  #row_labels <- c("omega","alpha1", "beta1", "gamma1","shape)
   # Find correspondence to AR1 abs_nu  nu
