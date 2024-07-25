@@ -382,50 +382,8 @@ Alvarez metrics for kurtosis
    
   Repurchase agreements to borrow or lend securities for cash or reserves take place in the tri-party, GCF repo, and bilateral markets. The TGCR are rates on overnight, specific-counterparty tri-party general collateral repurchase agreement (repo) transactions secured by Treasury securities. Transactions in the tri party market are centrally cleared. The over the counter BGCR rates are the more lucrative rates in which  the U.S. central bank primary  dealers trade with their customers.The SOFR, a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities replaced LIBOR as a benchmark overnight rate. The SOFR includes all trades in the Broad General Collateral market plus bilateral Treasury repurchase agreement (repo) transactions cleared through the Delivery-versus-Payment (DVP) service offered by the Fixed Income Clearing Corporation (FICC).
 
+<!--The overnight  bank funding rate (OBFR), similar to the EFFR, is a broad measure of U.S. dollar funding costs for U.S. based banks.-->
 <!--
-<!--The overnight  bank funding rate (OBFR), similar to the EFFR, is a broad measure of U.S. dollar funding costs for U.S. based banks.
-
-## Arbitrage
-
-IORR-EFFR
-Set by the Fed, the IORB rate is the return rate depository institutions can earn for holding reserves at the Federal Reserve. Meanwhile, the EFFR represents the cost of interbank borrowing and is determined by the market. The difference between these two rates present arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.
-
-Historically, the IORB has been higher than the EFFR in general. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
-The FICC trades are filtered to remove a portion of transactions considered “specials”. 
-[PLACE HERE or in rates discussion]
-FOMC policy changes in the FFR changes the distribution of the reference rates.Former scarcity, reserve requirements OMO, Under the corridor system that implements the [DATE] ample reserves, the Fed's setting of the IORB and O/NRRP which establish the the ceiling and floor of within which the Fed manages the range of the FFR. Fed temporary draining and adding reserves according to preferences for offsetting volatility in the FFR. 
-
-
-Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC) after amendments to the International Banking Act disallowed new branches of FBOs from obtaining deposit insurance. This regulatory difference has two important implications for why FBO branches borrow in the fed funds market: First, it limits their access to deposits—the main source of domestic bank funding—making fed funds an important source of their short-term funding. Second, since they do not pay the FDIC assessment fee, most FBO branches face an effective cost of borrowing fed funds that is lower than that of domestic banks. Lower funding costs give FBO branches an advantage over their domestic counterparts in arbitraging fed funds offered at rates below the interest on reserve balances (IORB) rate, as they can effectively earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed. Furthermore, differences in regulatory requirements across jurisdictions make engaging in the arbitrage trade less costly and less capital intensive for FBO branches. Specifically, leverage ratios in foreign jurisdictions are often calculated as a period-end snapshot, as opposed to daily or weekly averages in the U.S., which allows FBO branches more flexibility to borrow between reporting dates and simply unwind their positions on month-end or quarter-end dates to maintain higher reported leverage ratios
-\url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
-SOFR
-The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market, where investors offer banks overnight loans backed by their bond assets. SOFR replaced the London Interbank Offered Rate (LIBOR).
-
-Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.
-
-SOFR volumes top $2 trillion for the first time after quarter-end pressures cause repo activity and rates to spike. meanwhile, the MOVE index (bond volatility) finally rises on a bear steepener
- \url{https://www.concoda.com/p/money-market-update-b03}
-
-SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
-
-
-Inter-Commodity Spreads Featuring SOFR
-By virtue of its comprehensive link to activity in Treasury general collateral repo markets (\url{https://www.newyorkfed.org/data-and-statistics/data-visualization/tri-party-repo/}), SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks.  An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR.  For this reason, among others, inter-commodity spreads among SR1, SR3, GE, and ZQ futures may emerge as increasingly important tools to manage volatility.
-\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
-
-OBRRP and TBills
-T-bills Outstanding Decreased from January 2021 to July 2022
-Take-up at the Federal Reserve’s Overnight Reverse Repo Facility (ON RRP) increased from a few billion dollars in January 2021 to around $2.6 trillion at the end of December 2022.  In this post, based on a recent Staff Report, we explain how the supply of U.S. Treasury bills (T-bills) affects the decision of money market mutual funds (MMFs) to invest at the facility. We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up.
-
-MMFs’ Demand for U.S. Treasury Securities
-U.S. MMFs are open-end mutual funds regulated by the Securities and Exchange Commission (SEC) that can only invest in safe and highly liquid money-market instruments denominated in U.S. dollars. Among such instruments, U.S. Treasury securities are especially relevant because of their safety and liquidity. Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
-\url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/}
-
-After the Fed’s largest liquidity injection on record, the “excess cash” era is coming to an end. Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening). As the RRP balance reaches zero, the dynamics in the repo market are about to transform. The return to an “excess collateral” era awaits us.
-After the resolution of the latest debt ceiling debacle in June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
-\url{https://www.concoda.com/p/the-reverse-repo-endgame}
-
-
 policy shocks on long-term bonds outside of a yield-curve model.
 More patience is required to estimate a system of yield equations in a way that ensures
 no-arbitrage. The cross-equation restrictions have to be derived from parameters that
@@ -469,167 +427,88 @@ under discussion
 
 In 2019 the policy regime of ample reserves initiated by the FOMC manages the Fed Funds rate within the target range adopted by the FOMC in 2018. The creation of these administrative rates, the (IORB) and ON RRP created  a corridor system defined by FOMC target rates within which Fed manages the FFR.The Fed temporarily intervenes in repurchase (repo) and reverse repo markets to offset high frequency liquidity shocks in order to keep the FFR close to target. Together these administrative rates create a floor system for managing the FFR. IORB is the ceiling and the ON RRP rate the  floor. No bank would lend at rates lower than the IORB nor borrow at rates higher than the ON RRP rate.
 
-<!--
-ANOTHER ISSUE
-Changes in spreads of administered rates also change trading patterns, investing in these funding markets or keeping reserves with the Fed. When SOFR, the Fed’s broadest measure of repo rates, exceeds O/N RRP, cash lenders returns to private repo, leaving the Fed’s O/N RRP facility. When the spread between SOFR and IORB has widened, funding market participants allocate cash to repo trades. When Treasury bill rates exceed the O/N RRP, investors also abandon the Fed's Reverse Repurchase facility.
--->
-
-\emph{The Fed's involvement in repurchase markets}
+## Important arbitrage opportunities in overnight reference rates
+Under the corridor system that implements the [DATE] ample reserves, the Fed's setting of the IORB and O/NRRP which establish the the ceiling and floor of within which the Fed manages the range of the FFR. Fed temporary draining and adding reserves according to preferences for offsetting volatility in the FFR.
 
 <!--
-Concurrently, Sinc {DATES} there has been a dramatic increase in funding primary dealers and other financial participants through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. [DATES]
-
-
-\url{https://www.richmondfed.org/publications/research/economic_brief/2021/eb_21-31#:~:text=The%20Fed's%20Involvement%20in%20the%20Repo%20Market&text=The%20Fed%20supplied%20reserves%20by,temporary%20holdings%20of%20Treasury%20securities}
-\url{https://www.sifma.org/resources/research/us-repo-statistics/}
-
-\url{https://www.newyorkfed.org/markets/domestic-market-operations/monetary-policy-implementation/repo-reverse-repo-agreements}
+FOMC policy changes in the FFR changes the distribution of the reference rates. Former scarcity, reserve requirements OMO,
 -->
+
+IORR-EFFR
+The EFFR represents the cost of interbank borrowing and is determined by the market. The difference between the EFFR and IORR  presents arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.
+
+Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC). Since have FBO branches access to deposit is limited, they borrow in the Fed Funds market.  Since they do not pay the FDIC assessment fee, most FBO branches can borrow fed funds at a lower than domestic banks.  They can earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.
+
+Historically, the IORB has been higher than the EFFR in general. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
+\url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
 
 <!--
-The New York Fed’s Open Market Trading Desk (the Desk) is authorized and directed by the Federal Open Market Committee (FOMC) to conduct repurchase agreement (repo) and reverse repo transactions. These open market operations support effective monetary policy implementation and smooth market functioning by helping maintain the federal funds (fed funds) rate within the FOMC’s target range.
-Repos are a common secured money market transaction. In a repo transaction, the Desk purchases securities from a counterparty subject to an agreement to resell the securities at a later date. Each repo transaction is economically similar to a loan collateralized by securities, and temporarily increases the supply of reserve balances in the banking system.
-Conversely, in a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system.
-To support its policy objectives, the FOMC has established repo and reverse repo facilities. The Overnight Reverse Repo Facility (ON RRP) helps provide a floor under overnight interest rates by acting as an alternative investment for a broad base of money market investors when rates fall below the interest on reserve balances (IORB) rate. The Standing Repo Facility (SRF) serves as a backstop to dampen upward interest rate pressures that can occasionally emerge in overnight U.S. dollar funding markets and spillover into the fed funds market. The Desk generally conducts both the ON RRP and SRF operations each business day.
--->
+First, it limits their access to deposits—the main source of domestic bank funding—making fed funds an important source of their short-term funding. Second, since they do not pay the FDIC assessment fee, most FBO branches face an effective cost of borrowing fed funds that is lower than that of domestic banks. Lower funding costs give FBO branches an advantage over their domestic counterparts in arbitraging fed funds offered at rates below the interest on reserve balances (IORB) rate, as they can effectively earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.  
 
-   since the 1920s, The Fed used repo transactions to manage the reserves held by commercial banks with the Fed. Repo operations became the Fed's primary means of adjusting bank reserves.
-
-<!--
-   in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
-
-   Following the increase in liquidity from the LSAP response to the GFC, the Fed no longer needed to engage in daily reserve management hence, no need for the Fed to actively participate in the repo market to adjust reserves. After 2008, The Fed's ability to pay interest on reserves (IORB) made reserves an attractive short-term investment.
--->
-
-\emph{Repurchase and reverse purchase transactions}
-<!--
-When the Fed is the counterparty to an exchange of securities for reserves, the Fed loans reserves to the counterparty in exchange for a security as collateral. Reserves decrease as the counterparty's account at the Fed isdebited and the Federal Funds rate increases.  In a reverse repo transaction, the Fed lends securities to a counterparty, increasing reserves by a deposit in their account, and lowering the Federal Funds rates. Through these "reserve injections," the Fed was able to 
--->
-
-To offset liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions  to keep the federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
-
-\emph{The reverse repurchase facility}
-   Fed opened its RRP (reverse repo) facility in 2013 to absorb the excess liquidity after the GRC that drove the Fed Funds rate below the Fed's target range. The Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the ON RRP rate. During periods of high reserves, the reverse repo facility takes up reserves when banks no longer want to take on additional reserves and reducing deposit rates and other funding. 
-
-<!--
-   The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio. The reverse repo facility is available to a wide range of money market lenders.In a reverse repo transaction, the 
-   
-   
-   Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily  decreases the supply of reserve balances in the banking system and raises the FFR.   
-
-The ON RRP facility has been effective in helping maintain control of the fed funds rate well within the target policy range. More recently, however, one of the ON RRP's primary uses has been to absorb funds that would otherwise end up as reserves on bank balance sheets, with the Fed effectively becoming the largest borrower in the repo market, as seen in Figure 1.
-
-An important shift linked to the ON RRP is that the Fed now directly interacts with a much broader set of institutions in the repo market. Traditionally, primary dealers were the only admissible counterparties in open market operations. Access to the ON RRP, however, has been extended to banks, GSEs and other qualified financial institutions. Through this expansion, MMFs have become the main repo counterparty.3
-
-While it can be attractive to MMFs, the ON RRP interest rate has been set lower than the IOR that banks earn, making the participation in the program uneconomical for banks. An important consequence of this relative pricing is that the stock of bank reserves is now heavily influenced by flows in and out of MMFs.
--->
-
-\emph{The Standing Repo Facility (SRF)}
-The  the 2019 spike in repo rates followed the Fed reduction its balance sheet build up after quantitative easing (QE). the FFR, and FX swap rates exceeded the Fed’s upper target rate. The Fed initiated the Standing Repo Facility (SRF) after scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
-
-
-\emph{Other changes}
-The central banks continued to change their overall frameworks for controlling short-term interest rates.
-The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
-
-\emph{Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity}
-April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio). The onset of the Covid-19 pandemic in early 2020 led to turmoil in various financial markets.  Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets. Government agencies took action to stabilize financial markets and the economy.
-
-In June 2022, the Federal Reserve started reducing the size of its balance sheet, which had expanded to
-just under \$9 trillion in response to the COVID-19 pandemic. However, whereas banks’ reserves at the
-Federal Reserve have decreased, the investment of money market funds (MMFs) at the Federal Reserve’s
-overnight reverse repo (ON RRP) facility has continued to increase, reaching \$2.4 trillion in September
-2022. 
-
- Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to ON RRP.The Fed’s ON RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both ON RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
-
-Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in  December  2023 (urrently \$439.81 billion , 5/31/2024).
-
-<!--
- The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR expired March 31, 2021 
-
-How monetary policy and the ON RRP facility interact with the private repo market is illustrated by MMFs use of the facility. The MMFs use of the ON RRP facility increased by $2 trillion between January 2021 and June 2022, MMFs'heir private repo lending fell by almost $500 billion. T
-
-\url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
--->
+after amendments to the International Banking Act disallowed new branches of FBOs from obtaining deposit insurance. This regulatory difference has two important implications for why FBO branches borrow in the fed funds market: First, it limits their access to deposits—the main source of domestic bank funding—making fed funds an important source of their short-term funding. Second, since they do not pay the FDIC assessment fee, most FBO branches face an effective cost of borrowing fed funds that is lower than that of domestic banks. Lower funding costs give FBO branches an advantage over their domestic counterparts in arbitraging fed funds offered at rates below the interest on reserve balances (IORB) rate, as they can effectively earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed. Furthermore, differences in regulatory requirements across jurisdictions make engaging in the arbitrage trade less costly and less capital intensive for FBO branches. Specifically, leverage ratios in foreign jurisdictions are often calculated as a period-end snapshot, as opposed to daily or weekly averages in the U.S., which allows FBO branches more flexibility to borrow between reporting dates and simply unwind their positions on month-end or quarter-end dates to maintain higher reported leverage ratios
+he FICC trades are filtered to remove a portion of transactions considered “specials”. 
+[PLACE HERE or in rates discussion]
  
-<!--
-[CHECK and is fast approaching the zero bound] 	769.35.
-\url{https://libertystreeteconomics.newyorkfed.org/2023/12/dropping-like-a-stone-on-rrp-take-up-in-the-second-half-of-2023/}
-\url{https://fred.stlouisfed.org/graph/?g=1optd}
+\url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
 -->
 
-Once the surplus of cash in the Fed’s RRP facility dries up, the stability of the triparty repo market will once again be tested. The Fed’s QT (quantitative tightening) and the U.S. Treasury’s giant debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 “repocalypse”. Sensing a recurrence, a large number of banks have begun signing up to the Fed’s standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.
+SOFR
+The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market, where investors offer banks overnight loans backed by their bond assets. Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
 
+When SOFR exceeds the IORR, banks idle reserve balances in SOFR. An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR. SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks. 
+\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
 <!--
-The onset of the Covid-19 pandemic in early 2020 drastically increased uncertainty throughout the economy. This led to turmoil in various financial markets, evidenced by the Dow Jones Industrial Average in March 2020 posting its largest single-day drop since the 2008 global financial crisis. Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets.1 Government agencies took action to stabilize financial markets and the economy.
+SOFR replaced the London Interbank Offered Rate (LIBOR).
 
-April 1, 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record by exempting reserves and US Treasuries from the Supplementary Leverage Ratio (SLR).During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
+Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.
 
-On April 1, 2020, as part of efforts to restore stability in markets and economy, the Federal Reserve announced an interim final rule, set to expire on March 31, 2021, that would temporarily exclude U.S. Treasuries and deposits at Federal Reserve Banks from the calculation of the Supplementary Leverage Ratio (SLR). One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. 
+SOFR volumes top $2 trillion for the first time after quarter-end pressures cause repo activity and rates to spike. meanwhile, the MOVE index (bond volatility) finally rises on a bear steepener
+ \url{https://www.concoda.com/p/money-market-update-b03}
 
-The U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations. Money market funds (MMFs), invested in bills, turned to the RRP. MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
-\url{https://www.brookings.edu/articles/fed-response-to-covid19/
-
-
-\url{https://www.federalreserve.gov/econres/notes/feds-notes/impact-of-leverage-ratio-relief-announcement-and-expiry-on-bank-stock-prices-20230629.html}
-April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
-
-•	At this time 2021, the U.S. Treasury ended its issuance of Treasury bills used to fund emergency COVID operations
-* When the U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations, money market funds (MMFs) turned to the RRP, 
-•	MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
-\url{https://www.brookings.edu/articles/fed-response-to-covid19/
-
-MMFs began to park more investor cash in the U.S. central bank’s facility instead of lending it to private sector entities. At the same time, borrowers were spoilt for choice, with more cash than they could readily absorb. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.
-
-•	MMFs inflows into O/N RRP continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs
-Between January 2021 and June 2022, money market funds' (MMFs') investments in the Federal Reserve's Overnight Reverse Repurchase (ON RRP) facility rose by $2 trillion, while their private repo lending fell by almost $500 billion. These sizable shifts give us an opportunity to examine how monetary policy implementation and the ON RRP facility interact with the private repo market. 
-\url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
-
-The Fed’s ON RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
 
 
-When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
-•	When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades,
-•	repo rates have had to rise above both O/N RRP and IORB for banks to fund repo trades
-
-wrt to banks, As the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. Yet even Wall Street’s presence proved insufficient to create stable repo markets. Another level in the Fed’s repo hierarchy was needed.
-
-
-•	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the ON RRP.
-}
-
-• Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity
-•	However, large U.S. Treasury issuance in June 2023 provided returns greater the O/N RPP, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain, the primary RRP drainers, MMFs, bought Treasuries. 
-•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
-•	start of 2023, the RRP balance was housing a whopping $2.5 trillion in excess liquidity
-•	June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
-he U.S. Department of the Treasury today announced its current estimates of privately-held net marketable borrowing[1] for the April – June 2023 and July – September 2023 quarters.
-
-During the April – June 2023 quarter, Treasury expects to borrow $726 billion in privately-held net marketable debt, assuming an end-of-June cash balance of $550 billion.[2]  The borrowing estimate is $449 billion higher than announced in January 2023, primarily due to the lower beginning-of-quarter cash balance ($322 billion), and projections of lower receipts and higher outlays ($117 billion).
-
-During the July – September 2023 quarter, Treasury expects to borrow $733 billion in privately-held net marketable debt, assuming an end-of-September cash balance of $600 billion.2
-\url{https://home.treasury.gov/news/press-releases/jy1453#:~:text=U.S.%20Department%20of%20the%20Treasury,-Search&text=During%20the%20April%20%E2%80%93%20June%202023,cash%20balance%20of%20%24550%20billion.
-}
-•	Then heavy debt issuance made yields on government debt more attractive than the Fed’s RRP, the primary RRP drainers, MMFs, bought Treasuries. 
-Among fixed-income securities, there has been no refuge. Interest rates have spiked across the yield curve, thereby sinking all investment-grade debt. Lower-quality notes have also struggled. Sometimes when interest rates rise, junk bonds perform well, because credit spreads tighten. Not this year. Instead, credit spreads have widened owing to fears of a recession. The result has been comprehensive bond market losses.\url{https://www.morningstar.com/columns/rekenthaler-report/worst-bond-market-ever}
-
-•	the RRP drain had entered beast mode.
-•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+Inter-Commodity Spreads Featuring SOFR
+By virtue of its comprehensive link to activity in Treasury general collateral repo markets (\url{https://www.newyorkfed.org/data-and-statistics/data-visualization/tri-party-repo/}), SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks.  An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR.  For this reason, among others, inter-commodity spreads among SR1, SR3, GE, and ZQ futures may emerge as increasingly important tools to manage volatility.
+\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
 -->
 
+ON RRP and TBills
+Money market mutual funds (MMFs) have been a major lender in the ONRRP facility.However, the supply of U.S. Treasury bills (T-bills). Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
+\url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/} The supply of TBills affects the decision of money market mutual funds (MMFs) to invest in the ON RRP. When Tbills are scarce, MMEs increase their investment in the ON RRP as in January 2021 to around $2.6 trillion at the end of December 2022. When the supply Tbills is abundant, the reverse.  
+
+With 3 month Tbills paying over 5 percent interest, the ON RPP has fallen to its lowest level. After the Fed’s largest liquidity injection on record, the “excess cash” era is coming to an end. Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening). As the RRP balance reaches zero, the dynamics in the repo market are about to transform. The return to an “excess collateral” era awaits us.
+After the resolution of the latest debt ceiling debacle in June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
+\url{https://www.concoda.com/p/the-reverse-repo-endgame}
+
+<!--
+We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up T-bills Outstanding Decreased from January 2021 to July 2022 Take-up at the Federal Reserve’s Overnight Reverse Repo Facility (ON RRP) increased from a few billion dollars in January 2021 to around $2.6 trillion at the end of December 2022.  In this post, based on a recent Staff Report, we explain how the supply of U.S. Treasury bills (T-bills) affects the decision of money market mutual funds (MMFs) to invest at the facility. We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up.
+
+MMFs’ Demand for U.S. Treasury Securities
+U.S. MMFs are open-end mutual funds regulated by the Securities and Exchange Commission (SEC) that can only invest in safe and highly liquid money-market instruments denominated in U.S. dollars. Among such instruments, U.S. Treasury securities are especially relevant because of their safety and liquidity. Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
+\url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/}
+-->
 ## Arbitrage among short rates
 
-```{r}
+```{r, arbitragedata, echo=FALSE, warning=FALSE, message=FALSE} 
 # Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
 library(tidyverse)
-m3tbillbp<-m3tbill*100
-arbrates$m3tbillbp <- m3tbillbp
-arbrates$Three_mon_Tbill <- arbrates$m3tbillbp
-# Replace NA values in arbrates$m3tbillbp with 0
+#spread_no_na$Three_mon_Tbill <- spread_no_na$m3tbillbp
+#spread_no_na <- spread_no_na %>%
+#+     mutate(Three_mon_Tbill = spread_no_na$m3tbillbp)
+print(names(spread_no_na))
+arbrates <- spread_no_na %>%
+  select(sdate, EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill)
+# Three_mon_Tbill` doesn't exist.
 arbrates$Three_mon_Tbill[is.na(arbrates$Three_mon_Tbill)] <- 0
 # Ensure spread_no_na contains the updated m3tbillbp column
+#spread_no_na <- spread_no_na %>%
+# mutate(m3tbillbp = ifelse(is.na(m3tbillbp), 0, m3tbillbp))
 ```
+
+
+
+
 
 
 (Figure \@ref(fig:arbratesnorm).
@@ -743,7 +622,7 @@ print(arb_rateszlb)
 
 (Figure \@ref(fig:arbratesinflation).
 
-```{r arbratesinflation, fig.cap="Key reference rates: Taming inflation 3/17/2022-12/14/2023", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r arbratesinflation, fig.cap="Key reference rates: Taming inflation 3/17/2022-12/14/2023        ", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
 #Inflation
 k=5
 bgn=begn[k]
@@ -767,6 +646,156 @@ arb_ratesinflation <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = v
                                 "Three_mon_Tbill" = "yellow"))
 print(arb_ratesinflation)
 ```
+<!--
+ANOTHER ISSUE
+Changes in spreads of administered rates also change trading patterns, investing in these funding markets or keeping reserves with the Fed. When SOFR, the Fed’s broadest measure of repo rates, exceeds O/N RRP, cash lenders returns to private repo, leaving the Fed’s O/N RRP facility. When the spread between SOFR and IORB has widened, funding market participants allocate cash to repo trades. When Treasury bill rates exceed the O/N RRP, investors also abandon the Fed's Reverse Repurchase facility.
+-->
+
+\emph{The Fed's involvement in repurchase markets}
+
+<!--
+Concurrently, Sinc {DATES} there has been a dramatic increase in funding primary dealers and other financial participants through repo and wholesale money market rates. Repo markets trade $\$$4 trillions of dollars daily. [DATES]
+
+
+\url{https://www.richmondfed.org/publications/research/economic_brief/2021/eb_21-31#:~:text=The%20Fed's%20Involvement%20in%20the%20Repo%20Market&text=The%20Fed%20supplied%20reserves%20by,temporary%20holdings%20of%20Treasury%20securities}
+\url{https://www.sifma.org/resources/research/us-repo-statistics/}
+
+\url{https://www.newyorkfed.org/markets/domestic-market-operations/monetary-policy-implementation/repo-reverse-repo-agreements}
+-->
+
+<!--
+The New York Fed’s Open Market Trading Desk (the Desk) is authorized and directed by the Federal Open Market Committee (FOMC) to conduct repurchase agreement (repo) and reverse repo transactions. These open market operations support effective monetary policy implementation and smooth market functioning by helping maintain the federal funds (fed funds) rate within the FOMC’s target range.
+Repos are a common secured money market transaction. In a repo transaction, the Desk purchases securities from a counterparty subject to an agreement to resell the securities at a later date. Each repo transaction is economically similar to a loan collateralized by securities, and temporarily increases the supply of reserve balances in the banking system.
+Conversely, in a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system.
+To support its policy objectives, the FOMC has established repo and reverse repo facilities. The Overnight Reverse Repo Facility (ON RRP) helps provide a floor under overnight interest rates by acting as an alternative investment for a broad base of money market investors when rates fall below the interest on reserve balances (IORB) rate. The Standing Repo Facility (SRF) serves as a backstop to dampen upward interest rate pressures that can occasionally emerge in overnight U.S. dollar funding markets and spillover into the fed funds market. The Desk generally conducts both the ON RRP and SRF operations each business day.
+-->
+
+   since the 1920s, The Fed used repo transactions to manage the reserves held by commercial banks with the Fed. Repo operations became the Fed's primary means of adjusting bank reserves.
+
+<!--
+   in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
+
+   Following the increase in liquidity from the LSAP response to the GFC, the Fed no longer needed to engage in daily reserve management hence, no need for the Fed to actively participate in the repo market to adjust reserves. After 2008, The Fed's ability to pay interest on reserves (IORB) made reserves an attractive short-term investment.
+-->
+
+\emph{Repurchase and reverse purchase transactions}
+<!--
+When the Fed is the counterparty to an exchange of securities for reserves, the Fed loans reserves to the counterparty in exchange for a security as collateral. Reserves decrease as the counterparty's account at the Fed isdebited and the Federal Funds rate increases.  In a reverse repo transaction, the Fed lends securities to a counterparty, increasing reserves by a deposit in their account, and lowering the Federal Funds rates. Through these "reserve injections," the Fed was able to 
+-->
+
+To offset liquidity shocks, the Fed temporarily intervenes in repurchase (repo) and reverse repo transactions  to keep the federal funds rate within the FOMC target range. Repurchase agreements drain reserves from the system and raise the FFR. Reverse repo purchases of assets by the Fed add reserves and lower the FFR.
+
+\emph{The reverse repurchase facility}
+   Fed opened its RRP (reverse repo) facility in 2013 to absorb the excess liquidity after the GRC that drove the Fed Funds rate below the Fed's target range. The Overnight Reverse Repo Program (ON RRP) allows eligible counterparties to lend excess funds to the Fed through repo transactions, ensuring that repo rates remain close to or above the ON RRP rate. During periods of high reserves, the reverse repo facility takes up reserves when banks no longer want to take on additional reserves and reducing deposit rates and other funding. 
+
+<!--
+   The O/N RRP accepts offers to lend cash against securities from its System Open Market Account (SOMA) portfolio. The reverse repo facility is available to a wide range of money market lenders.In a reverse repo transaction, the 
+   
+   
+   Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date.  A reverse repo transaction temporarily  decreases the supply of reserve balances in the banking system and raises the FFR.   
+
+The ON RRP facility has been effective in helping maintain control of the fed funds rate well within the target policy range. More recently, however, one of the ON RRP's primary uses has been to absorb funds that would otherwise end up as reserves on bank balance sheets, with the Fed effectively becoming the largest borrower in the repo market, as seen in Figure 1.
+
+An important shift linked to the ON RRP is that the Fed now directly interacts with a much broader set of institutions in the repo market. Traditionally, primary dealers were the only admissible counterparties in open market operations. Access to the ON RRP, however, has been extended to banks, GSEs and other qualified financial institutions. Through this expansion, MMFs have become the main repo counterparty.3
+
+While it can be attractive to MMFs, the ON RRP interest rate has been set lower than the IORR that banks earn, making the participation in the program uneconomical for banks. An important consequence of this relative pricing is that the stock of bank reserves is now heavily influenced by flows in and out of MMFs.
+-->
+
+\emph{The Standing Repo Facility (SRF)}
+The  the 2019 spike in repo rates followed the Fed reduction its balance sheet build up after quantitative easing (QE). the FFR, and FX swap rates exceeded the Fed’s upper target rate. The Fed initiated the Standing Repo Facility (SRF) after scarce bank reserves constrained dealer balance sheets, leading to cash shortage and a segmented repo market. The SRF lets primary dealers and other approved counterparties borrow cash from the Fed, secured against U.S. Treasuries. The Fed transformed the SRF into a permanent facility.
+
+
+\emph{Other changes}
+The central banks continued to change their overall frameworks for controlling short-term interest rates.
+The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
+
+\emph{Concoda: from excess cash to excess collateral RRP, the sole shock absorber for excess liquidity}
+April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio). The onset of the Covid-19 pandemic in early 2020 led to turmoil in various financial markets.  Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets. Government agencies took action to stabilize financial markets and the economy.
+
+In June 2022, the Federal Reserve started reducing the size of its balance sheet, which had expanded to
+just under \$9 trillion in response to the COVID-19 pandemic. However, whereas banks’ reserves at the
+Federal Reserve have decreased, the investment of money market funds (MMFs) at the Federal Reserve’s
+overnight reverse repo (ON RRP) facility has continued to increase, reaching \$2.4 trillion in September
+2022. 
+
+ Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to ON RRP.The Fed’s ON RRP thus began to determine rates in tri-party repo. Repo rates must to rise above both ON RRP and IORB for banks to fund repo trades with reserves, since they can earn IORB returns on reserves. When the spread between SOFR and IORB widens, financial participants  allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+
+Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity. However, returns on large U.S. Treasury issuance in June 2023 exceeded the ON RPP rate. The RRP balance peaked as the primary RRP users, MMFs, bought Treasuries. RRP balance plunged below \$800 billion in  December  2023 (urrently \$439.81 billion , 5/31/2024).
+
+<!--
+ The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR expired March 31, 2021 
+
+How monetary policy and the ON RRP facility interact with the private repo market is illustrated by MMFs use of the facility. The MMFs use of the ON RRP facility increased by $2 trillion between January 2021 and June 2022, MMFs'heir private repo lending fell by almost $500 billion. T
+
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
+-->
+ 
+<!--
+[CHECK and is fast approaching the zero bound] 	769.35.
+\url{https://libertystreeteconomics.newyorkfed.org/2023/12/dropping-like-a-stone-on-rrp-take-up-in-the-second-half-of-2023/}
+\url{https://fred.stlouisfed.org/graph/?g=1optd}
+-->
+
+Once the surplus of cash in the Fed’s RRP facility dries up, the stability of the triparty repo market will once again be tested. The Fed’s QT (quantitative tightening) and the U.S. Treasury’s giant debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 “repocalypse”. Sensing a recurrence, a large number of banks have begun signing up to the Fed’s standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.
+
+<!--
+The onset of the Covid-19 pandemic in early 2020 drastically increased uncertainty throughout the economy. This led to turmoil in various financial markets, evidenced by the Dow Jones Industrial Average in March 2020 posting its largest single-day drop since the 2008 global financial crisis. Treasury markets faced similar turmoil, as a dash for cash by investors led to liquidity challenges across a variety of markets.1 Government agencies took action to stabilize financial markets and the economy.
+
+April 1, 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record by exempting reserves and US Treasuries from the Supplementary Leverage Ratio (SLR).During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
+
+On April 1, 2020, as part of efforts to restore stability in markets and economy, the Federal Reserve announced an interim final rule, set to expire on March 31, 2021, that would temporarily exclude U.S. Treasuries and deposits at Federal Reserve Banks from the calculation of the Supplementary Leverage Ratio (SLR). One of the main goals of this interim rule was to "ease strains in the Treasury market resulting from the coronavirus and increase banking organizations' ability to provide credit to households and businesses." The SLR was implemented as part of the Basel III reforms after the 2008 financial crisis. The ratio's numerator is tier 1 Capital, and the denominator comprises all on-balance-sheet assets – including U.S. Treasuries and deposits at Federal Reserve Banks – some off-balance-sheet items, and derivative exposures. 
+
+The U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations. Money market funds (MMFs), invested in bills, turned to the RRP. MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
+\url{https://www.brookings.edu/articles/fed-response-to-covid19/
+
+
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/impact-of-leverage-ratio-relief-announcement-and-expiry-on-bank-stock-prices-20230629.html}
+April 2021, the Federal Reserve began unwinding measures that enabled its largest monetary expansion on record. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE (quantitative easing) by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio)
+
+•	At this time 2021, the U.S. Treasury ended its issuance of Treasury bills used to fund emergency COVID operations
+* When the U.S. Treasury ended its mammoth issuance of Treasury bills in 2021 used to fund emergency COVID operations, money market funds (MMFs) turned to the RRP, 
+•	MMFs inflows continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).
+\url{https://www.brookings.edu/articles/fed-response-to-covid19/
+
+MMFs began to park more investor cash in the U.S. central bank’s facility instead of lending it to private sector entities. At the same time, borrowers were spoilt for choice, with more cash than they could readily absorb. The Fed’s O/N RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP.
+
+•	MMFs inflows into O/N RRP continued into 2022.  the volatility of the largest bond market drawdown in recent history encouraged even greater demand for RRPs
+Between January 2021 and June 2022, money market funds' (MMFs') investments in the Federal Reserve's Overnight Reverse Repurchase (ON RRP) facility rose by $2 trillion, while their private repo lending fell by almost $500 billion. These sizable shifts give us an opportunity to examine how monetary policy implementation and the ON RRP facility interact with the private repo market. 
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/money-market-fund-repo-and-the-on-rrp-facility-20231215.html}
+
+The Fed’s ON RRP had thus begun to determine rates in repo’s primary funding market (triparty repo).Throughout 2022, the rate for dealers to borrow from cash lenders remained tightly pinned to O/N RRP. For banks, as the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. 
+
+
+When SOFR (Secured Overnight Financing Rate), the Fed’s broadest measure of repo rates, exceeded O/N RRP, cash lenders returns to private repo, while the Fed’s facility took a backseat
+•	When the spread between SOFR and IORB has widened/ significantly, funding market participants allocate cash to repo trades,
+•	repo rates have had to rise above both O/N RRP and IORB for banks to fund repo trades
+
+wrt to banks, As the central bank pays interest on bank reserves, repo rates must to rise above both O/N RRP and IORB for banks to fund repo trades with reserves, which they’d otherwise park at the Fed for superior returns. Each time the spread between SOFR and IORB has widened significantly, Wall Street behemoths have begun to allocate cash to repo trades, supplying liquidity to the most crucial funding market. Yet even Wall Street’s presence proved insufficient to create stable repo markets. Another level in the Fed’s repo hierarchy was needed.
+
+
+•	Banks' “great shedding” pushed deposits off their balance sheets. The reduced reserves) were placed in the ON RRP.
+}
+
+• Beginning in 2023, the RRP balance was $2.5 trillion in excess liquidity
+•	However, large U.S. Treasury issuance in June 2023 provided returns greater the O/N RPP, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain, the primary RRP drainers, MMFs, bought Treasuries. 
+•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+•	start of 2023, the RRP balance was housing a whopping $2.5 trillion in excess liquidity
+•	June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
+he U.S. Department of the Treasury today announced its current estimates of privately-held net marketable borrowing[1] for the April – June 2023 and July – September 2023 quarters.
+
+During the April – June 2023 quarter, Treasury expects to borrow $726 billion in privately-held net marketable debt, assuming an end-of-June cash balance of $550 billion.[2]  The borrowing estimate is $449 billion higher than announced in January 2023, primarily due to the lower beginning-of-quarter cash balance ($322 billion), and projections of lower receipts and higher outlays ($117 billion).
+
+During the July – September 2023 quarter, Treasury expects to borrow $733 billion in privately-held net marketable debt, assuming an end-of-September cash balance of $600 billion.2
+\url{https://home.treasury.gov/news/press-releases/jy1453#:~:text=U.S.%20Department%20of%20the%20Treasury,-Search&text=During%20the%20April%20%E2%80%93%20June%202023,cash%20balance%20of%20%24550%20billion.
+}
+•	Then heavy debt issuance made yields on government debt more attractive than the Fed’s RRP, the primary RRP drainers, MMFs, bought Treasuries. 
+Among fixed-income securities, there has been no refuge. Interest rates have spiked across the yield curve, thereby sinking all investment-grade debt. Lower-quality notes have also struggled. Sometimes when interest rates rise, junk bonds perform well, because credit spreads tighten. Not this year. Instead, credit spreads have widened owing to fears of a recession. The result has been comprehensive bond market losses.\url{https://www.morningstar.com/columns/rekenthaler-report/worst-bond-market-ever}
+
+•	the RRP drain had entered beast mode.
+•	RRP balance has plunged below $800 billion and is fast approaching the zero bound
+-->
+
+
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
 Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates 
 <!--
