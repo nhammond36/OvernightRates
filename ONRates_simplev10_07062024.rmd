@@ -3424,6 +3424,63 @@ Note.The representation (1.7) assumes that ${\sigma^2}$ is strictly stationary, 
 #\url{https://stackoverflow.com/questions/58354207/interpreting-coefficients-of-rugarch-package-in-r}
 $\eta_1$ is the rotation parameter, i.e. when you do decomposition of the residuals inside the equation for the conditional variance, you can allow a shift ($\eta2$) or/and rotation ($\eta_1$) in the news impact curve.
 -->
+
+<!--
+VOlatility and Treasuries
+# ----------------------- Different realized volatility measures
+  # Use 252 day trailing window of std calculate three ways
+  # Volatility is calculated using publicly released weekly snapshots for 
+  # 52-week trailing windows, as the standard deviation of the first difference
+  # M = movstd(A,k) returns an array of local k-point standard deviation value
+  #  a. log(r_t)-log(r_{t+1})
+  # b. std deviation (log(r_t)-log(r_{t+1}))
+  # c. movstd(vol_b,244) with kernel K=244 or 252
+  # Both models are estimated via OLS on daily data, using a 260-day rolling window 
+  # to allow their parameters to adapt to a changing environment.
+  # Liberty Street  Price volatility is calculated for each day by summing squared one-minute returns (log changes in midpoint prices) from 7 a.m. to 5 p.m., 
+  # annualizing by multiplying by 252, and then taking the square root. It is reported in percent.
+  # 
+  # US Treasuries
+  # \url{https://libertystreeteconomics.newyorkfed.org/2024/02/measuring-treasury-market-depth/}
+  # Michael Fleming, OCTOBER 17, 2023, How Has Treasury Market Liquidity Evolved in 2023?
+  # \url{https://libertystreeteconomics.newyorkfed.org/2023/10/how-has-treasury-market-liquidity-evolved-in-2023/}
+# Volatility Spiked in March 2023
+# The failures of Silicon Valley Bank and Signature Bank increased uncertainty about the economic outlook 
+# and expected path of interest rates. Interest rate volatility increased sharply as a result, as shown 
+# in the next chart, with two-year note volatility in particular reaching levels more than twice as high 
+# as in March 2020. Volatility causes market makers to widen their bid-ask spreads and post less depth 
+# at any given price to manage the increased risk of taking on positions, producing a negative relationship 
+# between volatility and liquidity. The sharp rise in volatility and its subsequent decline hence help 
+# explain the observed patterns in the liquidity measures.
+#   # Darrell Duffie, Still the world’s safe haven? Redesigning the U.S. Treasury market after the COVID-19 crisis
+  # June 22, 2020 \url{https://www.brookings.edu/articles/still-the-worlds-safe-haven/} 2020
+  # Market Liquidity After the Financial Crisis Tobias Adrian,1 Michael Fleming,2 Or Shachar,2 and Erik Vogt3
+  # \url{chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.annualreviews.org/docserver/fulltext/financial/9/1/annurev-financial-110716-032325.pdf?expires=1721940002&id=id&accname=guest&checksum=737C14143F629319A66CAE45259D46F7}
+  # Hamilton Figure 1 displays the sample histogram for fid, drawn for comparison with the Normal distribution. Forty-six percent of the observations are exactly zero, 
+  # while 25 observations exceed 5 standard deviations. If fid were an i.i.d. Gaussian time series, one would not expect to see even one 5 standard deviation outlier. Often these outliers occur on days that Gurkaynak, Sack, and
+  # 
+  # While GARCH, FIGARCH and stochastic volatility models propose statistical
+  # constructions which mimick volatility clustering in financial time series, they
+  # do not provide any economic explanation for it.
+  # 
+  # Duffie Among our other explanatory variables are measures of the volatility of the federal funds rate and of the 
+  # strength of the relationship between pairs of counterparties.
+  # To capture the volatility of the federal funds rate, we start with 
+  # a dollar-weighted average during a given minute t of the interest rates of all loans made in that minute. 
+  # We then measure the time-series sample standard deviation of these minute-by-minute average rates 
+  # over the previous 30 minutes, denoted or(t). 
+  # The median federal funds rate volatility is about 3 basis points, but ranges from under 1 basis point to 87 basis points, 
+  # with a sample standard deviation of 4 basis points. Our measure of sender-receiver relationship strength for a particular 
+  # pair (i,j) of counterparties, denoted Sij, is the dollar volume of transactions sent by i to j over the previous month 
+  # divided by the dollar volume of all transactions sent by i to the top 100 institutions. The receiver-sender relationship 
+  # strength Rij is the dollar volume of transactions received by i from j over the previous month divided by the dollar 
+  # volume of all transactions received by i from j
+  # 
+  # The formal definition of the primary metric I study, market volatility, is the standard deviation of 1
+  # minute returns: 
+  # sibN=sqrt(sum 1 through n(ri -rbar)^2/(n-1))
+
+-->
 ## A simple model of the EFFR
 The parameters are all significant. Negative alpha1 and positive beta1 imply oscillatory behavior.
 
@@ -3524,17 +3581,17 @@ The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box
 
 
 
-## Replicate of Bertola et al empirical model of the Fed Funds rate for comparison with other methods. 
-Bertolini, Bertola, Prati () time series methodology for the Fed Funds rates aimed to: 
+## Replicate of Bertola et al empirical model of the Fed Funds rate 
+For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) Day to day Monetary Policy and the Volatility of the Federal Funds Interest Rate empirical model of the volatility of the Federal Funds rate. The objectives of the Bertolini, Bertola, Prati () or BBP time series methodology for the Fed Funds were: 
 - capture mean reversion behavior
-- establish main patterns of volatility in the data
+- establish main patterns of volatility in the Fed funds rates.
 
-Bertolini et al results of the volatility of the FFR
+Bertolini et al findings about the volatility of the FFR:
 - rises in advance of reserve settlement days 
 - declines in high rate regimes 
 - biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
 
-Although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
 
 Their empirical model of Fed Funds rate
 $r_t=\mu_t + \sigma_t\nu_t$
@@ -3778,20 +3835,22 @@ plot(residuals_bbp)
 
 
 \emph{Findings Bertolini et al}
-DESCRIBE
 Bertolini et al () find the variance of the FFR rate 
 - falls at the end of the year with variance 17 times larger that that of a typical day
-- rise at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls after
+- rise at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
 - tends to fall before holidays and rise afterwards
 - responds positively to penalty rate 1.240     (0.465)
 - increases on FOMC announcements days 0.783  (0.262)
 
 Each non trading day raises the variance of the next trading day by 67 percent
+
 The EGARCH parameters are significant indicating:
 - persistence in underlying volatility of liquidity shock
-- the distribution of errors df of student very fat tailed with t 2.94 significantly different than 3 $\rho=0.747$
+- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
 
-This paper covers the years 2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserva.  The response of the FFR to dummies representing inividual dates is very small compared to Bertolini el al:
+When I ran BBP's set up of their model, during the period of this paper,daily date from  2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserve. So eliminated their dummary days for the reserve period.  
+
+I found the  response of the FFR to dummies representing inividual dates very small compared to Bertolini el al:
 
 endquarter              0.114887391 0.142475753   vs     2.081     0.181
 endyear                 0.066116640 0.173470169          2.913     0.331
@@ -3801,9 +3860,10 @@ threeday_beforeholiday -0.095986648 0.045628642           NA        NA
 oneday_afterholiday     0.035191454 0.129995377           NA        NA
 
 
+Other findings:
 The variance of the FFR 
-- rises 0.067 bp rather falls at the end of the year
-- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 bp versus 2.08
+- rises 0.067 rather falls at the end of the year as in BBP
+- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
 <!--with variance 8 times larger that that of a typical day and falls after-->
 - rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
 
@@ -3811,11 +3871,11 @@ Bertolini estimates show the FFR
 - responds positively to penalty rate 1.240     (0.465)
 - increases on FOMC announcements days 0.783  (0.262)
 
-DUring the period 2015-2023, esitmates show
-- fall Friday, rise Monday -0.011, 0.005
+DUring the period 2016-2023, my estimates show the volatility of of the daily EFFR
 - falls with increases in penalty rate -.07 (0.222)
 - increases on FOMC days
 - small non trading day increase 0.062 (0.091)
+- Bertolini, Bertola, Prati () 
 
 <!--
 - rise end of year 0.066 (0.173)
@@ -3825,10 +3885,12 @@ DUring the period 2015-2023, esitmates show
 - rise one day after holiday
 -->
 
+The Ljung-Box test check for autocorrelation of the volatility time series reports:
 
-
-The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
+<!--The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
 Weighted Ljung-Box Test on Standardized Residuals
+-->
+
 ------------------------------------
                         statistic   p-value
 Lag[1]                      18.32 1.871e-05
