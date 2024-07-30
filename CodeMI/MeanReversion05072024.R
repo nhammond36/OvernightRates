@@ -34,7 +34,8 @@ existing_permissions <- file.access(file_path)
 
 # Grant read permissions
 # Rmd file
-file_path <- "C:/Users/Owner/Documents/Research/MonetaryPolicy/MPResults/LaTeX/ONrates11182023.rmd"
+file_path <- "C:/Users/Owner/Documents/Research/OvernightRates/
+# ? MPResults/LaTeX/ONrates11182023.rmd"
 
 # Replace spaces with escaped spaces
 file_path_quoted <- shQuote(file_path)
@@ -64,7 +65,7 @@ system("git init")
 # Add a specific file to Git in terminal
 file_path <- "C:/Users/Owner/Documents/Research/MonetaryPolicy/Code/CodeMI/MeanReversion11112023nogmmgit.r"
 #git add path/to/your/file.R
-#git add "C:/Users/Owner/Documents/Research/MonetaryPolicy/Code/CodeMI/MeanReversion11112023nogmmgit.r"
+#git add "C:/Users/Owner/Documents/Research/MonetaryPolic                                       y/Code/CodeMI/MeanReversion11112023nogmmgit.r"
 #git add C:/Users/Owner/Documents/MonetaryPolicy/MPResults/LaTeX/ONrates11182023.rmd
 
 # reset git  git config --global user. email "you@example.comgmail
@@ -323,6 +324,183 @@ Sstats <- colMeans(quantilesS[,2:ncol(quantilesS)], na.rm = TRUE)
  ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/quantileseffrline.pdf")
  ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/quantileseffrline.png")
  #labs(tag = "Figure 3: EFFR, FOMC target rates", y = "Basis Points (bp)", color = "Rate", linetype = "Rate") +  
+
+ yminq<-quantilesE$Percentile25_EFFR
+ ymaxq<-quantilesE$Percentile75_EFFR   
+ 
+ # Load ggplot2
+ library(ggplot2)
+ fig_num<-1
+ # add to RMD ```{r chunk5, fig.cap=fig$cap("cos_wav", "Cosine curve", col="red"), fig.align="center"}
+ quantileseffr2 <- ggplot(quantilesE, aes(x = sdate)) +
+   # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+   geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR), fill = "lightblue", alpha = 0.5) +
+   # Add points for EFFR
+   geom_point(aes(y = EFFR), color = "blue") +
+   # Add lines for TargetDe and TargetUe
+   geom_line(aes(y = TargetDe), color = "green", linetype = "dashed") +
+   geom_line(aes(y = TargetUe), color = "green", linetype = "dashed") +
+   labs(
+     caption = "EFFR with FOMC Target Range and Interquartile range (IQR)",
+     x = "",
+     y = "Basis points (bp)"
+   ) +
+   theme_minimal() +
+   guides(shape = guide_legend(title = "Rate"))
+ 
+ # Display the plot
+ print(quantileseffr2)
+ 
+ library(tidyverse)
+ 
+ # Create a long format data frame for TargetDe and TargetUe
+ quantilesE_long <- quantilesE %>%
+   pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+ 
+
+ library(tidyverse)
+ 
+ # Create a long format data frame for TargetDe and TargetUe
+ quantilesE_long <- quantilesE %>%
+   pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+ 
+ # Create the plot
+ quantileseffr2 <- ggplot(quantilesE, aes(x = sdate)) +
+   # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+   geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+   geom_line(aes(y = Percentile25_EFFR, color = "IQR"), linetype = "solid", show.legend = FALSE) +
+   geom_line(aes(y = Percentile75_EFFR, color = "IQR"), linetype = "solid", show.legend = FALSE) +
+   # Add points for EFFR
+   geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+   # Add lines for TargetDe and TargetUe
+   geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+   # Customize labels and theme
+   labs(
+     caption = "EFFR with FOMC Target Range and Interquartile Range (IQR)",
+     x = "",
+     y = "Basis points (bp)"
+   ) +
+   scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+   scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+   theme_minimal()
+ 
+ # Display the plot
+ print(quantileseffr2)
+ 
+ 
+ library(tidyverse)
+
+# Create a long format data frame for TargetDe and TargetUe
+quantilesE_long <- quantilesE %>%
+  pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+
+# Create the plot
+quantileseffr2 <- ggplot(quantilesE, aes(x = sdate)) +
+  # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+  geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+  # Add points for EFFR
+  geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+  # Add lines for TargetDe and TargetUe
+  geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+  # Customize labels and theme
+  labs(
+    caption = "EFFR with FOMC Target Range and Interquartile Range (IQR)",
+    x = "",
+    y = "Basis points (bp)"
+  ) +
+  scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+  scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+  theme_minimal()
+
+##
+library(tidyverse)
+
+# Create a long format data frame for TargetDe and TargetUe
+quantilesE_long <- quantilesE %>%
+  pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+
+# Create the plot
+quantileseffr2 <- ggplot(quantilesE, aes(x = sdate)) +
+  # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+  geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+  # Add points for EFFR
+  geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+  # Add lines for TargetDe and TargetUe
+  geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+  # Customize labels and theme
+  labs(
+    caption = "EFFR with FOMC Target Range and Interquartile Range (IQR)",
+    x = "",
+    y = "Basis points (bp)"
+  ) +
+  scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+  scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+  theme_minimal()
+
+# Display the plot
+print(quantileseffr2)
+
+
+
+library(tidyverse)
+
+# Create a long format data frame for TargetDe and TargetUe
+quantilesE_long <- quantilesE %>%
+  pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+
+# Create the plot
+quantileseffr2 <- ggplot(quantilesE, aes(x = sdate)) +
+  # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+  geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+  # Add points for EFFR
+  geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+  # Add lines for TargetDe and TargetUe
+  geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+  # Customize labels and theme
+  labs(
+    caption = "EFFR with FOMC Target Range and Interquartile Range (IQR)",
+    x = "",
+    y = "Basis points (bp)"
+  ) +
+  scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+  scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+  theme_minimal() +
+  guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+
+print(quantileseffr2)
+
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/quantileseffr2.pdf")
+ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/quantileseffr2.png")
+ 
+ ##
+ figure_number <- 1
+ 
+ # Function to create and save a plot with a figure number
+ create_plot <- function(df, figure_number) {
+   plot <- ggplot(df, aes(x = sdate)) +
+     # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+     geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR), fill = "lightblue", alpha = 0.5) +
+     # Add points for EFFR
+     geom_point(aes(y = EFFR), color = "blue") +
+     # Add lines for TargetDe and TargetUe
+     geom_line(aes(y = TargetDe), color = "red", linetype = "dashed") +
+     geom_line(aes(y = TargetUe), color = "green", linetype = "dashed") +
+     # Customize labels and theme
+     labs(title = paste("Figure", figure_number, ": EFFR with Target Ranges and Percentiles"),
+          x = "Date",
+          y = "Rate",
+          caption = "Data Source: Your Data Frame") +
+     theme_minimal()
+ 
+ ##
+ maxr<-max(quantilesE[,2:ncol(quantilesE)])
+ quantileseffr <- ggplot(melteffr,aes(x=sdate,y=value,colour=variable,group=variable)) + 
+   geom_point(shape = 16, size = 1) +
+   labs(x="",  y = "Basis Points (bp),volume $billions", color = "Rate", shape = "Rate") +  
+   scale_y_continuous(breaks = seq(0,maxr, by = 50), limits = c(0, maxr)) + 
+   theme_minimal() + guides(shape = guide_legend(title = "Rate"))
+ print(quantileseffr)
+ 
 
 
 # VOLUMES Plots and sample stats ---------------------------------------
@@ -1101,7 +1279,7 @@ minr<-min(normE[,ncol(normE)]
   maxr<-max(adjust[,2:ncol(adjust)]) 
   minr<-min(adjust[,2:ncol(adjust)])
   #maxr<-max(qadjE[,2]) 
-  #minr<-min(qadjE[,2]) 
+  #minr<-min(qadjE[,2]) str()
   
   meltrates_adjust <- melt(data.frame(sdate, data_without_sdate), id.vars = "sdate")
   meltrates_adjust$variable <- as.factor(meltrates_adjust$variable)
@@ -1362,183 +1540,7 @@ ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.pd
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/episoderates.png", prates)
 
 
-# ------------ do SOFR, TGCR, BCGR IQR
-# rates_normiqr
-iqr_normS<-quantilesS$Percentile75_SOFR-normE$Percentile25_SOFR
-range_normS<-quantilesS$Percentile99_SOFR-quantilesS$Percentile01_SOFR
-normS$iqr_norm<-iqr_normS
-normS$range_norm<-range_normS  
 
-# Load ggplot2 library
-library(ggplot2)
-library(dplyr)
-
-# Check the column names in quantilesS to ensure they are correct
-names(quantilesS)
-quantilesS$SOFR[1784]=481
-
-#NORMALCY
-k=1
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-# Create the subset using dplyr::select
-subset_normS <- quantilesS[bgn:edn,] %>%
-  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
-subset_normS$sdate<-quantilesS[bgn:edn,1]
-# Convert sdate to character to avoid issues with ggplot2
-subset_normS$sdate <- as.Date(subset_normS$sdate)
-
-maxr<-max(subset_normS$SOFR)
-# Create the plot
-rates_normiqrS <- ggplot(subset_normS, aes(x = sdate)) +
-  geom_line(aes(y = SOFR, color = "SOFR")) +
-  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
-  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
-  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
-  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
-  labs( caption = "SOFR Normalcy 3/4/2016-7/31/2019",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
-  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
-  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
-  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
-  scale_fill_manual(values = c("IQR" = "grey")) +
-  theme_minimal()
-print(rates_normiqrS)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqrS.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_normiqrS.png")
-
-#ADJUST
-# INFLATION
-k=5
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-# Create the subset using dplyr::select
-subset_inflationS <- quantilesS[bgn:edn,] %>%
-  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
-subset_inflationS$sdate<-quantilesS[bgn:edn,1]
-# Convert sdate to character to avoid issues with ggplot2
-subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
-
-maxr<-max(subset_inflationS$SOFR)
-# Create the plot
-rates_inflationiqrS2 <- ggplot(subset_inflationS, aes(x = sdate)) +
-  geom_line(aes(y = SOFR, color = "SOFR")) +
-  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
-  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
-  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
-  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
-  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
-  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
-  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
-  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
-  scale_fill_manual(values = c("IQR" = "grey")) +
-  theme_minimal()
-print(rates_inflationiqrS2)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS2.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS2.png")
-
-
-#COVID
-# INFLATION
-k=5
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-# Create the subset using dplyr::select
-subset_inflationS <- quantilesS[bgn:edn,] %>%
-  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
-subset_inflationS$sdate<-quantilesS[bgn:edn,1]
-# Convert sdate to character to avoid issues with ggplot2
-subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
-
-maxr<-max(subset_inflationS$SOFR)
-# Create the plot
-rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
-  geom_line(aes(y = SOFR, color = "SOFR")) +
-  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
-  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
-  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
-  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
-  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
-  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
-  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
-  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
-  scale_fill_manual(values = c("IQR" = "grey")) +
-  theme_minimal()
-print(rates_inflationiqrS)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
-
-
-#ZLB
-# INFLATION
-k=5
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-# Create the subset using dplyr::select
-subset_inflationS <- quantilesS[bgn:edn,] %>%
-  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
-subset_inflationS$sdate<-quantilesS[bgn:edn,1]
-# Convert sdate to character to avoid issues with ggplot2
-subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
-
-maxr<-max(subset_inflationS$SOFR)
-# Create the plot
-rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
-  geom_line(aes(y = SOFR, color = "SOFR")) +
-  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
-  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
-  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
-  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
-  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
-  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
-  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
-  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
-  scale_fill_manual(values = c("IQR" = "grey")) +
-  theme_minimal()
-print(rates_inflationiqrS)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
-
-
-# INFLATION
-k=5
-begn<-c(1,859,923,1014,1519,1)
-endn<-c(858,922,1013,1518,1957,1957)
-bgn<-begn[k]
-edn<-endn[k]
-# Create the subset using dplyr::select
-subset_inflationS <- quantilesS[bgn:edn,] %>%
-  dplyr::select(SOFR, VolumeSOFR, Percentile75_SOFR, Percentile25_SOFR)
-subset_inflationS$sdate<-quantilesS[bgn:edn,1]
-# Convert sdate to character to avoid issues with ggplot2
-subset_inflationS$sdate <- as.Date(subset_inflationS$sdate)
-
-maxr<-max(subset_inflationS$SOFR)
-# Create the plot
-rates_inflationiqrS <- ggplot(subset_inflationS, aes(x = sdate)) +
-  geom_line(aes(y = SOFR, color = "SOFR")) +
-  #geom_point(aes(y = SOFR, color = "SOFR"), shape = 16, size = 1) +  # Example: shape = 16 (solid circle), size = 2
-  #geom_line(aes(y = VolumeSOFR, color = "VolumeSOFR")) +
-  geom_ribbon(aes(ymin = Percentile25_SOFR, ymax = Percentile75_SOFR, fill = "IQR"), alpha = 1) +
-  geom_line(aes(y = Percentile75_SOFR, color = "IQR"), linetype = "blank") +  # Dummy line for legend
-  labs( caption = "SOFR Inflation 03/17/2022-12/14/2023",x = "", y = "rates basis points (bp) volume (billion dollars)", color = "Variables", fill = "Ribbon") +
-  scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green",  "IQR" = "grey")) +
-  scale_y_continuous(breaks = seq(0,maxr, by = 25), limits = c(0,maxr)) + 
-  #scale_color_manual(values = c("SOFR" = "red", "VolumeSOFR" = "green", "TargetUe" = "blue", "TargetDe" = "blue", "IQR" = "grey")) +
-  scale_fill_manual(values = c("IQR" = "grey")) +
-  theme_minimal()
-print(rates_inflationiqrS)
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.pdf")
-ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/rates_inflationiqrS.png")
-
-#---------------------------------------
 # Combine xtable objects
 #combined_xtable <- rbind(x1, x2, x3)
 episodesstats <-rbind(normstats, adjstats,covidstats, zlbstats,inflationstats)
@@ -2500,7 +2502,137 @@ bnormalcy <- ggplot(boxplot_normalcy , aes(x=Group,
         plot.background = element_rect(fill = "white"))
 print(bnormalcy)
   my_environmentbox$norm <-bnormalcy 
- 
+
+  #-----------------------------------------------------------------------------------  
+# Plot IQR as ribbon
+  # str(normE)
+  # 'data.frame':	858 obs. of  9 variables:
+  #   $ sdate            : Date, format: "2016-03-04" "2016-03-07" "2016-03-08" ...
+  # $ EFFR             : num  36 36 36 36 36 36 36 37 37 37 ...
+  # $ VolumeEFFR       : num  75 72 72 75 72 68 67 67 63 63 ...
+  # $ TargetUe         : num  50 50 50 50 50 50 50 50 50 50 ...
+  # $ TargetDe         : num  25 25 25 25 25 25 25 25 25 25 ...
+  # $ Percentile01_EFFR: num  34 34 32 34 35 35 35 35 35 36 ...
+  # $ Percentile25_EFFR: num  36 36 36 36 36 36 36 36 36 36 ...
+  # $ Percentile75_EFFR: num  37 37 37 37 37 37 37 37 37 37 ...
+  # $ Percentile99_EFFR: num  52 50 50 52 75 50 50 50 50 50 ...
+  # Assuming normE is the new smaller dataset
+  
+  quantilesE_long <- normE %>%
+    pivot_longer(cols = c(TargetDe, TargetUe), names_to = "Target", values_to = "Value")
+  
+  # Create the plot
+  quantileseffr_norm <- ggplot(normE, aes(x = sdate)) +
+    # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+    # Add points for EFFR
+    geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+    # Add lines for TargetDe and TargetUe
+    geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+    # Customize labels and theme
+    labs(
+      caption = "Normalcy: EFFR with FOMC Target Range and Interquartile Range (IQR)",
+      x = "",
+      y = "Basis points (bp)"
+    ) +
+    scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+    scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+    theme_minimal() +
+    guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+  
+  # Display the plot
+  print(quantileseffr_norm)
+  
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/quantileseffr_norm.pdf")
+  ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/quantileseffr_norm.png")
+  
+  #adjustE<-adjust[1:2,]
+  quantileseffr_adjust <- ggplot(adjE, aes(x = sdate)) +
+    # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+    # Add points for EFFR
+    geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+    # Add lines for TargetDe and TargetUe
+    geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+    # Customize labels and theme
+    labs(
+      caption = "Adjustment: EFFR with FOMC Target Range and Interquartile Range (IQR)",
+      x = "",
+      y = "Basis points (bp)"
+    ) +
+    scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+    scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+    theme_minimal() +
+    guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+  
+  print(quantileseffr_adjust)
+  
+  sdate<-covidE$sdate
+  quantileseffr_covid <- ggplot(covidE, aes(x = sdate)) +
+    # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+    # Add points for EFFR
+    geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+    # Add lines for TargetDe and TargetUe
+    geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+    # Customize labels and theme
+    labs(
+      caption = "Covid: EFFR with FOMC Target Range and Interquartile Range (IQR)",
+      x = "",
+      y = "Basis points (bp)"
+    ) +
+    scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+    scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+    theme_minimal() +
+    guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+  
+  print(quantileseffr_covid)
+  
+  sdate<-zlbE$sdate
+  quantileseffr_zlb <- ggplot(zlbE, aes(x = sdate)) +
+    # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+    # Add points for EFFR
+    geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+    # Add lines for TargetDe and TargetUe
+    geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+    # Customize labels and theme
+    labs(
+      caption = "zlb: EFFR with FOMC Target Range and Interquartile Range (IQR)",
+      x = "",
+      y = "Basis points (bp)"
+    ) +
+    scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+    scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+    theme_minimal() +
+    guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+  
+  print(quantileseffr_zlb)
+  
+  
+  sdate<-inflationE$sdate
+  quantileseffr_inflation <- ggplot(inflationE, aes(x = sdate)) +
+    # Add ribbon for Percentile75_EFFR and Percentile25_EFFR
+    geom_ribbon(aes(ymin = Percentile25_EFFR, ymax = Percentile75_EFFR, fill = "IQR"), alpha = 0.5) +
+    # Add points for EFFR
+    geom_point(aes(y = EFFR, color = "EFFR"), show.legend = TRUE) +
+    # Add lines for TargetDe and TargetUe
+    geom_line(data = quantilesE_long, aes(y = Value, color = Target), linetype = "dashed", show.legend = TRUE) +
+    # Customize labels and theme
+    labs(
+      caption = "inflation: EFFR with FOMC Target Range and Interquartile Range (IQR)",
+      x = "",
+      y = "Basis points (bp)"
+    ) +
+    scale_fill_manual(name = "Range", values = c("IQR" = "lightblue")) +
+    scale_color_manual(name = "Rate", values = c("EFFR" = "blue", "TargetDe" = "green", "TargetUe" = "green")) +
+    theme_minimal() +
+    guides(color = guide_legend(title = "Rate"), fill = guide_legend(title = "Range"))
+  
+  print(quantileseffr_inflation)
+#-----------------------------------------------------------------------------------  
+  
+  
   
   #str(boxplot_normalcy)
   # 'data.frame':	4 obs. of  6 variables:
@@ -3217,6 +3349,7 @@ labs(x = "Date", y = "basis points (bp)", color = "Lines") +
 #scale_color_manual(values = c("EFFR" = "blue, "25 pct" = "grey", "75 pct" = "grey" )) + 
 #scale_color_manual(values = c("EFFR" = "black","Lower target" = "green","Upper target" = "blue", "25 pct" = "grey", "75 pct" = "grey" )) + 
 theme_minimal()
+
 print(percentile)
 
 # -------------------------------------- DELETE OLS GMM -----------------------------------------
