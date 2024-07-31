@@ -1196,8 +1196,6 @@ endn <- c(858, 922, 1013, 1518, 1957, 1957)
 bgn<-begn[k]
 edn<-endn[k]
 covid<-rrbp[bgn:edn,]
-#sdatecovid<-sdate[bgn:edn]
-#sdate<-sdateadj
 maxr<-525  #max(covid[,2:ncol(covid)]) 
 minr<-0 #min(adjust[,2:ncol(covid)])
 meltrates_covid <- melt(covid,id="sdate")
@@ -1211,19 +1209,8 @@ ratests_covid <- ggplot(meltrates_covid,aes(x=sdate,y=value,colour=variable,grou
 ```
 
 
-```{r include_figure, results='asis', echo=FALSE}
-cat('
-\\begin{figure}[H]
-  \\centering
-  \\includegraphics[width=0.8\\textwidth]{C:/Users/Owner/Documents/Research/OvernightRates/ONRates_simplev10_05262024v7_files/figure-latex/ratestscovid-1.pdf}
-  \\caption{Rates during covid period 11/1/2019-3/16/2020}
-  \\label{fig:ratestscovid}
-\\end{figure}
-')
-```
-
 \FloatBarrier
-. 
+
 
 ```{r, fomccovid, echo=FALSE, results='asis'}
 library(xtable)
@@ -3523,7 +3510,58 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
+  
+  non_trading_days_pairs <- function(dates, holidays) {
+  n <- length(sdate)
+  non_trading_counts <- numeric(n-1)
+  
+  for (i in 2:n) {
+    start_date <- sdate[i - 1]
+    end_date <- sdate[i]
+    
+    # Generate sequence of dates between start_date and end_date
+    date_seq <- seq.Date(start_date, end_date, by = "day")
+    
+    # Identify weekends
+    weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
+    
+    # Identify public holidays
+    holidays <- date_seq %in% holidays
+    
+    # Combine weekends and holidays
+    non_trading <- weekends | holidays
+    
+    # Count non-trading days
+    non_trading_counts[i - 1] <- sum(non_trading)
+  }
+  
+  return(non_trading_counts)
+}
+  
  # Log function for non-trading days---------------------------------
+   holidays <- as.Date(c(
+    "2016-01-01", "2016-01-18", "2016-02-15", "2016-03-25", "2016-05-30", 
+    "2016-07-04", "2016-09-05", "2016-11-24", "2016-12-26", "2017-01-02", 
+    "2017-01-16", "2017-02-20", "2017-04-14", "2017-05-29", "2017-07-04", 
+    "2017-09-04", "2017-11-23", "2017-12-25", "2018-01-01", "2018-01-15", 
+    "2018-02-19", "2018-03-30", "2018-05-28", "2018-07-04", "2018-09-03", 
+    "2018-11-22", "2018-12-25", "2019-01-01", "2019-01-21", "2019-02-18", 
+    "2019-04-19", "2019-05-27", "2019-07-04", "2019-09-02", "2019-11-28", 
+    "2019-12-25", "2020-01-01", "2020-01-20", "2020-02-17", "2020-04-10", 
+    "2020-05-25", "2020-07-03", "2020-09-07", "2020-11-26", "2020-12-25", 
+    "2021-01-01", "2021-01-18", "2021-02-15", "2021-04-02", "2021-05-31", 
+    "2021-07-05", "2021-09-06", "2021-11-25", "2021-12-24", "2022-01-17", 
+    "2022-02-21", "2022-04-15", "2022-05-30", "2022-06-20", "2022-07-04", 
+    "2022-09-05", "2022-11-24", "2022-12-26", "2023-01-02", "2023-01-16", 
+    "2023-02-20", "2023-04-07", "2023-05-29", "2023-06-19", "2023-07-04", 
+    "2023-09-04", "2023-11-23", "2023-12-25", "2016-11-11", "2017-11-11", 
+    "2018-11-11", "2019-11-11", "2020-11-11", "2021-11-11", "2022-11-11", 
+    "2023-11-11", "2016-10-10", "2017-10-09", "2018-10-08", "2019-10-14", 
+    "2020-10-12", "2021-10-11", "2022-10-10", "2023-10-09", "2020-07-04", 
+    "2021-07-04", "2016-12-25", "2021-12-25", "2022-12-25"
+  ))
+  
+  non_trading_counts <- non_trading_days_pairs(dates, holidays)  
   nontradingdays<-non_trading_counts
   log_nontradingdays <- function(gamma, nontradingdays) {
     return(log(1 - gamma * nontradingdays))
@@ -3532,7 +3570,6 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   # Negative log-likelihood function
   if (!require("stats4")) install.packages("stats4")
   library(stats4)
- 
 
   neg_log_likelihood <- function(gamma) {
     if (any(1 - gamma * non_trading_counts <= 0)) {
@@ -3544,6 +3581,7 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
     log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
     return(log_likelihood)
   }
+  
   
   # Initial guess for gamma
   gamma_start <- 0.01
