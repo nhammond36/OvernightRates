@@ -94,16 +94,26 @@ print(colnames(spread))
 str(spread)
 sdate<-as.Date(spread$Date,format="%m/%d/%Y")
 
-# add 3 month Treasury bill to data frame UPDATE DATA RDS
+# FIND DELETE chatgpt code for this
+#ONE OFF CORRECTION DONT RERUN  
+# add 3 month Treasury bill to data frame UPDATE DATA RDS ----------------------
 dataupdate<-read.csv("C:/Users/Owner/Documents/Research/OvernightRates/Final data files/NYFedReferenceRates_12172023v5.csv",header=TRUE, sep=",",dec=".",stringsAsFactors=FALSE)
 m3tbill<-dataupdate$X3mbill[1:1957]
 spread_no_na$m3tbill<-m3tbill
-
+DPCREDIT<-dataupdate$DPCREDIT
+sd_effr<-dataupdate$sd_eff
 # I added DPCREDIT, h, and st_effr
-#spread_no_na$sd_effr<-spread$sd_effr[1:1957]
+spread_no_na$DPCREDIT<-DPCREDIT[1:1957]
+spread_no_na$sd_effr<-sd_effr[1:1957]
+spread_no_na$dummy_h<-NULL
+spread_no_na$h<-h
+str(spread_no_na)
+#spread$sd_effr[1:1957]
 #my_envmp$spread_no_na <-spread_no_na
 #saveRDS(my_envmp, file = "C:/Users/Owner/Documents/Research/OvernightRates/my_envmp.RDS")
 #str( my_envmp$spread_no_na)
+#-----------------------------------------
+
 
 # Find the row number for the beginning and end dates of the sample: where  "3/4/2016" occurs and 12/29/2022 for the first time
 # Check which index corresponds to the specified dates
@@ -798,16 +808,10 @@ ggsave("C:/Users/Owner/Documents/Research/MonetaryPolicy/Figures/Figures2/plotsd
 
 
 
-library(tidyverse)
 # Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
-#rrbp <-  spread_no_na[, c("sdate","EFFR","TGCR","BGCR","SOFR")]
-#head(rrbp)
-#str(rrbp)
 library(tidyverse)
-m3tbillbp<-m3tbill*100
-arbrates$m3tbillbp <- m3tbillbp
-arbrates$Three_mon_Tbill <- arbrates$m3tbillbp
-# Replace NA values in arbrates$m3tbillbp with 0
+Three_mon_Tbill<-spread_no_na$m3tbill*100
+arbrates<-c(EFFR, SOFR, IORR, RRPONTSYAWARD, Three_mon_Tbill)
 arbrates$Three_mon_Tbill[is.na(arbrates$Three_mon_Tbill)] <- 0
 # Ensure spread_no_na contains the updated m3tbillbp column
 mxrates<-max(arbrates[,2:6])
@@ -854,10 +858,6 @@ arb_rates <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = variable, 
 # 
 # # Print the plot
 print(arb_rates)
-
-
-
-
 
 library(tidyverse)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_rates.pdf")
@@ -999,7 +999,6 @@ arb_ratesinflation <- ggplot(arbrates_long, aes(x = sdate, y = value, colour = v
                                 "IORR" = "blue",
                                 "RRPONTSYAWARD" = "aquamarine",
                                 "Three_mon_Tbill" = "yellow"))
-
 print(arb_ratesinflation)
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesinflation.pdf")
 ggsave("C:/Users/Owner/Documents/Research/OvernightRates/Figures/arb_ratesinflation.png")
@@ -1451,6 +1450,7 @@ non_trading_days <- function(start_date, end_date, holidays) {
 }
 
 # Function to calculate non-trading days between pairs of dates---------------------------
+#function(start_date, end_date, holidays)
 non_trading_days_pairs <- function(dates, holidays) {
   n <- length(sdate)
   non_trading_counts <- numeric(n-1)
@@ -1485,7 +1485,7 @@ num_non_trading_days <- non_trading_days(start_date, end_date, public_holidays)
 print(num_non_trading_days)
 date_seq <- seq.Date(start_date, end_date, by = "day")
 
-# CUSTOM end of quarters 1-3
+# CUSTOM end of quarters 1-3---------------------------------------------------
 eq2017q3<-which(sdate == as.Date("2017-09-29")) 
 h[eq2017q3,7]=1
 
@@ -1545,7 +1545,7 @@ h[ey2022,1:8]
 h[ey2022,7:8]=1
 ey2023<- which(sdate == as.Date("2023-12-14")) 
 h[ey2023,7:8]
-
+#-----------------------------------------------------
 
 # Chat version 2
 # Load necessary package
@@ -1763,7 +1763,7 @@ h$endquarter <- h$sdate %in% end_quarter_dates
   dummy_h$fomcindex <- ifelse(dummy_h$fomc == 0, 0, 1)
   
   # Check the resulting dataframe
-  print(dummy_h2)
+  print(dummy_h)
   
   # Method 2
   # Initialize the new column with default values (e.g., 0)
@@ -1781,8 +1781,10 @@ h$endquarter <- h$sdate %in% end_quarter_dates
   dummy_h$holiday <- NULL
   dummy_h$threeday_afterholiday<- NULL  # only zeros --> check data
   str( dummy_h)
+  spread_no_na$h<-dummy_h
   #---------------------------------------------------------
   
+ 
   
   # Generate T observations for sd_effr from a normal distribution
   set.seed(123)  # Setting seed for reproducibility
@@ -1804,6 +1806,31 @@ h$endquarter <- h$sdate %in% end_quarter_dates
 
   
   # Log function for non-trading days---------------------------------
+  #non_trading_days <- non_trading_days_pairs(dates, holidays)
+  # Define the holidays vector
+  holidays <- as.Date(c(
+    "2016-01-01", "2016-01-18", "2016-02-15", "2016-03-25", "2016-05-30", 
+    "2016-07-04", "2016-09-05", "2016-11-24", "2016-12-26", "2017-01-02", 
+    "2017-01-16", "2017-02-20", "2017-04-14", "2017-05-29", "2017-07-04", 
+    "2017-09-04", "2017-11-23", "2017-12-25", "2018-01-01", "2018-01-15", 
+    "2018-02-19", "2018-03-30", "2018-05-28", "2018-07-04", "2018-09-03", 
+    "2018-11-22", "2018-12-25", "2019-01-01", "2019-01-21", "2019-02-18", 
+    "2019-04-19", "2019-05-27", "2019-07-04", "2019-09-02", "2019-11-28", 
+    "2019-12-25", "2020-01-01", "2020-01-20", "2020-02-17", "2020-04-10", 
+    "2020-05-25", "2020-07-03", "2020-09-07", "2020-11-26", "2020-12-25", 
+    "2021-01-01", "2021-01-18", "2021-02-15", "2021-04-02", "2021-05-31", 
+    "2021-07-05", "2021-09-06", "2021-11-25", "2021-12-24", "2022-01-17", 
+    "2022-02-21", "2022-04-15", "2022-05-30", "2022-06-20", "2022-07-04", 
+    "2022-09-05", "2022-11-24", "2022-12-26", "2023-01-02", "2023-01-16", 
+    "2023-02-20", "2023-04-07", "2023-05-29", "2023-06-19", "2023-07-04", 
+    "2023-09-04", "2023-11-23", "2023-12-25", "2016-11-11", "2017-11-11", 
+    "2018-11-11", "2019-11-11", "2020-11-11", "2021-11-11", "2022-11-11", 
+    "2023-11-11", "2016-10-10", "2017-10-09", "2018-10-08", "2019-10-14", 
+    "2020-10-12", "2021-10-11", "2022-10-10", "2023-10-09", "2020-07-04", 
+    "2021-07-04", "2016-12-25", "2021-12-25", "2022-12-25"
+  ))
+  
+  non_trading_counts <- non_trading_days_pairs(dates, holidays)
   nontradingdays<-non_trading_counts
   log_nontradingdays <- function(gamma, nontradingdays) {
     return(log(1 - gamma * nontradingdays))
