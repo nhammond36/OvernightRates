@@ -259,37 +259,32 @@ This paper describes the dynamics of these rates and proposes a model of volatil
 # Introduction
   How monetary policy impacts volatility of rates in the market for repurchase agreements also reveals how the Federal Reserve Bann (Fed) preference for volatility as it manages the policy rate, the Federal Funds rate (FFR) with the target rates specified by the FOMC. The Fed's  open market operations adjust reserves through repurchase transactions to maintain the Federal Funds rate within the FOMC’s target range. How does the Fed manage the FFR to survive the volatility of repurchase market rates? 
 
-  The Fed was challenged to manage its policy rate after the excess liquidity created by quantitative easing after the Great Financial Crisis (GFC). Increasing the FFR by lowering reserves through repurchases or decreasing the FFR through lending through reverse repurchase is... Events like the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy.
+  The Fed was challenged to manage its policy rate after the excess liquidity created by quantitative easing after the Great Financial Crisis (GFC). Events like the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy. By increasing reserves through repurchases, the Fed can lowering the FFR  or raising the FFR by decreasing reserves through lending through reverse repurchase transactions.
+  
+The Federal Funds rate is the Fed's policy rate, the rate banks exchange funds in the interbank market. The administered rates for setting policy, interest on reserves (IORB) and the overnight reverse repo rate are important tools for managing the FFR.  
 
    The daily \$4 trillion repurchase market market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. 
    
- The repurchase funding market rates are:
--  triparty general collaterialrate (TGCR) — the major dealer funding market
--  GCF — the interdealer repo market 
--  bilateral general collaterial rate (BGCR) — the dealer-to-customer repo market
--  The Secured Overnight Financing Rate (SOFR) is the Fed’s broadest measure of repo rates for borrowing     collateralized by US Treasury securities.
+The repurchase funding market rates are:
+- Triparty General Collateral Rate (TGCR) — the major dealer funding market
+- GCF — the interdealer repo market
+- Bilateral General Collateral Rate (BGCR) — the dealer-to-customer repo market
+- The Secured Overnight Financing Rate (SOFR) is the Fed’s broadest measure of repo rates for borrowing collateralized by US Treasury securities.
+   
+The tri-party general collaterial market is repo’s primary funding market. In tri-party repo, most players are cash lenders or borrowers. For example, primary dealers are required to intermediate US Treasury issuance to their customers. They finance these purchases from their inventory or by borrowing from the Fed in the tri-party market. Participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in tri-party repo, then lend at a spread in other repo markets. Primary dealers sell securities to the customers in the more lucrative OTC broad general collateral market.
 
-The Federal Funds rate is the Fed's policy rate, the rate banks exchange funds in the interbank market. The administered rates for setting policy, interest on reserves (IORB) and the overnight reverse repo rate are important tools for managing the FFR.
-
-The tri-party general collaterial market is repo’s primary funding market, In tri-party repo, most players are cash lenders or borrowers. For example, primary dealers are required to intermediate US Treasury issuance to their customers. They finance these purchases from their inventory or by borrowing from the Fed in the triparty market. Participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in tri-party repo, then lend at a spread in other repo markets. Primary dealers sell securities to the customers in the more lucrative OTC broad general collateral market.
-
-To manage the federal funds rate within its target range, the Federal Reserve responds to volatility in the federal funds rate by adjusting reserves through repo and reverse repo operations in the triparty market. The Fed is the only major participant to engage in both tri-party repo borrowing and lending.  By trading securities with banks and other counterparites, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. A repurchase transaction or repo is a loan secured by collateral subject to an agreement to resell the securities at a later date. The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements. In a  repo transaction, the Desk purchases securities from a counterparty. The transaction temporarily increases the supply of reserve balances in the banking system and lowers the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
+The level of reserves in the banking system changes when the Fed responds to volatility in the federal funds market by adjusting the reserve supply to keep the federal funds rate within its target range through daily repo and reverse repo operations. Reserves can also change
+1) when funds are transferred between reserves and non-reserve accounts at the Fed
+2) with changes in the US Treasury account at the Fed. 
+To manage the federal funds rate within its target range, the Federal Reserve responds to volatility in the federal funds rate by adjusting reserves through repo and reverse repo operations in the tri-party market. The Fed is the only major participant to engage in both tri-party repo borrowing and lending.  By trading securities with banks and other counterparties, Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. A repurchase transaction or repo is a loan secured by collateral subject to an agreement to resell the securities at a later date. The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements. In a  repo transaction, the Desk purchases securities from a counterparty. The transaction temporarily increases the supply of reserve balances in the banking system and lowers the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
   
-   The Federal reserve has also established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers. And the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationhships among these reference rates, policy and money market rates, is important to understanding the monetary system.
+The Federal reserve has established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers, and the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationships among these reference rates, policy and money market rates, is important to understanding the monetary system.
 
 Repurchase and reverse repurchase funding markets have become a major source of funding for primary dealers, hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed are required to intermediate new US Treasury issues. Primary dealers borrow at cheaper rates from lenders, asset managers in the tri party and the Fed, then lend at a spread in other repo markets. Loans are secured by collateral. They lend at the higher broad General Collateral Rate (BGCR) to leveraged investors such as hedge funds.The Fed conducts OMO in the tri party market, both  borrowing and lending.  The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of borrowing overnight.
 
-
-   The level of reserves in the banking system changes when the Fed responds to volatility in the federal funds market by adjusting the reserve supply to keep the federal funds rate within its target range through daily repo and reverse repo operations. Reserves can also change
-1) when funds are transferred between reserves and non-reserve accounts at the Fed
-2) with changes in the US Treasury account at the Fed
-
-
-
 This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. Comparing different policy regimes, we hope to elucidate the Fed's preferences for offsetting volatility in  managing the FFR within ranges set by the FOMC. How that volatility may vary under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
  
-Section  1 reviews monetary policy over the seven year period, 2016-2023  and identies FOMC rate changes, monetary regimes, and events in order to define monetary shocks. (see other authors like J and new?)
-Section 2 reviews the time series properties of daily policy and money market rates and transactions held at the Federal Reserve from 3/4/2016-12/14/2023. Section 3 describes rate behavior during different policy episodes.  Section 4 discusses methodology for modelling volatility of the EFFR. Section 5 Results.  Section 6 Conclusions.  Sections 5-6 are in progress.
+Section  1 reviews monetary policy over the seven year period, 2016-2023  and identifies FOMC rate changes, monetary regimes, and events in order to define monetary shocks. Section 2 reviews the time series properties of daily policy and money market rates and transactions held at the Federal Reserve from 3/4/2016-12/14/2023. Section 3 describes rate behavior during different policy episodes.  Section 4 discusses methodology for modelling volatility of the EFFR. Section 5 presents results.  Section 6 concludes.  (Sections 5-6 are in progress).
 
 <!--
 key characteristics of the FFR - time varying volatility or autoregressive conditional heteroskedasticity, spectacular outliers, skew, fat tails. shifts around central tendencies, jumps.
@@ -297,10 +292,7 @@ key characteristics of the FFR - time varying volatility or autoregressive condi
 
 Hamilton (1996) was the first to estimate the conditional mean and the conditional variance of the daily Federal Funds rate (FFR) in an adaption of Nelson's (1991) EGARCH model. Open-market purchases rather than interday arbitrage smooth  small fluctuations in the FFR. Adding reserves through an overnight repurchase agreement lowers the federal funds rate by inducing movement along a schedule that represents lending banks' liquidity benefit from holding excess reserves. Important day effects, the last day of the quarter or the last day of the year are responsible for large outliers of the FFR, the extreme volatility. 
 
-Piazzesi (2005) exploits both Federal Reserve and financial markets watch and dependence on bond yields ina continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model. She provides information about the exact timing of FOMC meetings to improve bond pricing and ability to identify monetary policy shocks. Yield-based information that may underlie the FOMC’s policy decisions describes Fed policy better than Taylor rules. The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy.The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. Decisions about target moves result in a series of target values that look like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move. Policy inertia is the Fed incremental implementation of changes in the FFR.
-
-.. 
- 
+Piazzesi (2005) exploits that both Federal Reserve and financial markets watch and depend on bond yields in a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR. High-frequency data in a linear-quadratic jump-diffusion model provide information about the exact timing of FOMC meetings and improve bond pricing and ability to identify monetary policy shocks. Yield-based information that may underlie the FOMC’s policy decisions describes Fed policy better than Taylor rules. The Fed's estimated policy rule reacts to information in the yield curve, especially yields with two year maturities, implying the Fed responds to some medium-run forecast of the economy. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. Decisions about target moves result in a series of target values that look like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move. Policy inertia is observed in the Fed incremental implementation of changes in the FFR.
 
  
 <!--
@@ -322,7 +314,7 @@ The model demonstrated the policy inertia, the tendency to continue same policy 
 
 (Andersen, Benzoni,Lund, 2004) model the U.S. short-term interest rate 3 month Tbill with a three-factor jump-diffusion model, a time-varying mean reversion factor, a stochastic volatility factor, and a jump process.  The U.S. short-term interest rate is characterized by complex conditional heteroskedasticity, fat-tailed innovations, and pronounced autocorrelation patterns. Stochastic volatility is critical for a good fit. Benzoni et al identify mean reversion of the short rate around a central tendency. The stochastic mean  allows a relatively fast mean-reversion of the short rate around a highly persistent time-varying central tendency process. Jumps are integral to the quality of fit and relieve the stochastic volatility factor from accommodating extreme outlier behavior. 
 
-The mean drift may be indicative of slowly evolving inflationary expectations (Gara horiz?), time-variation in the required real interest rate, or both.
+The mean drift may be indicative of slowly evolving inflationary expectations, time-variation in the required real interest rate, or both.
 
 Bertolini, Bertola, Prati (), Garaet al  () and Benzoni observe these effect of Fed interventions on the volatility in interbank rates 
 * declines in high rate regimes  
@@ -338,7 +330,7 @@ Bertolini, Bertola, Prati (), Garaet al  () and Benzoni observe these effect of 
 -->
 
 
-Bertolini, Bertola, Prati (2004) model of FFR volatility isolate Fed preferences for offsetting volatility in the FFR market in an EGARCH model of the log volatility of the FFR. Their work was motivated by the puzzle that the high frequency patterns of FFR volatility survives Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+Bertolini, Bertola, Prati (2004) model of FFR volatility isolate Fed preferences for offsetting volatility in the FFR market in an EGARCH model of the log volatility of the FFR. Their work was motivated by the puzzle that the high frequency patterns of FFR volatility survive Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
 
 Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl derive a function of reserve demand that describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. The function measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR under the Fed's policy of ample supply of reserves (2020). The FFR is price at which banks are willing to borrow and lend  reserve balances.The Banks' reserve demand sensitivity to shocks to reserves is greater when reserves are scarce. 
 
@@ -368,9 +360,9 @@ Changes in the Fed funds rate and the administered rates IORB and the reward rat
 Jarocinski (2002) 
 Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
 
-Estimating the Fed's unconventional policy shocks, Javocinski (2022) estimates structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitme;;;;nt (Campbell et al., 2012).
+Estimating the Fed's unconventional policy shocks, Javocinski (2022) estimates structural shocks that underlie the reactions of financial market to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
-Alvarez metrics for kurtosis
+<!-- Alvarez metrics for kurtosis-->
 
 
 # Time series properties of overnight policy, money market rates, transactions, and reserves held at the Federal Reserve
@@ -519,7 +511,7 @@ dailyvolumes
 ```
 
 \emph{Funding rates track the FFR}
-Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). Similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR),  the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR), 134 bp. The percentiles of rates reflect the same clustering around the EFFR (Figure \@ref(fig:samplerates)).
+Median funding rates closely track the the policy rate, the effective Federal funds rate (EFFR) (Table \@ref(tab:Sample statistics 2016-2023)). Similar average median rates illustrate the tendency of money market rates and SOFR to cluster around the EFFR. The average median EFFR over the full sample is 157 basis point (bp), the money market rates about 132-134 bp - Tri-Party General Collateral Rate (TGCR), the Broad General Collateral Rate (BGCR) 133 bp, the the Secured Overnight Financing Rate (SOFR), 134 bp. The percentiles of rates reflect the same clustering around the EFFR (Figure \@ref(fig:samplerates)).
 
 <!--
 (Figure \@ref (fig:EFFR percentiles of the sample 3/4/2016-12/14/2023)).
@@ -528,10 +520,11 @@ Median funding rates closely track the the policy rate, the effective Federal fu
 (Figure \@ref(fig:Sample volumes of reference rates 3/4/2016-12/14/2023)). 
 -->
 
-\emph{Variability: Small IQRs for all rates except SOFR, indiate rates cluster tightly around their median values (Figure \@ref(fig:samplebox)).Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an IQR of  1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  shows greater dispersion, 4.2 bp. (136.70-132.50).
+\emph{Variability: Small IQRs for all rates except SOFR, indiate rates cluster tightly around their median values} .Fifty percent of EFFR daily rates fall within 157.71-156.15 bp, an IQR of  1.56 basis points, the TGCR and BGCR cluster even more tightly, under one bp (133), SOHR  shows greater dispersion, 4.2 bp (Figure \@ref(fig:samplebox)).
+<!--(136.70-132.50).-->
 
 \emph{Outliers}
-The EFFR and money market rates are skewed with fatter tails.  A large range means high variability, a small range means low variability. The range of the EFFR and the money market rates, two percent of the data in the 99th minus the one percentile show sample TGCR, BGCR, and SOFR rates are some 14 to 16 basis points -  15.99 (EFFR), 13.86 (TGCR), 16.11 (BGCR), and 14.51 (SOFR) basis points. 
+The EFFR and money market rates are skewed with fatter tails.  The range of the EFFR and the money market rates, two percent of the data in the 99th minus the one percentile show sample TGCR, BGCR, and SOFR rates are some 14 to 16 basis points -  15.99 (EFFR), 13.86 (TGCR), 16.11 (BGCR), and 14.51 (SOFR) basis points. The larger the range, the higher the variability  
 
 \emph{Volatility} 
 The change in volatility over time, the percent change in median reference rates, indicates heteroskedasticity in rate data. From 2016 to 2020, the percent change in these daily rates, ranges plus of minus 0.5 percent from 2016 to November 2019 (Figure \@ref(fig:samplevola)). From  2020 to 2022 during the pandemic until the Fed began its fight to contain inflation in 2023, the percent change in rates varies plus or minus 2 percent. Volatility falls steadily during the fight against inflation.
@@ -608,9 +601,6 @@ Estats_mat <- matrix(Estats, nrow = 8, ncol = 1)
 Tstats_mat <- matrix(Tstats2, nrow = 8, ncol = 1)
 Bstats_mat <- matrix(Bstats2, nrow = 8, ncol = 1)
 Sstats_mat <- matrix(Sstats2, nrow = 8, ncol = 1)
-
-
-
 
 charsample <- cbind(Estats_mat, Tstats_mat, Bstats_mat, Sstats_mat)
 rownames(charsample) <- c("Rate", "Volume", "Upper target", "Lower target", 
@@ -718,7 +708,7 @@ The range of the data, the 99th minus the first percentile, illustrates the exte
 -->
 
 
-The vertical shifts in rates from 2016 to 2023 suggest changes in distribution of rates during policy episodes. Forbes (2024) summarizes these monetary policy episodes:
+The vertical shifts in rates from 2016 to 2023 suggest changes in distribution of rates during policy episodes. Forbes (2024) summarizes these monetary policy episodes (\url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/}):
 
 - Normalcy   3/4/2016 to 7/31/2019  
 - Mid cycle adjustment 8/1/2019 to 10/31/2019  
@@ -726,9 +716,9 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 - Zero lower bound 3/17/2020 to 3/16/2022  
 - Taming inflation 03/17/2022 - 12/14/2023 
 
-I have added the period of the zero lower bound. A rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024). (\url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/})
+I have added the period of the zero lower bound. A rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024). 
 
-During the period of normalcy, there were a series of 25 basis point (bp) increase rates from 2016 to mid 2019 (Figure \@ref(fig:ratestsnorm), during the  mid cycle adjustment with plus or minus 25 bp from August to November 2019 (Figure \@ref(fig:ratestsadjust).  During covid from November 2019 to mid March 2020, there were  a series of 25 bp increases(Figure \@ref(fig:ratestscovid).  No changes in the policy rate during the zero lower bound period in 2020-2021 (Figure \@ref(fig:ratestszlb). From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+During the period of normalcy, there were a series of 25 basis point (bp) increase in the EFFR from 2016 to mid 2019 (Figure \@ref(fig:ratestsnorm), during the  mid cycle adjustment with plus or minus 25 bp from August to November 2019 (Figure \@ref(fig:ratestsadjust).  During covid from November 2019 to mid March 2020, there were  a series of 25 bp increases(Figure \@ref(fig:ratestscovid).  There were no changes in the policy rate during the zero lower bound period in 2020-2021 (Figure \@ref(fig:ratestszlb). From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
  (Figure \@ref(fig:ratestsinflation). 
  
 <!--
@@ -1133,8 +1123,8 @@ xtable(normtab, caption="FOMC rate changes Normalcy 3/4/2016 to 7/31/2019",label
 print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:fomcnorm))
-<!--
+<!--(Table \@ref(tab:fomcnorm))
+
 Rate hikes 2015-2018 Returning to normalcy		
 20-Dec-18	25	2.25% to 2.50%
 Sept. 27, 2018	25	2.0% to 2.25%
@@ -1169,7 +1159,7 @@ ratests_adjust
 #Removed 3 rows containing missing values (`geom_point()`).
 ```
 \FloatBarrier
-(Figure \@ref(fig:ratestsadjust)).
+<!--(Figure \@ref(fig:ratestsadjust)).-->
 
 
 ```{r, fomcadjust, echo=FALSE, results='asis'}
@@ -1179,8 +1169,8 @@ xtable(adjusttab,caption="Mid cycle adjustment 8/1/2019 to 10/31/2019",label = "
 print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:fomcadjust))
-<!--
+<!--(Table \@ref(tab:fomcadjust))
+
 2019 rates cuts mid cycle adjustment		
 31-Oct-19	-25	1.50% to 1.75%
 Sept. 19, 2019	-25	1.75% to 2.0%
@@ -1222,13 +1212,12 @@ xtable(covidtab, caption="Covid 11/1/2019 to 3/16/2020",label = "tab:fomccovid",
  print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:fomccovid))
-<!--
+<!--(Table \@ref(tab:fomccovid))
+
 2020 Fed Rate Cuts: Coping with Covid-19		
 16-Mar-20	-100	0% to 0.25%
 3-Mar-20	-50	1.0% to 1.25%
 -->
-
 
 
 ```{r, fomczlb, echo=FALSE, results='asis'}
@@ -1345,6 +1334,10 @@ rates_norm
 
 \emph{The normalcy period} (Figure \@ref(fig:ratesnorm)).
 The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
+
+The rate characteristics the normalcy period are shown in (Table \@ref(tab:normchar))
+The rate statistics the normalcy period are shown in (Table \@ref(tab:normstatistics))
+
                   
 ```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
 library(ggplot2)
@@ -1383,8 +1376,9 @@ bnormalcy <- ggplot(boxplot_normalcy, aes(x = Group,
 bnormalcy
 ```
 \FloatBarrier
-<!-- The episode percentile plots -->
-The IQR and range during the normalcy period are shown in (Figure \@ref(fig:normbox)).
+<!-- The episode percentile plots
+There are box plots, line plots, consider consolitate toIQR ribbon plots
+The IQR and range during the normalcy period are shown in (Figure \@ref(fig:normbox)). -->
 
 ```{r, normchar,echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1433,10 +1427,6 @@ print.results = FALSE
 ```
 \FloatBarrier
 
-
-The rate characteristics the normalcy period are shown in 
-(Table \@ref(tab:normchar)).
-
 ```{r,normstatistics, echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 begn <- c(1, 859, 923, 1014, 1519, 1)
 endn <- c(858, 922, 1013, 1518, 1957, 1957)
@@ -1477,11 +1467,15 @@ xtable(normstats, caption="Normalcy 3/04/2016-7/31/2019", label = "tab:normstati
 print.results = FALSE
 ```
 \FloatBarrier
-The rate statistics the normalcy period are shown in 
-(Table \@ref(tab:normstatistics)).
+
 
 \emph{The adjustment period}
 The outliers from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range
+<!--(Figure \@ref(fig:adjustbox)).-->
+
+The rate characteristics the adjustment period are shown in...(Table \@ref(tab:adjustchar)).
+<!--(Table \@ref(tab:adjustchar)).-->
+The rate statistics the adjustment period are shown in (Table \@ref(tab:adjuststatistics)).
 
 ```{r,  EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
 rates=2
@@ -1527,7 +1521,7 @@ rates_adjust
 #my_envepisodes$rates_adjust<-rates_adjust
 ```
 \FloatBarrier
-(Figure \@ref(fig:ratesadjust)).
+<!--(Figure \@ref(fig:ratesadjust)).-->
 
 
 ```{r adjustbox, fig.cap= "IQR and range of rates during mid cycle adustment period 8/1/2019-10/31/2019",echo=FALSE,fig.pos='H',fig.label="adjustbox"}
@@ -1558,11 +1552,8 @@ library(reshape2)
 my_environmentbox$adjust <- badjust
 ```
 \FloatBarrier
-(Figure \@ref(fig:adjustbox)).
 
 
-
-The rate characteristics the adjustment period are shown in 
 ```{r, adjustchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=2  
@@ -1608,8 +1599,6 @@ xtable(charadj,caption="Adjustment 8/1/2019-10/31/2019",label="tab:adjustchar", 
 print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:adjustchar)).
-
 
 
 ```{r, adjuststatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
@@ -1660,12 +1649,16 @@ xtable(adjstats, include.rownames = FALSE,caption="Adjustment 8/1/2019-10/31/201
 print.results = FALSE
 ```
 \FloatBarrier
-The rate statistics the adjustment period are shown in 
-(Table \@ref(tab:adjuststatistics)).
+<!--The rate statistics the adjustment period are shown in 
+(Table \@ref(tab:adjuststatistics)).-->
 
 
 \emph{The pandemic}  
-The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate 
+The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref(fig:covidbox)).
+
+The rate characteristics during covid  are shown in (Table \@ref(tab:covidchar)).
+
+The rate statistics during covid are shown in (Table \@ref(tab:covidstatistics)).
 <!--
 Is this a model text format?
 \emph{Funding rates cluster around the FFR}
@@ -1711,7 +1704,7 @@ rates_covid
 #my_envepisodes$rates_covid<-rates_covid
 ```
 \FloatBarrier
-(Figure \@ref(fig:ratescovid)).
+<!--(Figure \@ref(fig:ratescovid)) -->
 
 ```{r covidbox, fig.cap= "IQR and range of rates during covid period 11/1/2019-3/16/2020", echo=FALSE, fig.pos='H', fig.label="covidbox"}
 #(Figure \@ref(fig:EFFR Key percentiles during.label="covidbox"}
@@ -1741,10 +1734,8 @@ library(reshape2)
   my_environmentbox$covid <-  bcovid 
 ```
 \FloatBarrier
-(Figure \@ref(fig:covidbox)).
 
 
-The rate characteristics during covid  are shown in 
 
 ```{r,covidchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE} 
 library(xtable)
@@ -1796,9 +1787,7 @@ xtable(charcovid, caption="Covid 03/17/2022-12/14/2023", label="tab:covidchar",c
 print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:covidchar)).
 
-The rate statistics during covid are shown in 
 
 ```{r, covidstatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -1816,10 +1805,14 @@ xtable(covidstats, include.rownames = FALSE, caption="Covid 03/17/2022-12/14/202
 print.results = FALSE
 ```
 \FloatBarrier
-(Table \@ref(tab:covidstatistics)).
-
 
 \emph{The zero lower bound} 
+(Figure \@ref(fig:rateszlb)) 
+The rate characteristics the zero lower bound are shown in 
+(Table \@ref(tab:zlbchar)).
+
+The rate statistics the zero lower bound are shown in 
+(Table \@ref(tab:zlbstatistics)).
 
 ```{r, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
 rates=2
@@ -1856,7 +1849,7 @@ rates_zlb
 #my_envepisodes$rates_zlb<-rates_zlb
 ```
 \FloatBarrier
-(Figure \@ref(fig:rateszlb)) 
+
 
 
 ```{r zlbbox, fig.cap= "IQR and range of rates during zero lower bond period  3/17/2020-3/16/2022",echo=FALSE,fig.pos='H',fig.label="zlbbox"}
@@ -1936,8 +1929,6 @@ xtable(charzlb,caption="Zero lower bound 03/17/2020-03/16/2022", label="tab:zlbc
 print.results = FALSE
 ```
 \FloatBarrier
-The rate characteristics the zero lower bound are shown in 
-(Table \@ref(tab:zlbchar)).
 
 ```{r,zlbstatistics, echo=FALSE,results='asis',echo=FALSE,warning=FALSE, message=FALSE}
 categories <- c("EFFR", "TGCR", "BGCR", "SOFR")
@@ -1978,11 +1969,20 @@ xtable(zlbstats, include.rownames = FALSE,caption="Rate statistics Zero lower bo
 print.results = FALSE
 ```
 \FloatBarrier
-The rate statistics the zero lower bound are shown in 
-(Table \@ref(tab:zlbstatistics)).
 
 
-\emph{The Fed's fight to control inflation}  
+
+\emph{The Fed's fight to control inflation} 
+The EFFR and the IQR are within the FOMC target rates
+(Figure \@ref(fig:ratesinflation)).
+(Figure \@ref(fig:inflationbox)).
+
+The rate characteristics during the taming of inflation are shown in 
+(Table \@ref(tab:inflationchar)).
+
+The rate statistics the taming of inflation are shown in 
+(Table \@ref(tab:inflationstatistics)).
+
 
 ```{r, EFFR during inflation period 03/17/2022-12/14/2023, echo=FALSE}
 rates=2
@@ -2018,9 +2018,7 @@ rates_inflation
 ```
 
 \FloatBarrier
-(Figure \@ref(fig:ratesinflation)).
 
-The EFFR and the IQR are within the FOMC target rates
 
 ```{r inflationbox, fig.cap="IQR and range of rates during inflation period 3/17/2022-12/14/2023", echo=FALSE, fig.pos='H',fig.label="inflationbox"}
 library(ggplot2)
@@ -2049,8 +2047,6 @@ boxplot_inflation <- data.frame(
   my_environmentbox$inflation <-binflation
 ```
 \FloatBarrier
-(Figure \@ref(fig:inflationbox)).
-
 
 ```{r, inflationchar, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
 library(xtable)
@@ -2096,8 +2092,6 @@ print.results = FALSE
 ```
 \FloatBarrier
 
-The rate characteristics during the taming of inflation are shown in 
-(Table \@ref(tab:inflationchar)).
 
 
 ```{r, inflationstatistics, echo=FALSE,results='asis',warning=FALSE, message=FALSE}
@@ -2143,8 +2137,6 @@ xtable(inflationstats, include.rownames = FALSE, caption="Rate statistics Taming
 print.results = FALSE
 ```
 \FloatBarrier
-The rate statistics the taming of inflation are shown in 
-(Table \@ref(tab:inflationstatistics)).
 
 
 ```{r,episodemedian,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -2212,17 +2204,14 @@ range_table
 #print(stacked_table)
 ```
 \FloatBarrier
-(Table \@ref(tab:episoderange))
 
 
 The average median rates and percentiles illustrate the tendency of other rates to cluster around the EFFR, and the clustering and outliers present in these reference rates.
 
 \emph{Median daily reference rates}
-The difference in the central tendency as measured by the median rate, changes dramatically over different policy episodes. 
+The difference in the central tendency as measured by the median rate, changes dramatically over different policy episodes. A measure of central tendency, the median of the reference rates EFFR and money market rates (Table \@ref(tab:episodemedian)) illustrate  how closely money market rates track the policy rate EFFR.  The change in median rates during different episodes demonstrate the how their central tendency changes with monetary policy. Average median rates for the sample are 157 bp for the EFFR, and some 133-134 bp for the money market rates and SOFR. 
 
-A measure of central tendency, the median of the reference rates EFFR and money market rates (Table \@ref(tab:episodemedian)) illustrate  how closely money market rates track the policy rate EFFR.  The change in median rates during different episodes demonstrate the how their central tendency changes with monetary policy. Average median rates for the sample are 157 bp for the EFFR, and some 133-134 bp for the money market rates and SOFR. 
-
-The sample EFFR  157 bp drops to 134 bp during the normalization period, 184 bp in the adjustment period bp,  150.46 bp during covid,  8.09 bp the zero lower bound, and 369 bp during the inflation fighting period.  Rates hover near zero from March 2020 to March 2022 during the zero lower bound. Median rates during the inflation episode increased over 233 percent of the the sample average as the Fed raised the FFR  in 25 or 50 basis point to tame inflation. Rates rose steadily from March 2022 to 533 bp in December 2023 some 235 percent of the sample median rate
+The sample EFFR  157 bp drops to 134 bp during the normalization period, 184 bp in the adjustment period bp, 150.46 bp during covid,8.09 bp the zero lower bound, and 369 bp during the inflation fighting period.Rates hover near zero from March 2020 to March 2022 during the zero lower bound. Median rates during the inflation episode increased over 233 percent of the the sample average as the Fed raised the FFR  in 25 or 50 basis point to tame inflation. Rates rose steadily from  ? bp March 2022 to 533 bp in December 2023 some 235 percent of the sample median rate
 
 <!--
 The median EFFR, 184 bp during adjustment periods, plunged from the sample mean 157 basis points in November 2019 to 15 bp in March 2020 (\@ref(tab:Median rates of policy regimes or top panel).
@@ -2238,9 +2227,8 @@ SOFR 134.08  84.78 369.33 151.19 5.41 364.07
 
 The IQR and range provide more information about the series, how close they stay to their median values  and also the extreme values characteristic of short rates (\@ref(tab:IQR of rates during policy regimes)).
 
-
-\emph{Variability: clustering of funding rates  around their median (IQR)}
-Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole  (Table \@ref(tab:episodeiqr)). For the sample, 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3bp during the inflation episode. Boxplots show the IQR, the location of the median and tails for the outliers.
+\emph{Variability how rates cluster around their median, IQR}
+Small interquartile range (IQR) values are evidence that the EFFR and the money market rates, with the exception of SOFR, cluster more tightly around their median values for the sample as a whole  (Table \@ref(tab:episodeiqr)). For the sample, the IQR is 1.54 bp for the EFFR, and under one bp for the money market rates. For different policy episodes the IQR is under 0.12 to 0.23 during normalcy and the zero lower bound, more disperse, over 1 bp during the adjustment periods and over 3 bp during the inflation episode. Boxplots show the IQR, the location of the median, and tails for the outliers.
 
 
 <!--
@@ -2282,7 +2270,9 @@ Not true in the repo spike during the pandemic, LIBOR skyrocketed above the Fed 
 The range of the data, the 99th and first percentile, is the spread from the lowest to the highest rates. More sensitive to outliers, the range represents 2 percent of the data, showing the magnitude of outliers under different policies (Table \@ref(tab:episoderange)). The  higher the range, the higher the variability. The spread outliers in the sample for all rates is 14 to 16 bp  (bottom panel Table).  During normalcy, the spread in money market rates and SOFR is 6 to 8 bp; the EFFR a higher 18 bp. Outliers soar during the period of adjustment, a spread of 18 bp, the EFFR reached 146 bp, the money market rates spread of 23- 34 bp, outliers reaching 275-300 bp. SOFR has the highest variablity, a spread of 42 bp, reaching a whopping 954 bp. The spread of outliers during covid and the zero lower bound are lower than the sample range. Spreads of extreme rate vaues  during the zero lower bond are lower than the sample, 7- 14 bp, some 11 to 12 bp for  the money market rates TGCR and BGCR 7.33 for the EFFR, and 14.44 for SOFR.  The spread 21 to 33 bp in outliers occurs during the Fed's attempt to contain inflation. some 23 basis points for the EFFR, the money market rates TGCR and BGCR 32-33 bp, and SOFR 21 bp.  Again SOFR shows greater variability in all episodes.
 
 <!--
-(\@ref(tab: Range of rates during policy regimes)-->
+(\@ref(tab: Range of rates during policy regimes)
+(Table \@ref(tab:episoderange))
+-->
 
 <!--
 Range   Sample   Normalcy Adjust Covid Zlb  Inflation
@@ -2418,11 +2408,11 @@ U.S. MMFs are open-end mutual funds regulated by the Securities and Exchange Com
 # Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
 library(tidyverse)
 # Select the desired columns from spread_no_na
-print(names(spread_no_na))
+#print(names(spread_no_na))
 
 # Ensure the Three_mon_Tbill column exists and has the correct length
 if ("Three_mon_Tbill" %in% names(spread_no_na)) {
-    print(length(spread_no_na$Three_mon_Tbill)) # Should print 1957
+    #print(length(spread_no_na$Three_mon_Tbill)) # Should print 1957
 } else {
     stop("Three_mon_Tbill column does not exist in spread_no_na")
 }
@@ -2431,7 +2421,7 @@ if ("Three_mon_Tbill" %in% names(spread_no_na)) {
 Three_mon_Tbill_processed <- ifelse(is.na(spread_no_na$Three_mon_Tbill), 0, spread_no_na$Three_mon_Tbill)
 
 # Ensure the processed column has the correct length
-print(length(Three_mon_Tbill_processed)) # Should print 1957
+#print(length(Three_mon_Tbill_processed)) # Should print 1957
 
 # Select the desired columns from spread_no_na
 arbrates <- spread_no_na %>%
@@ -2442,7 +2432,7 @@ arbrates <- arbrates %>%
   mutate(Three_mon_Tbill = Three_mon_Tbill_processed)
 
 # Check the structure of the arbrates dataframe
-str(arbrates)
+#str(arbrates)
 ```
 
 (Figure \@ref(fig:arbratesnorm).
