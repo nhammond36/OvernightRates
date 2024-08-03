@@ -718,7 +718,7 @@ The vertical shifts in rates from 2016 to 2023 suggest changes in distribution o
 
 I have added the period of the zero lower bound. A rigorous approach to identifying change in regimes is offered by (Valeria Gargiulo, Christian Matthes, and Katerina Petrova,2024) and (Bianchi, Ludvigson, and Ma, 2024). 
 
-During the period of normalcy, there were a series of 25 basis point (bp) increase in the EFFR from 2016 to mid 2019 (Figure \@ref(fig:ratestsnorm), during the  mid cycle adjustment with plus or minus 25 bp from August to November 2019 (Figure \@ref(fig:ratestsadjust).  During covid from November 2019 to mid March 2020, there were  a series of 25 bp increases(Figure \@ref(fig:ratestscovid).  There were no changes in the policy rate during the zero lower bound period in 2020-2021 (Figure \@ref(fig:ratestszlb). From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp.
+During the period of normalcy, there were a series of 25 basis point (bp) increase in the EFFR from 2016 to mid 2019 \@ref(tab:fomcnorm)) (Figure \@ref(fig:ratestsnorm), during the  mid cycle adjustment with plus or minus 25 bp from August to November 2019 \@ref(tab:fomcadjust)) (Figure \@ref(fig:ratestsadjust).  During covid from November 2019 to mid March 2020, there were  a series of 25 bp increases \@ref(tab:fomccovid)) (Figure \@ref(fig:ratestscovid).  There were no changes in the policy rate during the zero lower bound period in 2020-2021 (Figure \@ref(fig:ratestszlb). From March 17, 2022 to December 14, 2023, the Fed raised the FFR in steady increments of 25, 50, and 75 bp \@ref(tab:fomcinflation)) .
  (Figure \@ref(fig:ratestsinflation). 
  
 <!--
@@ -1332,12 +1332,8 @@ rates_norm
 ```
 \FloatBarrier
 
-\emph{The normalcy period} (Figure \@ref(fig:ratesnorm)).
-The EFFR, median and IQR values are within the FOMC target ranges (the step function for the lower and upper target rates, TargetDe, and TargetUe).
-
-The rate characteristics the normalcy period are shown in (Table \@ref(tab:normchar))
-The rate statistics the normalcy period are shown in (Table \@ref(tab:normstatistics))
-
+\emph{The normalcy period} 
+The EFFR, median and IQR values are within the FOMC target ranges (the green step function for the lower and upper target rates, TargetDe, and TargetUe)(Figure \@ref(fig:ratesnorm)). The median EFFR is 133.8 bp, the IQR 1.22 (Table \@ref(tab:normstatistics)). The The 99th percentile of the EFFR is outside the FOMC target range for most of the period. The average 99th percentile of the EFFR is 147 bp (Table \@ref(tab:normchar)).
                   
 ```{r normbox, fig.cap="IQR and range during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE,fig.pos='H', fig.label="normbox"}
 library(ggplot2)
@@ -1470,12 +1466,16 @@ print.results = FALSE
 
 
 \emph{The adjustment period}
-The outliers from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range
-<!--(Figure \@ref(fig:adjustbox)).-->
+The 99th percentile represents the outlier from the spike in repo rates September 2019 is the only time the FFR was not within the FOMC target range (Figure \@ref(fig:adjustnorm)). [CHECK ON DROP All quantiles? beg pandemic, check date]
+The EFFR, median and IQR values are within the FOMC target ranges (the green step function for the lower and upper target rates, TargetDe, and TargetUe) . The median EFFR is 183.59 bp, the IQR 12.84  (Table \@ref(tab:adjuststatistics)). The The 99th percentile of the EFFR is outside the FOMC target range for most of the period. The average 99th percentile of the EFFR is 209.8 bp (Table \@ref(tab:adjustchar)).
+
+
+<!--(Figure \@ref(fig:adjustbox))
 
 The rate characteristics the adjustment period are shown in...(Table \@ref(tab:adjustchar)).
 <!--(Table \@ref(tab:adjustchar)).-->
 The rate statistics the adjustment period are shown in (Table \@ref(tab:adjuststatistics)).
+.-->
 
 ```{r,  EFFR during adjustment period 8/1/2019-10/31/2019, echo=FALSE,results='asis'}
 rates=2
@@ -1654,11 +1654,13 @@ print.results = FALSE
 
 
 \emph{The pandemic}  
-The outliers from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref(fig:covidbox)).
+The 99th percentile represents the outlier from the March 20, 2020 dash for cash are outside the FOMC target rate (Figure \@ref(fig:covidnorm)).[CHECK ON DROP end of period All quantiles? beg zlb, check date]
+The EFFR, median and IQR values are within the FOMC target ranges (the green step function for the lower and upper target rates, TargetDe, and TargetUe) . The median EFFR is  150.46 bp, the IQR 2.35  (Table \@ref(tab:covidstatistics)). The average 99th percentile of the EFFR is  157.52 bp (Table \@ref(tab:covidchar)).
 
+<!--
 The rate characteristics during covid  are shown in (Table \@ref(tab:covidchar)).
-
 The rate statistics during covid are shown in (Table \@ref(tab:covidstatistics)).
+-->
 <!--
 Is this a model text format?
 \emph{Funding rates cluster around the FFR}
@@ -1807,12 +1809,16 @@ print.results = FALSE
 \FloatBarrier
 
 \emph{The zero lower bound} 
+Although no quantile of the EFFR during the zero lower bound is outside the target range of zero to 25 bp, clearly rates were volatile during this period (Figure \@ref(fig:zlbnorm)). The median EFFR is 8.09 bp, the IQR 1.54 (Table \@ref(tab:zlbstatistics)). Although the average 99th percentile of the EFFR, 12.40 bp, excceds the median, it remains within the FOMC range (Table \@ref(tab:zlbchar)).
+
+<!--
 (Figure \@ref(fig:rateszlb)) 
 The rate characteristics the zero lower bound are shown in 
 (Table \@ref(tab:zlbchar)).
 
 The rate statistics the zero lower bound are shown in 
 (Table \@ref(tab:zlbstatistics)).
+-->
 
 ```{r, EFFR during zero lower bound (zlb) period 3/17/2020-3/16/2022, echo=FALSE}
 rates=2
@@ -1971,8 +1977,9 @@ print.results = FALSE
 \FloatBarrier
 
 
-
 \emph{The Fed's fight to control inflation} 
+The median and IQR EFFR are within the FOMC target, but the outliers represented by the 99th percentile of the EFFR exceed the upper FOMC bound for most of 2023 (Figure \@ref(fig:inflationnorm)). The median EFFR is 368.60 bp, the IQR 1.62  (Table \@ref(tab:inflationstatistics)). The average 99th percentile of the EFFR,  388.81 bp, exceeds the upper FOMC target  385.65 (Table \@ref(tab:inflationchar)).
+
 The EFFR and the IQR are within the FOMC target rates
 (Figure \@ref(fig:ratesinflation)).
 (Figure \@ref(fig:inflationbox)).
@@ -2741,7 +2748,7 @@ Among fixed-income securities, there has been no refuge. Interest rates have spi
 
 ## FOMC rates changes, monetary regimes, and events over the seven year period, 2016-2023 
 Candidate shocks occurring during the seven year period of our sample 2016-2023 (Table \@ref{table_fomc}) include FOMC rate and administered rate changes, different policy experiments, events such as the March 2020 dash for cash, and macroeconomic announcements. Changes in the Fed funds rate and the administered rates IORB and the reward rate ON RRP are one source of shocks to overnight reference rates 
-<!--
+<!--          
 (\@ref{table:FOMC rate changes 2016-2023})  
 -->
 
