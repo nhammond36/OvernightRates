@@ -3075,7 +3075,7 @@ I first run a vector sutoregression on the EFFR and repo market rates to gain in
 
 
 ## VAR of daily rates EFFR, TGCR, BGCR, SOFR
-The Fed's policy rate, the EFFR at a daily frequency is mean reverting, but is changes little  in response to changes in money market rates TGCR, the tri party repurchase rate. and BGCR the bilateral market rate where dealers sell securities to their customers, some 0.14  basis points (bp). In response to changes in the EFFR, the money market rates change by around 2 bp, the TGCR positively 2.1 bp, the BGCR a negative 2.02 bp.  They respond to changes in own rates and SOFR -- TGCR positively, BGCR negatively. SOFR  responds very little to changes in the EFFR,  a small -.08bp, with increases under one bp with changes in the money market rates TGCR and BGCR.
+The Fed's policy rate, the EFFRis mean reverting  at a daily frequency, but changes little  in response to changes in repo rates TGCR, the tri party repurchase rate. and BGCR the bilateral market rate, some 0.14  basis points (bp). In response to changes in the EFFR, the money market rates change by around 2 bp, the TGCR positively 2.1 bp, the BGCR a negative 2.02 bp.  They respond to changes in own rates and SOFR -- TGCR positively, BGCR negatively. SOFR  responds very little to changes in the EFFR, a small -.08bp, and increases under one bp to changes in the money market rates TGCR and BGCR.
 
 (Table (\@ref(tab:samplebeta))
 ```{r,samplebeta,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -3148,9 +3148,9 @@ target over the prior 30 days (not shown).
 -->
 
 Optimal Parameters
-Nelson (1991): By setting conditional variance equal to a constant $\omega$ plus a weighted average (with positive weights) of past squared residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
+GARCH models capture the volatility clustering in asset returns by setting conditional variance equal to a constant $\omega$ plus a positively weighted average of past squared residuals Nelson (1991). First noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success.
 
-In EGARCH models, $\sigma^2_t$ responds asymmetrically to positive and negative residuals thus can accommodate volatility in returns that rises in response to "bad news" (excess returns lower than expected) and falls in response to "good news" 
+The improment provided by EGARCH models, volatility $\sigma^2_t$ responds asymmetrically to positive and negative residuals to accommodate returns volatility that rises in response to "bad news" (excess returns lower than expected) and falls in response to "good news" 
 
 Nelson's (1991) model of daily stock returns:
 $\nu_t$ i.i.d. with $E(\nu_t) =0, Var(_t) = 1$
@@ -3358,96 +3358,21 @@ Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
 If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
 -->
 
-GARCH Model	: eGARCH(1,1)
-Mean Model	: ARFIMA(1,0,0)
-Distribution	: ged 
-LogLikelihood : 19029.49 
+## Bertola et al empirical model of the Fed Funds rate 
+For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) empirical model of the volatility of the Federal Funds rate. Their objectives were to evaluate the time series properties of the  Fed Funds rate: 
+- mean reversion behavior in  the Fed Funds
+- main patterns of volatility in the Fed funds rates.
 
-Information Criteria:
-Akaike       -19.450
-Bayes        -19.430
-Shibata      -19.450
-Hannan-Quinn -19.443
-
-(Table (\@ref(tab:garchparams))
-```{r,garchparams,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-params_data <- matrix(c(
- 0.000000,    0.000000,  -0.004848,  0.99613,
- 0.002852,    0.000272,  10.465322,  0.00000,
--0.381938,    0.019067, -20.031004,  0.00000,
--0.541177,    0.103694,  -5.218990,  0.00000,
- 0.902623,    0.002823, 319.747033,  0.00000,
- 0.812176,    0.064852,  12.523500,  0.00000,
- 0.113474,    0.000906, 125.248149,  0.00000
-), nrow = 7, byrow = TRUE)
-
-rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-params <- as.data.frame(params_data)
-#print(beta)
-
-paramssample<-xtable(params, caption = "EGARCH parameters sample rates 3/4/2016 to 12/14/2023", label="tab:garchparams", caption.placement="bottom", comment = FALSE)
-rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-#rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-#colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-paramssample
-#print(paramssample)
-```
-
-
-(Table (\@ref(tab:garchse))
-```{r,garchse,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-garchse_data <- matrix(c(
-  0.000000,    0.000039, -0.000012, 0.999990,
-  0.002852,    0.006583,  0.433168, 0.664893,
- -0.381938,    0.127277, -3.000838, 0.002692,
- -0.541177,    0.434317, -1.246039, 0.212750,
-  0.902623,    0.019047, 47.389363, 0.000000,
-  0.812176,    0.326126,  2.490372, 0.012761,
-  0.113474,    0.009091, 12.481586, 0.000000
-), nrow = 7, byrow = TRUE)
-
-rownames(garchse_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-colnames(garchse_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-garchse <- as.data.frame(garchse_data)
-#print(garchse)
-
-garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
-rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-#rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-#colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-garchsesample
-#print(paramssample)
-```
--->
-
-<!--
-The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.
--->
-
-
-
-
-## Replicate of Bertola et al empirical model of the Fed Funds rate 
-For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) Day to day Monetary Policy and the Volatility of the Federal Funds Interest Rate empirical model of the volatility of the Federal Funds rate. The objectives of the Bertolini, Bertola, Prati () or BBP time series methodology for the Fed Funds were: 
-- capture mean reversion behavior
-- establish main patterns of volatility in the Fed funds rates.
-
-Bertolini et al findings about the volatility of the FFR:
+They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates. Other findings were that the Fed funds rate:
 - rises in advance of reserve settlement days 
 - declines in high rate regimes 
-- biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
-
-They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates.
+- exhibits biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
 
 Their empirical model of Fed Funds rate
 $r_t=\mu_t + \sigma_t\nu_t$
 $\nu_t$ unit variance mean zero i.i.d error term
 
 \emph{Conditional mean} $r_t, \mu_t=E[r_t]$
-
 Include target changes level shift changes of target rates affect on interest rates:
 $\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
 
@@ -3475,16 +3400,11 @@ data.frame':	1957 obs. of  12 variables:
 $z_t$ expresses the target rate as proportion of discount window primary credit rate (DPCredit)
 
 <!--
-(Table (\@ref(tab:arima_bbp))
+(Table (\@ref(tab:arima_bbp)) -->
+
 ```{r,arima_bbp,  eval = FALSE}
 #echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-
- # Define the number of observations
-  T <- 100  # You can change this to any number of observations you need
-  # Generate T observations for sd_effr from a normal distribution
-  set.seed(123)  # Setting seed for reproducibility
-  
-  # Generate dummy variables (h) and penalty function (z)
+# Generate dummy variables (h) and penalty function (z)
   # Assuming h and z are known and have T-1 observations
   T <- nrow(spread_no_na) #number of observations
   h<-spread_no_na$h
@@ -3498,42 +3418,10 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   z<- 1- target/(spread_no_na$DPCREDIT*100)
   sd_effr<-spread_no_na$sd_effr*100
   log_sd_effr_squared <- log(sd_effr^2)
-  #mu <- 0
-  #sigma <- 1
-  #nu <- rnorm(T, mean = mu, sd = sigma)
   nu<-rt(T, df = 5)
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
-  
-  non_trading_days_pairs <- function(dates, holidays) {
-  n <- length(sdate)
-  non_trading_counts <- numeric(n-1)
-  
-  for (i in 2:n) {
-    start_date <- sdate[i - 1]
-    end_date <- sdate[i]
-    
-    # Generate sequence of dates between start_date and end_date
-    date_seq <- seq.Date(start_date, end_date, by = "day")
-    
-    # Identify weekends
-    weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
-    
-    # Identify public holidays
-    holidays <- date_seq %in% holidays
-    
-    # Combine weekends and holidays
-    non_trading <- weekends | holidays
-    
-    # Count non-trading days
-    non_trading_counts[i - 1] <- sum(non_trading)
-  }
-  
-  return(non_trading_counts)
-}
-  
- # Log function for non-trading days---------------------------------
    holidays <- as.Date(c(
     "2016-01-01", "2016-01-18", "2016-02-15", "2016-03-25", "2016-05-30", 
     "2016-07-04", "2016-09-05", "2016-11-24", "2016-12-26", "2017-01-02", 
@@ -3556,7 +3444,32 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
     "2021-07-04", "2016-12-25", "2021-12-25", "2022-12-25"
   ))
   
-  # VOlatility
+  # Non trading days -----------------------------------------
+  non_trading_days_pairs <- function(dates, holidays) {
+  n <- length(sdate)
+  non_trading_counts <- numeric(n-1)
+  
+  for (i in 2:n) {
+    start_date <- sdate[i - 1]
+    end_date <- sdate[i]
+    date_seq <- seq.Date(start_date, end_date, by = "day")
+    weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
+    holidays <- date_seq %in% holidays
+    
+    # Combine weekends and holidays
+    non_trading <- weekends | holidays
+    
+    # Count non-trading days
+    non_trading_counts[i - 1] <- sum(non_trading)
+  }
+  return(non_trading_counts)
+}
+# ---------------------------------------------------
+  
+ # Log function for non-trading days--------------------------------- ??
+   
+  
+  # Volatility
   non_trading_counts <- non_trading_days_pairs(dates, holidays)
   nontradingdays<-non_trading_counts
   
@@ -3567,8 +3480,6 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   # Negative log-likelihood function
   if (!require("stats4")) install.packages("stats4")
   library(stats4)
- 
-
   neg_log_likelihood <- function(gamma) {
     if (any(1 - gamma * non_trading_counts <= 0)) {
       return(Inf)
@@ -3580,56 +3491,17 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
     return(log_likelihood)
   }
   
-  
-  # non_trading_counts <- non_trading_days_pairs(dates, holidays)  
-  # nontradingdays<-non_trading_counts
-  # log_nontradingdays <- function(gamma, nontradingdays) {
-  #   return(log(1 - gamma * nontradingdays))
-  # }
-  # 
-  # # Negative log-likelihood function
-  # if (!require("stats4")) install.packages("stats4")
-  # library(stats4)
-  # 
-  #  neg_log_likelihood <- function(gamma) {
-  #   if (any(1 - gamma * non_trading_counts <= 0)) {
-  #     return(Inf)
-  #   }
-  #   X <- log(1 - gamma * non_trading_counts)
-  #   model <- lm(log_sd_effr_squared[2:T] ~ X)
-  #   residuals <- residuals(model)
-  #   log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
-  #   return(log_likelihood)
-  # }
-
-  
-  # neg_log_likelihood <- function(gamma) {
-  #   if (any(1 - gamma * non_trading_counts <= 0)) {
-  #     return(Inf)
-  #   }
-  #   X <- log(1 - gamma * non_trading_counts)
-  #   model <- lm(log_sd_effr_squared[2:T] ~ X)
-  #   residuals <- residuals(model)
-  #   log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
-  #   return(log_likelihood)
-  # }
-  
-  
   # Initial guess for gamma
   gamma_start <- 0.01
-  
   # Use optimize to find the best gamma within a reasonable range
   result <- optimize(neg_log_likelihood, interval = c(0, 1))
-  
   gamma_estimated <- result$minimum
   print(gamma_estimated) # 0.6180798 0.2361138
-  
   # Update the nt calculation with the estimated gamma
   non_trading_counts <- c(0, non_trading_counts)
   nt <- log(1 - gamma_estimated * non_trading_counts)
   print(nt)
   
-
   external_regressors <- cbind(h[,2:ncol(h)], z,nt,absnu, nu)
   
   
@@ -3645,7 +3517,6 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   
   # Create a zoo object for log_sd_effr_squared with sdate as the index
   log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
-  
   # Fit an ARIMA model with cleaned external regressors using CSS
   arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
   
@@ -3656,13 +3527,74 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   print("ARIMA Model Parameters:")
   print(arima_params)
   
-  
   arima_params <- arima_model$coef
   vcov_matrix <- vcov(arima_model)
   std_errors <- sqrt(diag(vcov_matrix))
   results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
-  # Print the results
-  #print(results)     
+  # print(results)    
+#                     Replication 2016-2023             bbp_params             bbp1994_params
+#                         Coefficients   StdErrors  Coefficients   StdErrors   Coefficients   StdErrors   # ar1                     0.844725586 0.013027682                               0.600 (0.038)
+# intercept               1.995289332 0.107038918
+# oneday_beforeholiday    0.090674060 0.132469988   -0.026 (0.017)
+# threeday_beforeholiday -0.100208356 0.045532230   -0.018 (0.008)
+# oneday_afterholiday     0.056307993 0.130075255    0.062 (0.018)
+# endquarter              0.143136334 0.089780256    0.206 (0.034)              2.081 (0.181)
+# endyear                 0.108245069 0.173393200   -0.183 (0.078)              2.913 (0.331)
+# Monday                 -0.002832700 0.061330489
+# Friday                 -0.013389683 0.023629359
+# fomc                    0.009347913 0.005977139
+# fomcindex              -0.284634005 0.148983964                               0.713 (0.262)
+# z                      -0.700228944 0.221628438
+# nt                      0.049702753 0.091452890
+# absnu                   0.016534819 0.010158805                               0.718 (0.069)
+# nu                     -0.002099820 0.006963208                               0.276 (0.042)
+  
+# Create the dataframe
+arima_df <- data.frame(
+  Variable = c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday",
+               "endquarter", "endyear", "Monday", "Friday", "fomc", "fomcindex", "z", "nt", "absnu", "nu"),
+  Replication_Coefficients = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
+                               0.143136334, 0.108245069, -0.002832700, -0.013389683, 0.009347913,
+                               -0.284634005, -0.700228944, 0.049702753, 0.016534819, -0.002099820),
+  Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
+                            0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
+                            0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
+  bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.183, NA, NA, NA, NA, NA, NA, 0.718, 0.276),
+  bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
+  bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, NA, NA, NA, NA),
+  bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, NA, NA, NA, NA)
+)
+
+# Display the dataframe
+print(arima_df)
+  
+  
+bpp_params <- c(ar1 = 0.844725586, intercept = 0, oneday_beforeholiday = 0.-026, 
+                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
+                  endquarter = 0, endyear = 0.0 Monday =0, 
+                  Friday = 0, fomc = 0, fomcindex = 0, 
+                  z = 0, nt = 0, absnu = 0, nu = 0) 
+
+bpp_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.-026, 
+                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
+                  endquarter = 0, endyear = 0.0 Monday =0, 
+                  Friday = 0, fomc = 0.009347913, fomcindex = 0, 
+                  z = 0, nt = 0, absnu = 0, nu = 0) 
+
+
+bpp1994_params <- c(ar1 = 0.6, intercept = 0, oneday_beforeholiday = 0.-026, 
+                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
+                  endquarter = 0, endyear = 0.0 Monday =0, 
+                  Friday = 0, fomc = 0, fomcindex = 0.713, 
+                  z = 0, nt = 0, absnu = 0.718, nu = 0.276) 
+
+bpp1994_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.-026, 
+                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
+                  endquarter = 0, endyear = 0.0 Monday =0, 
+                  Friday = 0, fomc = 0.009347913, fomcindex = 0, 
+                  z = 0, nt = 0, absnu = 0, nu = 0) 
+
+
   
   # Convert the parameter_estimates to a data frame
   arima_params_df <- as.data.frame(results)
@@ -3674,14 +3606,42 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
    arima_params_table 
   # Print the table
   #print( arima_params_table) 
-  
-#   garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
-# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-# #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# garchsesample
-#print(paramssample)
+#ERROR see why chat fixed it
+  # Error in UseMethod("xtable") : 
+  # no applicable method for 'xtable' applied to an object of class "c('double', 'numeric')"
+
+   
+#CHAT -------------------------------------------------------
+   # Assuming arima_params is your vector
+arima_params <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
+                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
+                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
+                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
+                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
+   
+ arima_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
+                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
+                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
+                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
+                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
+   
+
+# Convert vector to data frame
+arima_params_df <- as.data.frame(t(arima_params))  # same as arima_params_df <- as.data.frame(results)
+
+# Assign column names
+colnames(arima_params_df) <- c("Estimate")
+
+# If you have additional columns for Std. Error, t value, and Pr(>|t), you can add them to the data frame
+# For example:
+# arima_params_df <- cbind(arima_params_df, "Std. Error" = ..., "t value" = ..., "Pr(>|t)" = ...)
+
+# Use xtable on the data frame
+library(xtable)
+arima_params_table <- xtable(arima_params_df, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_bbp", caption.placement="bottom", comment = FALSE)
+
+# Print the table
+print(arima_params_table)
 ```  
 
 (Table (\@ref(tab:garch_bbp))
@@ -3696,38 +3656,31 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   #"norm"
   # Fit the EGARCH model on the residuals from the ARIMA model
   fit <- ugarchfit(spec = spec, data = arima_residuals)
-  
-  # Print the EGARCH model parameters
   print("EGARCH Model Parameters:")
   print(coef(fit))
   
   coefficients <- coef(fit)
-  
-  # Extract the variance-covariance matrix
   vcov_matrix <- vcov(fit)
-  
-  # Calculate standard errors from the diagonal of the vcov matrix
   std_errors <- sqrt(diag(vcov_matrix))
-  
-  # Combine coefficients and standard errors into a data frame
   results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
-  
-  # Print the results
   print(results)
+#          Coefficients  StdErrors
+# omega    0.01341569 0.24756022
+# alpha1   0.04848064 0.08876039
+# beta1    0.64179830 0.04568855
+# gamma1   2.13728765 0.74535917
+# shape    2.10000000 0.07590593
   
   # Convert the parameter_estimates to a data frame
-  coefgarch_df <- as.data.frame(results)
-  
-  # Create a table using xtable
+  #coefgarch_df <- as.data.frame(results)
+  garch_bbp <- as.data.frame(results)
   coefgarch_table <- xtable(garch_bbp,caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:garch_bbp", caption.placement="bottom", comment = FALSE)
 # rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
 # colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
 # #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 # #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# garchsesample)
-  garch_bbp
-  # Print the table
- # print(coefgarch_table)
+# garch_bbp
+print(coefgarch_table)
   
  
 #   garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
@@ -3742,6 +3695,9 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 residuals_bbp <- residuals(fit)
 plot(residuals_bbp)
 ```
+
+
+
 (Table (\@ref(tab:arima_both))
 ```{r,arima_both, eval=FALSE}
 #echo=FALSE, results='asis',warning=FALSE, message=FALSE}
