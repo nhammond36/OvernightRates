@@ -3549,100 +3549,7 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 # absnu                   0.016534819 0.010158805                               0.718 (0.069)
 # nu                     -0.002099820 0.006963208                               0.276 (0.042)
   
-# Create the dataframe
-arima_df <- data.frame(
-  Variable = c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday",
-               "endquarter", "endyear", "Monday", "Friday", "fomc", "fomcindex", "z", "nt", "absnu", "nu"),
-  Replication_Coefficients = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
-                               0.143136334, 0.108245069, -0.002832700, -0.013389683, 0.009347913,
-                               -0.284634005, -0.700228944, 0.049702753, 0.016534819, -0.002099820),
-  Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
-                            0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
-                            0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
-  bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.183, NA, NA, NA, NA, NA, NA, 0.718, 0.276),
-  bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
-  bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, NA, NA, NA, NA),
-  bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, NA, NA, NA, NA)
-)
-
-# Display the dataframe
-print(arima_df)
   
-  
-bpp_params <- c(ar1 = 0.844725586, intercept = 0, oneday_beforeholiday = 0.-026, 
-                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
-                  endquarter = 0, endyear = 0.0 Monday =0, 
-                  Friday = 0, fomc = 0, fomcindex = 0, 
-                  z = 0, nt = 0, absnu = 0, nu = 0) 
-
-bpp_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.-026, 
-                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
-                  endquarter = 0, endyear = 0.0 Monday =0, 
-                  Friday = 0, fomc = 0.009347913, fomcindex = 0, 
-                  z = 0, nt = 0, absnu = 0, nu = 0) 
-
-
-bpp1994_params <- c(ar1 = 0.6, intercept = 0, oneday_beforeholiday = 0.-026, 
-                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
-                  endquarter = 0, endyear = 0.0 Monday =0, 
-                  Friday = 0, fomc = 0, fomcindex = 0.713, 
-                  z = 0, nt = 0, absnu = 0.718, nu = 0.276) 
-
-bpp1994_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.-026, 
-                  threeday_beforeholiday = -0.018, oneday_afterholiday = 0.062, 
-                  endquarter = 0, endyear = 0.0 Monday =0, 
-                  Friday = 0, fomc = 0.009347913, fomcindex = 0, 
-                  z = 0, nt = 0, absnu = 0, nu = 0) 
-
-
-  
-  # Convert the parameter_estimates to a data frame
-  arima_params_df <- as.data.frame(results)
-  
-  # Create a table using xtable
-  arima_params_table <- xtable(arima_params, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_bbp", caption.placement="bottom", comment = FALSE)
-# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-   arima_params_table 
-  # Print the table
-  #print( arima_params_table) 
-#ERROR see why chat fixed it
-  # Error in UseMethod("xtable") : 
-  # no applicable method for 'xtable' applied to an object of class "c('double', 'numeric')"
-
-   
-#CHAT -------------------------------------------------------
-   # Assuming arima_params is your vector
-arima_params <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
-                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
-                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
-                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
-                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
-   
- arima_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
-                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
-                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
-                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
-                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
-   
-
-# Convert vector to data frame
-arima_params_df <- as.data.frame(t(arima_params))  # same as arima_params_df <- as.data.frame(results)
-
-# Assign column names
-colnames(arima_params_df) <- c("Estimate")
-
-# If you have additional columns for Std. Error, t value, and Pr(>|t), you can add them to the data frame
-# For example:
-# arima_params_df <- cbind(arima_params_df, "Std. Error" = ..., "t value" = ..., "Pr(>|t)" = ...)
-
-# Use xtable on the data frame
-library(xtable)
-arima_params_table <- xtable(arima_params_df, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_bbp", caption.placement="bottom", comment = FALSE)
-
-# Print the table
-print(arima_params_table)
-```  
 
 (Table (\@ref(tab:garch_bbp))
 ```{r,garch_bbp,eval=FALSE}  
@@ -3695,6 +3602,273 @@ print(coefgarch_table)
 residuals_bbp <- residuals(fit)
 plot(residuals_bbp)
 ```
+  
+# Create the dataframe
+# CHAT
+#   egarch_bbp <- data.frame(
+#   Variable = c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday",
+#                "endquarter", "endyear", "Monday", "Friday", "fomc", "fomcindex", "z", "nt", "absnu", "nu"),
+#   Replication_Coefficients = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
+#                                0.143136334, 0.108245069, -0.002832700, -0.013389683, 0.009347913,
+#                                -0.284634005, -0.700228944, 0.049702753, 0.016534819, -0.002099820),
+#   Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
+#                             0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
+#                             0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
+#   bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, NA, NA, NA, NA, NA),
+#   bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
+#   bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, 1.24, 0.668, 0.718, 0.276),
+#   bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, 0.465, 0.195, 0.069, 0.042)
+# )
+# 
+# # Replace NA with empty string
+# egarch_bbp[is.na(egarch_bbp)] <- ""
+# egarch_bbp
+
+# With NA values  
+egarch_bbp <- data.frame(
+  Variable = c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday",
+               "endquarter", "endyear", "Monday", "Friday", "fomc", "fomcindex", "z", "nt", "absnu", "nu"),
+  Replication_Coefficients = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
+                               0.143136334, 0.108245069, -0.002832700, -0.013389683, 0.009347913,
+                               -0.284634005, -0.700228944, 0.049702753, 0.016534819, -0.002099820),
+  Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
+                            0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
+                            0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
+  bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, NA, NA, NA, NA, NA),
+  bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
+  bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, 1.24, 0.668, 0.718, 0.276),
+  bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, 0.465, 0.195, 0.069, 0.042)
+)
+
+# Display the dataframe
+# Replace NA with empty string
+egarch_bbp[is.na(egarch_bbp)] <- ""
+egarch_bbp
+  
+ # Create a table using xtable-------------------- for overnight EFFR
+egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
+     
+\emph{Findings Bertolini et al}
+Bertolini et al () find the variance of the FFR rate 
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rise at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
+- tends to fall before holidays and rise afterwards
+- responds positively to penalty rate 1.240     (0.465)
+- increases on FOMC announcements days 0.783  (0.262)
+
+Each non trading day raises the variance of the next trading day by 67 percent
+
+The EGARCH parameters are significant indicating:
+- persistence in underlying volatility of liquidity shock
+- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
+
+When I ran BBP's set up of their model, during the period of this paper,daily date from  2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserve. So eliminated their dummary days for the reserve period (see (Table (\@ref(tab:arima_both)).  
+
+CREATE GARCH table
+
+I found the  response of the FFR to dummies representing inividual dates very small compared to Bertolini el al:
+
+endquarter              0.114887391 0.142475753   vs     2.081     0.181
+endyear                 0.066116640 0.173470169          2.913     0.331
+
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+
+
+Other findings:
+The variance of the FFR 
+- rises 0.067 rather falls at the end of the year as in BBP
+- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
+<!--with variance 8 times larger that that of a typical day and falls after-->
+- rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
+
+Bertolini estimates show the FFR
+- responds positively to penalty rate 1.240     (0.465)
+- increases on FOMC announcements days 0.783  (0.262)
+
+DUring the period 2016-2023, my estimates show the volatility of of the daily EFFR
+- falls with increases in penalty rate -.07 (0.222)
+- increases on FOMC days
+- small non trading day increase 0.062 (0.091)
+- Bertolini, Bertola, Prati () 
+
+<!--
+- rise end of year 0.066 (0.173)
+- rise end of quarter 0.115 (0.142)
+- rise one day before holiday
+- fall three days before holiday
+- rise one day after holiday
+-->
+
+The Ljung-Box test check for autocorrelation of the volatility time series reports:
+
+<!--The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
+Weighted Ljung-Box Test on Standardized Residuals
+-->
+
+results
+                       Coefficients  StdErrors
+ar1                     0.844725586 0.24756022
+intercept               1.995289332 0.08876039
+oneday_beforeholiday    0.090674060 0.04568855
+threeday_beforeholiday -0.100208356 0.74535917
+oneday_afterholiday     0.056307993 0.07590593
+endquarter              0.143136334 0.24756022
+endyear                 0.108245069 0.08876039
+Monday                 -0.002832700 0.04568855
+Friday                 -0.013389683 0.74535917
+fomc                    0.009347913 0.07590593
+fomcindex              -0.284634005 0.24756022
+z                      -0.700228944 0.08876039
+nt                      0.049702753 0.04568855
+absnu                   0.016534819 0.74535917
+nu                     -0.002099820 0.07590593
+> fit
+
+*---------------------------------*
+*          GARCH Model Fit        *
+*---------------------------------*
+
+Conditional Variance Dynamics 	
+-----------------------------------
+GARCH Model	: eGARCH(1,1)
+Mean Model	: ARFIMA(0,0,0)
+Distribution	: std 
+
+Optimal Parameters
+------------------------------------
+        Estimate  Std. Error   t value Pr(>|t|)
+omega   0.013416    0.247560  0.054192 0.956782
+alpha1  0.048481    0.088760  0.546197 0.584931
+beta1   0.641798    0.045689 14.047247 0.000000
+gamma1  2.137288    0.745359  2.867460 0.004138
+shape   2.100000    0.075906 27.665822 0.000000
+
+Robust Standard Errors:
+        Estimate  Std. Error   t value Pr(>|t|)
+omega   0.013416    0.309792  0.043306 0.965458
+alpha1  0.048481    0.099271  0.488366 0.625290
+beta1   0.641798    0.086009  7.462029 0.000000
+gamma1  2.137288    1.009915  2.116305 0.034319
+shape   2.100000    0.105879 19.833987 0.000000
+
+LogLikelihood : -947.7031 
+
+Information Criteria
+------------------------------------
+                    
+Akaike       0.97364
+Bayes        0.98789
+Shibata      0.97362
+Hannan-Quinn 0.97888
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+                        statistic   p-value
+Lag[1]                      20.75 5.237e-06
+Lag[2*(p+q)+(p+q)-1][2]     21.40 1.913e-06
+Lag[4*(p+q)+(p+q)-1][5]     24.32 1.237e-06
+d.o.f=0
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                      4.534 0.03323
+Lag[2*(p+q)+(p+q)-1][5]     7.952 0.03029
+Lag[4*(p+q)+(p+q)-1][9]     9.412 0.06678
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+            Statistic Shape Scale P-Value
+ARCH Lag[3]     0.758 0.500 2.000  0.3839
+ARCH Lag[5]     2.200 1.440 1.667  0.4287
+ARCH Lag[7]     2.805 2.315 1.543  0.5511
+
+Nyblom stability test
+------------------------------------
+Joint Statistic:  8.93
+Individual Statistics:             
+omega  0.8534
+alpha1 0.1609
+beta1  1.4138
+gamma1 0.1943
+shape  0.5631
+
+Asymptotic Critical Values (10% 5% 1%)
+Joint Statistic:     	 1.28 1.47 1.88
+Individual Statistic:	 0.35 0.47 0.75
+
+Sign Bias Test
+------------------------------------
+                   t-value      prob sig
+Sign Bias           4.2344 2.398e-05 ***
+Negative Sign Bias  4.8617 1.257e-06 ***
+Positive Sign Bias  0.8992 3.687e-01    
+Joint Effect       33.5872 2.421e-07 ***
+
+
+Adjusted Pearson Goodness-of-Fit Test:
+------------------------------------
+  group statistic p-value(g-1)
+1    20     219.4    4.628e-36
+2    30     245.5    3.776e-36
+3    40     261.5    9.935e-35
+4    50     297.1    3.099e-37
+
+
+Elapsed time : 1.074492 
+  
+$ OLD ----------------------------------------------------------------
+  # Convert the parameter_estimates to a data frame
+  arima_params_df <- as.data.frame(results)
+  
+  # Create a table using xtable
+  arima_params_table <- xtable(arima_params, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_bbp", caption.placement="bottom", comment = FALSE)
+# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+   arima_params_table 
+  # Print the table
+  #print( arima_params_table) 
+#ERROR see why chat fixed it
+  # Error in UseMethod("xtable") : 
+  # no applicable method for 'xtable' applied to an object of class "c('double', 'numeric')"
+
+   
+#CHAT -------------------------------------------------------
+   # Assuming arima_params is your vector
+arima_params <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
+                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
+                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
+                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
+                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
+   
+ arima_se <- c(ar1 = 0.844725586, intercept = 1.995289332, oneday_beforeholiday = 0.090674060, 
+                  threeday_beforeholiday = -0.100208356, oneday_afterholiday = 0.056307993, 
+                  endquarter = 0.143136334, endyear = 0.108245069, Monday = -0.002832700, 
+                  Friday = -0.013389683, fomc = 0.009347913, fomcindex = -0.284634005, 
+                  z = -0.700228944, nt = 0.049702753, absnu = 0.016534819, nu = -0.002099820)
+   
+
+# Convert vector to data frame
+arima_params_df <- as.data.frame(t(arima_params))  # same as arima_params_df <- as.data.frame(results)
+
+# Assign column names
+colnames(arima_params_df) <- c("Estimate")
+
+# If you have additional columns for Std. Error, t value, and Pr(>|t), you can add them to the data frame
+# For example:
+# arima_params_df <- cbind(arima_params_df, "Std. Error" = ..., "t value" = ..., "Pr(>|t)" = ...)
+
+# Use xtable on the data frame
+library(xtable)
+arima_params_table <- xtable(arima_params_df, caption = "Arima (1,0,0) sample rates 3/4/2016 to 12/14/2023", label="tab:arima_bbp", caption.placement="bottom", comment = FALSE)
+
+# Print the table
+print(arima_params_table)
+```  
 
 
 
