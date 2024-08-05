@@ -3648,32 +3648,40 @@ egarch_bbp
  # Create a table using xtable-------------------- for overnight EFFR
 egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
      
-\emph{Findings Bertolini et al}
-Bertolini et al () find the variance of the FFR rate 
-- falls at the end of the year with variance 17 times larger that that of a typical day
-- rise at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
-- tends to fall before holidays and rise afterwards
-- responds positively to penalty rate 1.240     (0.465)
-- increases on FOMC announcements days 0.783  (0.262)
+\emph{Findings Bertolini, Bertola, Prati (2000) } 
+Reserve requirements for depositor banks and institutions at the Federal Reserve, in place during Bertolini et al (2000) study, were not present during this replication of their empirical model from 2016 to 2023.
 
-Each non trading day raises the variance of the next trading day by 67 percent
+A summary of their findings:
+the variance of the FFR rate in the full sample:
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
+- tends to fall before holidays and rise afterwards
+- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
+- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
+- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
 
 The EGARCH parameters are significant indicating:
 - persistence in underlying volatility of liquidity shock
 - the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
 
-When I ran BBP's set up of their model, during the period of this paper,daily date from  2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserve. So eliminated their dummary days for the reserve period (see (Table (\@ref(tab:arima_both)).  
+Replicating their model for the daily Federal funds rate from  2016 through 2023 I eliminated the  dummy days for the reserve period (see (Table (\@ref(tab:arima_both)).  
+The response of the FFR to dummies representing inividual dates similar in full sample but different signs, very small compared to Bertolini el al post 1994.
 
-CREATE GARCH table
+The only agreement is quarter end 2016-2023 qnd full cample
+Three day before holiday "
+One day after holiday:
 
-I found the  response of the FFR to dummies representing inividual dates very small compared to Bertolini el al:
-
-endquarter              0.114887391 0.142475753   vs     2.081     0.181
-endyear                 0.066116640 0.173470169          2.913     0.331
-
-oneday_beforeholiday    0.100839203 0.132623548           NA        NA
-threeday_beforeholiday -0.095986648 0.045628642           NA        NA
-oneday_afterholiday     0.035191454 0.129995377           NA        NA
+                                                      full sample          post 1994
+quarter end                  0.141 (0.248) vs          0.206 ()               2.081 (0.181)
+year end                     0.108 (0.089)            -0.185 ()               2.913 (0.331)
+one day before holiday       0.901 (0.046)            -0.026 ()              NA
+three day before holiday    -0.100 (0.745)            -0.018 ()              NA
+one day after holiday        0.056 (0.076)             0.062 () NA            0.783 (0.262)
+Fomc announcement day       -0.285 (0.248)             NA
+Non trading days             0.500 (0.046)             NA                     0.668 (0.195)
+Penalty z                   -0.700 (0.089)             NA                     1.240 (0.465)
+Absolute error $\nu$         0.016 (0.745)             NA                     0.718 (0.465)
+Lagged  error $\nu+{t-1}$   -0.002 (0.076)             NA                     0.276 (0.042)
 
 
 Other findings:
@@ -3688,10 +3696,10 @@ Bertolini estimates show the FFR
 - increases on FOMC announcements days 0.783  (0.262)
 
 During the period 2016-2023, my estimates show the volatility of of the daily EFFR
-- falls with increases in penalty rate -.07 (0.222)
-- increases on FOMC days
-- small non trading day increase 0.062 (0.091)
-- Bertolini, Bertola, Prati () 
+- falls with increases in penalty rate -.7 (0.089)
+- decreases on FOMC days -0.285 (0.248)
+- small non trading day increase 0.400 (0.046)
+
 
 <!--
 - rise end of year 0.066 (0.173)
