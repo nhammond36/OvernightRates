@@ -58,6 +58,8 @@ library(patchwork)
 library(caTools)
 library(kableExtra)
 library(knitr)
+library(rugarch)
+library(rmgarch)
 knitr::opts_chunk$set(echo = FALSE, cache = FALSE)
 #knitr::opts_chunk$set(cache = FALSE)
 #knitr::knit("ONRates_simplev10_05262024v6.Rmd")
@@ -3700,6 +3702,148 @@ During the period 2016-2023, my estimates show the volatility of of the daily EF
 - decreases on FOMC days -0.285 (0.248)
 - small non trading day increase 0.400 (0.046)
 
+EGARCH 2016-2023
+
+<!--
+3709-3750 [egarch_bbp] (ONRates_simplev10_08042024.rmd)
+Error:
+! object 'arima_residuals' not found
+-->
+
+(Table (\@ref(tab:egarch_bbp))
+```{r,egarch_bbp,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+# Specify the EGARCH model --------------------------------------
+  spec <- ugarchspec(
+    variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+    mean.model = list(armaOrder = c(0, 0), include.mean = FALSE),
+    distribution.model = "std" 
+  )
+  #"norm"
+  # Fit the EGARCH model on the residuals from the ARIMA model
+  fit <- ugarchfit(spec = spec, data = arima_residuals)
+  
+  # Print the EGARCH model parameters
+  print("EGARCH Model Parameters:")
+  print(coef(fit))
+  
+  coefficients <- coef(fit)
+  
+  # Extract the variance-covariance matrix
+  vcov_matrix <- vcov(fit)
+  
+  # Calculate standard errors from the diagonal of the vcov matrix
+  std_errors <- sqrt(diag(vcov_matrix))
+  
+  # Combine coefficients and standard errors into a data frame
+  results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
+  
+  # Print the results
+  print(results)
+  
+  # Convert the parameter_estimates to a data frame
+  coefgarch_df <- as.data.frame(results)
+  
+  # Create a table using xtable
+  coefgarch_table <- xtable(garch_bbp,caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:garch_bbp", caption.placement="bottom", comment = FALSE)
+# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+# #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+# #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+# garchsesample)
+  garch_bbp
+  # Print the table
+ # print(coefgarch_table)
+```
+  
+GARCH Model : EGARCH(1,1)
+Mean Model : ARIMA(1,0,1)
+Distribution : student t
+  
+$\alpha$ captures the sign effect
+$\beta$  captures persistence
+$\gamma$ size
+shape parameter typically refers to parameters that control the distributional characteristics of the error terms. Specifically, it often pertains to the skewness and kurtosis of the distribution used to model the error terms.
+
+The GARCH order is defined by (q; p) (ARCH, GARCH), with possibly m external regressors $x_j$
+$ z=\epsilon $ residuals from the mean filtration process discussed previously. the standardized residual.
+
+Related to this measure is the 'half-life' (call it h2l) defined as the number of days it takes for
+half of the expected reversion back towards $E(\sigma^2)$ to occur. $P=\sum_{k=1}^{p}\beta_j$
+
+\beginequation}
+h2l=-\frac{log(2)}{P}
+\end{}equation)
+
+\begin{equation}
+log(\sigma$2_t)= (\omega + \sum_{j=1}^{q}\xi_j \x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (abs(z_{t-j})+E(abs(z_{t-j})) + \sum_{k=1}^{p}\beta_j log(\sigma^2_{t=j})
+\end{equation}
+
+Robust Standard Errors:
+        Estimate  Std. Error   t value Pr(>|t|)
+omega   0.013416    0.309792  0.043306 0.965458
+alpha1  0.048481    0.099271  0.488366 0.625290
+beta1   0.641798    0.086009  7.462029 0.000000
+gamma1  2.137288    1.009915  2.116305 0.034319
+shape   2.100000    0.105879 19.833987 0.000000
+
+LogLikelihood : -947.7031 
+
+
+Fit:
+The inforcriteria method on a fitted or filtered object returns the Akaike (AIC), Bayesian (BIC), Hannan-Quinn (HQIC) and Shibata (SIC) information criteria to enable model selection
+by penalizing overfitting at different rates. p 28 Intro Rugarch
+Ljung-Box is a portmanteau test with null the adequacy of the ARMA fit.
+
+Information Criteria
+------------------------------------
+                    
+Akaike       0.97364
+Bayes        0.98789
+Shibata      0.97362
+Hannan-Quinn 0.97888
+
+Weighted Ljung-Box Test on Standardized Residuals. The Ljung-Box test check for autocorrelation of the volatility time series reports:
+<!--The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
+Weighted Ljung-Box Test on Standardized Residuals
+-->
+------------------------------------
+                        statistic   p-value
+Lag[1]                      20.75 5.237e-06
+Lag[2*(p+q)+(p+q)-1][2]     21.40 1.913e-06
+Lag[4*(p+q)+(p+q)-1][5]     24.32 1.237e-06
+d.o.f=0
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                      4.534 0.03323
+Lag[2*(p+q)+(p+q)-1][5]     7.952 0.03029
+Lag[4*(p+q)+(p+q)-1][9]     9.412 0.06678
+d.o.f=2
+------------------------------------
+The parameters are all significant. Negative alpha1 and positive beta1 imply oscillatory behavior.
+
+Mean Model:
+$\mu$ or mu constant
+ar1  AR term
+
+Distribution Model
+skew: skew
+shape: shape
+ghlambda: $\lambda$  (for GHYP distribution)
+
+power term1(shock): $\delta$
+
+Variance Model (GJR, EGARCH)
+constant: omega
+$\alpha_1$ or alpha1 is the ARCH(q) parameter. 
+$\beta_1$ or beta1 is the GARCH(p) parameter. 
+assymetry term: $\gamma_1$
+
+
+-->
+------------------------------------------
 
 <!--
 - rise end of year 0.066 (0.173)
@@ -3750,8 +3894,6 @@ Optimal Parameters
 omega   0.013416    0.247560  0.054192 0.956782
 alpha1  0.048481    0.088760  0.546197 0.584931
 beta1   0.641798    0.045689 14.047247 0.000000
-
-
 gamma1  2.137288    0.745359  2.867460 0.004138
 shape   2.100000    0.075906 27.665822 0.000000
 
@@ -3759,11 +3901,77 @@ Robust Standard Errors:
         Estimate  Std. Error   t value Pr(>|t|)
 omega   0.013416    0.309792  0.043306 0.965458
 alpha1  0.048481    0.099271  0.488366 0.625290
-beta1   0.641798    0.086009  7.462029 0.000000
+fitbeta1   0.641798    0.086009  7.462029 0.000000
 gamma1  2.137288    1.009915  2.116305 0.034319
 shape   2.100000    0.105879 19.833987 0.000000
 
 LogLikelihood : -947.7031 
+
+Information Criteria
+------------------------------------
+                    
+Akaike       0.97364
+Bayes        0.98789
+Shibata      0.97362
+Hannan-Quinn 0.97888
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+                        statistic   p-value
+Lag[1]                      20.75 5.237e-06
+Lag[2*(p+q)+(p+q)-1][2]     21.40 1.913e-06
+Lag[4*(p+q)+(p+q)-1][5]     24.32 1.237e-06
+d.o.f=0
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                      4.534 0.03323
+Lag[2*(p+q)+(p+q)-1][5]     7.952 0.03029
+Lag[4*(p+q)+(p+q)-1][9]     9.412 0.06678
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+            Statistic Shape Scale P-Value
+ARCH Lag[3]     0.758 0.500 2.000  0.3839
+ARCH Lag[5]     2.200 1.440 1.667  0.4287
+ARCH Lag[7]     2.805 2.315 1.543  0.5511
+
+Nyblom stability test
+------------------------------------
+Joint Statistic:  8.93
+Individual Statistics:             
+omega  0.8534
+alpha1 0.1609
+beta1  1.4138
+gamma1 0.1943
+shape  0.5631
+
+Asymptotic Critical Values (10% 5% 1%)
+Joint Statistic:     	 1.28 1.47 1.88
+Individual Statistic:	 0.35 0.47 0.75
+
+Sign Bias Test
+------------------------------------
+                   t-value      prob sig
+Sign Bias           4.2344 2.398e-05 ***
+Negative Sign Bias  4.8617 1.257e-06 ***
+Positive Sign Bias  0.8992 3.687e-01    
+Joint Effect       33.5872 2.421e-07 ***
+
+
+Adjusted Pearson Goodness-of-Fit Test:
+------------------------------------
+  group statistic p-value(g-1)
+1    20     219.4    4.628e-36
+2    30     245.5    3.776e-36
+3    40     261.5    9.935e-35
+4    50     297.1    3.099e-37
+
+
+Elapsed time : 1.074492 
 
 # Older model
         Estimate  Std. Error   t value Pr(>|t|)
@@ -3850,7 +4058,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 Elapsed time : 1.074492 
   
 
-
+OLDER--------------------------------------------------
 \emph{Findings Bertolini et al}
 Bertolini et al () find the variance of the FFR rate 
 - falls at the end of the year with variance 17 times larger that that of a typical day
