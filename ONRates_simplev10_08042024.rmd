@@ -3778,6 +3778,58 @@ h2l=-\frac{log(2)}{P}
 log(\sigma$2_t)= (\omega + \sum_{j=1}^{q}\xi_j \x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (abs(z_{t-j})+E(abs(z_{t-j})) + \sum_{k=1}^{p}\beta_j log(\sigma^2_{t=j})
 \end{equation}
 
+Nelson
+\begin{align*}
+1.1 \xi_t=\signma_t  z_t
+1.2 z_t ~ i.i.d E(z_t) = 0  Var(z_t)=1
+1.3 \sigma^2_t=\sigma(\xi_{t-1},\xi_{t-2},\cdot,t,x_t,b)
+\sigma^2_t=\sigma(\sigma_{t-1}z_{t-1},\sigma_{t-2}z_{t-2},\cdot,t,x_t,b)
+\end{align*}
+
+\begin{align*}
+1.4 log(\sigma$2_t)= \omega + \sum_{j=1}^{p}\alpha_j z^2_{t-j} \sigma^2_{t-j}
+1.5 log(\sigma$2_t)= \omega + \sum_{i=1}^{q}\beta_i \sigma^2_{t-i}+ \sum_{j=1}^{p}\alpha_j z^2_{t-j} \sigma^2_{t-j}
+\end{align*}
+
+The GARCH-M model of Engle and Bollerslev (1986a), adds another equation
+\begin{equation}
+1.6 R_t= a+b\sigma^2_t+\xi_t
+\end{equation}
+
+Substituting recursively for the \sum_{i=1}^{q}\beta_i \sigma^2_{t-i} terms lets us rewrite (1.5)
+\begin{equation}
+1.7 log(\sigma$2_t)= \omega* + \sum_{k=1}^{\infty}\fi_j z^2_{t-j} \sigma^2_{t-j}
+
+residuals, GARCH models elegantly capture the volatility clustering in asset returns first noted by Mandelbrot (1963): " .. . large changes tend to be followed by large changes-of either sign-and small changes by small changes... " This feature of GARCH models accounts for both their theoretical appeal and their empirical success. On the other hand, the simple structure of (1.7) imposes important limitations
+
+We adopt another natural device for ensuring that ot2 remains nonnegative, by making ln (-t2) linear in some function of time and lagged $z_t$'s. That is, for some suitable function g:
+\begin{equation}
+2.1 log(\sigma$2_t)=\alpha_t + \sum_{k=1}^{\infty}\beta_k g(z_{t-k})
+\end{equation}
+$\beta_1 \equiv 1
+
+To accommodate the asymmetric relation between stock returns and volatility changes noted in Section 1, the value of g(z,) must be a function of both magnitude and the sign of $z_t$. One choice, that in certain important cases turns out to give o-7 well-behaved moments, is to make $g(z_t)$ a linear combination z_t$ and $abs(z_t)$: 
+
+\begin{equation}
+(2.2) g(z_t) \equiv   \theta z_t + \gamma[abs{z_t) -E(abs(z_t))]
+\end{equation}
+
+By construction, ${g(z_t)}_{t=-\infty, \infty}$= is a zero-mean, i.i.d. random sequence. The two components of $g(z_t)$ are $\theta z_t $ and $\gamma[abs{z_t) -E(abs(z_t))]$, each with mean zero. If the distribution of $z_t$ is symmetric, the two components are orthogonal, though of course they are not independent. Over the range $0 < z_t < \infty$, g(zt) is linear in $z_t$ with slope $\theta + \gamma$, and over the range $- \infty <z_t < 0$, $g(z_t)$ is linear with slope $\theta - \gamma$. Thus, $g(z_t)$ allows the conditional variance process ${\sigma^2_t}$ to respond asymmetrically to rises and falls in stock price.
+
+of the GARCH models discussed in Section 1, assume for the moment that $\gamma > 0$ and $\theta = 0$. The innovation in $ln (\sigma^2_t)$ is then positive (negative) when magnitude of $z_t$ is larger (smaller) than its expected value. Suppose now y = 0 and 0 < 0. The innovation in conditional variance is now positive (negative) when returns innovations are negative (positive). Thus the exponential form of ARCH in (2.1)-(2.2) meets the first objection raised to the GARCH models in Section 1.
+
+note that in (2.1)-(2.2) there are no inequality constraints whatever, and that cycling is permitted, since the $\beta_k$ terms can be negative or positive.
+
+often a simpler expression for $ln (\sigma^2)$ than the infinite moving average representation in (2.1). In many applications, an ARMA process provides a parsimonious parameterization: see 2.3
+
+Distribution of z can be student t, GED (normal a special case)
+
+<!--Rugarch
+\begin{equation}
+log(\sigma$2_t)= (\omega + \sum_{j=1}^{q}\xi_j \x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (abs(z_{t-j})+E(abs(z_{t-j})) + \sum_{k=1}^{p}\beta_j log(\sigma^2_{t=j})
+\end{equation}
+-->
+
 Robust Standard Errors:
         Estimate  Std. Error   t value Pr(>|t|)
 omega   0.013416    0.309792  0.043306 0.965458
