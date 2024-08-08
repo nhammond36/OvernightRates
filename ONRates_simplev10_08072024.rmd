@@ -3424,6 +3424,21 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
   #abs(\nu_{t-1})+ \theta \nu_{t-1}
   absnu<-abs(nu)
   
+  # Sample character dates
+dates_char<- c(
+     "March 3, 2020", "March 11, 2020", "March 15, 2020", "March 16, 2020",
+     "April 1, 2020", "June 1, 2020", "August 28, 2020", "December11, 2020",
+     "July 28, 2021", "November 1, 2021", "December 1, 2021", "January 26, 2022",
+     "February 24, 2022", "March 16, 2022", "May 5, 2022", "June 1, 2022",
+     "June 16, 2022", "July 28, 2022", "September 22, 2022", "November 3, 2022",
+     "December 15, 2022", "February 2, 2023", "March 23, 2023", "May 4, 2023",
+     "July 27, 2023"
+ )
+ 
+ # Convert character dates to Date objects
+ # Handle common formats manually
+ dates <- as.Date(dates_char, format = "%B %d, %Y")
+  
    holidays <- as.Date(c(
     "2016-01-01", "2016-01-18", "2016-02-15", "2016-03-25", "2016-05-30", 
     "2016-07-04", "2016-09-05", "2016-11-24", "2016-12-26", "2017-01-02", 
@@ -3445,35 +3460,12 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
     "2020-10-12", "2021-10-11", "2022-10-10", "2023-10-09", "2020-07-04", 
     "2021-07-04", "2016-12-25", "2021-12-25", "2022-12-25"
   ))
-  
-  # Non trading days -----------------------------------------
-  # Example function definition
-non_trading_days_pairs <- function(dates, holidays) {
-  # Example code for counting non-trading days
-  non_trading_counts <- numeric(length(dates) - 1)
-  for (i in 2:length(dates)) {
-    start_date <- dates[i - 1]
-    end_date <- dates[i]
-    date_seq <- seq.Date(start_date, end_date, by = "day")
-    weekends <- weekdays(date_seq) %in% c("Saturday", "Sunday")
-    holidays <- date_seq %in% holidays
-    non_trading <- weekends | holidays
-    non_trading_counts[i - 1] <- sum(non_trading)
-  }
-  return(non_trading_counts)
-}
- 
    
    
-  non_trading_counts <- non_trading_days_pairs(dates, holidays)
-  non_trading_counts <- c(0, non_trading_counts)
-  nontradingdays<-non_trading_counts
-  
-  length(non_trading_counts)
-  
-  log_nontradingdays <- function(gamma, nontradingdays) {
-    return(log(1 - gamma * nontradingdays))
-  }
+
+     non_trading_days_pairs <- function(dates, holidays) {
+  n <- length(sdate)
+  non_trading_counts <- numeric(n-1)
   
   for (i in 2:n) {
     start_date <- sdate[i - 1]
@@ -3489,6 +3481,20 @@ non_trading_days_pairs <- function(dates, holidays) {
     non_trading_counts[i - 1] <- sum(non_trading)
   }
   return(non_trading_counts)
+}
+
+
+  
+  # Non trading days -----------------------------------------
+  non_trading_counts <- non_trading_days_pairs(dates, holidays)
+  non_trading_counts <- c(0, non_trading_counts)
+  nontradingdays<-non_trading_counts
+  
+  length(non_trading_counts)
+  
+  log_nontradingdays <- function(gamma, nontradingdays) {
+    return(log(1 - gamma * nontradingdays))
+  }
    
    length(non_trading_counts)
 ```   
@@ -3500,47 +3506,33 @@ non_trading_days_pairs <- function(dates, holidays) {
 ```{r,arima_bbp2,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 length(non_trading_counts)
 length(log_sd_effr_squared)
+
+
+#NEW
 neg_log_likelihood <- function(gamma) {
-   #Debug print statements
+    # Ensure gamma is numeric
+    gamma <- as.numeric(gamma)
+    if (is.na(gamma)) stop("gamma must be numeric")
+    
+    # Debug information
+    print(paste("gamma:", gamma))
     print(paste("Length of non_trading_counts:", length(non_trading_counts)))
     print(paste("Length of log_sd_effr_squared:", length(log_sd_effr_squared)))
     
     if (length(non_trading_counts) != length(log_sd_effr_squared)) {
         stop("non_trading_counts and log_sd_effr_squared must be of the same length")
     }
-    # Ensure gamma is numeric
-    if (!is.numeric(gamma)) stop("gamma must be numeric")
-    
-    # Ensure non_trading_counts and log_sd_effr_squared are numeric and same length
-    if (!is.numeric(non_trading_counts) || !is.numeric(log_sd_effr_squared)) {
-        stop("non_trading_counts and log_sd_effr_squared must be numeric")
-    }
-    if (length(non_trading_counts[1:T]) != length(log_sd_effr_squared)) {
-        stop("non_trading_counts and log_sd_effr_squared must be of the same length")
-    }
-    
-    # Check if any transformation leads to log(0) or log of a negative number
-    if (any(1 - gamma * non_trading_counts <= 0)) {
-        return(Inf)
-    }
-     if (length(non_trading_counts) != length(log_sd_effr_squared)) {
-        stop("non_trading_counts and log_sd_effr_squared must be of the same length")
-    }
     
     if (any(1 - gamma * non_trading_counts <= 0)) {
         return(Inf)
     }
-    # Calculate X and the linear model
+    
     X <- log(1 - gamma * non_trading_counts)
-    model <- lm(log_sd_effr_squared[2:T] ~ X[-1])
+    model <- lm(log_sd_effr_squared ~ X)
     
-    # Extract residuals
     residuals <- residuals(model)
-    
-    # Calculate the negative log likelihood
     log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
     
-    # Print intermediate values for debugging
     print(paste("gamma:", gamma, "log_likelihood:", log_likelihood))
     
     return(log_likelihood)
@@ -3549,69 +3541,157 @@ neg_log_likelihood <- function(gamma) {
 # Initial guess for gamma_value
 gamma_start <- 0.01
 
+# Use the optim function for optimization
+result <- optim(par = gamma_start, fn = neg_log_likelihood, method = "BFGS")
+
+print(result)
+
+
+# Chat's refined approach
+neg_log_likelihood <- function(gamma) {
+    # Ensure gamma is numeric
+    gamma <- as.numeric(gamma)
+    if (is.na(gamma)) stop("gamma must be numeric")
+    
+    # Debug information
+    print(paste("gamma:", gamma))
+    print(paste("Length of non_trading_counts:", length(non_trading_counts)))
+    print(paste("Length of log_sd_effr_squared:", length(log_sd_effr_squared)))
+    
+    if (length(non_trading_counts) != length(log_sd_effr_squared)) {
+        stop("non_trading_counts and log_sd_effr_squared must be of the same length")
+    }
+    
+    if (any(1 - gamma * non_trading_counts <= 0)) {
+        return(Inf)
+    }
+    
+    X <- log(1 - gamma * non_trading_counts)
+    model <- lm(log_sd_effr_squared ~ X)
+    
+    residuals <- residuals(model)
+    log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
+    
+    print(paste("gamma:", gamma, "log_likelihood:", log_likelihood))
+    
+    return(log_likelihood)
+}
+
+
+#Test
+#1 
+test_gamma <- 0.01
+result <- neg_log_likelihood(test_gamma)
+
+#2
+result <- optim(par = gamma_start, fn = function(g) {
+    print(paste("Optim gamma:", g))
+    neg_log_likelihood(g)
+}, method = "BFGS")
+
+
+# OH NO lost the end But I think its ok
+# gamma_estimated <- result$par
+gamma_estimated <- .01
+print(gamma_estimated)
+# 
+nt <- log(1 - gamma_estimated * non_trading_counts)
+print(nt)
+print(length(nt))
+# 
+external_regressors <- cbind(h[, 2:ncol(h)], z, nt, absnu, nu)
+# 
+stopifnot(!any(is.na(log_sd_effr_squared)))
+stopifnot(!any(is.infinite(log_sd_effr_squared)))
+stopifnot(!any(is.na(external_regressors)))
+stopifnot(!any(is.infinite(as.matrix(external_regressors))))
+# 
+cor_matrix <- cor(external_regressors, use = "complete.obs")
+print(cor_matrix)
+# 
+log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
+# 
+arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
+# 
+arima_params <- arima_model$coef
+arima_residuals <- residuals(arima_model)
+# 
+print("ARIMA Model Parameters:")
+print(arima_params)
+# 
+vcov_matrix <- vcov(arima_model)
+std_errors <- sqrt(diag(vcov_matrix))
+# results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
+# print(results)
+
+
+
+# # Initial guess for gamma_value
+gamma_start <- 0.01
+# 
 length(non_trading_counts)
 length(log_sd_effr_squared)
 # Use the optim function for optimization with a different method
 result <- optim(par = gamma_start, fn = neg_log_likelihood, method = "BFGS")
-
+# 
 # Print the result
 print(result)
-
-# Check the structure and summary of the data
+# 
+# # Check the structure and summary of the data
 str(non_trading_counts) #num [1:1957] 0 2 0 0 0 0 2 0 0 0 ...
 summary(non_trading_counts)
-#Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#0.0000  0.0000  0.0000  0.4149  0.0000  2.0000 
-
-str(log_sd_effr_squared) # num [1:1957] 2.2 1.39 2.2 1.39 1.39 ...
-summary(log_sd_effr_squared)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 0.000   1.386   2.197   1.757   2.197   7.222 
-
-
-  gamma_estimated <- result$par
-#   Here's a breakdown of the components in the result list:
-# par: The optimal parameter found (gamma_value = 0.01).
-# value: The value of the negative log likelihood at the optimal parameter (2873).
-# counts: The number of function and gradient evaluations used in the optimization.
-# convergence: An integer code indicating the convergence status (0 means successful convergence).
-# message: Any message from the optimization process (NULL means no message, which is typically a good sign).
-  print(gamma_estimated) # 0.6180798 0.2361138
-  # Update the nt calculation with the estimated gamma
-  nt <- log(1 - gamma_estimated * non_trading_counts)
-  length(non_trading_counts) #[1] 1957
-  print(nt)
-  length(nt)
-  
-  external_regressors <- cbind(h[,2:ncol(h)], z,nt,absnu, nu)
-  
-  
-  # Ensure there are no non-finite values in the cleaned data
-  stopifnot(!any(is.na(log_sd_effr_squared)))
-  stopifnot(!any(is.infinite(log_sd_effr_squared)))
-  stopifnot(!any(is.na(external_regressors)))
-  stopifnot(!any(is.infinite(as.matrix(external_regressors))))
-  
-  # Recalculate correlation matrix
-  cor_matrix<- cor(external_regressors, use = "complete.obs")
-  print(cor_matrix)
-  
-  # Create a zoo object for log_sd_effr_squared with sdate as the index
-  log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
-  # Fit an ARIMA model with cleaned external regressors using CSS
-  arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
-  
-  # Extract parameters and residuals
-  arima_params <- arima_model$coef
-  arima_residuals <- residuals(arima_model)
-  
-  print("ARIMA Model Parameters:")
-  print(arima_params)
-  
-  arima_params <- arima_model$coef
-  vcov_matrix <- vcov(arima_model)
-  std_errors <- sqrt(diag(vcov_matrix))
-  results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
+ #Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ #0.0000  0.0000  0.0000  0.4149  0.0000  2.0000 
+# 
+ str(log_sd_effr_squared) # num [1:1957] 2.2 1.39 2.2 1.39 1.39 ...
+ summary(log_sd_effr_squared)
+ # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ # 0.000   1.386   2.197   1.757   2.197   7.222 
+ 
+# 
+#   gamma_estimated <- result$par
+# #   Here's a breakdown of the components in the result list:
+# # par: The optimal parameter found (gamma_value = 0.01).
+# # value: The value of the negative log likelihood at the optimal parameter (2873).
+# # counts: The number of function and gradient evaluations used in the optimization.
+# # convergence: An integer code indicating the convergence status (0 means successful convergence).
+# # message: Any message from the optimization process (NULL means no message, which is typically a good sign).
+#   print(gamma_estimated) # 0.6180798 0.2361138
+#   # Update the nt calculation with the estimated gamma
+#   nt <- log(1 - gamma_estimated * non_trading_counts)
+#   length(non_trading_counts) #[1] 1957
+#   print(nt)
+#   length(nt)
+#   
+#   external_regressors <- cbind(h[,2:ncol(h)], z,nt,absnu, nu)
+#   
+#   
+#   # Ensure there are no non-finite values in the cleaned data
+#   stopifnot(!any(is.na(log_sd_effr_squared)))
+#   stopifnot(!any(is.infinite(log_sd_effr_squared)))
+#   stopifnot(!any(is.na(external_regressors)))
+#   stopifnot(!any(is.infinite(as.matrix(external_regressors))))
+#   
+#   # Recalculate correlation matrix
+#   cor_matrix<- cor(external_regressors, use = "complete.obs")
+#   print(cor_matrix)
+#   
+#   # Create a zoo object for log_sd_effr_squared with sdate as the index
+#   log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
+#   # Fit an ARIMA model with cleaned external regressors using CSS
+#   arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
+#   
+#   # Extract parameters and residuals
+#   arima_params <- arima_model$coef
+#   arima_residuals <- residuals(arima_model)
+#   
+#   print("ARIMA Model Parameters:")
+#   print(arima_params)
+#   
+#   arima_params <- arima_model$coef
+#   vcov_matrix <- vcov(arima_model)
+#   std_errors <- sqrt(diag(vcov_matrix))
+#   results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
   # print(results)    
 #                     Replication 2016-2023             bbp_params             bbp1994_params
 #                         Coefficients   StdErrors  Coefficients   StdErrors   Coefficients   StdErrors   # ar1                     0.844725586 0.013027682                               0.600 (0.038)
