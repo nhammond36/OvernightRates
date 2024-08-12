@@ -2818,12 +2818,64 @@ Estimated shocks about the current fed funds rate policy include 1) an “Odysse
 -->
 
 
-Monika Piazzesi (2005) follows the approach to exploit information from financial markets. Both financial markets and the Fed react ..  In a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR in a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. 
+Monika Piazzesi (2005) follows the approach to exploit information from financial markets. Both financial markets and the FOMC watch one another. The FOMC extracts information about the economy from the yield curve .  In a continuous-time model of the joint distribution of bond yields and the FOMC interest rate target for the FFR in a linear-quadratic jump-diffusion model. With high-frequency data she provides information about the exact timing of FOMC meetings. The short informational lag before Fed's policy decision, information available right before the FOMC meeting start provides a recursive identification scheme that turns the target forecast from right before the Federal Open Market Committee (FOMC) meeting into a high-frequency policy rule and the associated forecast errors into policy shocks. 
 <!--
  This information can improve bond pricing and ability to identify monetary policy shocks.
 --> 
 
+(Kerssenfischer, Schmeling (2023) compile a vast database from to 2020 of news that impact asset prices: macroeconomic data releases, monetary policy announcements, and ad  hoc news.
 
+The find the they regress the second moment of asset returns y, bonds and stocks, on dummy variables representing news sources, time fixed effects such as days, and lagged volatility measures..
+
+We estimate the impact of news on asset prices by running the following dummy regression separately for each asset:
+\begin{align*}
+y^2_t = \alpha + \sum_{i=1}^{k}\beta_i D_{i,t} +\lambda_j FE_{j,t}+vol_{k,t}+\epsilon_t
+\end{align*}
+
+The fraction of total market movements they attribute to news:
+\begin{align*}
+\Omega(k) = \sum_{i=1}^{k}\frac{E[y^2_t|D_{i,t}=1] P(D_{i,t=1}}{E(y^2)}
+\Omega(k) = \sum_{i=1}^{k}\frac{\beta_i P(D_{i,t=1}}{E(y^2)}
+\end{align*}
+
+where 𝑘 is the rank of each news release for a given asset (for most assets, 𝑘 = 1 is the US employment report. The $betas$ in Eq. (2) correspond to estimates of the effect of news 𝑖 on the conditional second moment. Weighing each coefficient by the frequency of releases and summing over all news gives us the second-moment share explained by all news. Since 𝐸[𝑦] ≈ 0 in tight
+event windows as discussed above, this measure is very close to a variance share and we thus label it $R^2$.
+<!--
+A recent literature has documented that monetary policy ‘‘surprises’’, measured as high-frequency changes of asset prices around
+central bank announcements (e.g., Gürkaynak et al., 2005), are, in fact, partly predictable by public information. Miranda-Agrippino
+and Ricco (2021) for example show that principal components, extracted from a large set of macro-financial variables, predict
+subsequent FOMC surprises whereas Neuhierl and Weber (2021) show that asset returns exhibit momentum around monetary policy
+news.
+Bauer and Swanson (2023) argue that such predictability is consistent with a channel in which the Fed responds to (public) news
+in a way that is imperfectly understood by market participants. In other words, even if a central bank and all market participants have
+access to the same information, imperfect knowledge about a central bank’s reaction function can lead to predictability of monetary
+policy ‘‘surprises’’.21 Our extensive data set allows us to investigate which type of news has predictive ability for monetary policy
+surprises to shed further light on this channel for the US Fed as well as the ECB.22
+We do so by regressing monetary policy surprises, denoted 𝑚𝑝𝑡 and measured as the change in domestic 2-year yields in narrow
+windows around press releases and press conferences on central bank announcement days 𝑡, on 2-year yield changes in narrow
+windows around other news between day 𝑡 and 𝑡−1, where 𝑡−1 denotes the day of the previous press release or press conference (not
+the previous calendar day). In essence, we ask what the market’s reaction to macro news since the last central bank announcement,
+measured by 2-year yield changes in tight events around macro news, tells us about monetary policy surprises at the next meeting.
+Since the signs of the coefficients in such regressions are hard to interpret, we focus on and report 𝐹-tests, i.e. tests for the joint
+significance of slope coefficients. We run these regressions with all news selected by the LASSO procedure detailed above and, in
+addition, for four different subsets of news to better understand the nature of monetary policy surprise predictability. Specifically,
+we distinguish between domestic and foreign macro news, domestic and foreign central bank news events, as well as ad hoc
+(unscheduled) events.
+Table 3 reports results for these regressions, where each column represents a regression of monetary policy shocks on the set of
+news indicated in the column heading. The last columns report results for a regression of monetary policy shocks on all news using
+LASSO to pick out the set of relevant news.
+
+Our results qualitatively confirm prior evidence and show that both FOMC and ECB announcement ‘‘surprises’’ are partly
+predictable by past (market reactions to) news. Interestingly, both FOMC and ECB surprises are significantly predictable by 2-year
+yield changes around foreign central bank news. FOMC surprises are also predictable by foreign macro news, whereas ECB surprises
+are predictable by domestic macro and ad hoc (unscheduled) news events. The associated (adjusted) 𝑅2s seem quite sizeable and
+range from 8% (ECB surprises and domestic macro news) to 18% (FOMC surprises and foreign central bank news). When regressing
+monetary policy shocks jointly on all news selected by LASSO, these adj. 𝑅2𝑠 are 22% for FOMC surprises and 13% for ECB surprises.
+Overall, our results thus corroborate recent work by Bauer and Swanson (2023) and Swanson (2023b). Complementing their
+results, we find that news prior to monetary policy meetings are significantly related to subsequent monetary policy surprises,
+indicating that market participants have imperfect knowledge about the central bank’s reaction function and lending credence to
+the existence of a ‘‘response to news channel’’
+-->
 
 <!--
 so it is crucial to disentangle their effects.
@@ -5036,9 +5088,8 @@ Approach",
   type = "NBER Working Paper "
 )
 
-
 article_citation <- list(
-  author = c("Jarocinski, Marek),
+  author = c("Jarocinski, Marek"),
   year = 2022,
   month = 06,
   title = "Estimating the Fed's unconventional policy shocks",
@@ -5046,12 +5097,23 @@ article_citation <- list(
 )
 
 article_citation <- list(
-  author = c("Adams, Michael),
+  author = c("Adams, Michael"),
   year = 2024,
   month = 05,
   title = "Federal Funds Rate History 1990 to 2024",
   type = "\url{https://www.forbes.com/advisor/investing/fed-funds-rate-history/}"
 )
+
+article_citation <- list(
+  author = c("Kerssenfischer, Mark", "Schmeling,Maik"),
+  year = 2024,
+  month = 07,
+  title = "What moves markets?",
+  type = "Journal of Monetary Economics"
+)
+
+<!--Volume 145->
+
 
 Concoda
 
