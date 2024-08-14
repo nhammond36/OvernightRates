@@ -264,19 +264,24 @@ my_envvolatile$norm_measure1 <- subset(my_envvolatile$norm_measure1, select = c(
 ```
 # Abstract
 How monetary policy impacts volatility of rates in the market for repurchase agreements also reveals
-the Federal Reserve preference for volatility as it manages the policy rate, the Federal Funds
-rate (FFR) within the target rate range specified by the FOMC. The Fed’s open market operations adjust reserves through repurchase transactions in the tri-party market to offset volatility in the Federal Funds rate.  The Fed's changes in the FFR, the target rate, and the administered rates, the interest on reserves (IORB) and the overnight reverse repurchase rate (ONRRP) also impact money market rates in these key funding markets. One puzzle is how the FFR survives the volatility of these short rates in the
-Federal Reserve Bank management of the FFR within the FOMC’s target range 
+the Federal Reserve preference for volatility as it manages the Federal Funds rate (FFR) within the target rate range specified by the FOMC. In the current ample reserves regime, the Fed’s open market operations adjust reserves through repurchase transactions in the tri-party market to offset volatility in the Federal Funds rate. The Fed's changes in the FFR, the target rate, and the administered rates, the interest on reserves (IORB) and the overnight reverse repurchase rate (ONRRP) also impact money market rates in these key funding markets.
  
-This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. How that volatility may vary under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR with the FOMC targets.
+This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. How that volatility may vary under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR within the FOMC targets.
 
 
 # Introduction
-  W examine how monetary policy impacts volatility of rates in the market for repurchase agreements may reveal the Federal Reserve Bank (Fed) preference for volatility as it manages the policy rate, the Federal Funds rate (FFR) with the target rates specified by the FOMC. The Fed's  open market operations adjust reserves through repurchase transactions to offset shocks the Federal Funds rate. How does the Fed manage the FFR to survive the volatility of shocks? 
-  
+I examine how monetary policy impacts volatility of rates in the market for repurchase agreements may reveal the Federal Reserve Bank (Fed) preference for volatility as it manages the Federal Funds rate (FFR) with the target range specified by the FOMC. The Fed's  open market operations adjust reserves through repurchase transactions to offset shocks to the Federal Funds rate. 
+
 The Federal Funds rate is the Fed's policy rate, the rate banks exchange funds in the interbank market. The administered rates for setting policy, interest on reserves (IORB) and the overnight reverse repo rate are important tools for managing the FFR.    
 
-the excess liquidity created by quantitative easing after the Great Financial Crisis (GFC) made the Fed's job of manage its policy rate difficult.  Events like the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy. By increasing reserves through repurchases, the Fed can lower the FFR  or raise the FFR by lending reserves in reverse repurchase transactions.
+The excess liquidity created by quantitative easing after the Great Financial Crisis (GFC) challenged the Fed's ability to manage short term rates.  Events like the spikes in repo and the FFR in 2019, the March 2020 dash for cash show how the adjustment of reserves through repurchase markets and the arbitrage opportunities between repo and the price of reserves affect credit and the economy. 
+By increasing reserves through purchases of securities, the Fed can lower the FFR  or raise the FFR by selling securities in reverse repurchase transactions. In a repurchase transaction, the Desk buys securities from a counterparty and agrees to resell them later. This increases reserves and lowers the FFR. in a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
+<!--
+\url{https://www.newyorkfed.org/markets/domestic-market-operations/monetary-policy-implementation/repo-reverse-repo-agreements}
+Repos are a common secured money market transaction. In a repo transaction, the Desk purchases securities from a counterparty subject to an agreement to resell the securities at a later date. Each repo transaction is economically similar to a loan collateralized by securities, and temporarily increases the supply of reserve balances in the banking system.
+
+Conversely, in a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system.
+-->
   
 The daily \$4 trillion repurchase market market provides liquidity to primary dealers, hedge funds, money market funds, government-sponsored enterprise (GSEs), banks, and private investors. Bank reserves and deposits are regularly swapped for Treasuries and other securities, which are then swapped for repurchase agreements (repos) used to fund loans, obtain leverage, and many other functions. 
    
@@ -286,21 +291,23 @@ The repurchase funding market rates are:
 - Bilateral General Collateral Rate (BGCR) — the dealer-to-customer repo market
 - The Secured Overnight Financing Rate (SOFR) - the Fed’s broadest measure of repo rates for borrowing collateralized by US Treasury securities.
    
-The tri-party general collaterial market is repo’s primary funding market for cash lenders or borrowers. For example, primary dealers are required to intermediate US Treasury issuance to their customers. They finance these purchases from their inventory or by borrowing from the Fed in the tri-party market. Participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in tri-party repo, then lend at a spread in other repo markets. Primary dealers sell securities to the customers in the more lucrative OTC broad general collateral market.
+
+Repurchase and reverse repurchase funding markets have become a major source of funding for primary dealers, hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. The tri-party general collaterial market is repo’s primary funding market for cash lenders or borrowers. Primary dealers appointed by the Fed are required to intermediate new US Treasury issues. Primary dealers borrow at cheaper rates from lenders, asset managers and the Fed in the tri party , then lend at a spread in other repo markets. Loans are secured by collateral. They lend at the higher broad General Collateral Rate (BGCR) to leveraged investors such as hedge funds.The Fed conducts OMO in the tri party market, both  borrowing and lending.  The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of borrowing overnight.
+
+<!-- For example, primary dealers are required to intermediate US Treasury issuance to their customers. They finance these purchases from their inventory or by borrowing from the Fed in the tri-party market. Participants obtain cash at the cheapest rates primarily from MMFs (money market funds) in tri-party repo, then lend at a spread in other repo markets. Primary dealers sell securities to the customers in the more lucrative OTC broad general collateral market.
 
 The level of reserves in the banking system changes when the Fed responds to volatility in the federal funds market by adjusting the reserve supply to keep the federal funds rate within its target range through daily repo and reverse repo operations. Reserves can also change
 1) when funds are transferred between reserves and non-reserve accounts at the Fed
-2) with changes in the US Treasury account at the Fed. 
+2) with changes in the US Treasury account at the Fed. -->
 
 To manage the federal funds rate within its target range, the Federal Reserve responds to volatility in the federal funds rate by adjusting reserves through repo and reverse repo operations in the tri-party market. Federal Reserve purchases or sales of assets from banks change the size of the Federal Reserve balance sheet. The Federal Reserve manages the FFR with temporary borrowing, repurchase agreements  and lending, reverse repurchase agreements. The Fed is the only major participant to engage in both tri-party repo borrowing and lending. A repurchase transaction or repo is a loan secured by collateral subject to an agreement to resell the securities at a later date. The borrower issues a cash equivalent liability to the lender. In a reverse repo an entity lends cash against secured collateral.  The transaction temporarily increases the supply of reserve balances in the banking system and lowers the FFR. In a reverse repo transaction, the Desk sells securities to a counterparty subject to an agreement to repurchase the securities at a later date. Reverse repo transactions temporarily reduce the supply of reserve balances in the banking system and raise the FFR.
   
 The Federal reserve has established facilities for dealers and investors, the Standard Repurchase Facility (SRF) to fund dealers, and the Overnight Reverse Repurchase Facility (O/N RRP) for lenders to invest excess liquidity. Identifying the behavior and relationships among these reference rates, policy and money market rates, is important to understanding the monetary system.
 
-Repurchase and reverse repurchase funding markets have become a major source of funding for primary dealers, hedge funds, government-sponsored enterprise (GSEs), money market funds (MMFS) and other participants. Primary dealers appointed by the Fed are required to intermediate new US Treasury issues. Primary dealers borrow at cheaper rates from lenders, asset managers in the tri party and the Fed, then lend at a spread in other repo markets. Loans are secured by collateral. They lend at the higher broad General Collateral Rate (BGCR) to leveraged investors such as hedge funds.The Fed conducts OMO in the tri party market, both  borrowing and lending.  The Secured Overnight Financing Rate (SOFR), Fed’s broadest measure of repo rates, expresses the average cost of borrowing overnight.
-
 This paper describes the dynamics of these rates and proposes a model of volatility joint with monetary policy. How that volatility may vary under different monetary policy regimes may reveal the Fed's preferences for offsetting volatility in managing the FFR within range specified by the FOMC.
  
-Section  1 reviews monetary policy over the seven year period, 2016-2023  and identifies FOMC rate changes, monetary regimes, and events in order to define monetary shocks. Section 2 reviews the time series properties of daily policy and money market rates and transactions from 3/4/2016-12/14/2023. Section 3 describes rate behavior during different policy episodes. Identify important arbitrage relationships. Section 4 discusses methodology for modelling volatility of the EFFR. Section 5 presents results.  Section 6 concludes.  (Sections 5-6 are in progress).
+Section  1 reviews monetary policy over the seven year period, 2016-2023  and identifies FOMC rate changes, monetary regimes, and events in order to define monetary shocks. Section 2 reviews the time series properties of daily policy and money market rates and transactions from 3/4/2016-12/14/2023. describes rate behavior during different policy episodes, presents The FFR and the FOMC target range, and identifies important arbitrage relationships.
+Section 3 surveys potential shocks to the Fed Funds rates available in existing databases. Section 4 discusses methodology for modelling volatility of the EFFR. Section 5 presents results.  Section 6 concludes.  (Sections 5-6 are in progress).
 
 <!--
 key characteristics of the FFR - time varying volatility or autoregressive conditional heteroskedasticity, spectacular outliers, skew, fat tails. shifts around central tendencies, jumps.
@@ -376,7 +383,7 @@ Changes in the Fed funds rate and the administered rates IORB and the reward rat
 Jarocinski (2002) 
 Another literature identifies monetary policy shocks from changes of financial asset prices in a narrow time window around Federal Open Market Committee (FOMC) announcements. Prior to the announcement, asset prices reflect the consensus view on the state of the economy and the Fed’s expected response to it. Afterwards, asset prices incorporate also any unexpected news conveyed in the announcement. These news could be about the current fed funds rate or its future path, asset purchases, the Fed’s view on the state of the economy, etc. They represent different structural shocks that may affect the economy differently.
 
-??
+
 Estimating the Fed's unconventional policy shocks, Jarocinski (2022) estimates structural shocks that underlie the reactions of financial markets to FOMC announcements. While the nature of the shocks is not specified ex ante, ex post the estimated shocks can be naturally labeled as the current fed funds rate policy, an “Odyssean” forward guidance (a commitment to a future course of policy rates), a large scale asset purchase and a “Delphic” forward guidance (a statement about the future course of policy rates understood as a forecast of the appropriate stance of the policy rather than a commitment (Campbell et al., 2012).
 
 <!-- Alvarez metrics for kurtosis-->
@@ -406,7 +413,7 @@ The FFR, the administered rates, and money market rates have similar qualities  
 
 
 ## Characteristics of the sample 2016-2023
-The average volume weighted median rate data are a better measure of central tendency since daily rates have skewed distributions with outliers. Less influenced by extreme values, the Interquartile range (IQR), the 75th minus the 25 percentile of the data, contains 50 percent of the data indicating how tightly the data cluster around the median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outlier rates  (Table (\@ref(tab:Rate characteristics 2016-2023))X
+The average volume weighted median rate data are a better measure of central tendency since daily rates have skewed distributions with outliers. Less influenced by extreme values, the Interquartile range (IQR), the 75th minus the 25 percentile of the data, contains 50 percent of the data indicating how tightly the data cluster around the median.  The  range, the 99th minus the one percentile, some two percent of rates, show the magnitude of the outlier rates (Table (\@ref(tab:Rate characteristics 2016-2023)).
 
 ```{r sampleratests, fig.cap="Sample reference rates 3/4/2016-12/14/2023", echo=FALSE,fig.num=TRUE, warning=FALSE, message=FALSE, results='asis'}
 #sdate<-rrbp[,1]
@@ -1325,7 +1332,7 @@ Fed Rate Hikes 2022-2023: Taming Inflation
 <!--
 These are the percentile plots to be replaced by IQR ribbon plots
 -->
-## The FFR and its target range
+## The FFR and the FOMC target range
 ```{r ratesnorm, fig.cap="EFFR during normalcy period 3/4/2016-7/31/2019", echo=FALSE, warning=FALSE, message=FALSE, fig.pos='H',fig.label="ratesnorm"}
 library(ggplot2)
 library(reshape2)
@@ -2363,18 +2370,14 @@ affect rate volatility. How that volatility may very under different monetary po
 -->
 
 ## Important arbitrage opportunities in overnight reference rates
-Under the corridor system that implements the [DATE] ample reserves, the Fed's setting of the IORB and O/NRRP which establish the the ceiling and floor of within which the Fed manages the range of the FFR. Fed temporary draining and adding reserves according to preferences for offsetting volatility in the FFR.
-
-- Arbitrage opportunities exist to invest in repo when SOFR exceed IORR, the interest banks can receive on   deposits with the Fed
-  \url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}                                                                                                       
+Under the corridor system that implements the  ample reserves, the Fed's setting of the IORB and O/N RRP establish  the ceiling and floor within which the Fed manages the range of the FFR. 
 
 \emph{IORB-EFFR}
-The EFFR represents the cost of interbank borrowing and is determined by the market. The difference between the EFFR and IORR  presents arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.
-
-Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC). Since have FBO branches access to deposit is limited, they borrow in the Fed Funds market.  Since they do not pay the FDIC assessment fee, most FBO branches can borrow fed funds at a lower than domestic banks.  They can earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.
-
-Historically, the IORB has been higher than the EFFR in general. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
+The EFFR represents the cost of interbank borrowing. The difference between the EFFR and IORR  presents arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.Historically, the IORB has been higher than the EFFR. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
 \url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
+<!--
+Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC). Since FBO branches access to deposit is limited, they borrow in the Fed Funds market. Since they do not pay the FDIC assessment fee, most FBO branches can borrow fed funds at a lower than domestic banks.  They can earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.
+-->
 
 <!--
 First, it limits their access to deposits—the main source of domestic bank funding—making fed funds an important source of their short-term funding. Second, since they do not pay the FDIC assessment fee, most FBO branches face an effective cost of borrowing fed funds that is lower than that of domestic banks. Lower funding costs give FBO branches an advantage over their domestic counterparts in arbitraging fed funds offered at rates below the interest on reserve balances (IORB) rate, as they can effectively earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.  
@@ -2387,9 +2390,11 @@ he FICC trades are filtered to remove a portion of transactions considered “sp
 -->
 
 \emph{SOFR}
-The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market, where investors offer banks overnight loans backed by their bond assets. Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
+The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market. Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
 
-When SOFR exceeds the IORR, banks idle reserve balances in SOFR. An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR. SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks. 
+Arbitrage opportunities exist to invest in repo when SOFR exceed IORB, the interest banks can receive on deposits with the Fed
+  \url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}                                                                                                       
+An IORB setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR. SOFR can and frequently does exhibit more day-to-day volatility than survey-based short term interest rates (STIR) benchmarks. 
 \url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
 <!--
 SOFR replaced the London Interbank Offered Rate (LIBOR).
@@ -2408,14 +2413,17 @@ By virtue of its comprehensive link to activity in Treasury general collateral r
 -->
 
 \emph{ON RRP and TBills}
-Money market mutual funds (MMFs) have been a major lender in the ONRRP facility.However, the supply of U.S. Treasury bills (T-bills). Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
+Money market mutual funds (MMFs) have been a major lender in the ON RRP facility. However, the supply of U.S. Treasury bills (T-bills) influences use of ON RPP. Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are a desireable investment option. MMFs’ demand for Treasury securities has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
 \url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/} The supply of TBills affects the decision of money market mutual funds (MMFs) to invest in the ON RRP. When Tbills are scarce, MMEs increase their investment in the ON RRP as in January 2021 to around $2.6 trillion at the end of December 2022. When the supply Tbills is abundant, the reverse.  
 
-With 3 month Tbills paying over 5 percent interest, the ON RPP has fallen to its lowest level. After the Fed’s largest liquidity injection on record, the “excess cash” era is coming to an end. Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening). As the RRP balance reaches zero, the dynamics in the repo market are about to transform. The return to an “excess collateral” era awaits us.
 After the resolution of the latest debt ceiling debacle in June 2023, however, the U.S. Treasury once again issued a deluge of Treasuries into the market, ending the safe asset deficit. The RRP balance had finally peaked, initiating the RRP drain
 \url{https://www.concoda.com/p/the-reverse-repo-endgame}
 
+With 3 month Tbills paying over 5 percent interest, the ON RPP has fallen to its lowest level. After the Fed’s largest liquidity injection on record, Concoda predicts the “excess cash” era is coming to an end. As the RRP balance reaches zero, the dynamics in the repo market are about to transform Concoda predicts the return to “excess collateral”.
+
+
 <!--
+Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening).
 We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up T-bills Outstanding Decreased from January 2021 to July 2022 Take-up at the Federal Reserve’s Overnight Reverse Repo Facility (ON RRP) increased from a few billion dollars in January 2021 to around $2.6 trillion at the end of December 2022.  In this post, based on a recent Staff Report, we explain how the supply of U.S. Treasury bills (T-bills) affects the decision of money market mutual funds (MMFs) to invest at the facility. We show that MMFs responded to a reduction in T-bill supply by increasing their take-up at the ON RRP, helping to explain the increased overall take-up.
 
 MMFs’ Demand for U.S. Treasury Securities
@@ -2645,6 +2653,7 @@ After the Fed reduced its balance sheet built up after quantitative easing (QE),
 The central banks continued to change their overall frameworks for controlling short-term interest rates.
 The  FOMC reference rate changes from Libor to SOFR,was one such policy change. 
 
+<!-- Maybe later
 \emph{Concoda: from excess cash to excess collateral 
 The ON RRP has been the shock absorber for excess liquidity. In April 2021, the Federal Reserve began unwinding its largest monetary expansion on record, the liquidity build up after the GFC. During the COVID-19 panic, the Fed allowed banks to absorb vast flows from QE by exempting reserves and Treasuries from its SLR (Supplementary Leverage Ratio). 
 
@@ -2662,7 +2671,7 @@ Beginning in 2023, the RRP balance was \$2.5 trillion in excess liquidity.  The 
 
 As the surplus of cash in the Fed’s RRP facility falls, the stability of the triparty repo market will once again be tested. The Fed’s quantitative tightening (QT) and the U.S. Treasury’s large debt issuance will continue to pull funding away from repo, perhaps causing a repeat of the September 2019 “repocalypse”. Sensing a recurrence, a large number of banks have begun signing up to the Fed’s standing repo facility, granting themselves the ability to receive emergency loans and front-run a repo rate spike. <!--
 If turmoil re-emerges, more monetary theatrics from the Federal Reserve await us, and the triparty repo market will be front and center.   -->
-
+-->
 <!--
    in order to influence the level and price of interbank credit as well as credit more broadly in the economy.manage the FFR in the interbank market?
 
@@ -2769,7 +2778,7 @@ Candidate shocks occurring during the seven year period of our sample 2016-2023 
 (\@ref{table:FOMC rate changes 2016-2023})  
 -->
 
-However, there are many compendia of shocks to draw on.  I will evaluate each one when choosing methodality to model the volatility of the FFR and repo market rates.
+However, there are many compendia of shocks to draw on.  I will evaluate each one when choosing methodology to model the volatility of the FFR and repo market rates.
 
 The  Romer and Romer (2023) narrative approach to identifying macroeconomic evidence into a statistical framework limits to monetary shocks that are unrelated to current or prospective real economic  activity. This approach would exclude shocks such as policy changes such as QE, LSAP, and forward guidance or events such the spike in repo rates in 2019 or the March 2020 dash for cash.
 
@@ -2825,22 +2834,21 @@ Monika Piazzesi (2005) follows the approach to exploit information from financia
  This information can improve bond pricing and ability to identify monetary policy shocks.
 --> 
 
-(Kerssenfischer, Schmeling (2023) compile a vast database from to 2020 of news that impact asset prices: macroeconomic data releases, monetary policy announcements, and ad  hoc news.
+(Kerssenfischer, Schmeling (2023) compile a vast database from to 2020 of news that impact asset prices: macroeconomic data releases, monetary policy announcements, and ad  hoc news. They state they will make the data available soon.
 
-The find the they regress the second moment of asset returns y, bonds and stocks, on dummy variables representing news sources, time fixed effects such as days, and lagged volatility measures..
-
-We estimate the impact of news on asset prices by running the following dummy regression separately for each asset:
+They regress the second moment of asset returns y, bonds and stocks, on dummy variables representing news sources, time fixed effects such as days, and lagged volatility measures..
+<!--We estimate the impact of news on asset prices by running the following dummy regression separately for each asset:-->
 \begin{align*}
 y^2_t = \alpha + \sum_{i=1}^{k}\beta_i D_{i,t} +\lambda_j FE_{j,t}+vol_{k,t}+\epsilon_t
 \end{align*}
 
-The fraction of total market movements they attribute to news:
+They attribute to news, the fraction of total market movements $\Omega$:
 \begin{align*}
 \Omega(k) = \sum_{i=1}^{k}\frac{E[y^2_t|D_{i,t}=1] P(D_{i,t=1}}{E(y^2)}
 \Omega(k) = \sum_{i=1}^{k}\frac{\beta_i P(D_{i,t=1}}{E(y^2)}
 \end{align*}
 
-where k is the rank of each news release for a given asset (for most assets, k = 1 is the US employment report. The $betas$ in Eq. (2) correspond to estimates of the effect of news i on the conditional second moment. Weighing each coefficient by the frequency of releases and summing over all news gives us the second-moment share explained by all news. Since E[y] $\approx 0$ in tight event windows as discussed above, this measure is very close to a variance share and we thus label it $R^2$.
+where k is the rank of each news release for a given asset (for most assets, k = 1 is the US employment report. The $betas$ correspond to estimates of the effect of news i on the conditional second moment. Weighing each coefficient by the frequency of releases and summing over all news gives the second-moment share explained by all news. Since E[y] $\approx 0$ in tight event windows as discussed above, this measure is very close to a variance share which they label $R^2$.
 <!--
 A recent literature has documented that monetary policy ‘‘surprises’’, measured as high-frequency changes of asset prices around central bank announcements (e.g., Gürkaynak et al., 2005), are, in fact, partly predictable by public information. Miranda-Agrippino and Ricco (2021) for example show that principal components, extracted from a large set of macro-financial variables, predict subsequent FOMC surprises whereas Neuhierl and Weber (2021) show that asset returns exhibit momentum around monetary policy
 news.
@@ -3121,7 +3129,7 @@ The distributions of daily reference rates and billions of dollars in transactio
 -->
 
 # Methodology
-[Should I put percent change sigma here and comment on results?]
+[Add percent change sigma here and comment on results]
 
 I plan to explore methods proposed by Piazzesi, Bezoni et al and Jarocinski. 
 
@@ -3129,7 +3137,7 @@ I first run a vector sutoregression on the EFFR and repo market rates to gain in
 
 
 ## VAR of daily rates EFFR, TGCR, BGCR, SOFR
-The Fed's policy rate, the EFFRis mean reverting  at a daily frequency, but changes little  in response to changes in repo rates TGCR, the tri party repurchase rate. and BGCR the bilateral market rate, some 0.14  basis points (bp). In response to changes in the EFFR, the money market rates change by around 2 bp, the TGCR positively 2.1 bp, the BGCR a negative 2.02 bp.  They respond to changes in own rates and SOFR -- TGCR positively, BGCR negatively. SOFR  responds very little to changes in the EFFR, a small -.08bp, and increases under one bp to changes in the money market rates TGCR and BGCR.
+The Fed's policy rate, the EFFR is mean reverting  at a daily frequency, but changes little  in response to changes in repo rates TGCR, the tri party repurchase rate. and BGCR the bilateral market rate, some 0.14  basis points (bp). In response to changes in the EFFR, the money market rates change by around 2 bp, the TGCR positively 2.1 bp, the BGCR a negative 2.02 bp.  They respond to changes in own rates and SOFR -- TGCR positively, BGCR negatively. SOFR  responds very little to changes in the EFFR, a small -.08bp, and increases under one bp to changes in the money market rates TGCR and BGCR.
 
 (Table (\@ref(tab:samplebeta))
 ```{r,samplebeta,  echo=FALSE, results='asis',warning=FALSE, message=FALSE}
