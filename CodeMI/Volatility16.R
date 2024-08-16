@@ -1820,12 +1820,13 @@ h$endquarter <- h$sdate %in% end_quarter_dates
     "2022-09-05", "2022-11-24", "2022-12-26", "2023-01-02", "2023-01-16", 
     "2023-02-20", "2023-04-07", "2023-05-29", "2023-06-19", "2023-07-04", 
     "2023-09-04", "2023-11-23", "2023-12-25", "2016-11-11", "2017-11-11", 
-    "2018-11-11", "2019-11-11", "2020-11-11", "2021-11-11", "2022-11-11", 
+    "2018-11-11", "2019-11-11", "202X0-11-11", "2021-11-11", "2022-11-11", 
     "2023-11-11", "2016-10-10", "2017-10-09", "2018-10-08", "2019-10-14", 
     "2020-10-12", "2021-10-11", "2022-10-10", "2023-10-09", "2020-07-04", 
     "2021-07-04", "2016-12-25", "2021-12-25", "2022-12-25"
   ))
   
+  # --------------------------------------------------------------
   non_trading_counts <- non_trading_days_pairs(dates, holidays)
   nontradingdays<-non_trading_counts
   
@@ -1837,17 +1838,60 @@ h$endquarter <- h$sdate %in% end_quarter_dates
   if (!require("stats4")) install.packages("stats4")
   library(stats4)
  
-<!--
+  #length(non_trading_counts) #1957
+  #length(log_sd_effr_squared[2:T]) #1956
+
   neg_log_likelihood <- function(gamma) {
     if (any(1 - gamma * non_trading_counts <= 0)) {
       return(Inf)
     }
     X <- log(1 - gamma * non_trading_counts)
-    model <- lm(log_sd_effr_squared[2:T] ~ X)
+    model <- lm(log_sd_effr_squared ~ X)
     residuals <- residuals(model)
     log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
     return(log_likelihood)
   }
+  
+  gamma <- 0.01  # Assign a specific value to gamma
+  log_nontradingdays(gamma, non_trading_counts)
+  result <- neg_log_likelihood(gamma)
+  
+  
+# EXPLANATION of this code:
+#   1. What does the log_nontradingdays function do?
+#     r
+#   Copy code
+#   log_nontradingdays <- function(gamma, nontradingdays) {
+#     return(log(1 - gamma * nontradingdays))
+#   }
+#   This function takes two arguments:
+#     
+#     gamma: A parameter that you are likely estimating or optimizing.
+#   nontradingdays: A variable representing the number of non-trading days (or possibly a proportion, depending on your context).
+#   The function computes the natural logarithm of 1 - gamma * nontradingdays. The idea here is likely related to some transformation or modeling of the relationship between gamma and the nontradingdays.
+#   
+#   2. Does the code use this log_nontradingdays function?
+#     The log_nontradingdays function is not directly used in the neg_log_likelihood function in the code you've provided. However, the logic of log_nontradingdays is effectively replicated in the neg_log_likelihood function:
+# 
+# r
+# Copy code
+# X <- log(1 - gamma * non_trading_counts)
+# This line does exactly what log_nontradingdays(gamma, non_trading_counts) would do if the log_nontradingdays function were used directly. However, the code directly implements the logic rather than calling the log_nontradingdays function. This could be because the author (or you) decided to simplify or optimize the code by avoiding an additional function call.
+# 
+# Why is nontradingdays not an argument in neg_log_likelihood?
+# The reason nontradingdays (or non_trading_counts in the context of neg_log_likelihood) is not an argument in the neg_log_likelihood function is likely because it is being treated as a global variable. The function neg_log_likelihood only takes gamma as an argument and assumes that non_trading_counts (or whatever name you are using) is defined elsewhere in your script or environment.
+# 
+# Summary
+# The log_nontradingdays function computes the log-transformation of 1 - gamma * nontradingdays.
+# The logic of log_nontradingdays is replicated within neg_log_likelihood, but the function itself is not used.
+# nontradingdays is not an argument in neg_log_likelihood because the function relies on the global variable non_trading_counts instead.
+# 
+
+
+
+
+
+#----------------------------------------------------------------------  
   
   # Initial guess for gamma
   gamma_start <- 0.01
