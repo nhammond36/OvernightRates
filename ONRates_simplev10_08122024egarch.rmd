@@ -44,6 +44,7 @@ echo: false
 
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(error = TRUE)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -3423,53 +3424,6 @@ Say alpha= .05 Reject $H_0=0$ when t Pr(>|t)
 If there is less than a 5 pct chance of a result as extreme as the sample mean if the null were true, then the null is rejected
 -->
 
-## Bertola et al empirical model of the Fed Funds rate 
-For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) empirical model of the volatility of the Federal Funds rate. Their objectives were to evaluate the time series properties of the  Fed Funds rate: 
-- mean reversion behavior in  the Fed Funds
-- main patterns of volatility in the Fed funds rates.
-
-They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates. Other findings were that the Fed funds rate:
-
-- rises in advance of reserve settlement days
-- declines in high rate regimes
-- exhibits biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
-
-
-Their empirical model of Fed Funds rate
-$r_t=\mu_t + \sigma_t\nu_t$
-$\nu_t$ unit variance mean zero i.i.d error term
-
-\emph{Conditional mean} $r_t, \mu_t=E[r_t]$
-They include target changes to capture the level shift changes of target rates affect on interest rates:
-$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
-
-
-\emph{Conditional variance)
-$\sigma^2_t= E[(r_t-\mu_t)^2]$
-$log(\sigma^2_t) +\omega h_t +\xi z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\xi z_{t-1} )$ $abs(\nu_{t-1})+ \theta \nu_{t-1}$
-
-I included their k dummy variables: before and after holidays, end of quarter, end of year
-I dropped the $\delta$ specific to maintenance day, as there were no required reserves during 2016-2023.
-The calendar effect variables included in the dummy $h_t. 
-
-- holiday               
-- oneday_beforeholiday  
-- threeday_beforeholiday
-- oneday_afterholiday  
-- threeday_afterholiday
-- endquarter            
-- endyear              
-- around_qtr           
-- around_yr            
-- Monday               
-- Friday     
-
-$z_t$ expresses the target rate as proportion of discount window primary credit rate (DPCredit)
-
-<!--
-(Table (\@ref(tab:arima_bbp))
--->
-
 ```{r,arima_bbp1,echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 #   eval = TRUE}
 #`r`**: This indicates that the chunk contains R code.
@@ -3566,73 +3520,7 @@ dates_char<- c(
    length(non_trading_counts)
 ```   
  
-<!-- 
-Delete all these chunks if the new arima_bbp2 works!!
-```{r, define_neg_log_likelihood, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
-neg_log_likelihood <- function(params) {
-  # Your function code here
-}
-```
- 
-```{r, define_gamma_start, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
-# Define gamma_start as an initial guess
-gamma_start <- 0.01
-```
 
-```{r,arima_bbp2,eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
-#echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-length(non_trading_counts)
-length(log_sd_effr_squared)
-
-non_trading_counts <- na.omit(non_trading_counts)
- log_sd_effr_squared <- na.omit(log_sd_effr_squared)
- #print(length(non_trading_counts)) #[1] 1957
- #print(length(log_sd_effr_squared)) #[1] 1957
- #print(head(non_trading_counts))
-#[1] 0 2 0 0 0 0
-print(head(log_sd_effr_squared))
-#[1] 2.197225 1.386294 2.197225 1.386294 1.386294 1.386294
-
-#NEW
-neg_log_likelihood <- function(gamma_value) {
-    # Ensure gamma_value is numeric
-    if (!is.numeric(gamma_value)) {
-        stop("gamma_value must be numeric")
-    }
-    
-    # Debug information
-    print(paste("gamma_value:", gamma_value))
-    print(paste("Length of non_trading_counts:", length(non_trading_counts)))
-    print(paste("Length of log_sd_effr_squared:", length(log_sd_effr_squared)))
-    
-    if (length(non_trading_counts) != length(log_sd_effr_squared)) {
-        stop("non_trading_counts and log_sd_effr_squared must be of the same length")
-    }
-    
-    # Check for invalid values in the gamma_value calculation
-    if (any(1 - gamma_value * non_trading_counts <= 0)) {
-        return(Inf)
-    }
-    
-    # Proceed with the calculations if no errors
-    X <- log(1 - gamma_value * non_trading_counts)
-    model <- lm(log_sd_effr_squared[2:length(log_sd_effr_squared)] ~ X[-1])
-    residuals <- residuals(model)
-    log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
-    
-    print(paste("gamma_value:", gamma_value, "log_likelihood:", log_likelihood))
-    
-    return(log_likelihood)
-}
-
-# Initial guess for gamma_value
-gamma_start <- 0.01
-
-# Use the optim function for optimization
-result <- optim(par = gamma_start, fn = neg_log_likelihood, method = "BFGS")
-#print(result)
-```
--->
 
 ```{r,arima_bbp2,eval=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # the correct chunk (above is wrong)
@@ -3647,8 +3535,16 @@ non_trading_counts <- non_trading_days_pairs(dates, holidays)
   if (!require("stats4")) install.packages("stats4")
   library(stats4)
  
-  #length(non_trading_counts) #1957
-  #length(log_sd_effr_squared[2:T]) #1956
+  length(non_trading_counts) #1956
+  length(X) #[1] 1957
+  length(log_sd_effr_squared) #1957
+  
+  ## AONLY DO ONCE IF YOUR START OVER!
+  #djusting X to match log_sd_effr_squared
+#X <- X[-1]  # Remove the first element
+# Adjusting log_sd_effr_squared to match X
+#log_sd_effr_squared <- log_sd_effr_squared[-1]  # Remove the first element
+
 
   neg_log_likelihood <- function(gamma) {
     if (any(1 - gamma * non_trading_counts <= 0)) {
@@ -3664,6 +3560,33 @@ non_trading_counts <- non_trading_days_pairs(dates, holidays)
   gamma <- 0.01  # Assign a specific value to gamma
   log_nontradingdays(gamma, non_trading_counts)
   result <- neg_log_likelihood(gamma)
+  print(result)
+  
+# Debugging August 17, 2024
+  # Debugging August 17, 2024
+  #X[is.na(X)] <- 0
+  #log_sd_effr_squared[is.na(log_sd_effr_squared)] <- 0
+  #stopifnot(!any(is.na(X)))
+  #stopifnot(!any(is.na(log_sd_effr_squared)))
+#print(str(X))
+#print(summary(X))
+#print(str(log_sd_effr_squared))
+#print(summary(log_sd_effr_squared))
+
+#Chat August 17
+#It looks like the log_nontradingdays function is computing some transformation based on gamma and #non_trading_counts, resulting in a sequence of values that alternate between -0.02020271 and 0.00000000.
+
+#The pattern in the output suggests that the function is applying a logarithmic transformation (or #something similar) to gamma * non_trading_counts, and depending on the values in non_trading_counts, the #resulting values can either be 0.00000000 or some negative value like -0.02020271.
+
+#Given that gamma is a small positive value (0.01), this could imply that the negative values arise when #non_trading_counts is positive, and zeros occur when non_trading_counts is zero.
+
+#If you need further help interpreting or debugging this function, could you share the code for #log_nontradingdays or more context on how non_trading_counts is structured? This will help in #understanding why the output is showing this specific pattern.
+
+  
+#Test
+#1 
+test_gamma <- 0.01
+result_test1 <- neg_log_likelihood(test_gamma)  
   
 # Initial guess for gamma_value only if not happy with gamma above:
 #   So I dont need # Use the optim function for optimization
@@ -3697,14 +3620,34 @@ non_trading_counts <- non_trading_days_pairs(dates, holidays)
 # 
 # $message
 # NULL
-  
+# Form external regeressors and estimate Arima  
+nt <- log(1 - gamma * non_trading_counts)
+print(nt)
+print(length(nt))
+# 
+external_regressors <- cbind(h[, 2:ncol(h)], z, nt, absnu, nu)
+# 
+stopifnot(!any(is.na(log_sd_effr_squared)))
+stopifnot(!any(is.infinite(log_sd_effr_squared)))
+stopifnot(!any(is.na(external_regressors)))
+stopifnot(!any(is.infinite(as.matrix(external_regressors))))
+# 
+cor_matrix <- cor(external_regressors, use = "complete.obs")
+print(cor_matrix)
+# 
+log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
+# 
+arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
+# 
+arima_params <- arima_model$coef
+arima_residuals <- residuals(arima_model)  
 ```
 
 <!--
 Delete
 
 ```{r, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
-<!-- delete this part
+# delete this part
 # Chat's refined approach
 # neg_log_likelihood <- function(gamma) {
 #     # Ensure gamma is numeric
@@ -3736,30 +3679,8 @@ Delete
 # }
 
 
-# Augst 9
-log_likelihood <- 0  # Replace with your actual log-likelihood calculation
-
-#
-
-#Test
-#1 
-test_gamma <- 0.01
-result <- neg_log_likelihood(test_gamma)
-
-#2
-result <- optim(par = gamma_start, fn = function(g) {
-    print(paste("Optim gamma:", g))
-    neg_log_likelihood(g)
-}, method = "BFGS")
-
-
-# OH NO lost the end But I think its ok
-# gamma_estimated <- result$par
-gamma_estimated <- .009
-print(gamma_estimated)
--->
 # 
-nt <- log(1 - gamma_estimated * non_trading_counts)
+nt <- log(1 - gamma * non_trading_counts)
 print(nt)
 print(length(nt))
 # 
@@ -3779,25 +3700,25 @@ arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg
 # 
 arima_params <- arima_model$coef
 arima_residuals <- residuals(arima_model)
-<!-- arima_params -->
-<!--                    ar1              intercept   oneday_beforeholiday threeday_beforeholiday  -->
-<!--            0.844553112            2.020623157            0.103042167           -0.101280887  -->
-<!--    oneday_afterholiday             endquarter                endyear                 Monday  -->
-<!--            0.039598463            0.141173996            0.101622528           -0.002546271  -->
-<!--                 Friday                   fomc              fomcindex                      z  -->
-<!--           -0.013815827            0.009543357           -0.281835631           -0.702084727  -->
-<!--                     nt                  absnu                     nu  -->
-<!--            1.622541417           -0.009251604           -0.009526509  -->
 
+#arima_params 
+#                    ar1              intercept   oneday_beforeholiday threeday_beforeholiday  -->
+#            0.844553112            2.020623157            0.103042167           -0.101280887  -->
+#    oneday_afterholiday             endquarter                endyear                 Monday  -->
+#            0.039598463            0.141173996            0.101622528           -0.002546271  -->
+#                 Friday                   fomc              fomcindex                      z  -->
+#           -0.013815827            0.009543357           -0.281835631           -0.702084727  -->
+#                     nt                  absnu                     nu  -->
+#            1.622541417           -0.009251604           -0.009526509  -->
 
 # 
-print("ARIMA Model Parameters:")
-print(arima_params)
+#print("ARIMA Model Parameters:")
+#print(arima_params)
 # 
 vcov_matrix <- vcov(arima_model)
 std_errors <- sqrt(diag(vcov_matrix))
 results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
-print(results)
+#print(results)
 
 # Check the structure and summary of the data
 str(non_trading_counts) #num [1:1957] 0 2 0 0 0 0 2 0 0 0 ...
@@ -3821,11 +3742,11 @@ summary(non_trading_counts)
 #   print(gamma_estimated) # 0.6180798 0.2361138
 #   # Update the nt calculation with the estimated gamma
 ```
-  
+-->  
   
 
 (Table (\@ref(tab:garch_bbp))
-```{r,garch_bbp, eval=FALSE,  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+```{r,garch_bbp, eval=TRUE,  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 #echo=FALSE, results='asis',warning=FALSE, message=FALSE}
 #eval=FALSE}  
 # Specify the EGARCH model --------------------------------------
@@ -3843,8 +3764,8 @@ summary(non_trading_counts)
   coefficients <- coef(fit)
   vcov_matrix <- vcov(fit)
   std_errors <- sqrt(diag(vcov_matrix))
-  results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
-  print(results)
+  results_Egarch <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
+  print(results_Egarch)
 #          Coefficients  StdErrors
 # omega    0.01341569 0.24756022
 # alpha1   0.04848064 0.08876039
@@ -3853,8 +3774,8 @@ summary(non_trading_counts)
 # shape    2.10000000 0.07590593
   
   # Convert the parameter_estimates to a data frame
-  #coefgarch_df <- as.data.frame(results)
-  garch_bbp <- as.data.frame(results)
+  #coefgarch_df <- as.data.frame(results_Egarch)
+  garch_bbp <- as.data.frame(results_Egarch)
   coefgarch_table <- xtable(garch_bbp,caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:garch_bbp", caption.placement="bottom", comment = FALSE)
 # rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
 # colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
@@ -3863,7 +3784,9 @@ summary(non_trading_counts)
 # garch_bbp
 print(coefgarch_table)
 ```
-  
+
+<!--
+#DELETE
 ```{r garchsimple, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE} 
 #   garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
 # rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
@@ -3924,22 +3847,108 @@ egarch_bbp
  # Create a table using xtable-------------------- for overnight EFFR
 egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
 ```     
-     
-\emph{Findings Bertolini, Bertola, Prati (2000) } 
+-->
+
+
+## Bertola et al empirical model of the Fed Funds rate 
+For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) empirical model of the volatility of the Federal Funds rate. Their objectives were to evaluate the time series properties of the  Fed Funds rate: 
+- mean reversion behavior in  the Fed Funds
+- main patterns of volatility in the Fed funds rates.
+
+They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates. Other findings were that the Fed funds rate:
+
+- rises in advance of reserve settlement days
+- declines in high rate regimes
+- exhibits biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
+
+
+Their empirical model of Fed Funds rate
+$r_t=\mu_t + \sigma_t\nu_t$
+$\nu_t$ unit variance mean zero i.i.d error term
+
+\emph{Conditional mean} $r_t, \mu_t=E[r_t]$
+They include target changes to capture the level shift changes of target rates affect on interest rates:
+$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
+
+
+\emph{Conditional variance}
+$\sigma^2_t= E[(r_t-\mu_t)^2]$
+$log(\sigma^2_t) +\omega h_t +\xi z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\xi z_{t-1} )$ $abs(\nu_{t-1})+ \theta \nu_{t-1}$
+
+
+$z_t$ expresses the target rate as proportion of discount window primary credit rate (DPCredit)
+
+<!--
+(Table (\@ref(tab:arima_bbp))
+-->
+
+
+
+(Table (\@ref(tab:egarch_bbp))
+```{r,egarch_bbp, eval=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+#echo=FALSE, results='asis',warning=FALSE, message=FALSE}
+# Specify the EGARCH model --------------------------------------
+  spec <- ugarchspec(
+    variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
+    mean.model = list(armaOrder = c(0, 0), include.mean = FALSE),
+    distribution.model = "std" 
+  )
+  #"norm"
+  # Fit the EGARCH model on the residuals from the ARIMA model
+  fit <- ugarchfit(spec = spec, data = arima_residuals)
+  
+  # Print the EGARCH model parameters
+  print("EGARCH Model Parameters:")
+  print(coef(fit))
+  
+  coefficients <- coef(fit)
+  
+  # Extract the variance-covariance matrix
+  vcov_matrix <- vcov(fit)
+  
+  # Calculate standard errors from the diagonal of the vcov matrix
+  std_errors <- sqrt(diag(vcov_matrix))
+  
+  # Combine coefficients and standard errors into a data frame
+  results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
+  
+  # Print the results
+  #print(results)
+  
+  # Convert the parameter_estimates to a data frame
+  coefgarch_df <- as.data.frame(results)
+  
+  # Create a table using xtable
+  coefgarch_table <- xtable(garch_bbp,caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:garch_bbp", caption.placement="bottom", comment = FALSE)
+# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
+# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
+# #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+# #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
+# garchsesample)
+  garch_bbp
+  # Print the table
+ # print(coefgarch_table)
+```
+
+\emph{EGARCH results for 2016-2023}  
+\emph{Arima 2016-2023}
 Reserve requirements for depositor banks and institutions at the Federal Reserve, in place during Bertolini et al (2000) study, were not present during this replication of their empirical model from 2016 to 2023.
 
-A summary of their findings:
-the variance of the FFR rate in the full sample:
-- falls at the end of the year with variance 17 times larger that that of a typical day
-- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
-- tends to fall before holidays and rise afterwards
-- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
-- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
-- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
+I included their k dummy variables: before and after holidays, end of quarter, end of year
+I dropped the $\delta$ specific to maintenance day, as there were no required reserves during 2016-2023.
+The calendar effect variables included in the dummy $h_t. 
 
-The EGARCH parameters are significant indicating:
-- persistence in underlying volatility of liquidity shock
-- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
+- holiday               
+- oneday_beforeholiday  
+- threeday_beforeholiday
+- oneday_afterholiday  
+- threeday_afterholiday
+- endquarter            
+- endyear              
+- around_qtr           
+- around_yr            
+- Monday               
+- Friday     
 
 Replicating their model for the daily Federal funds rate from  2016 through 2023 I eliminated the  dummy days for the reserve period (see (Table (\@ref(tab:arima_both)).  
 The response of the FFR to dummies representing inividual dates similar in full sample but different signs, very small compared to Bertolini el al post 1994.
@@ -3948,6 +3957,8 @@ The only agreement is quarter end 2016-2023 qnd full cample
 Three day before holiday "
 One day after holiday:
 
+<!--
+ADD TABLE
 [forgot constant, AR1]
 
                                                       full sample          post 1994
@@ -3982,8 +3993,61 @@ nt                      0.049702753 0.04568855
 absnu                   0.016534819 0.74535917
 nu                     -0.002099820 0.07590593
 
-
 -->
+
+
+In this EGARCH(1,1) model of the volatility of the FFR, with an  ARIMA(1,0,1) model of the mean
+[?]
+
+The GARCH order is defined by (q; p) (ARCH, GARCH), with possibly m external regressors $x_j$,
+$z=\epsilon$, residuals from the mean filtration process. the standardized residual.
+I assume the disturbance term z? follows a student t distribution:
+- constant: $\omega$
+- $\alpha$, the ARCH(q) parameter, captures the sign effect, . 
+- $\beta_1$, the GARCH(p) parameter. here $\beta_1$, captures persistence 
+- assymetry term: $\gamma_1$ size??
+- the shape parameter typically refers to parameters that control the distributional characteristics of the error terms, often pertains to the skewness and kurtosis of the distribution used to model the error terms.
+
+(Table (\@ref(tab:egarch_bbp))
+
+\begin{equation}
+\log(\sigma^2_t)= (\omega + \sum_{j=1}^{q}\xi_j x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (|z_{t-j}|+E(|z_{t-j}|) + \sum_{k=1}^{p}\beta_k log(\sigma^2_{t-k}
+\end{equation}
+
+Nelson's formulation of EGARCH:
+\begin{align*}
+1.1 \xi_t=\sigma_t  z_t
+1.2 z_t ~ i.i.d E(z_t) = 0  Var(z_t)=1
+1.3 \sigma^2_t=\sigma(\xi_{t-1},\xi_{t-2},\cdot,t,x_t,b)
+\sigma^2_t=\sigma(\sigma_{t-1}z_{t-1},\sigma_{t-2}z_{t-2},\cdot,t,x_t,b)
+\end{align*}
+
+\begin{align*}
+1.4 \log(\sigma^2_t)= \omega + \sum_{j=1}^{p}\alpha_j z^2_{t-j} \sigma^2_{t-j}
+1.5 \log(\sigma^2_t)= \omega + \sum_{i=1}^{q}\beta_i \sigma^2_{t-i}+ \sum_{j=1}^{p}\alpha_j z^2_{t-j} \sigma^2_{t-j}
+\end{align*}
+
+Related to this measure of persistence, the sum P of the $\beta$s, $P=\sum_{k=1}^{p}\beta_k$, is the 'half-life' (h2l), the number of days it takes for half of the expected reversion back towards $E(\sigma^2)$ to occur. 
+
+\begin{equation}
+h2l=-\frac{log(2)}{P}
+\end{equation}
+
+
+\emph{comparison of finding} A summary of their findings:
+the variance of the FFR rate in the full sample:
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
+- tends to fall before holidays and rise afterwards
+- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
+- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
+- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
+
+The EGARCH parameters are significant indicating:
+- persistence in underlying volatility of liquidity shock
+- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
+
+
 
 
 Other findings:
@@ -4011,69 +4075,7 @@ During the period 2016-2023, my estimates show the volatility of of the daily EF
 -->
 
 
-(Table (\@ref(tab:egarch_bbp))
-```{r,egarch_bbp, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
-#echo=FALSE, results='asis',warning=FALSE, message=FALSE}
-# Specify the EGARCH model --------------------------------------
-  spec <- ugarchspec(
-    variance.model = list(model = "eGARCH", garchOrder = c(1, 1)),
-    mean.model = list(armaOrder = c(0, 0), include.mean = FALSE),
-    distribution.model = "std" 
-  )
-  #"norm"
-  # Fit the EGARCH model on the residuals from the ARIMA model
-  fit <- ugarchfit(spec = spec, data = arima_residuals)
-  
-  # Print the EGARCH model parameters
-  print("EGARCH Model Parameters:")
-  print(coef(fit))
-  
-  coefficients <- coef(fit)
-  
-  # Extract the variance-covariance matrix
-  vcov_matrix <- vcov(fit)
-  
-  # Calculate standard errors from the diagonal of the vcov matrix
-  std_errors <- sqrt(diag(vcov_matrix))
-  
-  # Combine coefficients and standard errors into a data frame
-  results <- data.frame(Coefficients = coefficients, StdErrors = std_errors)
-  
-  # Print the results
-  print(results)
-  
-  # Convert the parameter_estimates to a data frame
-  coefgarch_df <- as.data.frame(results)
-  
-  # Create a table using xtable
-  coefgarch_table <- xtable(garch_bbp,caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:garch_bbp", caption.placement="bottom", comment = FALSE)
-# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-# #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# garchsesample)
-  garch_bbp
-  # Print the table
- # print(coefgarch_table)
-```
-
-\emph{EGARCH results for 2016-2023}  
-In this EGARCH(1,1) model of the volatility of the FFR, with an  ARIMA(1,0,1) model of the mean
-[]
-
-The GARCH order is defined by (q; p) (ARCH, GARCH), with possibly m external regressors $x_j$,
-$z=\epsilon$, residuals from the mean filtration process. the standardized residual.
-I assume the disturbance term z? follows a student t distribution:
-- constant: $\omega$
-- $\alpha$, the ARCH(q) parameter, captures the sign effect, . 
-- $\beta_1$, the GARCH(p) parameter. here $\beta_1$, captures persistence 
-- assymetry term: $\gamma_1$ size??
-- the shape parameter typically refers to parameters that control the distributional characteristics of the error terms, often pertains to the skewness and kurtosis of the distribution used to model the error terms.
-
-\begin{equation}
-\log(\sigma^2_t)= (\omega + \sum_{j=1}^{q}\xi_j x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (|z_{t-j}|+E(|z_{t-j}|) + \sum_{k=1}^{p}\beta_k log(\sigma^2_{t-k}
-\end{equation}
-
+<!--
 Nelson's formulation of EGARCH:
 \begin{align*}
 1.1 \xi_t=\sigma_t  z_t
@@ -4092,7 +4094,6 @@ Related to this measure of persistence, the sum P of the $\beta$s, $P=\sum_{k=1}
 \begin{equation}
 h2l=-\frac{log(2)}{P}
 \end{equation}
-
 The GARCH-M model of Engle and Bollerslev (1986a), adds another equation
 \begin{equation}
 1.6 R_t= a+b\sigma^2_t+\xi_t
@@ -4118,6 +4119,7 @@ To accommodate the asymmetric relation between stock returns and volatility chan
 \end{equation}
 
 $g(z_t)$ is constructed so that the conditional variance process ${\sigma^2_t}$ responds asymmetrically to rises and falls in stock price. By construction, ${g(z_t)}_{t=-\infty, \infty}$  is a zero-mean, i.i.d. random sequence. The two components of $g(z_t)$ are $\theta z_t$ and $\gamma[|z_t| -E(|z_t|)]$, are each with mean zero. If the distribution of $z_t$ is symmetric, the two components are orthogonal, though not independent. Over the range $0 < z_t < \infty$, $g(z_t)$ is linear in $z_t$ with slope $\theta + \gamma$, while over the range $-\infty <z_t < 0$, $g(z_t)$ is linear with slope $\theta - \gamma$. Thus, 
+-->
 
 <!--
 [EDIT Use this text to comment on results]
