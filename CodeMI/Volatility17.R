@@ -1926,7 +1926,7 @@ h$endquarter <- h$sdate %in% end_quarter_dates
   # Fit an ARIMA model with cleaned external regressors using CSS
   arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
   
-  # 1. Extract parameters and residuals
+  # 1. Extract parameters and residuals --------------------------------------------
   arima_params <- arima_model$coef
   arima_residuals <- residuals(arima_model)
   
@@ -1939,51 +1939,17 @@ h$endquarter <- h$sdate %in% end_quarter_dates
   results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
   
   row_labels <- c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", 
-                  "oneday_afterholiday", "endquarter",
-  # Print the results
-  print(results)     
-  
-  
-  # Convert the parameter_estimates to a data frame
-  arima_params_df <- as.data.frame(results)
-  cat("DailyEFFR 2016-2023\n")
-  
-# 2.Create vectors for Bertolini et al 1994 no FOMC ARIMA params 
-# ar1   
-# intercept  
-# oneday_beforeholiday
-# threeday_beforeholiday
-# oneday_afterholiday 
-# endquarter 
-# endyear  
-# Monday  
-# Friday                 
-# FOMC
-# FOMCindex
-# z
-# non trading days
-# abs_nu
-# nu
-  
-row_labels <- c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", 
                   "oneday_afterholiday", "endquarter", "endyear", "Monday", "Friday", "fomc","fomcindex","z", 
                   "nt", "absnu", "nu")  
-# row labels should be. go back, change variable definition in arima
-# row_labels <- c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", 
-#                   "oneday_afterholiday", "endquarter", "endyear", "Monday", "Friday", "FOMC","FOMCindex","penalty", 
-#                   "non trading days", "abs_nu", "nu")
-
-# BBP fill sample
-row_labels <- c("endyear","endquarter", oneday_beforeholiday", "threeday_beforeholiday",oneday_afterholiday", "threeday_afterholiday",)
-coefficients <- c(-.186, .206,-0.026, -0.018,0.052,0.209)
-std_errors <- c(0.078.0.034,0.017,0.008,0.018,0.013)
-# COrrect order
-row_labels <- c( oneday_beforeholiday", "threeday_beforeholiday",oneday_afterholiday", "threeday_afterholiday","endquarter","endyear",)
-coefficients <- c(-0.026, -0.018,0.052,0.209, 0.206,-0.186)
-std_errors <- c(0.017,0.008,0.018,0.013,0.034,0.078)
-
-
-# BBP post 1994 no fomc
+  
+  # Print the results
+  print(results)     
+  # Convert the parameter_estimates to a data frame
+  arima_params <- as.data.frame(results)
+  #cat("DailyEFFR 2016-2023\n")
+  
+# 2.Create vectors for Bertolini et al 1994 no FOMC ARIMA params 
+# BBP post 1994 no fomc ------------------------------------------------------------------
 coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
 std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
 
@@ -1991,35 +1957,42 @@ std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, N
 bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
 
 # Print the title and the dataframe
-cat("BBP post 1994 no FOMC\n")
-print(bbp1994_params)
+#cat("BBP post 1994 no FOMC\n")
+#print(bbp1994_params)
 
-# But where is RRBP full sample
-
+# DONT USE SECTION UNTIL SLOVED TITLE PLACEMENT
+# NO success adding titles and subheadings to params tables  it makes title another column
   # Combine arima_params_df and bbp1994_params--------------------------------
   # Add a title column to each dataframe
-  arima_params_df$title <- "DailyEFFR 2016-2023"
+  arima_params$title <- "DailyEFFR 2016-2023"
   bbp1994_params$title <- "BBP post 1994 no FOMC"
   
   # Ensure column names match
   # Both dataframes should have exactly: "Coefficients", "StdErrors", "title"
-  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(arima_params) <- c("Coefficients", "StdErrors")
   colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
   
   # Add the title column if not already added
-  if (!"title" %in% colnames(arima_params_df)) {
-    arima_params_df$title <- "DailyEFFR 2016-2023"
+  if (!"title" %in% colnames(arima_params)) {
+    arima_params$title <- "DailyEFFR 2016-2023"
+    # To delete, use 1. arima_params$title <- NULL
+    # or 2.library(dplyr) arima_params <- arima_params %>% select(-title)
   }
   if (!"title" %in% colnames(bbp1994_params)) {
-    bbp1994_params$title <- "BBP post 1994 no FOMC"
+    #bbp1994_params$title <- "BBP post 1994 no FOMC"
+    #  bbp1994_params$title <- NULL
   }
-  # try 5--------------------------------------------------------------
+  # ----------------------------------------------------------
+  
+  #Created combined arima_bbp2 table.  Both my reproduced results and bbp.
+  #Need to fix  figure caption and sub headings above columns
+  
   # Ensure both dataframes have the same column names
-  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
+  colnames(arima_params) <- c("Coefficients", "StdErrors")
   colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
 
   # Combine the dataframes for any further analysis if needed
-  combined_df <- cbind(arima_params_df, bbp1994_params)
+  combined_params <- cbind(arima_params, bbp1994_params)
   
   # Print the titles and dataframes separately for clear output
   cat("DailyEFFR 2016-2023\n")
@@ -2027,21 +2000,16 @@ print(bbp1994_params)
   cat("\nBBP post 1994 no FOMC\n")
   print(bbp1994_params)
   
+  # Create a table using xtable-------------------- for overnight EFFR
+  combined_arimas_table <- xtable(combined_params)
+  
   # Print a separator line (optional)
   cat("\n-----------------------\n")
   
+  FIX TITLE!---------------------------------------------------
   # Print the combined dataframe if needed for further analysis
   cat("\nCombined DataFrame:\n")
-  print(combined_df)
-  
-  # If you still need to print the combined dataframe
-  cat("\nCombined DataFrame:\n")
-  print(combined_df)
-  
-  # try 6 --------------------------------------------------
-  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
-  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
-
+  print(combined_params)
   
   # Custom print function to visually align titles above columns
   print_with_titles <- function(df1, df2, title1, title2) {
@@ -2053,87 +2021,25 @@ print(bbp1994_params)
     
     # Print the data row by row
     for (i in 1:nrow(arima_params_df)) {
-      cat(paste(arima_params_df[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
+      cat(paste(arima_params[i, ], collapse = "\t"), "\t", paste(bbp1994_params[i, ], collapse = "\t"), "\n")
     }
   }
   
-  # Use the custom print function
-  print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
+  # IGNORE: BBP fill sample----------------------------------------
+  # row labels should be. go back, change variable definition in arima
+  # row_labels <- c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", 
+  #                   "oneday_afterholiday", "endquarter", "endyear", "Monday", "Friday", "FOMC","FOMCindex","penalty", 
+  #                   "non trading days", "abs_nu", "nu")
+  
+  row_labels <- c("endyear","endquarter", oneday_beforeholiday", "threeday_beforeholiday",oneday_afterholiday", "threeday_afterholiday",)
+  coefficients <- c(-.186, .206,-0.026, -0.018,0.052,0.209)
+  std_errors_full <- c(0.078.0.034,0.017,0.008,0.018,0.013)
+  # COrrect order
+  row_labels_full <- c( oneday_beforeholiday", "threeday_beforeholiday",oneday_afterholiday", "threeday_afterholiday","endquarter","endyear",)
+  coefficients_full <- c(-0.026, -0.018,0.052,0.209, 0.206,-0.186)
+  std_errors_full <- c(0.017,0.008,0.018,0.013,0.034,0.078)
   
   
-  # Combine the dataframes using cbind for further analysis
-  combined_df <- cbind(arima_params_df, bbp1994_params)
- 
-  
-  # Print the combined dataframe for any further analysis if needed
-  cat("\nCombined DataFrame:\n")
-  print(combined_df)
-  
-  # Create a table using xtable-------------------- for overnight EFFR
-  combined_arimas_table <- xtable(combined_df)
-  
-  # Tyr 7 -------------------------------------------------------------
-  # Ensure both dataframes have the same column names
-  colnames(arima_params_df) <- c("Coefficients", "StdErrors")
-  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
-  
-  # Custom print function to visually align titles above columns
-  print_with_titles <- function(df1, df2, title1, title2) {
-    # Print the titles
-    cat(title1, "\t\t\t", title2, "\n")
-    
-    # Print the column names
-    cat(paste(colnames(df1), collapse = "\t"), "\t", paste(colnames(df2), collapse = "\t"), "\n")
-    
-    # Print the data row by row
-    for (i in 1:nrow(df1)) {
-      cat(paste(df1[i, ], collapse = "\t"), "\t", paste(df2[i, ], collapse = "\t"), "\n")
-    }
-  }
-  
-  # 2. Use the custom print function-----------------------------------------------------
-  print_with_titles(arima_params_df, bbp1994_params, "DailyEFFR 2016-2023", "BBP post 1994 no FOMC")
-  
-  # Combine the dataframes using cbind for further analysis
-  combined_df <- cbind(arima_params_df, bbp1994_params)
-  
-  # Print the combined dataframe for any further analysis if needed
-  cat("\nCombined DataFrame:\n")
-  print(combined_df)
-  #-------------------------------------------
-  # Delete column 3 and 6 or else fix title issue
-  str(combined_df)
-  'data.frame':	15 obs. of  6 variables:
-    $ Coefficients: num  0.8442 2.0144 0.1008 -0.096 0.0352 ...
-  $ StdErrors   : num  0.0131 0.1071 0.1326 0.0456 0.13 ...
-  $ title       : chr  "DailyEFFR 2016-2023" "DailyEFFR 2016-2023" "DailyEFFR 2016-2023" "DailyEFFR 2016-2023" ...
-  $ Coefficients: num  0.06 NA NA NA NA ...
-  $ StdErrors   : num  0.038 NA NA NA NA 0.181 0.331 NA NA 0.262 ...
-  $ title       : chr  "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" "BBP post 1994 no FOMC" ...
-  
-
-  
-  # Correct data frames----------------------------
-  ncol(arima_params_df) #4
-  ncol(bbp1994_params)  #3
-  print(colnames(arima_params_df))
-  [1] "Coefficients" "StdErrors"    "title"        NA            
-  > print(colnames(bbp1994_params))
-  [1] "Coefficients" "StdErrors"    "title" 
-   #You can set it to NULL.
-  
-  # Delete columns with titles
-  #Data <- Data[,-2] 
-  arima_params_df <- arima_params_df[,-3]
-  str(arima_params_df)
-  bbp1994_params <- bbp1994_params[,-3]
-  str(bbp1994_params)
-  
-  # Create a table using xtable-------------------- for overnight EFFR
-  arima_params_table <- xtable(arima_params_df)
-  
-  # Print the table
-  print( arima_params_table)                                 
   
   t.test(arima_params, y = NULL,
          alternative = c("two.sided", "less", "greater"),
