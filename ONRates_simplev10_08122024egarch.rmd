@@ -3521,7 +3521,7 @@ dates_char<- c(
 ```   
  
 
-
+(Table (\@ref(tab:arima_bbp2))
 ```{r,arima_bbp2,eval=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # the correct chunk (above is wrong)
 non_trading_counts <- non_trading_days_pairs(dates, holidays)
@@ -3582,11 +3582,10 @@ non_trading_counts <- non_trading_days_pairs(dates, holidays)
 
 #If you need further help interpreting or debugging this function, could you share the code for #log_nontradingdays or more context on how non_trading_counts is structured? This will help in #understanding why the output is showing this specific pattern.
 
-  
 #Test
 #1 
-test_gamma <- 0.01
-result_test1 <- neg_log_likelihood(test_gamma)  
+#test_gamma <- 0.01
+#result_test1 <- neg_log_likelihood(test_gamma)  
   
 # Initial guess for gamma_value only if not happy with gamma above:
 #   So I dont need # Use the optim function for optimization
@@ -3640,7 +3639,67 @@ log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdat
 arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg = external_regressors, method = "CSS")
 # 
 arima_params <- arima_model$coef
-arima_residuals <- residuals(arima_model)  
+#arima_residuals <- residuals(arima_model)  
+
+ # 1. Extract parameters and residuals --------------------------------------------
+  arima_params <- arima_model$coef
+  vcov_matrix <- vcov(arima_model)
+  std_errors <- sqrt(diag(vcov_matrix))
+  results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
+  
+  row_labels <- c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", 
+                  "oneday_afterholiday", "endquarter", "endyear", "Monday", "Friday", "fomc","fomcindex","z", 
+                  "nt", "absnu", "nu")  
+  
+  # Print the results
+  print(results)     
+  # Convert the parameter_estimates to a data frame
+  arima_params <- as.data.frame(results)
+  #cat("DailyEFFR 2016-2023\n")
+  
+# 2.Create vectors for Bertolini et al 1994 no FOMC ARIMA params 
+# BBP post 1994 no fomc ------------------------------------------------------------------
+coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
+std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
+
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+
+# Print the title and the dataframe
+#cat("BBP post 1994 no FOMC\n")
+#print(bbp1994_params)
+
+# BBP post 1994 no fomc ------------------------------------------------------------------
+coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
+std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
+
+# Create the dataframe without row labels as a separate column
+bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
+
+# Print the title and the dataframe
+#cat("BBP post 1994 no FOMC\n")
+#print(bbp1994_params)
+
+# Ensure both dataframes have the same column names
+  colnames(arima_params) <- c("Coefficients", "StdErrors")
+  colnames(bbp1994_params) <- c("Coefficients", "StdErrors")
+
+  # Combine the dataframes for any further analysis if needed
+  combined_params <- cbind(arima_params, bbp1994_params)
+  
+  # Print the titles and dataframes separately for clear output
+  #cat("DailyEFFR 2016-2023\n")
+  #print(arima_params_df)
+  #cat("\nBBP post 1994 no FOMC\n")
+  #print(bbp1994_params)
+  
+  # Create a table using xtable-------------------- for overnight EFFR
+  arima_bbp2_table <- xtable(combined_params)
+  arimas_bbp2_table
+  #(Table (\@ref(tab:arima_bbp2))
+  
+# Add residuals plot later ------------------------------------
+  arima_residuals <- residuals(arima_model)
 ```
 
 <!--
@@ -3796,7 +3855,13 @@ print(coefgarch_table)
 # garchsesample
 #print(paramssample)
 ```
+-->
+
+<!--(Table (\@ref(tab:egarch_bbp))-->
+
+
 ```{r,echo=FALSE, eval=FALSE, results='hide', message=FALSE, warning=FALSE}
+# (Table (\@ref(tab:egarch_bbp_table)
 #results='asis',warning=FALSE, message=FALSE}
 #eval=FALSE}
 residuals_bbp <- residuals(fit)
@@ -3846,6 +3911,7 @@ egarch_bbp
   
  # Create a table using xtable-------------------- for overnight EFFR
 egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
+egarch_bbp_table
 ```     
 -->
 
@@ -3862,13 +3928,12 @@ They note that although overnight wholesale money market rates change in respons
 - exhibits biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
 
 
-Their empirical model of Fed Funds rate
-$r_t=\mu_t + \sigma_t\nu_t$
-$\nu_t$ unit variance mean zero i.i.d error term
+Their empirical model of Fed Funds rate is $r_t=\mu_t + \sigma_t\nu_t$
+where $\nu_t$ is a unit variance mean zero i.i.d error term
 
 \emph{Conditional mean} $r_t, \mu_t=E[r_t]$
-They include target changes to capture the level shift changes of target rates affect on interest rates:
-$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r_t-r{t-1}$
+They include the affect of level shift of changes in the target rate $r^*_t$, or $r^{\ast}_t$, on interest rates:
+$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r^*_t-r{t^*-1}$
 
 
 \emph{Conditional variance}
@@ -3880,6 +3945,9 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 
 <!--
 (Table (\@ref(tab:arima_bbp))
+combined_df <- cbind(arima_params, bbp1994_params)
+print(combined_df)
+
 -->
 
 
@@ -3930,9 +3998,9 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
  # print(coefgarch_table)
 ```
 
-\emph{EGARCH results for 2016-2023}  
-\emph{Arima 2016-2023}
-Reserve requirements for depositor banks and institutions at the Federal Reserve, in place during Bertolini et al (2000) study, were not present during this replication of their empirical model from 2016 to 2023.
+#\emph{EGARCH results for 2016-2023}  
+\emph{Arima EGARCH results for the variance of the FFR  2016-2023}
+I replicated the Bertolini et al (2000)  model for the variance of daily Federal funds rate data from  2016 through 2023. I eliminated the  dummy days for the reserve period Reserve requirements for depositor banks and institutions at the Federal Reserve, since there were no required reserves from 2016 to 2023.
 
 I included their k dummy variables: before and after holidays, end of quarter, end of year
 I dropped the $\delta$ specific to maintenance day, as there were no required reserves during 2016-2023.
@@ -3950,12 +4018,15 @@ The calendar effect variables included in the dummy $h_t.
 - Monday               
 - Friday     
 
-Replicating their model for the daily Federal funds rate from  2016 through 2023 I eliminated the  dummy days for the reserve period (see (Table (\@ref(tab:arima_both)).  
+<!--(see (Table (\@ref(tab:arima_both)). -->
+(Table (\@ref(tab:egarch_bbp_table)        
 The response of the FFR to dummies representing inividual dates similar in full sample but different signs, very small compared to Bertolini el al post 1994.
 
-The only agreement is quarter end 2016-2023 qnd full cample
-Three day before holiday "
-One day after holiday:
+The only agreement the day ffects of this replication with results in 2016-2023from earlier data is 
+
+- Quarter end  
+- Three day before holiday "
+- One day after holiday:
 
 <!--
 ADD TABLE
@@ -3973,7 +4044,7 @@ Penalty z                   -0.700 (0.089)             NA                     1.
 Absolute error $\nu$         0.016 (0.745)             NA                     0.718 (0.465)
 Lagged  error $\nu+{t-1}$   -0.002 (0.076)             NA                     0.276 (0.042)
 
-
+<!-- But above doesnt have BBP's GARCH effects, shit!-->
 <!--
 results OLD?
                        Coefficients  StdErrors
@@ -3995,7 +4066,51 @@ nu                     -0.002099820 0.07590593
 
 -->
 
+\emph{comparison of finding} A summary of their findings:
+the variance of the FFR rate in the full sample:
 
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
+
+- tends to fall before holidays and rise afterwards
+- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
+- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
+- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
+
+The EGARCH parameters are significant indicating:
+
+- persistence in underlying volatility of liquidity shock
+- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
+
+Other findings:
+The variance of the FFR 
+
+- rises 0.067 rather falls at the end of the year as in BBP
+- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
+- rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
+
+<!--with variance 8 times larger that that of a typical day and falls after-->
+
+
+Bertolini estimates show the FFR
+- responds positively to penalty rate 1.240     (0.465)
+- increases on FOMC announcements days 0.783  (0.262)
+
+During the period 2016-2023, my estimates show the volatility of of the daily EFFR
+- falls with increases in penalty rate -.7 (0.089)
+- decreases on FOMC days -0.285 (0.248)
+- small non trading day increase 0.400 (0.046)
+
+<!--
+- rise end of year 0.066 (0.173)
+- rise end of quarter 0.115 (0.142)
+- rise one day before holiday
+- fall three days before holiday
+- rise one day after holiday
+-->
+
+<!
+\emph{EGARCH 2015-2023}
 In this EGARCH(1,1) model of the volatility of the FFR, with an  ARIMA(1,0,1) model of the mean
 [?]
 
@@ -4033,47 +4148,7 @@ Related to this measure of persistence, the sum P of the $\beta$s, $P=\sum_{k=1}
 h2l=-\frac{log(2)}{P}
 \end{equation}
 
-
-\emph{comparison of finding} A summary of their findings:
-the variance of the FFR rate in the full sample:
-- falls at the end of the year with variance 17 times larger that that of a typical day
-- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
-- tends to fall before holidays and rise afterwards
-- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
-- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
-- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
-
-The EGARCH parameters are significant indicating:
-- persistence in underlying volatility of liquidity shock
-- the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
-
-
-
-
-Other findings:
-The variance of the FFR 
-- rises 0.067 rather falls at the end of the year as in BBP
-- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
-<!--with variance 8 times larger that that of a typical day and falls after-->
-- rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
-
-Bertolini estimates show the FFR
-- responds positively to penalty rate 1.240     (0.465)
-- increases on FOMC announcements days 0.783  (0.262)
-
-During the period 2016-2023, my estimates show the volatility of of the daily EFFR
-- falls with increases in penalty rate -.7 (0.089)
-- decreases on FOMC days -0.285 (0.248)
-- small non trading day increase 0.400 (0.046)
-
-<!--
-- rise end of year 0.066 (0.173)
-- rise end of quarter 0.115 (0.142)
-- rise one day before holiday
-- fall three days before holiday
-- rise one day after holiday
 -->
-
 
 <!--
 Nelson's formulation of EGARCH:
