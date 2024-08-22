@@ -340,7 +340,7 @@ The model demonstrated the policy inertia, the tendency to continue same policy 
 
 The mean drift may be indicative of slowly evolving inflationary expectations, time-variation in the required real interest rate, or both.
 
-Bertolini, Bertola, Prati (), Garaet al  () and Benzoni observe volatility in interbank rates from Fed interventions:
+Bertolini, Bertola, Prati (2000), Anderson, Benzoni, Lund (2004) observe volatility in interbank rates from Fed interventions:
 * declines in high rate regimes  
 * rises end of quarter, end of year  
 * falls before holidays, rises day after  
@@ -354,7 +354,10 @@ Bertolini, Bertola, Prati (), Garaet al  () and Benzoni observe volatility in in
 -->
 
 
-Bertolini, Bertola, Prati (2004) model of FFR volatility isolate Fed preferences for offsetting volatility in the FFR market in an EGARCH model of the log volatility of the FFR. Their work was motivated by the puzzle that the high frequency patterns of FFR volatility survive Fed's attempt to manage the FFR within the FOMC target range. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+Bertolini, Bertola, Prati (2000) predict patterns of the Federal Funds rate's volatility and its response to changes in FOMC target rates and Fed interventions to manage the FFR withing the target range.They model banks' liquidity management joint with the Fed's intervention withing the institutional features of the Federal Funds market.Their interest is the high frequency in volatility of the FFR survive the Fed's attempt to manage the rate. Their model of FFR volatility seeks to isolate Fed preferences for offsetting volatility in the FFR market in an EGARCH model of the log volatility of the FFR. Overnight wholesale money market rates both track the FFR and quickly revert to changes in the unsecured federal funds rate (FFR) or administered rates. 
+<!--
+heir work was motivated by the puzzle that the high frequency patterns of FFR volatility survive Fed's attempt to manage the FFR within the FOMC target range.
+-->
 
 Gara Afonso, Kyungmin Kim, Antoine Martin, Ed Nosal, Simon Potter, and Sam Schulhofer-Wohl derive a function of reserve demand that describes the price at which banks are willing to trade reserves as a function of the total amount of reserves in the banking system. The function measures banks’ demand for liquidity  as a function of aggregate reserves and the FFR under the Fed's policy of ample supply of reserves (2020). The FFR is price at which banks are willing to borrow and lend  reserve balances.The Banks' reserve demand sensitivity to shocks to reserves is greater when reserves are scarce. 
 
@@ -905,6 +908,7 @@ SOFR Sstatscovid 151.19 7.37 19.46 1085.60
 -->
 
 
+
 ```{r, tab.cap="Rate characteristics normalcy 3/4/2016-7/31/2019", eval=TRUE,echo=FALSE,results='markup',results='asis',warning=FALSE, message=FALSE}
 library(xtable)
 k=1 
@@ -1191,6 +1195,7 @@ print.results = FALSE
 ```
 \FloatBarrier
 <!--(Table \@ref(tab:fomcadjust))
+
 
 2019 rates cuts mid cycle adjustment		
 31-Oct-19	-25	1.50% to 1.75%
@@ -3164,8 +3169,6 @@ betasample
 
 
 <!--            
-\emph{EGARCH simple model of daily rates}
-
 \url{https://www.newyorkfed.org/markets/reference-rates/additional-information-about-reference-rates#additional_reference_rate_data}
 
 \url{https://www.federalreserve.gov/econres/notes/feds-notes/elevated-option-implied-pinterest-rate-volatility-and-downside-risks-to-economic-activity-20231222.html}
@@ -3391,7 +3394,7 @@ VOlatility and Treasuries
   # 
   # The formal definition of the primary metric I study, market volatility, is the standard deviation of 1
   # minute returns: 
-  # sibN=sqrt(sum 1 through n(ri -rbar)^2/(n-1))
+  # sibN=sqrt(sum 1 through n(ri -rbar)^2/(n-1))
 
 -->
 
@@ -3415,6 +3418,7 @@ constant: omega
 $\alpha_1$ or alpha1 is the ARCH(q) parameter. 
 $\beta_1$ or beta1 is the GARCH(p) parameter. 
 assymetry term: $\gamma_1$
+-->
 
 <!--
 $ t=frac{H_a-H_0}{s/n^.5)}$
@@ -3621,8 +3625,8 @@ non_trading_counts <- non_trading_days_pairs(dates, holidays)
 # NULL
 # Form external regeressors and estimate Arima  
 nt <- log(1 - gamma * non_trading_counts)
-print(nt)
-print(length(nt))
+#print(nt)
+#print(length(nt))
 # 
 external_regressors <- cbind(h[, 2:ncol(h)], z, nt, absnu, nu)
 # 
@@ -3632,7 +3636,7 @@ stopifnot(!any(is.na(external_regressors)))
 stopifnot(!any(is.infinite(as.matrix(external_regressors))))
 # 
 cor_matrix <- cor(external_regressors, use = "complete.obs")
-print(cor_matrix)
+#print(cor_matrix)
 # 
 log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
 # 
@@ -3656,7 +3660,9 @@ arima_params <- arima_model$coef
   # Convert the parameter_estimates to a data frame
   arima_params <- as.data.frame(results)
   #cat("DailyEFFR 2016-2023\n")
-  
+# 1. BPP full  
+  coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
+std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
 # 2.Create vectors for Bertolini et al 1994 no FOMC ARIMA params 
 # BBP post 1994 no fomc ------------------------------------------------------------------
 coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
@@ -3668,13 +3674,6 @@ bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_err
 # Print the title and the dataframe
 #cat("BBP post 1994 no FOMC\n")
 #print(bbp1994_params)
-
-# BBP post 1994 no fomc ------------------------------------------------------------------
-coefficients <- c(0.6, NA, NA, NA, NA, 2.081, 2.913, NA, NA, 0.783, NA, 1.24, NA, 0.718, 0.276)
-std_errors <- c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, 0.262, NA, 0.465, NA, 0.069, 0.042)
-
-# Create the dataframe without row labels as a separate column
-bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_errors, row.names = row_labels)
 
 # Print the title and the dataframe
 #cat("BBP post 1994 no FOMC\n")
@@ -3695,7 +3694,7 @@ bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_err
   
   # Create a table using xtable-------------------- for overnight EFFR
   arima_bbp2_table <- xtable(combined_params)
-  arimas_bbp2_table
+  arima_bbp2_table
   #(Table (\@ref(tab:arima_bbp2))
   
 # Add residuals plot later ------------------------------------
@@ -3704,7 +3703,6 @@ bbp1994_params <- data.frame(Coefficients = coefficients, `Std Errors` = std_err
 
 <!--
 Delete
-
 ```{r, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # delete this part
 # Chat's refined approach
@@ -3740,8 +3738,8 @@ Delete
 
 # 
 nt <- log(1 - gamma * non_trading_counts)
-print(nt)
-print(length(nt))
+#print(nt)
+#print(length(nt))
 # 
 external_regressors <- cbind(h[, 2:ncol(h)], z, nt, absnu, nu)
 # 
@@ -3760,17 +3758,7 @@ arima_model <- arima(coredata(log_sd_effr_squared_zoo), order = c(1, 0, 0), xreg
 arima_params <- arima_model$coef
 arima_residuals <- residuals(arima_model)
 
-#arima_params 
-#                    ar1              intercept   oneday_beforeholiday threeday_beforeholiday  -->
-#            0.844553112            2.020623157            0.103042167           -0.101280887  -->
-#    oneday_afterholiday             endquarter                endyear                 Monday  -->
-#            0.039598463            0.141173996            0.101622528           -0.002546271  -->
-#                 Friday                   fomc              fomcindex                      z  -->
-#           -0.013815827            0.009543357           -0.281835631           -0.702084727  -->
-#                     nt                  absnu                     nu  -->
-#            1.622541417           -0.009251604           -0.009526509  -->
 
-# 
 #print("ARIMA Model Parameters:")
 #print(arima_params)
 # 
@@ -3803,7 +3791,7 @@ summary(non_trading_counts)
 ```
 -->  
   
-
+<!--
 (Table (\@ref(tab:garch_bbp))
 ```{r,garch_bbp, eval=TRUE,  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 #echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -3843,30 +3831,13 @@ summary(non_trading_counts)
 # garch_bbp
 print(coefgarch_table)
 ```
-
-<!--
-#DELETE
-```{r garchsimple, eval=FALSE, echo=FALSE, results='hide', message=FALSE, warning=FALSE} 
-#   garchsesample<-xtable(garchse,caption = "EGARCH std errors sample rates 3/4/2016 to 12/14/2023", label="tab:garchse", caption.placement="bottom", comment = FALSE)
-# rownames(params_data) <- c("mu","ar1", "omega", "alpha1", "beta1", "gamma1", "shape")
-# colnames(params_data) <- c("Estimate", "Std. Error", "t value", "Pr(>|t)")
-# #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
-# garchsesample
-#print(paramssample)
-```
 -->
+
 
 <!--(Table (\@ref(tab:egarch_bbp))-->
 
-
-```{r,echo=FALSE, eval=FALSE, results='hide', message=FALSE, warning=FALSE}
-# (Table (\@ref(tab:egarch_bbp_table)
-#results='asis',warning=FALSE, message=FALSE}
-#eval=FALSE}
-residuals_bbp <- residuals(fit)
-plot(residuals_bbp)
-
+<!--
+Duplicate of chunk below
 # Create the dataframe
 # CHAT
 #   egarch_bbp <- data.frame(
@@ -3878,8 +3849,8 @@ plot(residuals_bbp)
 #   Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
 #                             0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
 #                             0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
-#   bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, NA, NA, NA, NA, NA),
-#   bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
+#   bbp_full_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, 0.431, NA, NA, NA, NA),
+#   bbp_full_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
 #   bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, 1.24, 0.668, 0.718, 0.276),
 #   bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, 0.465, 0.195, 0.069, 0.042)
 # )
@@ -3889,19 +3860,31 @@ plot(residuals_bbp)
 # egarch_bbp
 
 # With NA values  
+-->
+
+```{r egarch_bbp_table_chunk, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE}
+# Code to generate your table
+# (Table (\@ref(tab:egarch_bbp_table)
+#results='asis',warning=FALSE, message=FALSE}
+#eval=FALSE}
+residuals_bbp <- residuals(fit)
+#plot(residuals_bbp)
+
 egarch_bbp <- data.frame(
   Variable = c("ar1", "intercept", "oneday_beforeholiday", "threeday_beforeholiday", "oneday_afterholiday",
                "endquarter", "endyear", "Monday", "Friday", "fomc", "fomcindex", "z", "nt", "absnu", "nu"),
-  Replication_Coefficients = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
+  Coeff = c(0.844725586, 1.995289332, 0.090674060, -0.100208356, 0.056307993,
                                0.143136334, 0.108245069, -0.002832700, -0.013389683, 0.009347913,
                                -0.284634005, -0.700228944, 0.049702753, 0.016534819, -0.002099820),
-  Replication_StdErrors = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
+  SE = c(0.013027682, 0.107038918, 0.132469988, 0.045532230, 0.130075255,
                             0.089780256, 0.173393200, 0.061330489, 0.023629359, 0.005977139,
                             0.148983964, 0.221628438, 0.091452890, 0.010158805, 0.006963208),
-  bbp_params_Coefficients = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, NA, NA, NA, NA, NA),
-  bbp_params_StdErrors = c(NA, NA, 0.017, 0.008, 0.018, 0.034, 0.078, NA, NA, NA, NA, NA, NA, 0.069, 0.042),
-  bbp1994_params_Coefficients = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, 1.24, 0.668, 0.718, 0.276),
-  bbp1994_params_StdErrors = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, 0.465, 0.195, 0.069, 0.042)
+  
+bbp_full_Coeff = c(NA, NA, -0.026, -0.018, 0.062, 0.206, -0.185, NA, NA, NA, 0.431, NA, NA, NA, NA),
+bbp_full_SE =    c(NA, NA, 0.017,   0.008, 0.018, 0.034,  0.078, NA, NA, NA, .05, NA, NA, NA, NA),
+
+bbp1994__Coeff = c(0.600, NA, NA, NA, NA, 2.081, 2.913, NA, NA, NA, 0.713, 1.24, 0.668, 0.718, 0.276),
+  bbp1994__SE = c(0.038, NA, NA, NA, NA, 0.181, 0.331, NA, NA, NA, 0.262, 0.465, 0.195, 0.069, 0.042)
 )
 
 # Display the dataframe
@@ -3910,35 +3893,64 @@ egarch_bbp[is.na(egarch_bbp)] <- ""
 egarch_bbp
   
  # Create a table using xtable-------------------- for overnight EFFR
-egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) sample rates 3/4/2016 to 12/14/2023", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
+egarch_bbp_table <- xtable(egarch_bbp, caption = "EGARCH (1,1) 3/4/2016 to 12/14/2023 vs Bartolini, Bertoal, Prati", label="tab:egarch_bbp", caption.placement="bottom", comment = FALSE)
 egarch_bbp_table
 ```     
--->
+
 
 
 ## Bertola et al empirical model of the Fed Funds rate 
-For comparison with other methods, I replicate Bertolini, Bertola, Prati (2000) empirical model of the volatility of the Federal Funds rate. Their objectives were to evaluate the time series properties of the  Fed Funds rate: 
+The logic. Daily the Fed injects $m_t$ to keep the FFR close to its FOMC target rate $r^*_t$. A zero mean random shock $\nu_t$ alters banks' reserves, like Treasury  payments and other non bank transactions.  Banks may then borrow or lend $b_{i,t}$ in the interbank market at rate $r_t$.  After the market clears, a second zero mean liquidity shock $\epsilon_t$ alters banks reserve positions. The dynamics of the FFR $r_t$ reflect banks' update of their daily reserve position. The shape and position of the banks' the FFR as a function of their reserve position fluctuates with the probability distribution of future shocks.
+
+If the Fed intervenes it is with just enough reserves to provide banks with sufficient liquidity $m_t$ to maintain the target FFR $r^*_t$. The Fed may choose to offset liquidity shocks or not, depending on its preferences for volatility of the FFR or its capacity to intervene. It may choose to let interest rate changes to absorb part of the shock to liquidity.
+
+<!--One prediction is that FFR volatility should be lower the higher the target $r^*_t$ when the target rate is closer to the penalty rate than to zero. Check: target 50% of penalty rate historically. When interest rates are close to the target, responses to shocks are truncated banks'arbitrage at the margin $\bar{r}$.  A higher target rate, banks demand schedules for reserve are flatter around the target rate, implying a less elastic (less volatile) response to shocks.  p 13 -->
+
+Alternatively liquidity shocks can be absorbed through changes in interest rates. If the Fed changes ints target rate in response to shocks that also affect reserves, e.g. money demand, inflation, output, then these shocks will spill over into higher rates.
+
+
+For comparison with other methods, I replicate Bartolini, Bertola, Prati (2000) empirical model of the volatility of the Federal Funds rate. Their objectives were to evaluate the time series properties of the  Fed Funds rate: 
 - mean reversion behavior in  the Fed Funds
 - main patterns of volatility in the Fed funds rates.
 
-They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quick revert to changes in the unsecured federal funds rate (FFR) or administered rates. Other findings were that the Fed funds rate:
+They note that although overnight wholesale money market rates change in response to monetary policy and other shocks, they quickly revert to changes in the federal funds rate (FFR) or administered rates. Other findings were that the Fed funds rate:
 
 - rises in advance of reserve settlement days
 - declines in high rate regimes
 - exhibits biweekly periodicity when Fed is perceived as committed to keeping rates close to the target
 
+- falls at the end of the year with variance 17 times larger that that of a typical day
+- rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
+
+- tends to fall before holidays and rise afterwards
+- responds positively to penalty rate 1.240 (0.465) in post 1994 perdiod
+- increases on FOMC announcements days 0.783  (0.262) in post 1994 period
+- Each non trading day raises the variance of the next trading day by 67 percent, post 1994 period
+
+The EGARCH parameters are significant indicating:
+
+- persistence in underlying volatility of liquidity shock
+- the distribution of errors, degrees of freedom.of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
+
+Other findings:
+The variance of the FFR 
+
+- rises 0.067 rather falls at the end of the year as in BBP
+- rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
+- rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
+
 
 Their empirical model of Fed Funds rate is $r_t=\mu_t + \sigma_t\nu_t$
-where $\nu_t$ is a unit variance mean zero i.i.d error term
+where $\nu_t$ is a unit variance mean zero i.i.d error term. $\nu_t$ is a random shock that alters reserve balances after the Fed has injected reserves m. In a sense a counterpart to a forecast error of Treasury payments and other non bank flows.
 
 \emph{Conditional mean} $r_t, \mu_t=E[r_t]$
-They include the affect of level shift of changes in the target rate $r^*_t$, or $r^{\ast}_t$, on interest rates:
-$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r^*_t-r{t^*-1}$
-
+They include the affect of level shift of changes in the target rate $r^*_t$ on interest rates:
+$\mu_t= r_{t-1} +\delta_t + \kappa k_t + \iota(r^*_t-r^*_{t-1})$
+<!-- , or $r^{\ast}_t$ -->
 
 \emph{Conditional variance}
-$\sigma^2_t= E[(r_t-\mu_t)^2]$
-$log(\sigma^2_t) +\omega h_t +\xi z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\xi z_{t-1} )$ $abs(\nu_{t-1})+ \theta \nu_{t-1}$
+$\sigma^2_t= E[(r_t-\mu_t)^2]=
+log(\sigma^2_t) +\omega h_t +\xi z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\xi z_{t-1} )+ \alpha |\nu_{t-1}|+ \theta \nu_{t-1}$
 
 
 $z_t$ expresses the target rate as proportion of discount window primary credit rate (DPCredit)
@@ -3947,11 +3959,9 @@ $z_t$ expresses the target rate as proportion of discount window primary credit 
 (Table (\@ref(tab:arima_bbp))
 combined_df <- cbind(arima_params, bbp1994_params)
 print(combined_df)
-
 -->
 
-
-
+<!--
 (Table (\@ref(tab:egarch_bbp))
 ```{r,egarch_bbp, eval=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 #echo=FALSE, results='asis',warning=FALSE, message=FALSE}
@@ -3993,46 +4003,67 @@ print(combined_df)
 # #rownames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 # #colnames <- c("EFFR", "TGCR", "BGCR", "SOFR")
 # garchsesample)
-  garch_bbp
+  #garch_bbp
   # Print the table
  # print(coefgarch_table)
 ```
+-->
 
-#\emph{EGARCH results for 2016-2023}  
 \emph{Arima EGARCH results for the variance of the FFR  2016-2023}
 I replicated the Bertolini et al (2000)  model for the variance of daily Federal funds rate data from  2016 through 2023. I eliminated the  dummy days for the reserve period Reserve requirements for depositor banks and institutions at the Federal Reserve, since there were no required reserves from 2016 to 2023.
 
 I included their k dummy variables: before and after holidays, end of quarter, end of year
 I dropped the $\delta$ specific to maintenance day, as there were no required reserves during 2016-2023.
-The calendar effect variables included in the dummy $h_t. 
-
+The calendar effect variables included in the dummy $h_t$ are: 
 - holiday               
 - oneday_beforeholiday  
 - threeday_beforeholiday
 - oneday_afterholiday  
 - threeday_afterholiday
-- endquarter            
-- endyear              
-- around_qtr           
-- around_yr            
-- Monday               
-- Friday     
+- endquarter        
+- endyear             
+- around_qtr       
+- around_yr           
+- Monday             
+- Friday 
 
 <!--(see (Table (\@ref(tab:arima_both)). -->
-(Table (\@ref(tab:egarch_bbp_table)        
-The response of the FFR to dummies representing inividual dates similar in full sample but different signs, very small compared to Bertolini el al post 1994.
 
-The only agreement the day ffects of this replication with results in 2016-2023from earlier data is 
+The response of the FFR to dummies representing individual dates are similar in full sample to the 201-2023 replication?] but have different signs and are very small compared to Bertolini el al post 1994 sample (Table \@ref(tab:egarch_bbp_table).
 
-- Quarter end  
-- Three day before holiday "
-- One day after holiday:
+The only agreement among day effects of this 2016-2023 replication with the authors' earlier full sample  is 
+
+- Quarter end 0.14 vs .206
+- Three day before holiday -.10 vs -0.18
+- One day after holiday 0.06 vs 0.062
+
+End of year coefficient are positive in the 2016-2023 period,  0.11 vs -0.185 in the earlier full sample
+
+The effect of a target change in the replication is-0.028, in the full sample is 0.431, 0.783 in the 1994 sample
+
+In contrast for the end of year 2.861 and end of quarter 2.081 effects are large compared to the current test
+
+Bartolini estimates show the FFR
+- responds positively to the penalty rate function 1.240   (0.465)
+- increases on FOMC announcements days 0.783  (0.262)
+
+During the period 2016-2023, my estimates show the volatility of of the daily EFFR
+- falls with increases in penalty rate -.7 (0.089)
+- decreases on FOMC days -0.285 (0.248)
+- small non trading day increase 0.400 (0.046)
+
+BBP find persistence in the liquidity error $\nu$ .
+Absolute error $\nu$         0.016 (0.745) currently versus   0.718 (0.465) in the 1994 sample
+Lagged  error $\nu+{t-1}$   -0.002 (0.076)  versus   0.276 (0.042)
+
+
+The different policy regimes and differing factors in the BBP model provide little information except that day effects are now minimal.  
 
 <!--
 ADD TABLE
 [forgot constant, AR1]
 
-                                                      full sample          post 1994
+                              Replication              full sample          post 1994
 quarter end                  0.141 (0.248) vs          0.206 ()               2.081 (0.181)
 year end                     0.108 (0.089)            -0.185 ()               2.913 (0.331)
 one day before holiday       0.901 (0.046)            -0.026 ()              NA
@@ -4057,17 +4088,17 @@ endquarter              0.143136334 0.24756022
 endyear                 0.108245069 0.08876039
 Monday                 -0.002832700 0.04568855
 Friday                 -0.013389683 0.74535917
-fomc                    0.009347913 0.07590593
+fomc                    0.009347913 0.07590593   .431 (0.050)
 fomcindex              -0.284634005 0.24756022
 z                      -0.700228944 0.08876039
 nt                      0.049702753 0.04568855
 absnu                   0.016534819 0.74535917
 nu                     -0.002099820 0.07590593
-
 -->
 
-\emph{comparison of finding} A summary of their findings:
-the variance of the FFR rate in the full sample:
+<!--
+\emph{Comparison of findings} A summary of their findings:
+The variance of the FFR rate in Bertolini et al full sample:
 
 - falls at the end of the year with variance 17 times larger that that of a typical day
 - rises at end of quarters 1,2, and 3 with variance 8 times larger that that of a typical day and falls afterward
@@ -4089,17 +4120,18 @@ The variance of the FFR
 - rises  at end of quarters 1,2, and 3  by a much smaller 0.115 versus 2.08 in BBP
 - rises one day before holidays but falls three days before holidays and rises one day after holidays but a much smaller effect whereas Bertolini evidence shows the FFR tends to fall before holidays and rise afterward
 
-<!--with variance 8 times larger that that of a typical day and falls after-->
+<!--with variance 8 times larger that that of a typical day and falls after
 
-
-Bertolini estimates show the FFR
-- responds positively to penalty rate 1.240     (0.465)
+Bartolini estimates show the FFR
+- responds positively to the penalty rate function 1.240   (0.465)
 - increases on FOMC announcements days 0.783  (0.262)
 
 During the period 2016-2023, my estimates show the volatility of of the daily EFFR
 - falls with increases in penalty rate -.7 (0.089)
 - decreases on FOMC days -0.285 (0.248)
 - small non trading day increase 0.400 (0.046)
+
+-->
 
 <!--
 - rise end of year 0.066 (0.173)
@@ -4109,7 +4141,7 @@ During the period 2016-2023, my estimates show the volatility of of the daily EF
 - rise one day after holiday
 -->
 
-<!
+<!--
 \emph{EGARCH 2015-2023}
 In this EGARCH(1,1) model of the volatility of the FFR, with an  ARIMA(1,0,1) model of the mean
 [?]
@@ -4147,7 +4179,6 @@ Related to this measure of persistence, the sum P of the $\beta$s, $P=\sum_{k=1}
 \begin{equation}
 h2l=-\frac{log(2)}{P}
 \end{equation}
-
 -->
 
 <!--
@@ -4211,7 +4242,7 @@ Distribution of z can be student t, GED (normal a special case)
 \begin{equation}
 log(\sigma$2_t)= (\omega + \sum_{j=1}^{q}\xi_j \x_{jt})+\sum_{j=1}^{q}(z_{t-j} + \gamma_j (abs(z_{t-j})+E(abs(z_{t-j})) + \sum_{k=1}^{p}\beta_j log(\sigma^2_{t=j})
 \end{equation}
--->
+
 
 Robust Standard Errors for the EFFR from 2016-2023:
         Estimate  Std. Error   t value Pr(>|t|)
@@ -4222,6 +4253,7 @@ gamma1  2.137    1.010  2.116 0.034
 shape   2.100    0.106 19.834 0.000
 LogLikelihood : -947.7031 
 
+-->
 <!--
         Estimate  Std. Error   t value Pr(>|t|)
 omega   0.013416    0.309792  0.043306 0.965458
@@ -4231,8 +4263,9 @@ gamma1  2.137288    1.009915  2.116305 0.034319
 shape   2.100000    0.105879 19.833987 0.000000
 -->
 
+<!--
 Fit:
-The inforMATION criteria method on a fitted or filtered object returns the Akaike (AIC), Bayesian (BIC), Hannan-Quinn (HQIC) and Shibata (SIC) information criteria to enable model selection
+The information criteria method on a fitted or filtered object returns the Akaike (AIC), Bayesian (BIC), Hannan-Quinn (HQIC) and Shibata (SIC) information criteria to enable model selection
 by penalizing overfitting at different rates. p 28 Intro Rugarch
 Ljung-Box is a portmanteau test with null the adequacy of the ARMA fit.
 
@@ -4245,9 +4278,12 @@ Shibata      0.97362
 Hannan-Quinn 0.97888
 
 Weighted Ljung-Box Test on Standardized Residuals. The Ljung-Box test check for autocorrelation of the volatility time series reports:
+-->
 <!--The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
 Weighted Ljung-Box Test on Standardized Residuals
 -->
+
+<!--
 The Ljung-Box test:
 
                         statistic   p-value
@@ -4266,6 +4302,7 @@ Lag[4*(p+q)+(p+q)-1][9]     9.412 0.067
 d.o.f=2
 ------------------------------------
 The parameters are all significant. Negative alpha1 and positive beta1 imply oscillatory behavior.
+-->
 
 <!--
 Mean Model:
@@ -4466,6 +4503,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 Elapsed time : 1.074492 
 -->  
 
+<!--
 OLDER--------------------------------------------------
 \emph{Findings Bertolini et al}
 Bertolini et al () find the variance of the FFR rate 
@@ -4481,9 +4519,8 @@ The EGARCH parameters are significant indicating:
 - persistence in underlying volatility of liquidity shock
 - the distribution of errors df of student indicate very fat tails with t 2.94 significantly different than 3 $\rho=0.747$
 
-When I ran BBP's set up of their model, during the period of this paper,daily date from  2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserve. So eliminated their dummary days for the reserve period (see (Table (\@ref(tab:arima_both)).  
-
-CREATE GARCH table
+When I ran BBP's set up of their model, during the period of this paper,daily date from  2016 through 2023 when there are no longer reserve requirements for depositor banks and institutions at the Federal Reserve. So eliminated their dummary days for the reserve period
+<!--(see (Table (\@ref(tab:arima_both)).-->
 
 I found the  response of the FFR to dummies representing inividual dates very small compared to Bertolini el al:
 
@@ -4506,11 +4543,12 @@ Bertolini estimates show the FFR
 - responds positively to penalty rate 1.240     (0.465)
 - increases on FOMC announcements days 0.783  (0.262)
 
-DUring the period 2016-2023, my estimates show the volatility of of the daily EFFR
+During the period 2016-2023, my estimates show the volatility of of the daily EFFR
 - falls with increases in penalty rate -.07 (0.222)
 - increases on FOMC days
 - small non trading day increase 0.062 (0.091)
 - Bertolini, Bertola, Prati () 
+-->
 
 <!--
 - rise end of year 0.066 (0.173)
@@ -4519,12 +4557,34 @@ DUring the period 2016-2023, my estimates show the volatility of of the daily EF
 - fall three days before holiday
 - rise one day after holiday
 -->
+<!--
+ print(combined_df)
+                       Coefficients   StdErrors Coefficients StdErrors
+ar1                     0.844237998 0.013053850        0.060     0.038
+intercept               2.014386816 0.107115536           NA        NA
+oneday_beforeholiday    0.100839203 0.132623548           NA        NA
+threeday_beforeholiday -0.095986648 0.045628642           NA        NA
+oneday_afterholiday     0.035191454 0.129995377           NA        NA
+endquarter              0.114887391 0.142475753        2.081     0.181
+endyear                 0.066116640 0.173470169        2.913     0.331
+Monday                  0.004691872 0.061329648           NA        NA
+Friday                 -0.011205695 0.023676676           NA        NA
+fomc                    0.009640622 0.005993818        0.783     0.262
+fomcindex              -0.282124740 0.149256602           NA        NA
+z                      -0.700007226 0.221871277        1.240     0.465
+nt                      0.061577943 0.091488156           NA        NA
+absnu                  -0.002429300 0.011621492        0.718     0.069
+nu                     -0.007706428 0.007626636        0.276     0.042
+-->
 
+
+
+<!--
 The Ljung-Box test check for autocorrelation of the volatility time series reports:
 
-<!--The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
+The Ljung-Box test, named after statisticians Greta M. Ljung and George E.P. Box, is a statistical test that checks if autocorrelation exists in a time series.\url{https://statisticalpoint.com/ljung-box-test/}
 Weighted Ljung-Box Test on Standardized Residuals
--->
+
 
 ------------------------------------
                         statistic   p-value
@@ -4561,134 +4621,12 @@ shape   2.100000    0.077000 27.272755 0.000000
 AR1	0.06	0.038
 abs_nu	0.718	0.069
 nu	0.276	0.042
-  
-
-<!--
- print(combined_df)
-                       Coefficients   StdErrors Coefficients StdErrors
-ar1                     0.844237998 0.013053850        0.060     0.038
-intercept               2.014386816 0.107115536           NA        NA
-oneday_beforeholiday    0.100839203 0.132623548           NA        NA
-threeday_beforeholiday -0.095986648 0.045628642           NA        NA
-oneday_afterholiday     0.035191454 0.129995377           NA        NA
-endquarter              0.114887391 0.142475753        2.081     0.181
-endyear                 0.066116640 0.173470169        2.913     0.331
-Monday                  0.004691872 0.061329648           NA        NA
-Friday                 -0.011205695 0.023676676           NA        NA
-fomc                    0.009640622 0.005993818        0.783     0.262
-fomcindex              -0.282124740 0.149256602           NA        NA
-z                      -0.700007226 0.221871277        1.240     0.465
-nt                      0.061577943 0.091488156           NA        NA
-absnu                  -0.002429300 0.011621492        0.718     0.069
-nu                     -0.007706428 0.007626636        0.276     0.042
--->
-
-fomcindex              -0.282124740 0.149256602        0.783     0.262
-z                      -0.700007226 0.221871277        1.240     0.465
-nt                      0.061577943 0.091488156           NA        NA
-absnu                  -0.002429300 0.011621492        0.718     0.069
-nu                     -0.007706428 0.007626636        0.276     0.042
+-->  
 
 
-<!--
-An older run before I added more variables
-
-*---------------------------------*
-*          GARCH Model Fit        *
-*---------------------------------*
-
-Conditional Variance Dynamics 	
------------------------------------
-GARCH Model	: eGARCH(1,1)
-Mean Model	: ARFIMA(0,0,0)
-Distribution	: std 
-
-Optimal Parameters
-------------------------------------
-        Estimate  Std. Error   t value Pr(>|t|)
-omega  -0.000277    0.249396 -0.001110  0.99911
-alpha1  0.000790    0.083915  0.009414  0.99249
-beta1   0.651946    0.043837 14.872050  0.00000
-gamma1  2.127154    0.769761  2.763396  0.00572
-shape   2.100000    0.078766 26.661201  0.00000
-
-Robust Standard Errors:
-        Estimate  Std. Error   t value Pr(>|t|)
-omega  -0.000277    0.328358 -0.000843 0.999327
-alpha1  0.000790    0.086349  0.009149 0.992700
-beta1   0.651946    0.082412  7.910777 0.000000
-gamma1  2.127154    1.097995  1.937307 0.052708
-shape   2.100000    0.115172 18.233666 0.000000
-
-LogLikelihood : -933.0832 
-
-Information Criteria
-------------------------------------
-                    
-Akaike       0.95870
-Bayes        0.97295
-Shibata      0.95868
-Hannan-Quinn 0.96393
-
-Weighted Ljung-Box Test on Standardized Residuals
-------------------------------------
-                        statistic   p-value
-Lag[1]                      18.32 1.871e-05
-Lag[2*(p+q)+(p+q)-1][2]     18.80 9.200e-06
-Lag[4*(p+q)+(p+q)-1][5]     21.89 5.844e-06
-d.o.f=0
-H0 : No serial correlation
-
-Weighted Ljung-Box Test on Standardized Squared Residuals
-------------------------------------
-                        statistic p-value
-Lag[1]                      4.598 0.03200
-Lag[2*(p+q)+(p+q)-1][5]     8.407 0.02334
-Lag[4*(p+q)+(p+q)-1][9]    10.010 0.04993
-d.o.f=2
-
-Weighted ARCH LM Tests
-------------------------------------
-            Statistic Shape Scale P-Value
-ARCH Lag[3]    0.9026 0.500 2.000  0.3421
-ARCH Lag[5]    2.5280 1.440 1.667  0.3659
-ARCH Lag[7]    3.1468 2.315 1.543  0.4863
-
-Nyblom stability test
-------------------------------------
-Joint Statistic:  9.5486
-Individual Statistics:             
-omega  0.8831
-alpha1 0.1182
-beta1  1.2543
-gamma1 0.2607
-shape  0.5429
-
-Asymptotic Critical Values (10% 5% 1%)
-Joint Statistic:     	 1.28 1.47 1.88
-Individual Statistic:	 0.35 0.47 0.75
-
-Sign Bias Test
-------------------------------------
-                   t-value      prob sig
-Sign Bias           4.6424 3.673e-06 ***
-Negative Sign Bias  5.1426 2.981e-07 ***
-Positive Sign Bias  0.7789 4.361e-01    
-Joint Effect       37.7713 3.160e-08 ***
 
 
-Adjusted Pearson Goodness-of-Fit Test:
-------------------------------------
-  group statistic p-value(g-1)
-1    20     221.1    2.114e-36
-2    30     220.4    2.564e-31
-3    40     270.3    2.210e-36
-4    50     294.6    9.091e-37
 
-
-Elapsed time : 1.072841 
-
--->
 ## Candidate models of short rates to explore:
 Piazzesi (2005) constructs a continuous-time model of the joint distribution of bond yields and the FOMC  interest rate target for the FFR. With high-frequency data in a linear-quadratic jump-diffusion model, she provides information about the exact timing of FOMC meetings. This information can improve bond pricing and ability to identify monetary policy shocks.
 
@@ -5277,7 +5215,7 @@ article_citation <- list(
 )
 
 <!--Volume 145->
-
+Bartolini, Leonardo, Giuseppe Bertola, and Alessandro Prati. “Day-to-Day Monetary Policy and the Volatility of the Federal Funds Interest Rate.” Journal of Money, Credit and Banking 34, no. 1 (2002): 137–59. http://www.jstor.org/stable/3270679.
 
 Concoda
 
