@@ -2375,11 +2375,15 @@ affect rate volatility. How that volatility may very under different monetary po
 -->
 
 ## Important arbitrage opportunities in overnight reference rates
-Under the corridor system that implements the  ample reserves, the Fed's setting of the IORB and O/N RRP establish  the ceiling and floor within which the Fed manages the range of the FFR. 
+Under the corridor system that implements the  ample reserves, the Fed's setting of the IORB and O/N RRP establish  the ceiling and floor within which the Fed manages the range of the FFR. The discussion below lists some of these arbitrage opportunities.  At present this section is in progress.
 
 \emph{IORB-EFFR}
 The EFFR represents the cost of interbank borrowing. The difference between the EFFR and IORR  presents arbitrage opportunities for banks. Banks can borrow funds at a lower EFFR and deposit the funds for a higher IORB rate, making a profit on the spread.Historically, the IORB has been higher than the EFFR. A narrowing IORB/EFFR spread indicates tight supply of funds in the market and little room for arbitrage, which can lead to an outflow of excess reserves from the banking system.
 \url{https://libertystreeteconomics.newyorkfed.org/2023/10/whos-borrowing-and-lending-in-the-fed-funds-market-today/}
+
+\url{https://www.cmegroup.com/education/files/trading-us-money-market-spreads-with-sofr-v1.pdf}
+A recent JP Morgan analysis documents the positive correlative relationship between the EFFR-IOER spread and supply of outstanding Treasury bills (Exhibit 2). Among the implications is that the LIBOR-OIS [update SOFR-OIS ] spread can turn volatile, not only in response to bank credit swings but also during times when banks hold more than adequate reserves. For market participants with exposure to movements between these rates, the inter-commodity spread can serve the same purpose as a basis swap.
+
 <!--
 Unlike domestic banks, most foreign banks (FBO branches) are not insured by the Federal Deposit Insurance Corporation (FDIC). Since FBO branches access to deposit is limited, they borrow in the Fed Funds market. Since they do not pay the FDIC assessment fee, most FBO branches can borrow fed funds at a lower than domestic banks.  They can earn a larger spread by borrowing fed funds and depositing the borrowed funds at the Fed.
 -->
@@ -2395,14 +2399,42 @@ he FICC trades are filtered to remove a portion of transactions considered “sp
 -->
 
 \emph{SOFR}
-The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. The daily SOFR is based on transactions in the Treasury repurchase market. Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
+The SOFR is an influential interest rate banks use to price U.S. dollar-denominated derivatives and loans. SOFR replaced the London Interbank Offered Rate (LIBOR). The daily SOFR is based on transactions in the Treasury repurchase market. Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
+
+Inter-Commodity Spreads Featuring SOFR
+By virtue of its comprehensive link to activity in Treasury general collateral repo markets (\url{https://www.newyorkfed.org/data-and-statistics/data-visualization/tri-party-repo/}), SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks.  An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR.  For this reason, among others, inter-commodity spreads among SR1, SR3, GE, and ZQ futures may emerge as increasingly important tools to manage volatility.
+\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
 
 Arbitrage opportunities exist to invest in repo when SOFR exceed IORB, the interest banks can receive on deposits with the Fed
   \url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}                                                                                                       
-An IORB setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR. SOFR can and frequently does exhibit more day-to-day volatility than survey-based short term interest rates (STIR) benchmarks. 
+An IORB setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR. As evidenced in this paper, SOFR can and frequently does exhibit more day-to-day volatility than survey-based short term interest rates (STIR) benchmarks. 
 \url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
+
+\url{https://www.federalreserve.gov/econres/notes/feds-notes/interest-on-reserves-and-arbitrage-in-post-crisis-money-markets-20180301.html}
+Thomas Keating and Marco Macchiavelli
+
+The Federal Reserve (Fed) sets the rate paid on interest on reserves (IOR) as a primary tool for implementing monetary policy. By adjusting the rate paid on IOR, the Fed can raise or lower the value of reserves held by banks on deposit at the Fed. Although there are many types of money market participants, not all are eligible to receive IOR. Because of this limitation, some lenders,  such as money market funds (MMFs) and government-sponsored enterprises (GSEs), are willing to lend overnight wholesale funds at rates below the IOR rate. This market segmentation creates an opportunity for IOR eligible banks to earn the positive spread between the IOR rate and the overnight funding rate by borrowing in overnight wholesale funding markets and holding the funds as reserve balances. As these trades do not involve credit or interest rate risk, we refer to these trades as "IOR arbitrage trades".
+
+
+An interesting assessment The Collateral Spread Puzzle: Why Do Repo Rates Often Exceed Unsecured Rates? (Nyborg,20214) differentiates repos from plain collateralized loans,
+namely, that cash providers in repos get usage of the underlying collateral for the duration of
+the contract. Abstracting from credit risk, I study linkages between repo rates, unsecured (or
+uncollateralized) rates, and rates of return in the collateral cash market that result from this
+fundamental feature of repurchase agreements when both cash takers and providers face liquidity
+constraints. An example of an agent facing a hard liquidity constraint is a bank that needs
+reserves to settle purchases initiated by customers. In the model, potential repo counterparties
+operate on similar terms in the two other market segments, differing only, potentially, in their
+unsecured borrowing capacities. The cash provider draws potential value from the underlying
+collateral because selling an optimal fraction of it in the cash market can reduce funding costs.
+When this is relatively costly, for example, because the market for the underlying collateral is depressed, the cash provider requires a relatively high repo rate. Similarly, in this case,
+a constrained cash taker (borrower) is willing to pay a relatively large repo rate because the
+alternative of raising liquidity by selling the security is unattractive. A negative collateral spread
+emerges when markets are highly stressed, as captured by tight unsecured borrowing constraints,
+large illiquidity or volatility in the cash market, or a high level of risk aversion among agents.
+A policy implication is that collateral spreads should respond to central-bank actions that affect
+the level of financial market stress."
+
 <!--
-SOFR replaced the London Interbank Offered Rate (LIBOR).
 
 Benchmark rates such as the SOFR are essential in derivatives trading—particularly interest-rate swaps, which corporations and other parties use to manage interest-rate risk and to speculate on changes in borrowing costs.
 
@@ -2410,11 +2442,6 @@ SOFR volumes top $2 trillion for the first time after quarter-end pressures caus
  \url{https://www.concoda.com/p/money-market-update-b03}
 
 SOFR now covers 25% of daily repo volumes, equalling around $1 trillion, while the number of repos traded daily worldwide totals around $4 trillion. The size of the Eurodollar system, meanwhile, has shrunk dramatically. \url{https://www.concoda.com/p/the-silent-monetary-revolution}
-
-
-Inter-Commodity Spreads Featuring SOFR
-By virtue of its comprehensive link to activity in Treasury general collateral repo markets (\url{https://www.newyorkfed.org/data-and-statistics/data-visualization/tri-party-repo/}), SOFR can and frequently does exhibit more day-to-day volatility than survey-based STIR benchmarks.  An IOER setting that lies near the prevailing level of market repo rates is likely to drive swings in the decisions by which banks choose where to park idle reserve balances, thereby amplifying daily swings in SOFR.  For this reason, among others, inter-commodity spreads among SR1, SR3, GE, and ZQ futures may emerge as increasingly important tools to manage volatility.
-\url{https://www.cmegroup.com/education/articles-and-reports/trading-us-money-market-spreads-with-sofr.html}
 -->
 
 \emph{ON RRP and TBills}
@@ -2426,6 +2453,232 @@ After the resolution of the latest debt ceiling debacle in June 2023, however, t
 
 With 3 month Tbills paying over 5 percent interest, the ON RPP has fallen to its lowest level. After the Fed’s largest liquidity injection on record, Concoda predicts the “excess cash” era is coming to an end. As the RRP balance reaches zero, the dynamics in the repo market are about to transform Concoda predicts the return to “excess collateral”.
 
+Trading opportunities at CME:
+\url{https://www.cmegroup.com/trading/interest-rates/intercommodity-spread.html}
+\url{https://www.cmegroup.com/markets/interest-rates/stirs/30-day-federal-fund.html}
+\url{https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.html}
+\url{https://www.cmegroup.com/markets/interest-rates/swap-futures.html}
+\url{https://www.cmegroup.com/markets/interest-rates/us-treasury.html}
+\url{https://investor.cmegroup.com/news-releases/news-release-details/cme-group-launch-ois-futures-and-options-futures?_gl=1*1di352t*_gcl_au*MTcxNzkxMDkxOS4xNzIxOTU4MTg5*_ga*NDkwNTcwODc3LjE3MTYyMjMxNDk.*_ga_L69G7D7MMN*MTcyNTMyNjQ2NC4xNy4xLjE3MjUzMjcwNTEuMTIuMC4w}
+<!--
+"In the current economic environment, an increasing number of short-term interest rate instruments are linked to the overnight Fed Funds rate," said Robin Ross, managing director, CME Group interest rate products. "Our new contract will be a welcome means of hedging OIS-linked risk exposure. Combining the new 3-month OIS contract with our benchmark Eurodollar futures will enable efficient trading of the Fed Funds/LIBOR spread, which has grown increasingly volatile, creating substantial risk for money market participants. The contract will also provide a direct way to take a view on FOMC policy moves further out the yield curve than is possible with our existing 30-day Fed Funds contracts."
+
+The OIS futures will complement CME Group's rapidly growing 30-Day Federal Funds contracts, which reflect the average level of the overnight Federal Funds rate over a calendar month. CME Group's 30-Day Federal Funds futures and options have experienced strong growth over the past year. For the first six months of 2008, the contracts had average daily volume of 115,673 contracts a day, up 52 percent over the same period last year. For more information on 3-month OIS futures please visit www.cmegroup.com/trading/interest-rates/files/3month_OIS_Contract_Specs.pdf.
+
+
+\ulr{https://www.cmegroup.com/education/files/trading-us-money-market-spreads-with-sofr-v1.pdf}
+CME Group interest rate products span the entire U.S. dollar denominated yield curve and are among the world's most actively traded futures and options on futures contracts. They are an important risk management tool for managing short-, medium- and long-term interest rate risk with products based on Eurodollars, U.S. Treasuries, swaps and other dollar-related instruments as well as products for managing interest rate risk in Europe and Japan. In 2007, an average of 6.9 million interest rate contracts a day traded at CME Group.
+
+US Dollar STIR Benchmarks CME STIR futures offerings are based on widely used USD reference rates: •  Three-month US dollar ICE LIBOR® is the benchmark for final settlement of GE futures1 •  The daily effective federal funds rate (EFFR) is the reference for final settlement of ZQ futures. In turn, interest on excess reserves (IOER) is the rate the Federal Reserve Board uses to align EFFR with the Federal Open Market Committee’s (FOMC) intermeeting target level for EFFR. •  The Secured Overnight Financing Rate (SOFR) is the reference for final settlement of SR1 and SR3 futures. Having been recommended to the Federal Reserve System by the Alternative Reference Rates Committee (ARRC) as the designated alternative to US dollar ICE LIBOR®, SOFR is anticipated to see growing use as the underlying reference in floating rate note issuances, bank loans, and other cash market applications as well as in futures and other derivative contracts
+-->
+
+<!--
+Make table
+Trading resources
+Spread ratios and trading codes
+Treasury ICS analytics
+STIR ICS analytics
+Current ratios and Bloomberg codes: PDF | XLS
+
+Spread
+
+Spread ratio*
+
+CME Globex code
+
+(December 2023 Contract Example)
+
+Bloomberg code
+
+STIRS
+
+ 
+
+1-Month SOFR vs. Fed Funds
+
+1:1
+
+SR1Z3-ZQZ3
+
+SERFF <Comdty> CT
+
+1-Month vs. 3-Month SOFR
+
+6:10
+
+SR1F4G4-SR3Z3
+
+SERSFR <Comdty> CT
+
+Fed Funds vs. 3-Month SOFR
+
+6:10
+
+ZQ V3X3-SR3U3
+
+FFSFR <Comdty> CT
+
+3-Month €STR vs. 3-Month SOFR
+
+1:1
+
+ESRZ3-SR3Z3
+
+KTRSFR <Comdty> CT
+
+Treasuries
+
+ 
+
+2-Year T-Note vs. 5-Year T-Note
+
+5:4
+
+TUF 05-04 Z3
+
+ 
+
+2-Year T-Note vs. 5-Year T-Note
+
+3:2
+
+TAF 03-02 Z3
+
+ 
+
+2-Year T-Note vs. 10-Year T-Note
+
+2:1
+
+TUT 02-01 Z3
+
+TUTY <Comdty>
+
+5-Year T-Note vs. 10-Year T-Note
+
+3:2
+
+FYT 03-02 Z3
+
+ 
+
+5-Year T-Note vs. T-Bond
+
+3:1
+
+FOB 03-01 Z3
+
+FVUS <Comdty>
+
+10-Year T-Note vs. T-Bond
+
+2:1
+
+NOB 02-01 Z3
+
+ 
+
+T-Bond vs. Ultra T-Bond
+
+2:1
+
+BOB 02-01 Z3
+
+ 
+
+Eris SOFR Swap futures
+
+ 
+
+1-Year vs. 2-Year Eris SOFR Swap
+
+1:1
+
+EAT 01-01 Z23
+
+YIAYIT <Comdty>
+
+1-Year vs. 3-Year Eris SOFR Swap
+
+1:1
+
+EIC 01-01 Z23
+
+YIAYIC <Comdty>
+
+2-Year vs. 3-Year Eris SOFR Swap
+
+1:1
+
+ETC 01-01 Z23
+
+YITYIC <Comdty>
+
+2-Year vs. 5-Year Eris SOFR Swap
+
+5:2
+
+ETW 05-02 Z23
+
+YITYIW <Comdty>
+
+3-Year vs. 4-Year Eris SOFR Swap
+
+1:1
+
+EID 01-01 Z23
+
+YICYID <Comdty>
+
+3-Year vs. 5-Year Eris SOFR Swap
+
+5:3
+
+ECW 05-03 Z23
+
+YICYIW <Comdty>
+
+4-Year vs. 5-Year Eris SOFR Swap
+
+1:1
+
+EDW 01-01 Z23
+
+YIDYIW <Comdty>
+
+5-Year vs. 10-Year Eris SOFR Swap
+
+2:1
+
+EIY 05-02 Z23
+
+YIWYIY <Comdty>
+
+Eris SOFR Swap futures vs. Treasuries
+
+ 
+
+5-Year Eris SOFR Swap vs. 5-Year T-Note	
+1:1
+
+EWV 01-01 Z23-Z3
+
+YIWFV <Comdty>
+
+7-Year Eris SOFR Swap vs. 10-Year T-Note	
+1:1
+
+EBN 01-01 Z23-Z3
+
+YIBTY <Comdty>
+
+10-Year Eris SOFR Swap vs. Ultra 10-Year T-Note	
+1:1
+
+EYT 01-01 Z23-Z3
+
+YIYUXT <Comdty>
+
 
 <!--
 Trillions of reserves once trapped in the Fed’s RRP (reverse repo) facility have been released to replenish the U.S. government’s bank account and fund QT (quantitative tightening).
@@ -2435,10 +2688,8 @@ MMFs’ Demand for U.S. Treasury Securities
 U.S. MMFs are open-end mutual funds regulated by the Securities and Exchange Commission (SEC) that can only invest in safe and highly liquid money-market instruments denominated in U.S. dollars. Among such instruments, U.S. Treasury securities are especially relevant because of their safety and liquidity. Since MMFs cannot hold securities with a remaining maturity greater than 397 days, T-bills are an especially appealing investment option for them. MMFs’ demand for Treasury securities, moreover, has grown significantly since October 2016, when the Securities and Exchange Commission (SEC) implemented an important reform of the MMF industry; this reform led to an increase in assets under management of more than $1 trillion for government MMFs—a type of MMF that can only hold Treasury securities, agency debt, or repurchase agreements collateralized by these assets.
 \url{https://libertystreeteconomics.newyorkfed.org/2023/11/treasury-bill-supply-and-on-rrp-investment/}
 -->
-\url{https://www.federalreserve.gov/econres/notes/feds-notes/interest-on-reserves-and-arbitrage-in-post-crisis-money-markets-20180301.html}
 
-\url{https://www.cmegroup.com/education/files/trading-us-money-market-spreads-with-sofr-v1.pdf}
-A recent JP Morgan analysis documents the positive correlative relationship between the EFFR-IOER spread and supply of outstanding Treasury bills (Exhibit 2). Among the implications is that the LIBOR-OIS spread can turn volatile, not only in response to bank credit swings but also during times when banks hold more than adequate reserves. For market participants with exposure to movements between these rates, the inter-commodity spread can serve the same purpose as a basis swap.
+
 
 ```{r, arbitragedata, echo=FALSE, warning=FALSE, message=FALSE} 
 # Plot time series of SOFR, EFFR, IOR, RRP, 3 month Treasury
@@ -4421,6 +4672,94 @@ Both Federal Reserve and financial markets watch and depend on bond yields. Yiel
  
 Decisions about target moves result in a series of target values that looks like a pure jump process. Estimates reveals increased volatility of interest rates at all maturities in both FOMC meeting days and releases of key macroeconomic data. Macro news releases change the conditional distribution of a future Fed move. 
  
+ The target rate:
+ the target $\theta$ solves the stochastic differential equation (SDE)
+\begin{equation*}
+d\theta(t) = 0:0025 ( $dN_U$- $dN_D$)  (1)
+\end{equation*}
+
+where $N_U$ and $N_D$ are counting processes with stochastic intensities $\lambda_U$ and $\lambda_D$ , respectively.
+Jumps in $N_U$ aincrease the target by 25 bp, while jumps in $N_D$ lower the target by
+the same amount. Heuristically, the probability of a Poisson jump in $N_U$ during the interval
+[t; t + $\Delta$] conditional on information up to time t is given by $\lambda_U(t)\Delta$; and the expression for jumps in $N_D$is analogous. The econometrician has discrete observations on the dierence
+between NU and ND; which means that he observes target moves that are multiples of 25 bp.
+
+The conditional probability of a target move varies according to the FOMC meeting calendar. The arrival rate of `regular'target moves at FOMC meetings depends on the state X of the economy. Then there is
+a small and constant probability of an emergency move outside of FOMC meetings (`Peso events').
+
+More precisely, FOMC meetings are taken to be intervals, the i-th meeting being
+
+$[\tilde{t}_M(i); t_M(i)]$: The arrival rates $\lambda_U(t)$ and $\lambda_D(t)$ are given by
+\begin{equation*}
+\lambda^j(t)=\lambda^J_0+\lambda^J_X X_{t-} for t \in [\tilde{t}_M(i); t_M(i)] (2)
+\lambda^j_P ; otherwise;
+\end{equation*}
+for j = U (\up") and D (\down").
+
+The analogy between the target process (1) and descriptions of Fed behavior in the Taylor
+rule literature can be seen more easily by dening the martingale $M = M_U-M_D$, where $M_j$
+is the compensated process given by 
+\begin{equation*}
+M_j(t) = N_j(t)- \int_{t=0}^{t}\lambda^j(t)dt,  t \geq 0 for j = U;D
+\end{equation*}
+(see
+Bremaud (1981) for further details). Then the dynamics of the target can be rewritten as
+\begin{equation*}
+d\theta(t) = \kappa(t) (\bar{\theta}(t-) - \theta(t-)dt + 0:0025dM(t); (3)
+\end{equation*
+where the process $\bar{\theta}$ is a linear function of the state X with coeffcients dictated by the
+intensity parameters. This representation shows that, during times at which the deterministic
+scalar $\kappa(t)$ is positive; the target is expected to move back towards $\bar{\theta}(t-)$: The expected value
+of $\theta(t)$ (and of the average target over some period) conditional on information at time $s\leq t$
+is linear in X(s). This expected value is thus directly comparable to the Taylor rule, for example, which links the average federal funds rate to measures of inflation and output at a quarterly frequency.
+
+To economize on parameters, the slope parameters are taken to be symmetric, in that
+$\lambda_X := \lambda^U_X= - \lambda^D_X$
+Mean-reversion in the target is also imposed by assuming $\lambda^D_0=\lambda^U_0 +2\lambda_X\bar{x}$
+where $\bar{x}$ denotes the long-run mean of X: The arrival rates of Peso events are fixed to their
+empirical frequency. There has been one up and one down move outside of FOMC meetings
+the 5 years from 1994 to 1998, so that I set $\lamba^U_P= \lamba^D_P= 0:2$ For given long-run mean
+parameters, there are thus N + 1 free parameters: $\lambda^U_0$ and $\lambda_X$.
+
+General State Dynamics (including Target)
+The state X(t) at time t includes the target rate (t), some macro variables m(t), and
+analyst forecasts mF (t) of these macro variables. All these state variables are observable.
+The remaining state variables are unobservable (or latent). Among these is the short rate
+and thus the spread $s(t) = r(t)-\theta(t)$. The main reason for this approach is that the spikes in
+the fed funds rate (see Figure 1) call for a detailed specification of the underlying seasonality
+similar to Hamilton (1996), which would add a large number of parameters. This complexity
+can be avoided by backing out the short rate from longer term yields.
+The general dynamics of X are described by an SDE of the form
+
+\begin{equation*}
+dX(t) = \mu(X(t)) dt + \sima(X(t))dW(t) + dJ(t); (4)
+\end{equation*}
+where W is a vector of Brownian motions, $\mu$ is the drift, $\sigma$  is the volatility, and J is a pure jump process. The drift  $\mu(x)$  and the variance-covariance term $\sigma(x)\sigma(x)'$ are linear functions of the state x. Without jumps and with constant $\mu$, this system may be thought of as a
+Gaussian vector-autoregression with mean rate of change $\sigma$. Taking the variance-covariance
+ $\sigma(x)\sigma(x)'$ to be state-dependent allows for conditional heteroscedasticity. More importantly, the
+jumps J can capture `macroeconomic jump effects', such as policy events and macroeconomic
+releases. Here, jumps do not necessarily capture `large moves' in yields (as in the short-rate
+studies of Das (2001) and Johannes (2001)), but observable changes in X that happen at
+distinct points in time.
+The
+
+All estimated setups share the feature that that the state vector X includes the target as
+observable variable and the spread $s = r-\theta$ as latent, with s mean-reverting to zero. The
+fat tails of the spread distribution can be captured with a stochastic volatility factor $\nu$: The
+most interesting variable is called policy inertia factor z, which proxies variables (in addition
+to s; $\theta$ and $\nu$) to which the Fed reacts when setting the target. The arrival intensities (2) of policy moves during FOMC meetings may depend on all these variables in X: The dynamics
+of these additional state variable solve
+
+\begin{align*}
+ds(t) = _s s(t) dt +\sqrt{\nu(t)}dW_s(t);
+dv(t) = \kappa_\nu(\bar{\nu}-\nu(t)) dt + \sqrt{\nu(t)}dW_\nu(t); (5)
+dz(t) = \kappa_z z(t)dt + dW_z(t);
+\end{align*}
+where $W_s,W_\nu$ and $W_z$ are independent standard Brownian motions.
+
+The four-dimensional state vector $X = (\theta, s, \nu, z)$ does not yet include macro variables.
+Section 6 tries link the latent information in z to observable macro variables by augmenting
+the state X with employment and CPI inflation.
 <!--
 Findings:
  1) latent factors
