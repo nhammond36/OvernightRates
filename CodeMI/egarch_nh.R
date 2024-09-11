@@ -339,46 +339,46 @@ non_trading_days_pairs <- function(dates, holidays) {
 }
 
 
-# Example usage
-#start_date <- as.Date("2024-07-01")
-#end_date <- as.Date("2024-07-15")
-public_holidays<-h$holidays
-num_non_trading_days <- non_trading_days(start_date, end_date, public_holidays)
-print(num_non_trading_days)
-date_seq <- seq.Date(start_date, end_date, by = "day")
-
-
-
-# Chat version 2
-# Load necessary package
-library(lubridate)
-
-# Example dataset with dates
-
-# Define the start and end dates for the seven years
-start_date <- as.Date("2016-03-04")
-end_date <- as.Date("2023-12-14")
-
-h <- data.frame(sdate = seq.Date(from = start_date, to = end_date, by = "month"))
-
-# Function to check if a date is the end of a quarter
-is_end_of_quarter <- function(date) {
-  month(date) %in% c(3, 6, 9, 12) && day(date) == days_in_month(date)
-}
-
-# Determine the first end-of-quarter date from the start_date
-if (is_end_of_quarter(start_date)) {
-  first_quarter_end <- start_date
-} else {
-  # Get the next quarter's ceiling date
-  next_quarter_date <- ceiling_date(start_date, "quarter")
-  # Rollback to the last day of the previous month
-  first_quarter_end <- rollback(next_quarter_date)
-}
-
-# Generate end-of-quarter dates for the date range
-end_quarter_dates <- seq(from = first_quarter_end, to = end_date, by = "quarter")
-
+# # Example usage
+# #start_date <- as.Date("2024-07-01")
+# #end_date <- as.Date("2024-07-15")
+# public_holidays<-h$holidays
+# num_non_trading_days <- non_trading_days(start_date, end_date, public_holidays)
+# print(num_non_trading_days)
+# date_seq <- seq.Date(start_date, end_date, by = "day")
+# 
+# 
+# 
+# # Chat version 2
+# # Load necessary package
+# library(lubridate)
+# 
+# # Example dataset with dates
+# 
+# # Define the start and end dates for the seven years
+# start_date <- as.Date("2016-03-04")
+# end_date <- as.Date("2023-12-14")
+# 
+# h <- data.frame(sdate = seq.Date(from = start_date, to = end_date, by = "month"))
+# 
+# # Function to check if a date is the end of a quarter
+# is_end_of_quarter <- function(date) {
+#   month(date) %in% c(3, 6, 9, 12) && day(date) == days_in_month(date)
+# }
+# 
+# # Determine the first end-of-quarter date from the start_date
+# if (is_end_of_quarter(start_date)) {
+#   first_quarter_end <- start_date
+# } else {
+#   # Get the next quarter's ceiling date
+#   next_quarter_date <- ceiling_date(start_date, "quarter")
+#   # Rollback to the last day of the previous month
+#   first_quarter_end <- rollback(next_quarter_date)
+# }
+# 
+# # Generate end-of-quarter dates for the date range
+# end_quarter_dates <- seq(from = first_quarter_end, to = end_date, by = "quarter")
+# 
 
 # EGARCH ----------------------------------------------------------------
 #https://blog.devgenius.io/volatility-modeling-with-r-asymmetric-garch-models-85ee02f8b6e8
@@ -422,20 +422,21 @@ end_quarter_dates <- seq(from = first_quarter_end, to = end_date, by = "quarter"
 # specify the variance equation
 #$log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1}
 
+#DUPLICATE OF log sd2
 # Create AR(1)----------------------------
 # Initialize the AR(1) process
-log_sd_effr_squared <- log(sd_effr[1:(T-1)]^2)
-
-# Specify the AR(1) equation
-ar1_process <- numeric(T-1)  # Create an empty vector to store the AR(1) process values
-
-# Compute the AR(1) process
-for (t in 1:(T-1)) {
-  ar1_process[t] <- log_sd_effr_squared[t] + h[t,] + z[t]
-}
-
-# Print the AR(1) process values
-print(ar1_process)
+# log_sd_effr_squared <- log(sd_effr[1:(T-1)]^2)
+# 
+# # Specify the AR(1) equation
+# ar1_process <- numeric(T-1)  # Create an empty vector to store the AR(1) process values
+# 
+# # Compute the AR(1) process
+# for (t in 1:(T-1)) {
+#   ar1_process[t] <- log_sd_effr_squared[t] + h[t,] + z[t]
+# }
+# 
+# # Print the AR(1) process values
+# print(ar1_process)
 #-----------------------------------------  
 
 # --------- CHAT with external variables in the ARIMA
@@ -480,12 +481,12 @@ library(stats)
 #library(arima2)  dont need?
 
 # one time correct spread_no_na ---------------------
-spread_no_na$h<-h
-dummy_h <- spread_no_na$h
-#dummy_h <- dummy_h[, -which(names(dummy_h) == "sdate")]  # Remove the sdate column if present
-dummy_h_matrix <- as.matrix(dummy_h)
-str(dummy_h)
-spread_no_na$dummy_h<-dummy_h
+# spread_no_na$h<-h
+# dummy_h <- spread_no_na$h
+# #dummy_h <- dummy_h[, -which(names(dummy_h) == "sdate")]  # Remove the sdate column if present
+# dummy_h_matrix <- as.matrix(dummy_h)
+# str(dummy_h)
+# spread_no_na$dummy_h<-dummy_h
 
 # create fomc d
 #ta in h
@@ -523,12 +524,12 @@ h$threeday_afterholiday<- NULL  # only zeros --> check data
 str(h)
 #---------------------------------------------------------
 
-
-
 # Generate T observations for sd_effr from a normal distribution
 # Only in Piazzesi and Benzoni.  I had an observed intraday sd (source?)
 set.seed(123)  # Setting seed for reproducibility
 
+
+# ATTENTION: length(non_trading_counts) 1956, the length of these variables 1957
 # Generate penalty function (z)
 # Assuming h and z are known and have T-1 observations
 T <- nrow(spread_no_na) #number of observations
@@ -581,7 +582,7 @@ log_nontradingdays <- function(gamma, nontradingdays) {
 if (!require("stats4")) install.packages("stats4")
 library(stats4)
 
-#length(non_trading_counts) #1957
+#length(non_trading_counts) #1956
 #length(log_sd_effr_squared[2:T]) #1956
 
 neg_log_likelihood <- function(gamma) {
@@ -589,7 +590,7 @@ neg_log_likelihood <- function(gamma) {
     return(Inf)
   }
   X <- log(1 - gamma * non_trading_counts)
-  model <- lm(log_sd_effr_squared ~ X)
+  model <- lm(log_sd_effr_squared[2:T] ~ X)
   residuals <- residuals(model)
   log_likelihood <- -sum(dnorm(residuals, mean = 0, sd = sd(residuals), log = TRUE))
   return(log_likelihood)
@@ -639,11 +640,36 @@ non_trading_counts <- c(0, non_trading_counts)
 nt <- log(1 - gamma_estimated * non_trading_counts)
 print(nt)
 
+# Bertola et al
+# MEAN OF THR EFFR
+# $r_t = \mu_t + \sigma_t \nu_t$
+
+# $ \mu_t=r_{t-1}+\delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+# $ \mu_t=r_{t-1}+\Phi(r_{t-1}=r_{t-2})+ \Phi(r_{t-2}=r_{t-3}) +delta_s_t=\Kappa' k_t + \iota(\ast(r_t)-\as(r{_t-1})$
+#                                                                                               
+# Variance of the FFR $\sigma^2_t=E[(r_t-\mu_t)^2]$
+# $log(\sigma^2_t) +\omega h_t +\zeta z_t = \lambda(log(\sigma^2_{t-1}) +\omega h_{t-1} +\zeta z_{t-1} ) + abs(\nu_{t-1})+ \theta \nu_{t-1
+#  
 # Piazzesi jump process
 
 # Benzoni jump process
 
-external_regressors <- cbind(h[,2:ncol(h)], z,nt,absnu, nu)
+external_regressors <- cbind(h[,2:ncol(h)], z,nt,absnu, nu) #1957 by 13
+str(external_regressors)
+# 'data.frame':	1957 obs. of  13 variables:
+#   $ oneday_beforeholiday  : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ threeday_beforeholiday: num  0 0 0 0 0 0 0 0 0 0 ...
+# $ oneday_afterholiday   : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endquarter            : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ endyear               : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
+# $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
+# $ fomc                  : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ fomcindex             : num  0 0 0 0 0 0 0 0 0 0 ...
+# $ z                     : num  0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 ...
+# $ nt                    : num  0 -0.0202 0 0 0 ...
+# $ absnu                 : num  1.0964 0.6168 0.0501 1.0396 0.4991 ...
+# $ nu                    : num  1.0964 -0.6168 0.0501 -1.0396 0.4991 ...
 
 # Ensure there are no non-finite values in the cleaned data
 stopifnot(!any(is.na(log_sd_effr_squared)))
@@ -660,19 +686,6 @@ cor_matrix<- cor(external_regressors, use = "complete.obs")
 print(cor_matrix)
 
 
-# str(external_regressors)
-# 'data.frame':	1957 obs. of  11 variables:
-#   $ holiday               : num  0 0 0 0 0 0 0 0 0 0 ...
-# $ oneday_beforeholiday  : num  0 0 0 0 0 0 0 0 0 0 ...
-# $ threeday_beforeholiday: num  0 0 0 0 0 0 0 0 0 0 ...
-# $ oneday_afterholiday   : num  0 0 0 0 0 0 0 0 0 0 ...
-# $ endquarter            : num  0 0 0 0 0 0 0 0 0 0 ...
-# $ endyear               : num  0 0 0 0 0 0 0 0 0 0 ...
-# $ Monday                : num  0 1 0 0 0 0 1 0 0 0 ...
-# $ Friday                : num  1 0 0 0 0 1 0 0 0 0 ...
-# $ z                     : num  0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 0.625 ...
-# $ absnu                 : num  1.14 0.341 1.271 1.846 0.272 ...
-# $ nu                    : num  1.14 -0.341 -1.271 1.846 0.272 ...
 
 # Create a zoo object for log_sd_effr_squared with sdate as the index
 log_sd_effr_squared_zoo <- zoo(log_sd_effr_squared, order.by = spread_no_na$sdate)
@@ -687,7 +700,6 @@ arima_residuals <- residuals(arima_model)
 print("ARIMA Model Parameters:")
 print(arima_params)
 
-arima_params <- arima_model$coef
 vcov_matrix <- vcov(arima_model)
 std_errors <- sqrt(diag(vcov_matrix))
 results <- data.frame(Coefficients = arima_params, StdErrors = std_errors)
